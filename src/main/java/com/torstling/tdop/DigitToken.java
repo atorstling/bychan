@@ -38,7 +38,7 @@ public class DigitToken implements Token {
     }
 
 
-    public Node suffixParse(@NotNull TokenParserCallback parser) {
+    public Node prefixParse(@NotNull TokenParserCallback parser) {
         return new DigitNode(value);
     }
 

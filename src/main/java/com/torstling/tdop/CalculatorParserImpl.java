@@ -22,7 +22,7 @@ public class CalculatorParserImpl implements TokenParserCallback {
     @NotNull
     public Node expression(int callerInfixBindingPower) {
         Token first = tokens.pop();
-        Node rootNode = first.suffixParse(this);
+        Node rootNode = first.prefixParse(this);
         while (callerInfixBindingPower < tokens.peek().infixBindingPower()) {
             Token second = tokens.pop();
             rootNode = second.infixParse(rootNode, this);

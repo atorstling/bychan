@@ -11,7 +11,7 @@ import com.sun.istack.internal.NotNull;
  */
 public class LeftParenthesisToken implements Token {
 
-    public Node suffixParse(@NotNull TokenParserCallback parser) {
+    public Node prefixParse(@NotNull TokenParserCallback parser) {
         Node expression = parser.expression(0);
         parser.swallow(RightParenthesisToken.class);
         return expression;

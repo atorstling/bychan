@@ -11,7 +11,7 @@ import com.sun.istack.internal.NotNull;
  */
 public class RightParenthesisToken implements Token {
 
-    public Node suffixParse(@NotNull TokenParserCallback parser) {
+    public Node prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 

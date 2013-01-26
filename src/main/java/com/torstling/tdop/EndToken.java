@@ -10,7 +10,7 @@ import com.sun.istack.internal.NotNull;
  * To change this template use File | Settings | File Templates.
  */
 public class EndToken implements Token {
-    public Node suffixParse(@NotNull TokenParserCallback parser) {
+    public Node prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
