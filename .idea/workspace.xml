@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/DigitToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/DigitToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/EndToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/EndToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeftParenthesisToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeftParenthesisToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/RightParenthesisToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/RightParenthesisToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Token.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Token.java" />
-    </list>
+    <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="" />
     <ignored path="tdop.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -115,7 +106,7 @@
       <file leaf-file-name="CalculatorParserImpl.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="41" selection-start="597" selection-end="597" vertical-scroll-proportion="0.3478261">
+            <state line="24" column="38" selection-start="594" selection-end="594" vertical-scroll-proportion="0.3478261">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -446,28 +437,6 @@
       <option name="MAIN_CLASS_NAME" value="com.torstling.tdop.CompleteTest" />
       <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="com.torstling.tdop in tdop" type="JUnit" factoryName="JUnit" temporary="true">
-      <module name="tdop" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.torstling.tdop" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
       <option name="VM_PARAMETERS" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -823,7 +792,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="41" selection-start="597" selection-end="597" vertical-scroll-proportion="0.3478261">
+        <state line="24" column="38" selection-start="594" selection-end="594" vertical-scroll-proportion="0.3478261">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
