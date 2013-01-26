@@ -103,4 +103,19 @@ public class CalculatorParserImplTest {
         DigitNode right = new DigitNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
     }
+
+    @Test
+    public void multipleSameOp() {
+        CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
+                new DigitToken(1),
+                new MultiplicationToken(),
+                new DigitToken(2),
+                new MultiplicationToken(),
+                new DigitToken(3),
+                new EndToken()));
+        Node rootNode = p.parse();
+        MultiplicationNode left = new MultiplicationNode(new DigitNode(1), new DigitNode(2));
+        DigitNode right = new DigitNode(3);
+        assertEquals(new MultiplicationNode(left, right), rootNode);
+    }
 }

@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/MultiplicationNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/MultiplicationToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/DigitNode.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/DigitNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionNode.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionToken.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java" />
     </list>
     <ignored path="tdop.iws" />
@@ -153,7 +146,7 @@
       <file leaf-file-name="CalculatorParserImplTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="30" selection-start="3654" selection-end="3654" vertical-scroll-proportion="0.65831435">
+            <state line="115" column="44" selection-start="4118" selection-end="4118" vertical-scroll-proportion="0.5899772">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -385,35 +378,7 @@
       <recent name="com.torstling.tdop" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CalculatorParserImplTest.prioReverse">
-    <configuration default="false" name="CalculatorParserImplTest.ambigous2" type="JUnit" factoryName="JUnit" temporary="true">
-      <module name="tdop" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.torstling.tdop" />
-      <option name="MAIN_CLASS_NAME" value="com.torstling.tdop.CalculatorParserImplTest" />
-      <option name="METHOD_NAME" value="ambigous2" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.CalculatorParserImplTest.multipleSameOp">
     <configuration default="false" name="CompleteTest.test" type="JUnit" factoryName="JUnit" temporary="true">
       <module name="tdop" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -518,6 +483,28 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="CalculatorParserImplTest.multipleSameOp" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="tdop" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.torstling.tdop" />
+      <option name="MAIN_CLASS_NAME" value="com.torstling.tdop.CalculatorParserImplTest" />
+      <option name="METHOD_NAME" value="multipleSameOp" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -593,12 +580,12 @@
       </method>
     </configuration>
     <list size="6">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.ambigous2" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.CompleteTest.test" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.com.torstling.tdop in tdop" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.prio" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.prioReverse" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.CompleteTest.test" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.com.torstling.tdop in tdop" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.prio" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.prioReverse" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.multipleSameOp" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -833,7 +820,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="30" selection-start="3654" selection-end="3654" vertical-scroll-proportion="0.65831435">
+        <state line="115" column="44" selection-start="4118" selection-end="4118" vertical-scroll-proportion="0.5899772">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
