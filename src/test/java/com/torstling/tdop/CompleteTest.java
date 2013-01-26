@@ -27,6 +27,12 @@ public class CompleteTest {
         assertEquals(rootNode.evaluate(), -5);
     }
 
+    @Test
+    public void test3() {
+        Node rootNode = new CalculatorParser().parse("99+1");
+        assertEquals(rootNode.evaluate(), 100);
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.println("Welcome to calculator");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

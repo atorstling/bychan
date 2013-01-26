@@ -36,15 +36,21 @@ public class Lexer {
         final List<Token> tokens = new ArrayList<Token>();
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
-            for (int group = 1; group <= matcher.groupCount(); group++) {
-                String groupValue = matcher.group(group);
-                if (groupValue != null) {
-                    TokenType correspondingTokenType = tokenTypes.get(group - 1);
-                    tokens.add(correspondingTokenType.toToken(groupValue));
-                }
-            }
+            tokens.add(findMatchingToken(matcher));
         }
         tokens.add(new EndToken());
         return tokens;
+    }
+
+
+    private Token findMatchingToken(Matcher matcher) {
+        for (int group = 1; group <= matcher.groupCount(); group++) {
+            String groupValue = matcher.group(group);
+            if (groupValue != null) {
+                TokenType correspondingTokenType = tokenTypes.get(group - 1);
+                return correspondingTokenType.toToken(groupValue);
+            }
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 package com.torstling.tdop;
 
 enum TokenType {
-    DIGIT("\\d") {
+    DIGIT("\\d+") {
         @Override
         Token toToken(String value) {
             return DigitToken.valueOf(value);
@@ -11,6 +11,12 @@ enum TokenType {
         @Override
         Token toToken(String value) {
             return new SubtractionToken();
+        }
+    },
+    ADDITION("\\+") {
+        @Override
+        Token toToken(String value) {
+            return new AdditionToken();
         }
     },
     MULTIPLY("\\*") {
