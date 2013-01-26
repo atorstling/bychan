@@ -8,10 +8,10 @@ import java.util.List;
 public class CalculatorParserImpl implements TokenParserCallback {
 
     @NotNull
-    private final ArrayDeque<Token> stack;
+    private final ArrayDeque<Token> tokens;
 
     public CalculatorParserImpl(List<? extends Token> tokens) {
-        stack = new ArrayDeque<Token>(tokens);
+        this.tokens = new ArrayDeque<Token>(tokens);
     }
 
     @NotNull
@@ -21,20 +21,20 @@ public class CalculatorParserImpl implements TokenParserCallback {
 
     @NotNull
     public Node expression(int callerInfixBindingPower) {
-        Token first = stack.pop();
+        Token first = tokens.pop();
         Node rootNode = first.suffixParse(this);
-        while (callerInfixBindingPower < stack.peek().infixBindingPower()) {
-            Token second = stack.pop();
+        while (callerInfixBindingPower < tokens.peek().infixBindingPower()) {
+            Token second = tokens.pop();
             rootNode = second.infixParse(rootNode, this);
         }
         return rootNode;
     }
 
     public void swallow(Class<? extends Token> expectedClass) {
-        if (stack.peek().getClass().equals(expectedClass)) {
-            stack.pop();
+        if (tokens.peek().getClass().equals(expectedClass)) {
+            tokens.pop();
         } else {
-            throw new IllegalStateException("Expected " + expectedClass + ", had " + stack.peek());
+            throw new IllegalStateException("Expected " + expectedClass + ", had " + tokens.peek());
         }
     }
 }

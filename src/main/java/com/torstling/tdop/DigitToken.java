@@ -47,6 +47,6 @@ public class DigitToken implements Token {
     }
 
     public int infixBindingPower() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException();
     }
 }
