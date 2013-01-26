@@ -1,35 +1,46 @@
 package com.torstling.tdop;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Collections2;
+import com.sun.istack.internal.NotNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lexer {
 
-    public ArrayList<Token> lex(String input) {
-        ArrayList<Token> tokens = new ArrayList<Token>();
-        Pattern pattern = Pattern.compile("\\s*(?:(\\d+)|([-+*/])|([\\(\\)]))");
+    private final Pattern pattern;
+    private List<TokenType> tokenTypes;
+
+    public Lexer() {
+        tokenTypes = Arrays.asList(TokenType.values());
+        Collection<String> subPatterns = makeSubPatterns();
+        String patternString = "\\s*(?:" + Joiner.on("|").join(subPatterns) + ")";
+        pattern = Pattern.compile(patternString);
+    }
+
+    private Collection<String> makeSubPatterns() {
+        return Collections2.transform(tokenTypes, new Function<TokenType, String>() {
+            public String apply(TokenType tokenType) {
+                return "(" + tokenType.getPattern() + ")";
+            }
+        });
+    }
+
+    public List<Token> lex(@NotNull final String input) {
+        final List<Token> tokens = new ArrayList<Token>();
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
-            String digit = matcher.group(1);
-            String operator = matcher.group(2);
-            String parenthesis = matcher.group(3);
-            if (digit != null) {
-                assert operator == null;
-                tokens.add(DigitToken.valueOf(digit));
-            } else if (operator != null) {
-                if (operator.equals("-")) {
-                    tokens.add(new SubtractionToken());
-                } else if (operator.equals("*")) {
-                    tokens.add(new MultiplicationToken());
-                } else {
-                    throw new IllegalStateException("Unknown operator");
-                }
-            } else if (parenthesis != null) {
-                if (parenthesis.equals("(")) {
-                    tokens.add(new LeftParenthesisToken());
-                } else if (parenthesis.equals(")")) {
-                    tokens.add(new RightParenthesisToken());
+            for (int group = 1; group <= matcher.groupCount(); group++) {
+                String groupValue = matcher.group(group);
+                if (groupValue != null) {
+                    TokenType correspondingTokenType = tokenTypes.get(group - 1);
+                    tokens.add(correspondingTokenType.toToken(groupValue));
                 }
             }
         }
