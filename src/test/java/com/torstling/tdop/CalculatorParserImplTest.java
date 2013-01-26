@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class CalculatorParserImplTest {
 
@@ -117,5 +118,44 @@ public class CalculatorParserImplTest {
         MultiplicationNode left = new MultiplicationNode(new DigitNode(1), new DigitNode(2));
         DigitNode right = new DigitNode(3);
         assertEquals(new MultiplicationNode(left, right), rootNode);
+    }
+
+    @Test
+    public void unclosedParenthesis() {
+        CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
+                new LeftParenthesisToken(),
+                new DigitToken(1),
+                new EndToken()));
+        try {
+            p.parse();
+            fail("expected exception");
+        } catch (IllegalStateException e) {
+            assertEquals("Expected RightParenthesisToken, got EndToken", e.getMessage());
+        }
+    }
+
+    @Test
+    public void wrongOrderParenthesis() {
+        CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
+                new RightParenthesisToken(),
+                new EndToken()));
+        try {
+            p.parse();
+            fail("expected exception");
+        } catch (IllegalStateException e) {
+            assertEquals("Cannot use right parenthesis as prefix to expression", e.getMessage());
+        }
+    }
+
+    @Test
+    public void empty() {
+        CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
+                new EndToken()));
+        try {
+            p.parse();
+            fail("expected exception");
+        } catch (IllegalStateException e) {
+            assertEquals("Cannot parse end as expression", e.getMessage());
+        }
     }
 }

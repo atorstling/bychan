@@ -20,6 +20,8 @@ public class Lexer {
             } else if (operator != null) {
                 if (operator.equals("-")) {
                     tokens.add(new SubtractionToken());
+                } else if (operator.equals("*")) {
+                    tokens.add(new MultiplicationToken());
                 } else {
                     throw new IllegalStateException("Unknown operator");
                 }
