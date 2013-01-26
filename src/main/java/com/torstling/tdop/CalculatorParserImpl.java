@@ -31,10 +31,9 @@ public class CalculatorParserImpl implements TokenParserCallback {
     }
 
     public void swallow(Class<? extends Token> expectedClass) {
-        if (tokens.peek().getClass().equals(expectedClass)) {
-            tokens.pop();
-        } else {
-            throw new IllegalStateException("Expected " + expectedClass + ", had " + tokens.peek());
+        Token next = tokens.pop();
+        if (!next.getClass().equals(expectedClass)) {
+            throw new IllegalStateException("Expected " + expectedClass + ", had " + next);
         }
     }
 }

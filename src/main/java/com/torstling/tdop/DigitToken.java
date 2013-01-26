@@ -49,4 +49,9 @@ public class DigitToken implements Token {
     public int infixBindingPower() {
         throw new UnsupportedOperationException();
     }
+
+    public String toString() {
+        return String.valueOf(value);
+    }
+
 }

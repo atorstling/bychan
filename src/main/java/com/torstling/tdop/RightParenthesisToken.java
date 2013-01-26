@@ -12,14 +12,18 @@ import com.sun.istack.internal.NotNull;
 public class RightParenthesisToken implements Token {
 
     public Node suffixParse(@NotNull TokenParserCallback parser) {
-            throw new UnsupportedOperationException();
-        }
+        throw new UnsupportedOperationException();
+    }
 
-        public Node infixParse(Node left, TokenParserCallback parser) {
-            throw new UnsupportedOperationException();
-        }
+    public Node infixParse(Node left, TokenParserCallback parser) {
+        throw new UnsupportedOperationException();
+    }
 
-        public int infixBindingPower() {
-            return 0;
-        }
+    public int infixBindingPower() {
+        return 0;
+    }
+
+    public String toString() {
+        return ")";
+    }
 }

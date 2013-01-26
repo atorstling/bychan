@@ -24,4 +24,8 @@ public class LeftParenthesisToken implements Token {
     public int infixBindingPower() {
         throw new UnsupportedOperationException();
     }
+
+    public String toString() {
+        return "(";
+    }
 }

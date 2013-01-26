@@ -11,14 +11,18 @@ import com.sun.istack.internal.NotNull;
  */
 public class SubtractionToken implements Token {
     public Node suffixParse(@NotNull TokenParserCallback parser) {
-            throw new UnsupportedOperationException();
-        }
+        throw new UnsupportedOperationException();
+    }
 
-        public Node infixParse(Node left, TokenParserCallback parser) {
-            return new SubtractionNode(left, parser.expression(infixBindingPower()));
-        }
+    public Node infixParse(Node left, TokenParserCallback parser) {
+        return new SubtractionNode(left, parser.expression(infixBindingPower()));
+    }
 
-        public int infixBindingPower() {
-            return 10;
-        }
+    public int infixBindingPower() {
+        return 10;
+    }
+
+    public String toString() {
+        return "-";
+    }
 }
