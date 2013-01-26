@@ -23,4 +23,8 @@ public class DigitNode implements Node {
     public int hashCode() {
         return value;
     }
+
+    public int evaluate() {
+        return value;
+    }
 }

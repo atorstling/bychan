@@ -8,4 +8,5 @@ package com.torstling.tdop;
  * To change this template use File | Settings | File Templates.
  */
 public interface Node {
+    int evaluate();
 }

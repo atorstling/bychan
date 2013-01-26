@@ -35,4 +35,8 @@ public class SubtractionNode implements Node {
         result = 31 * result + (right != null ? right.hashCode() : 0);
         return result;
     }
+
+    public int evaluate() {
+        return left.evaluate() - right.evaluate();
+    }
 }
