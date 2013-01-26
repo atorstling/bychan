@@ -1,19 +1,16 @@
 package com.torstling.tdop;
 
-/**
- * Created with IntelliJ IDEA.
- * User: alext
- * Date: 1/26/13
- * Time: 3:12 PM
- * To change this template use File | Settings | File Templates.
- */
-public class SubtractionNode implements Node {
+public class MultiplicationNode implements Node {
     private final Node left;
     private final Node right;
 
-    public SubtractionNode(Node left, Node right) {
+    public MultiplicationNode(Node left, Node right) {
         this.left = left;
         this.right = right;
+    }
+
+    public int evaluate() {
+        return left.evaluate() * right.evaluate();
     }
 
     @Override
@@ -21,7 +18,7 @@ public class SubtractionNode implements Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SubtractionNode that = (SubtractionNode) o;
+        MultiplicationNode that = (MultiplicationNode) o;
 
         if (left != null ? !left.equals(that.left) : that.left != null) return false;
         if (right != null ? !right.equals(that.right) : that.right != null) return false;
@@ -36,11 +33,7 @@ public class SubtractionNode implements Node {
         return result;
     }
 
-    public int evaluate() {
-        return left.evaluate() - right.evaluate();
-    }
-
     public String toString() {
-        return "(" + left.toString() + "-" + right.toString() + ")";
+        return "(" + left.toString() + " * " + right.toString() + ")";
     }
 }

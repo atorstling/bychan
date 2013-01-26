@@ -27,4 +27,8 @@ public class DigitNode implements Node {
     public int evaluate() {
         return value;
     }
+
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

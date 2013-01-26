@@ -73,4 +73,34 @@ public class CalculatorParserImplTest {
         SubtractionNode right = new SubtractionNode(new DigitNode(2), new DigitNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
     }
+
+    @Test
+    public void prio() {
+        CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
+                new DigitToken(1),
+                new SubtractionToken(),
+                new DigitToken(2),
+                new MultiplicationToken(),
+                new DigitToken(3),
+                new EndToken()));
+        Node rootNode = p.parse();
+        DigitNode left = new DigitNode(1);
+        MultiplicationNode right = new MultiplicationNode(new DigitNode(2), new DigitNode(3));
+        assertEquals(new SubtractionNode(left, right), rootNode);
+    }
+
+    @Test
+    public void prioReverse() {
+        CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
+                new DigitToken(1),
+                new MultiplicationToken(),
+                new DigitToken(2),
+                new SubtractionToken(),
+                new DigitToken(3),
+                new EndToken()));
+        Node rootNode = p.parse();
+        MultiplicationNode left = new MultiplicationNode(new DigitNode(1), new DigitNode(2));
+        DigitNode right = new DigitNode(3);
+        assertEquals(new SubtractionNode(left, right), rootNode);
+    }
 }
