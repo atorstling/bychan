@@ -29,4 +29,12 @@ public class CalculatorParserImpl implements TokenParserCallback {
         }
         return rootNode;
     }
+
+    public void swallow(Class<? extends Token> expectedClass) {
+        if (stack.peek().getClass().equals(expectedClass)) {
+            stack.pop();
+        } else {
+            throw new IllegalStateException("Expected " + expectedClass + ", had " + stack.peek());
+        }
+    }
 }

@@ -20,6 +20,6 @@ public class RightParenthesisToken implements Token {
         }
 
         public int infixBindingPower() {
-            throw new UnsupportedOperationException();
+            return 0;
         }
 }
