@@ -21,12 +21,11 @@ public class CalculatorParserImpl implements TokenParserCallback {
 
     @NotNull
     public Node expression(int callerInfixBindingPower) {
-        Node rootNode = tokens.pop().prefixParse(this);
-        while (callerInfixBindingPower < tokens.peek().infixBindingPower()) {
-            Token second = tokens.pop();
-            rootNode = second.infixParse(rootNode, this);
+        Node currentRoot = tokens.pop().prefixParse(this);
+        while (tokens.peek().infixBindingPower() > callerInfixBindingPower) {
+            currentRoot = tokens.pop().infixParse(currentRoot, this);
         }
-        return rootNode;
+        return currentRoot;
     }
 
     public void swallow(Class<? extends Token> expectedClass) {
