@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CalculatorParser {
     @NotNull
-    public Node parse(@NotNull final String input) {
+    public CalculatorNode parse(@NotNull final String input) {
         List<Token> tokens = new Lexer(CalculatorTokenTypes.get()).lex(input);
         return new CalculatorParserImpl(tokens).parse();
     }

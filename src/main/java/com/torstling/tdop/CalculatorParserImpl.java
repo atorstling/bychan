@@ -15,12 +15,12 @@ public class CalculatorParserImpl implements TokenParserCallback {
     }
 
     @NotNull
-    public Node parse() {
+    public CalculatorNode parse() {
         return expression(0);
     }
 
     @NotNull
-    public Node expression(int callerInfixBindingPower) {
+    public CalculatorNode expression(int callerInfixBindingPower) {
         //An expression always starts with a symbol which can qualify as a prefix value
         //i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -28,7 +28,7 @@ public class CalculatorParserImpl implements TokenParserCallback {
         // "(" as in "start subexpression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
-        Node currentLeftHandSide = tokens.pop().prefixParse(this);
+        CalculatorNode currentLeftHandSide = tokens.pop().prefixParse(this);
         //When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         //returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
         //token will remain. But since the end token has 0 binding power, we will never continue in this case.

@@ -1,23 +1,20 @@
 package com.torstling.tdop;
 
-
 import com.sun.istack.internal.NotNull;
 
-public class AdditionToken implements Token {
+public class OrToken implements Token {
+    public OrToken() {
+    }
+
     public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
     public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
-        CalculatorNode right = parser.expression(infixBindingPower());
-        return new AdditionNode(left, right);
+        return new OrNode(left, parser.expression(infixBindingPower()));
     }
 
     public int infixBindingPower() {
-        return 10;
-    }
-
-    public String toString() {
-        return "+";
+        return 20;
     }
 }

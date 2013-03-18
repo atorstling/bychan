@@ -1,10 +1,10 @@
 package com.torstling.tdop;
 
-public class MultiplicationNode implements Node {
-    private final Node left;
-    private final Node right;
+public class MultiplicationNode implements CalculatorNode {
+    private final CalculatorNode left;
+    private final CalculatorNode right;
 
-    public MultiplicationNode(Node left, Node right) {
+    public MultiplicationNode(CalculatorNode left, CalculatorNode right) {
         this.left = left;
         this.right = right;
     }

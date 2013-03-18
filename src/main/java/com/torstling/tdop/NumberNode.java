@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-public class NumberNode implements Node {
+public class NumberNode implements CalculatorNode {
     private final int value;
 
     public NumberNode(int value) {

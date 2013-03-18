@@ -11,13 +11,13 @@ import com.sun.istack.internal.NotNull;
  */
 public class LeftParenthesisToken implements Token {
 
-    public Node prefixParse(@NotNull TokenParserCallback parser) {
-        Node expression = parser.expression(0);
+    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
+        CalculatorNode expression = parser.expression(0);
         parser.swallow(RightParenthesisToken.class);
         return expression;
     }
 
-    public Node infixParse(Node left, TokenParserCallback parser) {
+    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 

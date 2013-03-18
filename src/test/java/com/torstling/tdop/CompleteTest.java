@@ -12,7 +12,7 @@ public class CompleteTest {
 
     @Test
     public void test() {
-        Node rootNode = new CalculatorParser().parse("( (1-  2)* 3) -4");
+        CalculatorNode rootNode = new CalculatorParser().parse("( (1-  2)* 3) -4");
         NumberNode topRight = new NumberNode(4);
         NumberNode secondRight = new NumberNode(3);
         SubtractionNode secondLeft = new SubtractionNode(new NumberNode(1), new NumberNode(2));
@@ -22,13 +22,13 @@ public class CompleteTest {
 
     @Test
     public void test2() {
-        Node rootNode = new CalculatorParser().parse("1-2*3");
+        CalculatorNode rootNode = new CalculatorParser().parse("1-2*3");
         assertEquals(rootNode.evaluate(), -5);
     }
 
     @Test
     public void test3() {
-        Node rootNode = new CalculatorParser().parse("99+1");
+        CalculatorNode rootNode = new CalculatorParser().parse("99+1");
         assertEquals(rootNode.evaluate(), 100);
     }
 

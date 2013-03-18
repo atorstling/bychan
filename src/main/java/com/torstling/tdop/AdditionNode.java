@@ -7,11 +7,11 @@ package com.torstling.tdop;
  * Time: 6:05 PM
  * To change this template use File | Settings | File Templates.
  */
-public class AdditionNode implements Node {
-    private final Node left;
-    private final Node right;
+public class AdditionNode implements CalculatorNode {
+    private final CalculatorNode left;
+    private final CalculatorNode right;
 
-    public AdditionNode(Node left, Node right) {
+    public AdditionNode(CalculatorNode left, CalculatorNode right) {
         this.left = left;
         this.right = right;
     }

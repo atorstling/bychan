@@ -31,11 +31,11 @@ public class NumberToken implements Token {
     }
 
 
-    public Node prefixParse(@NotNull TokenParserCallback parser) {
+    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         return new NumberNode(value);
     }
 
-    public Node infixParse(Node left, TokenParserCallback parser) {
+    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 

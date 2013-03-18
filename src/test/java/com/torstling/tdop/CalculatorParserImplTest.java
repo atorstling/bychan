@@ -14,7 +14,7 @@ public class CalculatorParserImplTest {
         CalculatorParserImpl p = new CalculatorParserImpl(Arrays.asList(
                 new NumberToken(1),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(1), rootNode);
     }
 
@@ -25,7 +25,7 @@ public class CalculatorParserImplTest {
                 new SubtractionToken(),
                 new NumberToken(2),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
     }
 
@@ -36,7 +36,7 @@ public class CalculatorParserImplTest {
                 new NumberToken(2),
                 new RightParenthesisToken(),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(2), rootNode);
     }
 
@@ -51,7 +51,7 @@ public class CalculatorParserImplTest {
                 new SubtractionToken(),
                 new NumberToken(3),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -68,7 +68,7 @@ public class CalculatorParserImplTest {
                 new NumberToken(3),
                 new RightParenthesisToken(),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -83,7 +83,7 @@ public class CalculatorParserImplTest {
                 new MultiplicationToken(),
                 new NumberToken(3),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -98,7 +98,7 @@ public class CalculatorParserImplTest {
                 new SubtractionToken(),
                 new NumberToken(3),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -113,7 +113,7 @@ public class CalculatorParserImplTest {
                 new MultiplicationToken(),
                 new NumberToken(3),
                 new EndToken()));
-        Node rootNode = p.parse();
+        CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new MultiplicationNode(left, right), rootNode);

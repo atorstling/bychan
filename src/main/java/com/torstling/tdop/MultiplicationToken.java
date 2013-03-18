@@ -4,12 +4,12 @@ import com.sun.istack.internal.NotNull;
 
 public class MultiplicationToken implements Token {
 
-    public Node prefixParse(@NotNull TokenParserCallback parser) {
+    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
-    public Node infixParse(Node left, TokenParserCallback parser) {
-        Node right = parser.expression(infixBindingPower());
+    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
+        CalculatorNode right = parser.expression(infixBindingPower());
         return new MultiplicationNode(left, right);
     }
 
