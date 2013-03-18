@@ -1,9 +1,9 @@
 package com.torstling.tdop;
 
-public class DigitNode implements Node {
+public class NumberNode implements Node {
     private final int value;
 
-    public DigitNode(int value) {
+    public NumberNode(int value) {
         this.value = value;
     }
 
@@ -12,11 +12,9 @@ public class DigitNode implements Node {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DigitNode digitNode = (DigitNode) o;
+        NumberNode numberNode = (NumberNode) o;
 
-        if (value != digitNode.value) return false;
-
-        return true;
+        return value == numberNode.value;
     }
 
     @Override

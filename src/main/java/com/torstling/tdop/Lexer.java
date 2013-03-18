@@ -15,10 +15,14 @@ import java.util.regex.Pattern;
 public class Lexer {
 
     private final Pattern pattern;
-    private List<TokenType> tokenTypes;
+    private final List<TokenType> tokenTypes;
 
     public Lexer() {
-        tokenTypes = Arrays.asList(TokenType.values());
+        this(SubtractionTokenTypes.get());
+    }
+
+    public Lexer(@NotNull final List<TokenType> tokenTypes) {
+        this.tokenTypes = tokenTypes;
         Collection<String> subPatterns = makeSubPatterns();
         String patternString = "\\s*(?:" + Joiner.on("|").join(subPatterns) + ")";
         pattern = Pattern.compile(patternString);

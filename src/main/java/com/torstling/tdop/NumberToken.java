@@ -2,22 +2,15 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-/**
- * Created with IntelliJ IDEA.
- * User: alext
- * Date: 1/26/13
- * Time: 1:51 PM
- * To change this template use File | Settings | File Templates.
- */
-public class DigitToken implements Token {
+public class NumberToken implements Token {
     private int value;
 
-    public DigitToken(int value) {
+    public NumberToken(int value) {
         this.value = value;
     }
 
     public static Token valueOf(String digit) {
-        return new DigitToken(Integer.parseInt(digit));
+        return new NumberToken(Integer.parseInt(digit));
     }
 
     @Override
@@ -25,7 +18,7 @@ public class DigitToken implements Token {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DigitToken that = (DigitToken) o;
+        NumberToken that = (NumberToken) o;
 
         if (value != that.value) return false;
 
@@ -39,7 +32,7 @@ public class DigitToken implements Token {
 
 
     public Node prefixParse(@NotNull TokenParserCallback parser) {
-        return new DigitNode(value);
+        return new NumberNode(value);
     }
 
     public Node infixParse(Node left, TokenParserCallback parser) {
