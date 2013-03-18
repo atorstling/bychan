@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertTrue;
 public class LexerTest {
     @Test
     public void test() {
-        List<Token> tokens = new Lexer().lex("(1 -) ");
+        List<Token> tokens = new Lexer(CalculatorTokenTypes.get()).lex("(1 -) ");
         assertEquals(5, tokens.size());
         assertTrue(tokens.get(0) instanceof LeftParenthesisToken);
         assertEquals(new NumberToken(1), tokens.get(1));

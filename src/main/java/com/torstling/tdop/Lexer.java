@@ -6,7 +6,6 @@ import com.google.common.collect.Collections2;
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,10 +15,6 @@ public class Lexer {
 
     private final Pattern pattern;
     private final List<TokenType> tokenTypes;
-
-    public Lexer() {
-        this(SubtractionTokenTypes.get());
-    }
 
     public Lexer(@NotNull final List<TokenType> tokenTypes) {
         this.tokenTypes = tokenTypes;
