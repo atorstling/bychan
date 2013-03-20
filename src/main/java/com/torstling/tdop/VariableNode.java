@@ -10,6 +10,6 @@ public class VariableNode implements BooleanExpressionNode {
     }
 
     public boolean evaluate(VariableBindings bindings) {
-        throw new UnsupportedOperationException();
+        return bindings.isSet(name);
     }
 }

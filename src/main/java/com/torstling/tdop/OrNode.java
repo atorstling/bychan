@@ -10,6 +10,10 @@ public class OrNode implements BooleanExpressionNode {
     }
 
     public boolean evaluate(VariableBindings bindings) {
-        throw new UnsupportedOperationException();
+        boolean leftResult = left.evaluate(bindings);
+        if (leftResult) {
+            return true;
+        }
+        return right.evaluate(bindings);
     }
 }

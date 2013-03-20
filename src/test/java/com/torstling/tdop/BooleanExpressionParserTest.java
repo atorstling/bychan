@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class BooleanExpressionParserTest {
@@ -23,6 +24,9 @@ public class BooleanExpressionParserTest {
         BooleanExpressionParser parser = new BooleanExpressionParser();
         BooleanExpressionNode root = parser.parse("a | b");
 
-        //root.evaluate(new VariableBindingBuilder().bind("a", false).bind("b", true).build());
+        assertEquals(false, root.evaluate(new VariableBindingBuilder().bind("a", false).bind("b", false).build()));
+        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", false).bind("b", true).build()));
+        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", true).bind("b", false).build()));
+        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", true).bind("b", true).build()));
     }
 }
