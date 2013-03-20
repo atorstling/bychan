@@ -5,22 +5,22 @@ import com.sun.istack.internal.NotNull;
 import java.util.ArrayDeque;
 import java.util.List;
 
-public class CalculatorParserImpl implements TokenParserCallback {
+public class CalculatorParserImpl<N extends Node> implements TokenParserCallback<N> {
 
     @NotNull
-    private final ArrayDeque<Token> tokens;
+    private final ArrayDeque<Token<N>> tokens;
 
-    public CalculatorParserImpl(List<? extends Token> tokens) {
-        this.tokens = new ArrayDeque<Token>(tokens);
+    public CalculatorParserImpl(List<? extends Token<N>> tokens) {
+        this.tokens = new ArrayDeque<Token<N>>(tokens);
     }
 
     @NotNull
-    public CalculatorNode parse() {
+    public N parse() {
         return expression(0);
     }
 
     @NotNull
-    public CalculatorNode expression(int callerInfixBindingPower) {
+    public N expression(int callerInfixBindingPower) {
         //An expression always starts with a symbol which can qualify as a prefix value
         //i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -28,7 +28,7 @@ public class CalculatorParserImpl implements TokenParserCallback {
         // "(" as in "start subexpression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
-        CalculatorNode currentLeftHandSide = tokens.pop().prefixParse(this);
+        N currentLeftHandSide = tokens.pop().prefixParse(this);
         //When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         //returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
         //token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -43,7 +43,7 @@ public class CalculatorParserImpl implements TokenParserCallback {
         return currentLeftHandSide;
     }
 
-    public void swallow(Class<? extends Token> expectedClass) {
+    public void swallow(Class<? extends Token<N>> expectedClass) {
         Token next = tokens.pop();
         Class<? extends Token> actualClass = next.getClass();
         if (!actualClass.equals(expectedClass)) {

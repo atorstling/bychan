@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lexer {
+public class Lexer<N extends Node> {
 
     private final Pattern pattern;
     private final List<TokenType> tokenTypes;
@@ -31,8 +31,8 @@ public class Lexer {
         });
     }
 
-    public List<Token> lex(@NotNull final String input) {
-        final List<Token> tokens = new ArrayList<Token>();
+    public List<Token<N>> lex(@NotNull final String input) {
+        final List<Token<N>> tokens = new ArrayList<Token<N>>();
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
             tokens.add(findMatchingToken(matcher));
@@ -42,7 +42,7 @@ public class Lexer {
     }
 
 
-    private Token findMatchingToken(Matcher matcher) {
+    private Token<N> findMatchingToken(Matcher matcher) {
         for (int group = 1; group <= matcher.groupCount(); group++) {
             String groupValue = matcher.group(group);
             if (groupValue != null) {

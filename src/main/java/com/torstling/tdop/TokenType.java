@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-public interface TokenType {
-    abstract Token toToken(final String value);
+public interface TokenType<N extends Node> {
+    abstract Token<N> toToken(final String value);
     public String getPattern();
 }

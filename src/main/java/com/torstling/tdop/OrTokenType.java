@@ -2,10 +2,10 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-public class OrTokenType implements TokenType {
+public class OrTokenType implements TokenType<BooleanExpressionNode> {
     public static final OrTokenType INSTANCE = new OrTokenType();
 
-    public Token toToken(String value) {
+    public Token<BooleanExpressionNode> toToken(String value) {
         return new OrToken();
     }
 

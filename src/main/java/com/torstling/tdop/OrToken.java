@@ -2,15 +2,15 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-public class OrToken implements Token {
+public class OrToken implements Token<BooleanExpressionNode> {
     public OrToken() {
     }
 
-    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
+    public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
-    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
+    public BooleanExpressionNode infixParse(BooleanExpressionNode left, TokenParserCallback<BooleanExpressionNode> parser) {
         return new OrNode(left, parser.expression(infixBindingPower()));
     }
 

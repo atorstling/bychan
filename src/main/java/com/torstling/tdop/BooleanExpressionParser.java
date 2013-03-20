@@ -6,8 +6,8 @@ import java.util.List;
 
 public class BooleanExpressionParser {
     @NotNull
-    public CalculatorNode parse(@NotNull final String input) {
-        List<Token> tokens = new Lexer(BooleanExpressionTokens.get()).lex(input);
-        return new CalculatorParserImpl(tokens).parse();
+    public BooleanExpressionNode parse(@NotNull final String input) {
+        List<Token<BooleanExpressionNode>> tokens = new Lexer(BooleanExpressionTokens.get()).lex(input);
+        return new CalculatorParserImpl<BooleanExpressionNode>(tokens).parse();
     }
 }

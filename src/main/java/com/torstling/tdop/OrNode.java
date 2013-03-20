@@ -1,15 +1,15 @@
 package com.torstling.tdop;
 
-public class OrNode implements CalculatorNode {
-    private final CalculatorNode left;
-    private final CalculatorNode right;
+public class OrNode implements BooleanExpressionNode {
+    private final BooleanExpressionNode left;
+    private final BooleanExpressionNode right;
 
-    public OrNode(CalculatorNode left, CalculatorNode right) {
+    public OrNode(BooleanExpressionNode left, BooleanExpressionNode right) {
         this.left = left;
         this.right = right;
     }
 
-    public int evaluate() {
+    public boolean evaluate(VariableBindings bindings) {
         throw new UnsupportedOperationException();
     }
 }

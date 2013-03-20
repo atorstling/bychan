@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-public class VariableToken implements Token {
+public class VariableToken implements Token<BooleanExpressionNode> {
     @NotNull
     private final String name;
 
@@ -22,16 +22,16 @@ public class VariableToken implements Token {
         return name;
     }
 
-    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
+    public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
         return new VariableNode(name);
     }
 
-    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public BooleanExpressionNode infixParse(BooleanExpressionNode left, TokenParserCallback parser) {
+        throw new UnsupportedOperationException();
     }
 
     public int infixBindingPower() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        throw new UnsupportedOperationException();
     }
 }
 

@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-public class NumberToken implements Token {
+public class NumberToken implements Token<CalculatorNode> {
     private int value;
 
     public NumberToken(int value) {
@@ -20,9 +20,8 @@ public class NumberToken implements Token {
 
         NumberToken that = (NumberToken) o;
 
-        if (value != that.value) return false;
+        return value == that.value;
 
-        return true;
     }
 
     @Override

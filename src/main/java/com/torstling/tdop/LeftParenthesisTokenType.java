@@ -1,18 +1,16 @@
 package com.torstling.tdop;
 
-public class LeftParenthesisTokenType implements TokenType {
+public class LeftParenthesisTokenType<N extends Node> implements TokenType<N> {
 
-    public static final LeftParenthesisTokenType INSTANCE = new LeftParenthesisTokenType();
-
-    public Token toToken(String value) {
-        return new LeftParenthesisToken();
+    public Token<N> toToken(String value) {
+        return new LeftParenthesisToken<N>();
     }
 
     public String getPattern() {
         return "\\(";
     }
 
-    public static LeftParenthesisTokenType get() {
-        return INSTANCE;
+    public static <N extends Node> LeftParenthesisTokenType<N> get() {
+        return new LeftParenthesisTokenType<N>();
     }
 }

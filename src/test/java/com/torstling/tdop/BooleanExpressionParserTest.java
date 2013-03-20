@@ -21,7 +21,8 @@ public class BooleanExpressionParserTest {
     @Test
     public void parsing() {
         BooleanExpressionParser parser = new BooleanExpressionParser();
-        CalculatorNode root = parser.parse("a | b");
+        BooleanExpressionNode root = parser.parse("a | b");
+
         //root.evaluate(new VariableBindingBuilder().bind("a", false).bind("b", true).build());
     }
 }

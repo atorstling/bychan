@@ -1,15 +1,15 @@
 package com.torstling.tdop;
 
-public class AndNode implements CalculatorNode {
-    private final CalculatorNode left;
-    private final CalculatorNode right;
+public class AndNode implements BooleanExpressionNode {
+    private final BooleanExpressionNode left;
+    private final BooleanExpressionNode right;
 
-    public AndNode(CalculatorNode left, CalculatorNode right) {
+    public AndNode(BooleanExpressionNode left, BooleanExpressionNode right) {
         this.left = left;
         this.right = right;
     }
 
-    public int evaluate() {
+    public boolean evaluate(VariableBindings bindings) {
         throw new UnsupportedOperationException();
     }
 }
