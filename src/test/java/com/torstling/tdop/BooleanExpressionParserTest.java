@@ -24,9 +24,13 @@ public class BooleanExpressionParserTest {
         BooleanExpressionParser parser = new BooleanExpressionParser();
         BooleanExpressionNode root = parser.parse("a | b");
 
-        assertEquals(false, root.evaluate(new VariableBindingBuilder().bind("a", false).bind("b", false).build()));
-        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", false).bind("b", true).build()));
-        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", true).bind("b", false).build()));
-        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", true).bind("b", true).build()));
+        checkTruth(root, false, false, false);
+        checkTruth(root, false, true, true);
+        checkTruth(root, true, false, true);
+        checkTruth(root, true, true, true);
+    }
+
+    private void checkTruth(BooleanExpressionNode root, boolean aValue, boolean bValue, boolean expectedOutcome) {
+        assertEquals(expectedOutcome, root.evaluate(new VariableBindingBuilder().bind("a", aValue).bind("b", bValue).build()));
     }
 }
