@@ -7,13 +7,13 @@ import java.util.List;
 
 public class CalculatorTokenTypes {
     @NotNull
-    public static List<TokenType> get() {
-        return Arrays.asList(
+    public static List<TokenType<CalculatorNode>> get() {
+        return Arrays.<TokenType<CalculatorNode>>asList(
                 NumberTokenType.get(),
                 SubtractionTokenType.get(),
                 AdditionTokenType.get(),
                 MultiplicationTokenType.get(),
-                LeftParenthesisTokenType.get(),
-                RightParenthesisTokenType.get());
+                LeftParenthesisTokenType.<CalculatorNode>get(),
+                RightParenthesisTokenType.<CalculatorNode>get());
     }
 }

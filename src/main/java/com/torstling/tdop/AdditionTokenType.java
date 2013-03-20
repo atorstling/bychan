@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-public class AdditionTokenType implements TokenType {
+public class AdditionTokenType implements TokenType<CalculatorNode> {
     public static final AdditionTokenType INSTANCE = new AdditionTokenType();
 
     public Token toToken(String value) {

@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-public class SubtractionTokenType implements TokenType {
+public class SubtractionTokenType implements TokenType<CalculatorNode> {
     public static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
 
     public Token toToken(String value) {

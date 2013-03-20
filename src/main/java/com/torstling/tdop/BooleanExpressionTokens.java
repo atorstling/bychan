@@ -5,6 +5,6 @@ import java.util.List;
 
 public class BooleanExpressionTokens {
     public static List<TokenType<BooleanExpressionNode>> get() {
-        return Arrays.asList(VariableTokenType.get(), AndTokenType.get(), OrTokenType.get(), LeftParenthesisTokenType.<BooleanExpressionNode>get(), RightParenthesisTokenType.<BooleanExpressionNode>get());
+        return Arrays.<TokenType<BooleanExpressionNode>>asList(VariableTokenType.get(), AndTokenType.get(), OrTokenType.get(), LeftParenthesisTokenType.<BooleanExpressionNode>get(), RightParenthesisTokenType.<BooleanExpressionNode>get());
     }
 }

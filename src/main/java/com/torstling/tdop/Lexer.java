@@ -14,9 +14,9 @@ import java.util.regex.Pattern;
 public class Lexer<N extends Node> {
 
     private final Pattern pattern;
-    private final List<TokenType> tokenTypes;
+    private final List<TokenType<N>> tokenTypes;
 
-    public Lexer(@NotNull final List<TokenType> tokenTypes) {
+    public Lexer(@NotNull final List<TokenType<N>> tokenTypes) {
         this.tokenTypes = tokenTypes;
         Collection<String> subPatterns = makeSubPatterns();
         String patternString = "\\s*(?:" + Joiner.on("|").join(subPatterns) + ")";
