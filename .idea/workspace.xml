@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotToken.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotTokenType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/BooleanExpressionTokens.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/BooleanExpressionTokens.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java" />
     </list>
     <ignored path="tdop.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -116,6 +113,19 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java" line="50" class="com.torstling.tdop.BooleanExpressionParserTest" package="com.torstling.tdop">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
     </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
@@ -177,7 +187,7 @@
       <file leaf-file-name="BooleanExpressionParserTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="56" selection-start="1606" selection-end="1606" vertical-scroll-proportion="0.5302013">
+            <state line="61" column="19" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.8333333">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -289,12 +299,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/AndNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/AndTokenType.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/OrTokenType.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Lexer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/BooleanExpressionTokens.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotToken.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotTokenType.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java" />
       </list>
     </option>
   </component>
@@ -459,33 +469,7 @@
       <recent name="com.torstling.tdop" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.com.torstling.tdop in tdop">
-    <configuration default="false" name="CalculatorParserImplTest.prioReverse" type="JUnit" factoryName="JUnit" temporary="true">
-      <module name="tdop" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.torstling.tdop" />
-      <option name="MAIN_CLASS_NAME" value="com.torstling.tdop.CalculatorParserImplTest" />
-      <option name="METHOD_NAME" value="prioReverse" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <ConfigurationWrapper RunnerId="Debug" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.BooleanExpressionParserTest.notPrio">
     <configuration default="false" name="CalculatorParserImplTest.multipleSameOp" type="JUnit" factoryName="JUnit" temporary="true">
       <module name="tdop" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -578,6 +562,34 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="BooleanExpressionParserTest.notPrio" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="tdop" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.torstling.tdop" />
+      <option name="MAIN_CLASS_NAME" value="com.torstling.tdop.BooleanExpressionParserTest" />
+      <option name="METHOD_NAME" value="notPrio" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -654,11 +666,11 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="JUnit.com.torstling.tdop in tdop" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.prioReverse" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.multipleSameOp" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest.lexing" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest.or" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.CalculatorParserImplTest.multipleSameOp" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest.lexing" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest.or" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.BooleanExpressionParserTest.notPrio" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -754,7 +766,11 @@
       <created>1363936517408</created>
       <updated>1363936517408</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="not">
+      <created>1363937065661</created>
+      <updated>1363937065661</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -766,7 +782,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48412699" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.48412699" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -775,8 +791,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20942408" sideWeight="0.4431217" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.6706349" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.515873" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -820,7 +836,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="mismatch report" />
+    <option name="LAST_COMMIT_MESSAGE" value="not" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -847,6 +863,7 @@
     <MESSAGE value="fix" />
     <MESSAGE value="electronics notation" />
     <MESSAGE value="mismatch report" />
+    <MESSAGE value="not" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -951,7 +968,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="56" selection-start="1606" selection-end="1606" vertical-scroll-proportion="0.5302013">
+        <state line="61" column="19" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.8333333">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

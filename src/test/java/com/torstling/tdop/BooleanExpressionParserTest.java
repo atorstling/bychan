@@ -45,6 +45,12 @@ public class BooleanExpressionParserTest {
 
     }
 
+    @Test
+    public void notPrio() {
+        BooleanExpressionNode root = parse("!a+b");
+        checkTruth(root, false, false, true);
+    }
+
     private BooleanExpressionNode parse(String expression) {
         BooleanExpressionParser parser = new BooleanExpressionParser();
         return parser.parse(expression);
