@@ -10,6 +10,6 @@ public class AndNode implements BooleanExpressionNode {
     }
 
     public boolean evaluate(VariableBindings bindings) {
-        throw new UnsupportedOperationException();
+        return left.evaluate(bindings) && right.evaluate(bindings);
     }
 }

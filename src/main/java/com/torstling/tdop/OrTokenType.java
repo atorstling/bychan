@@ -10,7 +10,7 @@ public class OrTokenType implements TokenType<BooleanExpressionNode> {
     }
 
     public String getPattern() {
-        return "\\|";
+        return "\\+";
     }
 
     @NotNull

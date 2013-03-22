@@ -9,7 +9,7 @@ public class AndTokenType implements TokenType<BooleanExpressionNode> {
     }
 
     public String getPattern() {
-        return "\\&";
+        return "\\*";
     }
 
     public static AndTokenType get() {

@@ -12,7 +12,7 @@ public class BooleanExpressionParserTest {
     @Test
     public void lexing() {
         Lexer lexer = new Lexer<BooleanExpressionNode>(BooleanExpressionTokens.get());
-        List<Token> tokenStream = lexer.lex("a | b");
+        List<Token> tokenStream = lexer.lex("a + b");
         assertTrue(tokenStream.get(0) instanceof VariableToken);
         assertTrue(tokenStream.get(1) instanceof OrToken);
         assertTrue(tokenStream.get(2) instanceof VariableToken);
@@ -20,14 +20,26 @@ public class BooleanExpressionParserTest {
     }
 
     @Test
-    public void parsing() {
-        BooleanExpressionParser parser = new BooleanExpressionParser();
-        BooleanExpressionNode root = parser.parse("a | b");
-
+    public void or() {
+        BooleanExpressionNode root = parse("a + b");
         checkTruth(root, false, false, false);
         checkTruth(root, false, true, true);
         checkTruth(root, true, false, true);
         checkTruth(root, true, true, true);
+    }
+
+    @Test
+    public void and() {
+        BooleanExpressionNode root = parse("a * b");
+        checkTruth(root, false, false, false);
+        checkTruth(root, false, true, false);
+        checkTruth(root, true, false, false);
+        checkTruth(root, true, true, true);
+    }
+
+    private BooleanExpressionNode parse(String expression) {
+        BooleanExpressionParser parser = new BooleanExpressionParser();
+        return parser.parse(expression);
     }
 
     private void checkTruth(BooleanExpressionNode root, boolean aValue, boolean bValue, boolean expectedOutcome) {
