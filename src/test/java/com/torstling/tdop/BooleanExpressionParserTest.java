@@ -37,6 +37,14 @@ public class BooleanExpressionParserTest {
         checkTruth(root, true, true, true);
     }
 
+    @Test
+    public void not() {
+        BooleanExpressionNode root = parse("!a");
+        assertEquals(true, root.evaluate(new VariableBindingBuilder().bind("a", false).build()));
+        assertEquals(false, root.evaluate(new VariableBindingBuilder().bind("a", true).build()));
+
+    }
+
     private BooleanExpressionNode parse(String expression) {
         BooleanExpressionParser parser = new BooleanExpressionParser();
         return parser.parse(expression);

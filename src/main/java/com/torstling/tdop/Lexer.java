@@ -34,8 +34,15 @@ public class Lexer<N extends Node> {
     public List<Token<N>> lex(@NotNull final String input) {
         final List<Token<N>> tokens = new ArrayList<Token<N>>();
         Matcher matcher = pattern.matcher(input);
+        int lastEnd = 0;
         while (matcher.find()) {
+            int currentStart = matcher.start();
+            if (currentStart > lastEnd) {
+                final String missedText = input.substring(lastEnd, currentStart);
+                throw new RuntimeException("No matching rule for range from " + lastEnd + " to " + currentStart + ": '" + missedText + "'");
+            }
             tokens.add(findMatchingToken(matcher));
+            lastEnd = matcher.end();
         }
         tokens.add(new EndToken());
         return tokens;
