@@ -7,11 +7,11 @@ import java.util.Arrays;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class CalculatorParserImplTest {
+public class PrattParserTest {
 
     @Test
     public void singleDigit() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(1),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
@@ -20,7 +20,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void subtraction() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(1),
                 new SubtractionToken(),
                 new NumberToken(2),
@@ -31,7 +31,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void parenthesis() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(),
                 new NumberToken(2),
                 new RightParenthesisToken(),
@@ -42,7 +42,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void ambigous1() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(),
                 new NumberToken(1),
                 new SubtractionToken(),
@@ -59,7 +59,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void ambigous2() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(1),
                 new SubtractionToken(),
                 new LeftParenthesisToken(),
@@ -76,7 +76,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void prio() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(1),
                 new SubtractionToken(),
                 new NumberToken(2),
@@ -91,7 +91,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void prioReverse() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(1),
                 new MultiplicationToken(),
                 new NumberToken(2),
@@ -106,7 +106,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void multipleSameOp() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(1),
                 new MultiplicationToken(),
                 new NumberToken(2),
@@ -121,7 +121,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void unclosedParenthesis() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(),
                 new NumberToken(1),
                 new EndToken()));
@@ -135,7 +135,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void wrongOrderParenthesis() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new RightParenthesisToken(),
                 new EndToken()));
         try {
@@ -148,7 +148,7 @@ public class CalculatorParserImplTest {
 
     @Test
     public void empty() {
-        CalculatorParserImpl<CalculatorNode> p = new CalculatorParserImpl<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
                 new EndToken()));
         try {
             p.parse();

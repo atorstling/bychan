@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/InfixAstBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Language.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/PrefixAstBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitionBuilder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/PrattParser.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/PrattParserTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/BooleanExpressionParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/BooleanExpressionParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
     </list>
     <ignored path="tdop.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,7 +78,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java" line="100" class="com.torstling.tdop.CalculatorParserImplTest" package="com.torstling.tdop">
+      <breakpoint url="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/PrattParserTest.java" line="100" class="com.torstling.tdop.CalculatorParserImplTest" package="com.torstling.tdop">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -94,7 +91,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/CalculatorParserImplTest.java" line="115" class="com.torstling.tdop.CalculatorParserImplTest" package="com.torstling.tdop">
+      <breakpoint url="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/PrattParserTest.java" line="115" class="com.torstling.tdop.CalculatorParserImplTest" package="com.torstling.tdop">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -191,15 +188,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ShortcutSyntaxParserTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ShortcutSyntaxParserTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="37" selection-start="690" selection-end="690" vertical-scroll-proportion="0.5633803">
+            <state line="12" column="24" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#383#642#0" expanded="true" />
-                <element signature="e#623#624#0" expanded="true" />
-                <element signature="e#792#1067#0" expanded="true" />
-                <element signature="e#1048#1049#0" expanded="true" />
+                <element signature="e#382#641#0" expanded="true" />
+                <element signature="e#622#623#0" expanded="true" />
+                <element signature="e#791#1066#0" expanded="true" />
+                <element signature="e#1047#1048#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -270,10 +267,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CalculatorParserImpl.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java">
+      <file leaf-file-name="PrattParser.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/PrattParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="11" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
+            <state line="7" column="24" selection-start="147" selection-end="147" vertical-scroll-proportion="0.14084508">
               <folding />
             </state>
           </provider>
@@ -301,8 +298,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/BooleanExpressionTokens.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotToken.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotNode.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotTokenType.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/BooleanExpressionParserTest.java" />
@@ -314,9 +309,11 @@
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/InfixAstBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitionBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Language.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/PrattParser.java" />
       </list>
     </option>
   </component>
@@ -782,7 +779,11 @@
       <created>1363937235884</created>
       <updated>1363937235885</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="initial structure for language builder">
+      <created>1364194596112</created>
+      <updated>1364194596112</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -804,7 +805,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.6706349" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -848,7 +849,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="more tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial structure for language builder" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -877,6 +878,7 @@
     <MESSAGE value="mismatch report" />
     <MESSAGE value="not" />
     <MESSAGE value="more tests" />
+    <MESSAGE value="initial structure for language builder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -967,13 +969,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParserImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="11" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/CalculatorParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="34" selection-start="210" selection-end="236" vertical-scroll-proportion="0.0">
@@ -997,13 +992,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="37" selection-start="690" selection-end="690" vertical-scroll-proportion="0.5633803">
+        <state line="12" column="24" selection-start="264" selection-end="264" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#383#642#0" expanded="true" />
-            <element signature="e#623#624#0" expanded="true" />
-            <element signature="e#792#1067#0" expanded="true" />
-            <element signature="e#1048#1049#0" expanded="true" />
+            <element signature="e#382#641#0" expanded="true" />
+            <element signature="e#622#623#0" expanded="true" />
+            <element signature="e#791#1066#0" expanded="true" />
+            <element signature="e#1047#1048#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/PrattParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="24" selection-start="147" selection-end="147" vertical-scroll-proportion="0.14084508">
+          <folding />
         </state>
       </provider>
     </entry>

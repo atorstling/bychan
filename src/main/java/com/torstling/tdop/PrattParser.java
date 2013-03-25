@@ -5,12 +5,12 @@ import com.sun.istack.internal.NotNull;
 import java.util.ArrayDeque;
 import java.util.List;
 
-public class CalculatorParserImpl<N extends Node> implements TokenParserCallback<N> {
+public class PrattParser<N extends Node> implements TokenParserCallback<N> {
 
     @NotNull
     private final ArrayDeque<Token<N>> tokens;
 
-    public CalculatorParserImpl(List<? extends Token<N>> tokens) {
+    public PrattParser(List<? extends Token<N>> tokens) {
         this.tokens = new ArrayDeque<Token<N>>(tokens);
     }
 

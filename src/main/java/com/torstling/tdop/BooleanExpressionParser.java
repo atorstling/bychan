@@ -8,6 +8,6 @@ public class BooleanExpressionParser {
     @NotNull
     public BooleanExpressionNode parse(@NotNull final String input) {
         List<Token<BooleanExpressionNode>> tokens = new Lexer(BooleanExpressionTokens.get()).lex(input);
-        return new CalculatorParserImpl<BooleanExpressionNode>(tokens).parse();
+        return new PrattParser<BooleanExpressionNode>(tokens).parse();
     }
 }

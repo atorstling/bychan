@@ -11,7 +11,6 @@ public class ShortcutSyntaxParserTest {
 
     @Test
     public void doit() {
-
         TokenDefinition not = new TokenDefinitionBuilder<BooleanExpressionNode>("!")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull BooleanExpressionNode trailingExpression) {

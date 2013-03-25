@@ -8,6 +8,6 @@ public class CalculatorParser {
     @NotNull
     public CalculatorNode parse(@NotNull final String input) {
         List<Token<CalculatorNode>> tokens = new Lexer<CalculatorNode>(CalculatorTokenTypes.get()).lex(input);
-        return new CalculatorParserImpl<CalculatorNode>(tokens).parse();
+        return new PrattParser<CalculatorNode>(tokens).parse();
     }
 }
