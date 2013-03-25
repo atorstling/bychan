@@ -21,6 +21,7 @@ public class MultiplicationNode implements CalculatorNode {
         MultiplicationNode that = (MultiplicationNode) o;
 
         if (left != null ? !left.equals(that.left) : that.left != null) return false;
+        //noinspection RedundantIfStatement
         if (right != null ? !right.equals(that.right) : that.right != null) return false;
 
         return true;

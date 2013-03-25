@@ -1,12 +1,5 @@
 package com.torstling.tdop;
 
-/**
- * Created with IntelliJ IDEA.
- * User: alext
- * Date: 1/26/13
- * Time: 3:12 PM
- * To change this template use File | Settings | File Templates.
- */
 public class SubtractionNode implements CalculatorNode {
     private final CalculatorNode left;
     private final CalculatorNode right;
@@ -24,6 +17,7 @@ public class SubtractionNode implements CalculatorNode {
         SubtractionNode that = (SubtractionNode) o;
 
         if (left != null ? !left.equals(that.left) : that.left != null) return false;
+        //noinspection RedundantIfStatement
         if (right != null ? !right.equals(that.right) : that.right != null) return false;
 
         return true;
