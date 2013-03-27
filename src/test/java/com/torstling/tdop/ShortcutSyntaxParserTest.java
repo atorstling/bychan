@@ -3,8 +3,6 @@ package com.torstling.tdop;
 import com.sun.istack.internal.NotNull;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
 public class ShortcutSyntaxParserTest {
 
 
@@ -13,15 +11,15 @@ public class ShortcutSyntaxParserTest {
         TokenDefinition not = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString("!")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
-                    public BooleanExpressionNode build(@NotNull BooleanExpressionNode trailingExpression) {
-                        return new NotNode(trailingExpression);
+                    public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
+                        return new NotNode(parser.expression());
                     }
                 }).build();
         TokenDefinition<BooleanExpressionNode> and = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString("&")
                 .supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
-                    public BooleanExpressionNode build(@NotNull BooleanExpressionNode left, @NotNull BooleanExpressionNode right) {
-                        return new AndNode(left, right);
+                    public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
+                        return new AndNode(left, parser.expression());
                     }
                 }).build();
         TokenDefinition<BooleanExpressionNode> variable = new TokenDefinitionBuilder<BooleanExpressionNode>()
@@ -31,9 +29,21 @@ public class ShortcutSyntaxParserTest {
                         return new VariableNode(match.getText());
                     }
                 }).build();
+        final TokenDefinition<BooleanExpressionNode> rparen = new TokenDefinitionBuilder<BooleanExpressionNode>()
+                .matchesString("(")
+                .build();
+        TokenDefinition<BooleanExpressionNode> lparen = new TokenDefinitionBuilder<BooleanExpressionNode>()
+                .matchesString("(")
+                .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
+                    public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
+                        BooleanExpressionNode trailingExpression = parser.expression();
+                        parser.expect(rparen);
+                        return trailingExpression;
+                    }
+                }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesPattern(" *")
-                .notParseable()
+                .filterOutBeforeParsing()
                 .build();
         Language l = new LanguageBuilder()
                 .addToken(whitespace)
@@ -41,6 +51,6 @@ public class ShortcutSyntaxParserTest {
                 .addToken(and)
                 .addToken(variable)
                 .build();
-        l.getParser().parse("&!");
+        l.getParser().parse("!(a & b)");
     }
 }

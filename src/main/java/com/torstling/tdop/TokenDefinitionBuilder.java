@@ -8,7 +8,7 @@ public class TokenDefinitionBuilder<N extends Node> {
     private String pattern;
     private PrefixAstBuilder<N> prefixBuilder;
     private InfixAstBuilder<BooleanExpressionNode> infixBuilder;
-    private boolean parseable;
+    private boolean filterOutBeforeParsing;
     private StandaloneAstBuilder<BooleanExpressionNode> standaloneAstBuilder;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
@@ -21,7 +21,7 @@ public class TokenDefinitionBuilder<N extends Node> {
     }
 
     public TokenDefinitionBuilder() {
-        parseable = true;
+        filterOutBeforeParsing = false;
     }
 
     public TokenDefinitionBuilder<N> supportsPrefix(PrefixAstBuilder<N> prefixBuilder) {
@@ -34,9 +34,6 @@ public class TokenDefinitionBuilder<N extends Node> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        if (parseable && (prefixBuilder == null && infixBuilder == null && standaloneAstBuilder == null)) {
-            throw new IllegalStateException("Token must support either prefix or infix");
-        }
         return new TokenDefinition<N>(prefixBuilder, infixBuilder);
     }
 
@@ -45,8 +42,8 @@ public class TokenDefinitionBuilder<N extends Node> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> notParseable() {
-        this.parseable = false;
+    public TokenDefinitionBuilder<N> filterOutBeforeParsing() {
+        this.filterOutBeforeParsing = true;
         return this;
     }
 
