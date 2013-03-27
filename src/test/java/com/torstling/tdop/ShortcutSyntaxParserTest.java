@@ -8,7 +8,7 @@ public class ShortcutSyntaxParserTest {
 
     @Test
     public void doit() {
-        TokenDefinition not = new TokenDefinitionBuilder<BooleanExpressionNode>()
+        TokenDefinition<BooleanExpressionNode> not = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString("!")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
@@ -45,10 +45,15 @@ public class ShortcutSyntaxParserTest {
                 .matchesPattern(" *")
                 .filterOutBeforeParsing()
                 .build();
-        Language l = new LanguageBuilder()
+        Language l = new LanguageBuilder<BooleanExpressionNode>()
                 .addToken(whitespace)
+                .addToken(lparen)
+                .addToken(rparen)
+                .newLevel()
                 .addToken(not)
+                .newLevel()
                 .addToken(and)
+                .newLevel()
                 .addToken(variable)
                 .build();
         l.getParser().parse("!(a & b)");

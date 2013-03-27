@@ -3,25 +3,30 @@ package com.torstling.tdop;
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: alext
- * Date: 3/22/13
- * Time: 5:43 PM
- * To change this template use File | Settings | File Templates.
- */
-public class LanguageBuilder {
+public class LanguageBuilder<N extends Node> {
     @NotNull
-    private final List<TokenDefinition> tokens;
+    private final List<TokenDefinitions<N>> levels;
+    @NotNull
+    private final List<TokenDefinition<N>> currentTokens;
 
     public LanguageBuilder() {
-        this.tokens = new ArrayList<TokenDefinition>();
+        this.levels = new ArrayList<>();
+        this.currentTokens = new ArrayList<>();
     }
 
-    public LanguageBuilder addToken(TokenDefinition token) {
-        tokens.add(token);
+    @NotNull
+    public LanguageBuilder<N> addToken(@NotNull final TokenDefinition<N> token) {
+        currentTokens.add(token);
+        return this;
+    }
+
+    @NotNull
+    public LanguageBuilder<N> newLevel() {
+        this.levels.add(new TokenDefinitions<>(currentTokens));
+        currentTokens.clear();
         return this;
     }
 
