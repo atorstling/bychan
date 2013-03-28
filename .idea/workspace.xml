@@ -2,30 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeveledTokenDefinition.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/AdditionToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/AdditionToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/AndToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/AndToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/EndToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/EndToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Language.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Language.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeftParenthesisToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeftParenthesisToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Lexer.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Lexer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/MultiplicationToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/MultiplicationToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NotToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NumberToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/NumberToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/OrToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/OrToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/RightParenthesisToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/RightParenthesisToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/SubtractionToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Token.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Token.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitionBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitionBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitions.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenType.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableToken.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
     </list>
     <ignored path="tdop.iws" />
@@ -207,10 +186,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GenericParser.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="GenericParser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="12" selection-start="1330" selection-end="1330" vertical-scroll-proportion="0.9859155">
+            <state line="36" column="30" selection-start="1423" selection-end="1423" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#527#781#0" expanded="true" />
                 <element signature="e#770#771#0" expanded="true" />
@@ -220,10 +199,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ParseResult.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ParseResult.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="36" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
+            <state line="11" column="19" selection-start="284" selection-end="284" vertical-scroll-proportion="0.39473686">
               <folding />
             </state>
           </provider>
@@ -259,7 +238,16 @@
       <file leaf-file-name="ShortcutSyntaxParserTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="71" selection-start="3057" selection-end="3057" vertical-scroll-proportion="0.0">
+            <state line="61" column="31" selection-start="3170" selection-end="3170" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LanguageBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="16" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -279,18 +267,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state line="22" column="0" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TokenDefinitionBuilder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitionBuilder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="29" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#1285#1528#0" expanded="true" />
-                <element signature="e#1513#1514#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -319,8 +295,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParserCallback2.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenPrioLevel.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Language.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinitions.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenType.java" />
@@ -331,8 +305,10 @@
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Lexer.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/EndToken.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/Token.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java" />
       </list>
     </option>
   </component>
@@ -839,7 +815,11 @@
       <created>1364408112236</created>
       <updated>1364408112236</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="hacking without tests">
+      <created>1364489924950</created>
+      <updated>1364489924950</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -905,7 +885,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="levels" />
+    <option name="LAST_COMMIT_MESSAGE" value="hacking without tests" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -940,6 +920,7 @@
     <MESSAGE value="some warnings" />
     <MESSAGE value="fooling around" />
     <MESSAGE value="levels" />
+    <MESSAGE value="hacking without tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -949,11 +930,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableToken.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="15" selection-start="937" selection-end="937" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/AndToken.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="15" selection-start="585" selection-end="585" vertical-scroll-proportion="0.0" />
@@ -1037,28 +1013,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/LanguageBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="71" selection-start="3057" selection-end="3057" vertical-scroll-proportion="0.0">
+        <state line="34" column="16" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/ShortcutSyntaxParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="36" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
+        <state line="61" column="31" selection-start="3170" selection-end="3170" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="12" selection-start="1330" selection-end="1330" vertical-scroll-proportion="0.9859155">
+        <state line="36" column="30" selection-start="1423" selection-end="1423" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#527#781#0" expanded="true" />
             <element signature="e#770#771#0" expanded="true" />
             <element signature="e#985#1012#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/ParseResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="19" selection-start="284" selection-end="284" vertical-scroll-proportion="0.39473686">
+          <folding />
         </state>
       </provider>
     </entry>

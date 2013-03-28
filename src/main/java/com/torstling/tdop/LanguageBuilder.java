@@ -30,7 +30,8 @@ public class LanguageBuilder<N extends Node> {
         return this;
     }
 
-    public Language build() {
-        return new Language(levels);
+    @NotNull
+    public Language<N> build() {
+        return new Language<N>(levels);
     }
 }

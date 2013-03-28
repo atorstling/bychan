@@ -3,6 +3,8 @@ package com.torstling.tdop;
 import com.sun.istack.internal.NotNull;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 public class ShortcutSyntaxParserTest {
 
 
@@ -45,7 +47,7 @@ public class ShortcutSyntaxParserTest {
                 .matchesPattern(" *")
                 .filterOutBeforeParsing()
                 .build();
-        Language l = new LanguageBuilder<BooleanExpressionNode>()
+        Language<BooleanExpressionNode> l = new LanguageBuilder<BooleanExpressionNode>()
                 .addToken(whitespace)
                 .addToken(lparen)
                 .addToken(rparen)
@@ -57,5 +59,7 @@ public class ShortcutSyntaxParserTest {
                 .addToken(variable)
                 .build();
         ParseResult<BooleanExpressionNode> result = l.getParser().parse("!( a & b)");
+        assertTrue(result.isSuccess());
+
     }
 }

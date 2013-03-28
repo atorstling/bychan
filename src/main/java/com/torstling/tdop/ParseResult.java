@@ -7,4 +7,8 @@ public class ParseResult<N extends Node> {
     public static <N extends Node> ParseResult<N> success() {
         return new ParseResult<N>();
     }
+
+    public boolean isSuccess() {
+        return true;
+    }
 }
