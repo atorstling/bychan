@@ -11,31 +11,31 @@ public class ShortcutSyntaxParserTest {
     @Test
     public void doit() {
         TokenDefinition<BooleanExpressionNode> not = new TokenDefinitionBuilder<BooleanExpressionNode>()
-                .matchesString("!")
+                .matchesPattern("\\!")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         return new NotNode(parser.expression());
                     }
                 }).build();
         TokenDefinition<BooleanExpressionNode> and = new TokenDefinitionBuilder<BooleanExpressionNode>()
-                .matchesString("&")
+                .matchesPattern("\\&")
                 .supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         return new AndNode(left, parser.expression());
                     }
                 }).build();
         TokenDefinition<BooleanExpressionNode> variable = new TokenDefinitionBuilder<BooleanExpressionNode>()
-                .matchesString("[a-z]+")
+                .matchesPattern("[a-z]+")
                 .supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull final LexingMatch match) {
                         return new VariableNode(match.getText());
                     }
                 }).build();
         final TokenDefinition<BooleanExpressionNode> rparen = new TokenDefinitionBuilder<BooleanExpressionNode>()
-                .matchesString("(")
+                .matchesPattern("\\)")
                 .build();
         TokenDefinition<BooleanExpressionNode> lparen = new TokenDefinitionBuilder<BooleanExpressionNode>()
-                .matchesString("(")
+                .matchesPattern("\\(")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         BooleanExpressionNode trailingExpression = parser.expression();
@@ -44,7 +44,7 @@ public class ShortcutSyntaxParserTest {
                     }
                 }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = new TokenDefinitionBuilder<BooleanExpressionNode>()
-                .matchesPattern(" *")
+                .matchesPattern("\\s+")
                 .filterOutBeforeParsing()
                 .build();
         Language<BooleanExpressionNode> l = new LanguageBuilder<BooleanExpressionNode>()
@@ -58,8 +58,9 @@ public class ShortcutSyntaxParserTest {
                 .newLevel()
                 .addToken(variable)
                 .build();
-        ParseResult<BooleanExpressionNode> result = l.getParser().parse("!( a & b)");
+        ParseResult<BooleanExpressionNode> result = l.getParser().parse("!( a & b) ");
         assertTrue(result.isSuccess());
-
+        VariableBindings bindings = new VariableBindingBuilder().bind("a", false).bind("b", true).build();
+        assertTrue(result.getRootNode().evaluate(bindings));
     }
 }

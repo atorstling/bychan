@@ -36,4 +36,8 @@ public class WrappedDefinition<N extends Node> implements TokenType<N>, Token<N>
     public int infixBindingPower() {
         return def.getLevel();
     }
+
+    public String toString() {
+        return "" + def;
+    }
 }

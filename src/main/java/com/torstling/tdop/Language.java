@@ -12,7 +12,7 @@ public class Language<N extends Node> {
         this.tokenDefinitions = tokenDefinitions;
     }
 
-    public GenericParser getParser() {
-        return new GenericParser(tokenDefinitions);
+    public GenericParser<N> getParser() {
+        return new GenericParser<N>(tokenDefinitions);
     }
 }

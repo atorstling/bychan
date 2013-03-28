@@ -6,7 +6,6 @@ public class LeveledTokenDefinition<N extends Node> {
     @NotNull
     private final TokenDefinition<N> definition;
     private final int levelCount;
-    private int level;
 
     public LeveledTokenDefinition(@NotNull final TokenDefinition<N> definition, final int levelCount) {
         this.definition = definition;
@@ -18,6 +17,10 @@ public class LeveledTokenDefinition<N extends Node> {
     }
 
     public int getLevel() {
-        return level;
+        return levelCount;
+    }
+
+    public String toString() {
+        return levelCount + ":"  + definition;
     }
 }

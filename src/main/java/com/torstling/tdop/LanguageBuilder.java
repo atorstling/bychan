@@ -32,6 +32,13 @@ public class LanguageBuilder<N extends Node> {
 
     @NotNull
     public Language<N> build() {
+        flushRemainingTokens();
         return new Language<N>(levels);
+    }
+
+    private void flushRemainingTokens() {
+        if (!currentTokens.isEmpty()) {
+            newLevel();
+        }
     }
 }

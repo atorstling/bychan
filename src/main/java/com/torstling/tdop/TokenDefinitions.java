@@ -21,4 +21,8 @@ public class TokenDefinitions<N extends Node> implements Iterable<TokenDefinitio
     public Iterator<TokenDefinition<N>> iterator() {
         return tokenDefinitions.iterator();
     }
+
+    public String toString() {
+        return tokenDefinitions.toString();
+    }
 }

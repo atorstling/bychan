@@ -9,15 +9,22 @@ import java.util.Collection;
 import java.util.List;
 
 public class GenericParser<N extends Node> {
+    @NotNull
+    private final Lexer<N> lexer;
+
     public GenericParser(List<TokenDefinitions<N>> levels) {
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(levels);
-        Collection<WrappedDefinition<N>> wrappedDefinitions = Collections2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, WrappedDefinition<N>>() {
+        Collection<WrappedDefinition<N>> wrappedDefinitions = wrap(leveledDefinitions);
+        lexer = new Lexer<>(wrappedDefinitions);
+    }
+
+    private Collection<WrappedDefinition<N>> wrap(List<LeveledTokenDefinition<N>> leveledDefinitions) {
+        return Collections2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, WrappedDefinition<N>>() {
             @Override
             public WrappedDefinition<N> apply(LeveledTokenDefinition<N> tokenDef) {
                 return new WrappedDefinition<N>(tokenDef);
             }
         });
-        new Lexer<N>(wrappedDefinitions);
     }
 
     private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {
@@ -34,6 +41,9 @@ public class GenericParser<N extends Node> {
 
     @NotNull
     public ParseResult<N> parse(@NotNull final String text) {
-        return ParseResult.<N>success();
+        List<Token<N>> tokens = lexer.lex(text);
+        PrattParser<N> parser = new PrattParser<>(tokens);
+        N rootNode = parser.parse();
+        return ParseResult.success(rootNode);
     }
 }

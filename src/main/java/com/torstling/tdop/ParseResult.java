@@ -1,14 +1,34 @@
 package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 
 public class ParseResult<N extends Node> {
+    @Nullable
+    private final N rootNode;
+
+    public ParseResult(@NotNull final N rootNode) {
+        this.rootNode = rootNode;
+    }
+
     @NotNull
-    public static <N extends Node> ParseResult<N> success() {
-        return new ParseResult<N>();
+    public static <N extends Node> ParseResult<N> success(@NotNull final N rootNode) {
+        return new ParseResult<N>(rootNode);
     }
 
     public boolean isSuccess() {
-        return true;
+        return rootNode != null;
+    }
+
+    private void checkSuccess() {
+        if (!isSuccess()) {
+            throw new IllegalStateException("Parsing wasn't successful");
+        }
+    }
+
+    @NotNull
+    public N getRootNode() {
+        checkSuccess();
+        return rootNode;
     }
 }

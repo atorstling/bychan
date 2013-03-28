@@ -39,6 +39,9 @@ public class TokenDefinitionBuilder<N extends Node> {
 
     @NotNull
     private PrefixAstBuilder<N> selectPrefix() {
+        if (standaloneBuilder != null && prefixBuilder != null) {
+            throw new IllegalStateException("Prefix and standalone matchers cannot be simultaniously defined.");
+        }
         if (standaloneBuilder != null) {
              return new PrefixAstBuilder<N>() {
                 @Override

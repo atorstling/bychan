@@ -24,4 +24,9 @@ public class TokenDefinition<N extends Node> {
     public String getPattern() {
         return pattern;
     }
+
+    @Override
+    public String toString() {
+        return pattern;
+    }
 }

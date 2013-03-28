@@ -37,11 +37,12 @@ public class Lexer<N extends Node> {
         int lastEnd = 0;
         while (matcher.find()) {
             int currentStart = matcher.start();
+            Token<N> matchingToken = findMatchingToken(matcher);
             if (currentStart > lastEnd) {
                 final String missedText = input.substring(lastEnd, currentStart);
                 throw new RuntimeException("No matching rule for range from " + lastEnd + " to " + currentStart + ": '" + missedText + "'");
             }
-            tokens.add(findMatchingToken(matcher));
+            tokens.add(matchingToken);
             lastEnd = matcher.end();
         }
         tokens.add(new EndToken());
