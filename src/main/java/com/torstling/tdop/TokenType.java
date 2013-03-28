@@ -1,6 +1,10 @@
 package com.torstling.tdop;
 
+import com.sun.istack.internal.NotNull;
+
 public interface TokenType<N extends Node> {
-    abstract Token<N> toToken(final String value);
-    public String getPattern();
+    @NotNull
+    Token<N> toToken(@NotNull final String value);
+    @NotNull
+    String getPattern();
 }

@@ -2,12 +2,9 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-public class TokenDefinitions<N extends Node> {
+public class TokenDefinitions<N extends Node> implements Iterable<TokenDefinition<N>> {
     @NotNull
     private final List<TokenDefinition<N>> tokenDefinitions;
 
@@ -18,5 +15,10 @@ public class TokenDefinitions<N extends Node> {
 
     public TokenDefinitions(@NotNull final Collection<TokenDefinition<N>> tokens) {
         this.tokenDefinitions = new ArrayList<>(tokens);
+    }
+
+    @Override
+    public Iterator<TokenDefinition<N>> iterator() {
+        return tokenDefinitions.iterator();
     }
 }

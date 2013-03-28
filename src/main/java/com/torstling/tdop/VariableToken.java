@@ -22,11 +22,13 @@ public class VariableToken implements Token<BooleanExpressionNode> {
         return name;
     }
 
+    @NotNull
     public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
         return new VariableNode(name);
     }
 
-    public BooleanExpressionNode infixParse(BooleanExpressionNode left, TokenParserCallback parser) {
+    @NotNull
+    public BooleanExpressionNode infixParse(@NotNull BooleanExpressionNode left, @NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 

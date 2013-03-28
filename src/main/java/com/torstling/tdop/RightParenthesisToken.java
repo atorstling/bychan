@@ -4,11 +4,13 @@ import com.sun.istack.internal.NotNull;
 
 public class RightParenthesisToken<N extends Node> implements Token<N> {
 
+    @NotNull
     public N prefixParse(@NotNull TokenParserCallback<N> parser) {
         throw new IllegalStateException("Cannot use right parenthesis as prefix to expression");
     }
 
-    public N infixParse(N left, TokenParserCallback<N> parser) {
+    @NotNull
+    public N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser) {
         throw new UnsupportedOperationException();
     }
 

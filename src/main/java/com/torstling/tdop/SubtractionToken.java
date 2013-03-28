@@ -10,11 +10,13 @@ import com.sun.istack.internal.NotNull;
  * To change this template use File | Settings | File Templates.
  */
 public class SubtractionToken implements Token<CalculatorNode> {
+    @NotNull
     public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
-    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback<CalculatorNode> parser) {
+    @NotNull
+    public CalculatorNode infixParse(@NotNull CalculatorNode left, @NotNull TokenParserCallback<CalculatorNode> parser) {
         CalculatorNode right = parser.expression(infixBindingPower());
         return new SubtractionNode(left, right);
     }

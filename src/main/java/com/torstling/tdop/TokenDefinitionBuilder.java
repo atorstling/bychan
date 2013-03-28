@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 public class TokenDefinitionBuilder<N extends Node> {
     private String pattern;
     private PrefixAstBuilder<N> prefixBuilder;
-    private InfixAstBuilder<BooleanExpressionNode> infixBuilder;
+    private InfixAstBuilder<N> infixBuilder;
+    private StandaloneAstBuilder<N> standaloneBuilder;
     private boolean filterOutBeforeParsing;
-    private StandaloneAstBuilder<BooleanExpressionNode> standaloneAstBuilder;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
         return matchesPattern(Pattern.quote(text));
@@ -34,10 +34,24 @@ public class TokenDefinitionBuilder<N extends Node> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<N>(prefixBuilder, infixBuilder);
+        return new TokenDefinition<N>(pattern, selectPrefix(), infixBuilder, filterOutBeforeParsing);
     }
 
-    public TokenDefinitionBuilder<N> supportsInfix(InfixAstBuilder<BooleanExpressionNode> infixBuilder) {
+    @NotNull
+    private PrefixAstBuilder<N> selectPrefix() {
+        if (standaloneBuilder != null) {
+             return new PrefixAstBuilder<N>() {
+                @Override
+                public N build(@NotNull LexingMatch match, @NotNull ParserCallback2<N> callback) {
+                    return standaloneBuilder.build(match);
+                }
+            };
+        } else {
+           return prefixBuilder;
+        }
+    }
+
+    public TokenDefinitionBuilder<N> supportsInfix(InfixAstBuilder<N> infixBuilder) {
         this.infixBuilder = infixBuilder;
         return this;
     }
@@ -47,8 +61,8 @@ public class TokenDefinitionBuilder<N extends Node> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<BooleanExpressionNode> standaloneAstBuilder) {
-        this.standaloneAstBuilder = standaloneAstBuilder;
+    public TokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<N> standaloneAstBuilder) {
+        this.standaloneBuilder = standaloneAstBuilder;
         return this;
     }
 }

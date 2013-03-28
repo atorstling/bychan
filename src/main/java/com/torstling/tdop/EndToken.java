@@ -2,12 +2,14 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-public class EndToken implements Token {
-    public Node prefixParse(@NotNull TokenParserCallback parser) {
+public class EndToken<N extends Node> implements Token<N> {
+    @NotNull
+    public N prefixParse(@NotNull final TokenParserCallback parser) {
         throw new IllegalStateException("Cannot parse end as expression");
     }
 
-    public Node infixParse(Node left, TokenParserCallback parser) {
+    @NotNull
+    public N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser) {
         throw new UnsupportedOperationException();
     }
 

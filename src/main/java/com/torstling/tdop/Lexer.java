@@ -14,10 +14,10 @@ import java.util.regex.Pattern;
 public class Lexer<N extends Node> {
 
     private final Pattern pattern;
-    private final List<TokenType<N>> tokenTypes;
+    private final List<? extends TokenType<N>> tokenTypes;
 
-    public Lexer(@NotNull final List<TokenType<N>> tokenTypes) {
-        this.tokenTypes = tokenTypes;
+    public Lexer(@NotNull final Collection<? extends TokenType<N>> tokenTypes) {
+        this.tokenTypes = new ArrayList<>(tokenTypes);
         Collection<String> subPatterns = makeSubPatterns();
         String patternString = "\\s*(?:" + Joiner.on("|").join(subPatterns) + ")";
         pattern = Pattern.compile(patternString);
@@ -32,7 +32,7 @@ public class Lexer<N extends Node> {
     }
 
     public List<Token<N>> lex(@NotNull final String input) {
-        final List<Token<N>> tokens = new ArrayList<Token<N>>();
+        final List<Token<N>> tokens = new ArrayList<>();
         Matcher matcher = pattern.matcher(input);
         int lastEnd = 0;
         while (matcher.find()) {

@@ -31,6 +31,6 @@ public class LanguageBuilder<N extends Node> {
     }
 
     public Language build() {
-        return new Language();
+        return new Language(levels);
     }
 }

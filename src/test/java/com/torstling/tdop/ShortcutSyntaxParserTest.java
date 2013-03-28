@@ -56,6 +56,6 @@ public class ShortcutSyntaxParserTest {
                 .newLevel()
                 .addToken(variable)
                 .build();
-        l.getParser().parse("!(a & b)");
+        ParseResult<BooleanExpressionNode> result = l.getParser().parse("!( a & b)");
     }
 }

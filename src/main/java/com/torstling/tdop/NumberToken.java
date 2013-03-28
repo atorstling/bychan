@@ -30,11 +30,13 @@ public class NumberToken implements Token<CalculatorNode> {
     }
 
 
+    @NotNull
     public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         return new NumberNode(value);
     }
 
-    public CalculatorNode infixParse(CalculatorNode left, TokenParserCallback parser) {
+    @NotNull
+    public CalculatorNode infixParse(@NotNull CalculatorNode left, @NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 

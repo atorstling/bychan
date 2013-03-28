@@ -1,16 +1,27 @@
 package com.torstling.tdop;
 
-/**
- * Created with IntelliJ IDEA.
- * User: alext
- * Date: 3/22/13
- * Time: 5:55 PM
- * To change this template use File | Settings | File Templates.
- */
-public class TokenDefinition<N extends Node> {
-    private PrefixAstBuilder<N> prefixBuilder;
+import com.sun.istack.internal.NotNull;
 
-    public TokenDefinition(PrefixAstBuilder<N> prefixBuilder, InfixAstBuilder<BooleanExpressionNode> infixBuilder) {
+public class TokenDefinition<N extends Node> {
+    @NotNull
+    private final String pattern;
+    @NotNull
+    private final PrefixAstBuilder<N> prefixBuilder;
+    @NotNull
+    private final InfixAstBuilder<N> infixBuilder;
+    @NotNull
+    private final boolean filterOutBeforeParsing;
+
+    public TokenDefinition(@NotNull final String pattern, @NotNull final PrefixAstBuilder<N> prefixBuilder, @NotNull final InfixAstBuilder<N> infixBuilder, boolean filterOutBeforeParsing) {
+
+        this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
+        this.infixBuilder = infixBuilder;
+        this.filterOutBeforeParsing = filterOutBeforeParsing;
+    }
+
+    @NotNull
+    public String getPattern() {
+        return pattern;
     }
 }
