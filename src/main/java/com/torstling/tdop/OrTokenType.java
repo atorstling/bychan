@@ -5,7 +5,7 @@ import com.sun.istack.internal.NotNull;
 public class OrTokenType implements TokenType<BooleanExpressionNode> {
     public static final OrTokenType INSTANCE = new OrTokenType();
 
-    public Token<BooleanExpressionNode> toToken(String value) {
+    public Token<BooleanExpressionNode> toToken(LexingMatch match) {
         return new OrToken();
     }
 

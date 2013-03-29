@@ -15,26 +15,26 @@ public class GenericParser<N extends Node> {
     public GenericParser(List<TokenDefinitions<N>> levels) {
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(levels);
         DelegatingTokenFinder delegatingFinder = new DelegatingTokenFinder();
-        final Collection<WrappedDefinition<N>> wrappedDefinitions = wrap(leveledDefinitions, delegatingFinder);
+        final Collection<DefinitionTokenType<N>> definitionTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
         delegatingFinder.setDelegate(new TokenFinder<N>() {
             @Override
-            public WrappedDefinition<N> getTokenFor(@NotNull TokenDefinition<N> tokenDefinition) {
-                for (WrappedDefinition<N> wrappedDefinition : wrappedDefinitions) {
-                    if (wrappedDefinition.getTokenDefinition().equals(tokenDefinition)) {
-                        return wrappedDefinition;
+            public DefinitionTokenType<N> getTokenFor(@NotNull TokenDefinition<N> tokenDefinition) {
+                for (DefinitionTokenType<N> definitionTokenType : definitionTokenTypes) {
+                    if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
+                        return definitionTokenType;
                     }
                 }
                 throw new IllegalStateException("No token found for definition " + tokenDefinition);
             }
         });
-        lexer = new Lexer<>(wrappedDefinitions);
+        lexer = new Lexer<>(definitionTokenTypes);
     }
 
-    private Collection<WrappedDefinition<N>> wrap(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder tokenFinder) {
-        return Collections2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, WrappedDefinition<N>>() {
+    private Collection<DefinitionTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder tokenFinder) {
+        return Collections2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, DefinitionTokenType<N>>() {
             @Override
-            public WrappedDefinition<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
-                return new WrappedDefinition<N>(tokenDef, tokenFinder);
+            public DefinitionTokenType<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
+                return new DefinitionTokenType<N>(tokenDef, tokenFinder);
             }
         });
     }

@@ -3,8 +3,8 @@ package com.torstling.tdop;
 public class NumberTokenType implements TokenType<CalculatorNode> {
     public static final NumberTokenType INSTANCE = new NumberTokenType();
 
-    public Token toToken(String value) {
-        return NumberToken.valueOf(value);
+    public Token toToken(LexingMatch match) {
+        return NumberToken.valueOf(match.getText());
     }
 
     public String getPattern() {

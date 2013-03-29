@@ -7,7 +7,7 @@ public class DelegatingTokenFinder implements TokenFinder {
     private TokenFinder delegate;
 
     @Override
-    public WrappedDefinition getTokenFor(@NotNull TokenDefinition tokenDefinition) {
+    public DefinitionTokenType getTokenFor(@NotNull TokenDefinition tokenDefinition) {
         return delegate.getTokenFor(tokenDefinition);
     }
 

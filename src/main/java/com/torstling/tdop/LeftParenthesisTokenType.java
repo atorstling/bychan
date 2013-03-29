@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 public class LeftParenthesisTokenType<N extends Node> implements TokenType<N> {
 
-    public Token<N> toToken(String value) {
+    public Token<N> toToken(LexingMatch match) {
         return new LeftParenthesisToken<N>();
     }
 

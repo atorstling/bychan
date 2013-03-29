@@ -4,7 +4,7 @@ public class NotTokenType implements TokenType<BooleanExpressionNode> {
 
     public static final NotTokenType INSTANCE = new NotTokenType();
 
-    public Token<BooleanExpressionNode> toToken(String value) {
+    public Token<BooleanExpressionNode> toToken(LexingMatch match) {
         return new NotToken();
     }
 

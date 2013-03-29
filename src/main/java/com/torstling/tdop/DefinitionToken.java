@@ -2,24 +2,14 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-public class WrappedDefinition<N extends Node> implements TokenType<N>, Token<N> {
+public class DefinitionToken<N extends Node> implements Token<N> {
     @NotNull
     private final LeveledTokenDefinition<N> def;
     private TokenFinder<N> tokenFinder;
 
-    public WrappedDefinition(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public DefinitionToken(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
-    }
-
-    @Override
-    public Token<N> toToken(@NotNull final String value) {
-        return this;
-    }
-
-    @Override
-    public String getPattern() {
-        return def.getPattern();
     }
 
     @NotNull

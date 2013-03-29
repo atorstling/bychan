@@ -6,8 +6,8 @@ public class VariableTokenType implements TokenType<BooleanExpressionNode> {
 
     public static final VariableTokenType INSTANCE = new VariableTokenType();
 
-    public Token<BooleanExpressionNode> toToken(String value) {
-        return VariableToken.valueOf(value);
+    public Token<BooleanExpressionNode> toToken(LexingMatch match) {
+        return VariableToken.valueOf(match.getText());
     }
 
     public String getPattern() {

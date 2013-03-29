@@ -3,7 +3,7 @@ package com.torstling.tdop;
 public class MultiplicationTokenType implements TokenType<CalculatorNode> {
     public static final MultiplicationTokenType INSTANCE = new MultiplicationTokenType();
 
-    public Token toToken(String value) {
+    public Token toToken(LexingMatch match) {
         return new MultiplicationToken();
     }
 
