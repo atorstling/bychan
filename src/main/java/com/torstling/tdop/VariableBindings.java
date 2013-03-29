@@ -13,6 +13,10 @@ public class VariableBindings {
     }
 
     public boolean isSet(@NotNull final String variableName) {
-        return bindings.get(variableName);
+        Boolean boundValue = bindings.get(variableName);
+        if (boundValue == null) {
+            throw new IllegalStateException("No value bound to variable '" + variableName + "'");
+        }
+        return boundValue;
     }
 }

@@ -23,4 +23,17 @@ public class LeveledTokenDefinition<N extends Node> {
     public String toString() {
         return levelCount + ":"  + definition;
     }
+
+    public PrefixAstBuilder<N> getPrefixBuilder() {
+        return definition.getPrefixBuilder();
+    }
+
+    @NotNull
+    public TokenDefinition<N> getTokenDefinition() {
+        return definition;
+    }
+
+    public InfixAstBuilder<N> getInfixBuilder() {
+        return definition.getInfixBuilder();
+    }
 }

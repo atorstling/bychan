@@ -29,4 +29,12 @@ public class TokenDefinition<N extends Node> {
     public String toString() {
         return pattern;
     }
+
+    public PrefixAstBuilder<N> getPrefixBuilder() {
+        return prefixBuilder;
+    }
+
+    public InfixAstBuilder<N> getInfixBuilder() {
+        return infixBuilder;
+    }
 }
