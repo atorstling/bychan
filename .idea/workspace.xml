@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/DelegatingTokenFinder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenFinder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/GenericParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/InfixAstBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/InfixAstBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeveledTokenDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeveledTokenDefinition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableBindings.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableBindings.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" />
     </list>
     <ignored path="tdop.iws" />
@@ -81,7 +74,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" line="29" class="com.torstling.tdop.WrappedDefinition" package="com.torstling.tdop">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" line="27" class="com.torstling.tdop.WrappedDefinition" package="com.torstling.tdop">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -176,13 +169,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WrappedDefinition.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="WrappedDefinition.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="30" selection-start="1864" selection-end="1864" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="11" column="31" selection-start="431" selection-end="431" vertical-scroll-proportion="0.35869566">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -196,10 +187,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VariableBindings.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="VariableBindings.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableBindings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="34" selection-start="530" selection-end="530" vertical-scroll-proportion="0.45652175">
+            <state line="17" column="34" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -218,7 +209,9 @@
         <entry file="jar:///usr/lib/jvm/java-7-openjdk-common/src.zip!/java/lang/Object.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="63" column="33" selection-start="2511" selection-end="2511" vertical-scroll-proportion="0.0">
-              <folding />
+              <folding>
+                <element signature="e#0#26907#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -277,8 +270,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/TokenDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/LeveledTokenDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/InfixAstBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableBindings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java" />
       </list>
     </option>
   </component>
@@ -803,7 +796,11 @@
       <created>1364492695101</created>
       <updated>1364492695101</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="almost there">
+      <created>1364555511762</created>
+      <updated>1364555511762</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -869,7 +866,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="hack" />
+    <option name="LAST_COMMIT_MESSAGE" value="almost there" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -882,7 +879,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Error cases, multiplication" />
     <MESSAGE value="Add TokenType" />
     <MESSAGE value="comments" />
     <MESSAGE value="Remove enum to generify" />
@@ -907,6 +903,7 @@
     <MESSAGE value="hacking without tests" />
     <MESSAGE value="hacketyhack" />
     <MESSAGE value="hack" />
+    <MESSAGE value="almost there" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -988,7 +985,9 @@
     <entry file="jar:///usr/lib/jvm/java-7-openjdk-common/src.zip!/java/lang/Object.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="63" column="33" selection-start="2511" selection-end="2511" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="e#0#26907#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1013,15 +1012,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="30" selection-start="1864" selection-end="1864" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
@@ -1031,7 +1021,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/VariableBindings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="34" selection-start="530" selection-end="530" vertical-scroll-proportion="0.45652175">
+        <state line="17" column="34" selection-start="530" selection-end="530" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/WrappedDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="31" selection-start="431" selection-end="431" vertical-scroll-proportion="0.35869566">
           <folding />
         </state>
       </provider>

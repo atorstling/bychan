@@ -2,9 +2,7 @@ package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
 
-import java.awt.datatransfer.DataFlavor;
-
-public class WrappedDefinition<N extends Node> implements TokenType<N>, Token<N>{
+public class WrappedDefinition<N extends Node> implements TokenType<N>, Token<N> {
     @NotNull
     private final LeveledTokenDefinition<N> def;
     private TokenFinder<N> tokenFinder;
