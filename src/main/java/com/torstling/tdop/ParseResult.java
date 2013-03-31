@@ -31,4 +31,8 @@ public class ParseResult<N extends Node> {
         checkSuccess();
         return rootNode;
     }
+
+    public boolean isFailure() {
+        return !isSuccess();
+    }
 }

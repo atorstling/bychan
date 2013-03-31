@@ -1,15 +1,19 @@
 package com.torstling.tdop;
 
 import com.sun.istack.internal.NotNull;
+import junit.framework.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ShortcutSyntaxParserTest {
 
+    private Language<BooleanExpressionNode> l;
 
-    @Test
-    public void doit() {
+    @Before
+    public void setupLanguage() {
         TokenDefinition<BooleanExpressionNode> not = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesPattern("\\!")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
@@ -47,7 +51,7 @@ public class ShortcutSyntaxParserTest {
                 .matchesPattern("\\s+")
                 .filterOutBeforeParsing()
                 .build();
-        Language<BooleanExpressionNode> l = new LanguageBuilder<BooleanExpressionNode>()
+        l = new LanguageBuilder<BooleanExpressionNode>()
                 .addToken(whitespace)
                 .addToken(lparen)
                 .addToken(rparen)
@@ -58,9 +62,25 @@ public class ShortcutSyntaxParserTest {
                 .newLevel()
                 .addToken(variable)
                 .build();
-        ParseResult<BooleanExpressionNode> result = l.getParser().parse("!( a & b) ");
+    }
+
+
+    @Test
+    public void paranthesisPrio() {
+        check(l, "!( a & b) ", true, false, true);
+        check(l, "!  a & b  ", false, true, true);
+    }
+
+    @Test
+    public void parseFailure() {
+        //ParseResult<BooleanExpressionNode> parseResult = l.getParser().parse("(a");
+        //Assert.assertTrue(parseResult.isFailure());
+    }
+
+    private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
+        ParseResult<BooleanExpressionNode> result = l.getParser().parse(expression);
         assertTrue(result.isSuccess());
-        VariableBindings bindings = new VariableBindingBuilder().bind("a", false).bind("b", true).build();
-        assertTrue(result.getRootNode().evaluate(bindings));
+        VariableBindings bindings = new VariableBindingBuilder().bind("a", aValue).bind("b", bValue).build();
+        assertEquals(result.getRootNode().evaluate(bindings), expectedOutcome);
     }
 }
