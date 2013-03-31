@@ -1,7 +1,6 @@
 package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +42,7 @@ public class ShortcutSyntaxParserTest {
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         BooleanExpressionNode trailingExpression = parser.expression();
-                        parser.expect(rparen);
+                        parser.singleToken(rparen);
                         return trailingExpression;
                     }
                 }).build();
@@ -68,14 +67,17 @@ public class ShortcutSyntaxParserTest {
     @Test
     public void parenthesisPrio() {
         check(l, "!( a & b) ", true, false, true);
+        check(l, "!( a & b) ", true, true, false);
         check(l, "!  a & b  ", false, true, true);
     }
 
+    /*
     @Test
     public void parseFailure() {
-        //ParseResult<BooleanExpressionNode> parseResult = l.getParser().parse("(a");
-        //Assert.assertTrue(parseResult.isFailure());
+        ParseResult<BooleanExpressionNode> parseResult = l.getParser().parse("(a");
+        Assert.assertTrue(parseResult.isFailure());
     }
+    */
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
         ParseResult<BooleanExpressionNode> result = l.getParser().parse(expression);

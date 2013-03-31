@@ -10,6 +10,9 @@ public interface ParserCallback2<N extends Node> {
     @NotNull
     N expression();
 
+    /**
+     * Parse a single token of the type indicated by the token definition passed in.
+     */
     @NotNull
-    Token<N> expect(TokenDefinition<N> tokenD);
+    Token<N> singleToken(TokenDefinition<N> tokenTypeDefinition);
 }

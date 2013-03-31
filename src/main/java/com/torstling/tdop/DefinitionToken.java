@@ -30,8 +30,8 @@ public class DefinitionToken<N extends Node> implements Token<N> {
 
             @NotNull
             @Override
-            public Token<N> expect(TokenDefinition<N> tokenD) {
-                return swallow(tokenD, parser);
+            public Token<N> singleToken(TokenDefinition<N> tokenTypeDefinition) {
+                return swallow(tokenTypeDefinition, parser);
             }
         });
     }
@@ -55,8 +55,8 @@ public class DefinitionToken<N extends Node> implements Token<N> {
 
             @NotNull
             @Override
-            public Token<N> expect(TokenDefinition<N> tokenD) {
-                return swallow(tokenD, parser);
+            public Token<N> singleToken(TokenDefinition<N> tokenTypeDefinition) {
+                return swallow(tokenTypeDefinition, parser);
             }
         });
     }
