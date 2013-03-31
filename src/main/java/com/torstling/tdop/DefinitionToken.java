@@ -5,11 +5,14 @@ import com.sun.istack.internal.NotNull;
 public class DefinitionToken<N extends Node> implements Token<N> {
     private DefinitionTokenType<N> tokenType;
     @NotNull
+    private LexingMatch match;
+    @NotNull
     private final LeveledTokenDefinition<N> def;
     private TokenFinder<N> tokenFinder;
 
-    public DefinitionToken(@NotNull final DefinitionTokenType<N> tokenType, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public DefinitionToken(@NotNull final DefinitionTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.tokenType = tokenType;
+        this.match = match;
         this.def = def;
         this.tokenFinder = tokenFinder;
     }
@@ -18,7 +21,7 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     @Override
     public N prefixParse(@NotNull final TokenParserCallback<N> parser) {
         final PrefixAstBuilder<N> builder = def.getPrefixBuilder();
-        return builder.build(new LexingMatch("fake"), new ParserCallback2<N>() {
+        return builder.build(match, new ParserCallback2<N>() {
             @Override
             public N expression() {
                 return parser.expression(infixBindingPower());
