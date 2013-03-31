@@ -28,17 +28,16 @@ public class DefinitionToken<N extends Node> implements Token<N> {
             }
 
             @Override
-            public LexingMatch expect(TokenDefinition<N> tokenD) {
+            public Token<N> expect(TokenDefinition<N> tokenD) {
                 return swallow(tokenD, parser);
             }
         });
     }
 
     @NotNull
-    private LexingMatch swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
+    private Token<N> swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
         DefinitionTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
-        parser.swallow(type);
-        return new LexingMatch("fake");
+        return parser.swallow(type);
     }
 
     @NotNull
@@ -52,7 +51,7 @@ public class DefinitionToken<N extends Node> implements Token<N> {
             }
 
             @Override
-            public LexingMatch expect(TokenDefinition<N> tokenD) {
+            public Token<N> expect(TokenDefinition<N> tokenD) {
                 return swallow(tokenD, parser);
             }
         });

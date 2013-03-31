@@ -11,5 +11,5 @@ public interface ParserCallback2<N extends Node> {
     N expression();
 
     @NotNull
-    LexingMatch expect(TokenDefinition<N> tokenD);
+    Token<N> expect(TokenDefinition<N> tokenD);
 }
