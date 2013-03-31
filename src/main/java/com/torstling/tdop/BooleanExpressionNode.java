@@ -1,5 +1,7 @@
 package com.torstling.tdop;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface BooleanExpressionNode extends Node {
-    boolean evaluate(VariableBindings bindings);
+    boolean evaluate(@NotNull VariableBindings bindings);
 }

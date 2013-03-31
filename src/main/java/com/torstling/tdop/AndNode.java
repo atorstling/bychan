@@ -1,5 +1,7 @@
 package com.torstling.tdop;
 
+import org.jetbrains.annotations.NotNull;
+
 public class AndNode implements BooleanExpressionNode {
     private final BooleanExpressionNode left;
     private final BooleanExpressionNode right;
@@ -9,7 +11,7 @@ public class AndNode implements BooleanExpressionNode {
         this.right = right;
     }
 
-    public boolean evaluate(VariableBindings bindings) {
+    public boolean evaluate(@NotNull VariableBindings bindings) {
         return left.evaluate(bindings) && right.evaluate(bindings);
     }
 }

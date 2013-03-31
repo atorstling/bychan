@@ -1,19 +1,18 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class TokenDefinition<N extends Node> {
     @NotNull
     private final String pattern;
-    @NotNull
+    @Nullable
     private final PrefixAstBuilder<N> prefixBuilder;
-    @NotNull
+    @Nullable
     private final InfixAstBuilder<N> infixBuilder;
-    @NotNull
     private final boolean filterOutBeforeParsing;
 
-    public TokenDefinition(@NotNull final String pattern, @NotNull final PrefixAstBuilder<N> prefixBuilder, @NotNull final InfixAstBuilder<N> infixBuilder, boolean filterOutBeforeParsing) {
-
+    public TokenDefinition(@NotNull final String pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, boolean filterOutBeforeParsing) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
@@ -30,10 +29,12 @@ public class TokenDefinition<N extends Node> {
         return pattern;
     }
 
+    @Nullable
     public PrefixAstBuilder<N> getPrefixBuilder() {
         return prefixBuilder;
     }
 
+    @Nullable
     public InfixAstBuilder<N> getInfixBuilder() {
         return infixBuilder;
     }

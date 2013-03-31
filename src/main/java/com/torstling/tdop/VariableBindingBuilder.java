@@ -1,7 +1,7 @@
 package com.torstling.tdop;
 
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;

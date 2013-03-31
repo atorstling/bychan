@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import sun.font.AttributeValues;
 
 interface Token<N extends Node> {
@@ -12,9 +12,7 @@ interface Token<N extends Node> {
      * @return How strongly this token, when interpreted as an infix operator, binds to the left argument.
      */
     int infixBindingPower();
-    @NotNull
     boolean isOfType(@NotNull TokenType<N> type);
-    @org.jetbrains.annotations.NotNull
     @NotNull
     LexingMatch getMatch();
 }

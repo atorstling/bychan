@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class EndToken<N extends Node> implements Token<N> {
 

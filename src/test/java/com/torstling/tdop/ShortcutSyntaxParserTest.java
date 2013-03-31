@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;

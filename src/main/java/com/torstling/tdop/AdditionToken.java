@@ -1,7 +1,7 @@
 package com.torstling.tdop;
 
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class AdditionToken implements Token<CalculatorNode> {
     @NotNull
@@ -35,6 +35,7 @@ public class AdditionToken implements Token<CalculatorNode> {
         return type.equals(AdditionTokenType.get());
     }
 
+    @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;

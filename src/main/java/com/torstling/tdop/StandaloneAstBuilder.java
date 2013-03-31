@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public interface StandaloneAstBuilder<N extends Node> {
     N build(@NotNull LexingMatch match);

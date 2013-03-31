@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class LeftParenthesisToken<N extends Node> implements Token<N> {
 
@@ -36,6 +36,7 @@ public class LeftParenthesisToken<N extends Node> implements Token<N> {
         return type.equals(LeftParenthesisTokenType.<N>get());
     }
 
+    @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;

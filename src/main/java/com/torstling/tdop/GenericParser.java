@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;

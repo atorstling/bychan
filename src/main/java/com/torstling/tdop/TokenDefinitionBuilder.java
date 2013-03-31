@@ -1,6 +1,7 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
@@ -37,7 +38,7 @@ public class TokenDefinitionBuilder<N extends Node> {
         return new TokenDefinition<N>(pattern, selectPrefix(), infixBuilder, filterOutBeforeParsing);
     }
 
-    @NotNull
+    @Nullable
     private PrefixAstBuilder<N> selectPrefix() {
         if (standaloneBuilder != null && prefixBuilder != null) {
             throw new IllegalStateException("Prefix and standalone matchers cannot be simultaniously defined.");

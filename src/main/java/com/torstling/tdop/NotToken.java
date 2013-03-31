@@ -30,6 +30,7 @@ public class NotToken implements Token<BooleanExpressionNode> {
         return type.equals(NotTokenType.get());
     }
 
+    @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;

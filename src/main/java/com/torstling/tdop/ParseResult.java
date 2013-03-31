@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import com.sun.istack.internal.Nullable;
 
 public class ParseResult<N extends Node> {

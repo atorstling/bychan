@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class VariableNode implements BooleanExpressionNode {
     private String name;
@@ -9,7 +9,7 @@ public class VariableNode implements BooleanExpressionNode {
         this.name = name;
     }
 
-    public boolean evaluate(VariableBindings bindings) {
+    public boolean evaluate(@org.jetbrains.annotations.NotNull VariableBindings bindings) {
         return bindings.isSet(name);
     }
 }

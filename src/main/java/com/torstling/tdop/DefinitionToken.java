@@ -1,6 +1,6 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class DefinitionToken<N extends Node> implements Token<N> {
     private DefinitionTokenType<N> tokenType;
@@ -71,6 +71,7 @@ public class DefinitionToken<N extends Node> implements Token<N> {
         return "" + def;
     }
 
+    @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;

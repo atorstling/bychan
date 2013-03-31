@@ -15,6 +15,7 @@ public class SubtractionToken implements Token<CalculatorNode> {
         throw new UnsupportedOperationException();
     }
 
+    @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;
