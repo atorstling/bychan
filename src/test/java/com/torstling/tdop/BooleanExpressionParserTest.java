@@ -11,7 +11,7 @@ public class BooleanExpressionParserTest {
 
     @Test
     public void lexing() {
-        Lexer lexer = new Lexer<BooleanExpressionNode>(BooleanExpressionTokens.get());
+        Lexer lexer = new Lexer<>(BooleanExpressionTokens.get());
         List<Token> tokenStream = lexer.lex("a + b");
         assertTrue(tokenStream.get(0) instanceof VariableToken);
         assertTrue(tokenStream.get(1) instanceof OrToken);

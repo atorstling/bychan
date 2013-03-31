@@ -8,7 +8,7 @@ public class RightParenthesisTokenType<N extends Node> implements TokenType<N> {
 
     @NotNull
     public Token<N> toToken(@NotNull LexingMatch match) {
-        return new RightParenthesisToken<N>(match);
+        return new RightParenthesisToken<>(match);
     }
 
     @NotNull

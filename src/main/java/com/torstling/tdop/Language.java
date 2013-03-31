@@ -13,6 +13,6 @@ public class Language<N extends Node> {
     }
 
     public GenericParser<N> getParser() {
-        return new GenericParser<N>(tokenDefinitions);
+        return new GenericParser<>(tokenDefinitions);
     }
 }

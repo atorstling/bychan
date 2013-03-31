@@ -11,7 +11,7 @@ public class VariableBindingBuilder {
     private final Map<String, Boolean> bindings;
 
     public VariableBindingBuilder() {
-        this.bindings = new HashMap<String, Boolean>();
+        this.bindings = new HashMap<>();
     }
 
     @NotNull

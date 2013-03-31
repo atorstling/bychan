@@ -15,7 +15,7 @@ public class DefinitionTokenType<N extends Node> implements TokenType<N> {
     @NotNull
     @Override
     public Token<N> toToken(@NotNull final LexingMatch match) {
-        return new DefinitionToken<N>(this, match, def, tokenFinder);
+        return new DefinitionToken<>(this, match, def, tokenFinder);
     }
 
     @NotNull

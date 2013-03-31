@@ -11,7 +11,7 @@ public class PrattParser<N extends Node> implements TokenParserCallback<N> {
     private final ArrayDeque<Token<N>> tokens;
 
     public PrattParser(List<? extends Token<N>> tokens) {
-        this.tokens = new ArrayDeque<Token<N>>(tokens);
+        this.tokens = new ArrayDeque<>(tokens);
     }
 
     @NotNull

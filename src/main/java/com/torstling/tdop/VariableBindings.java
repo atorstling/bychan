@@ -9,7 +9,7 @@ public class VariableBindings {
     private final Map<String, Boolean> bindings;
 
     public VariableBindings(@NotNull final Map<String, Boolean> bindings) {
-        this.bindings = new HashMap<String, Boolean>(bindings);
+        this.bindings = new HashMap<>(bindings);
     }
 
     public boolean isSet(@NotNull final String variableName) {

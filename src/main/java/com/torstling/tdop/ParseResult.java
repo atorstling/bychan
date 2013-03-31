@@ -13,7 +13,7 @@ public class ParseResult<N extends Node> {
 
     @NotNull
     public static <N extends Node> ParseResult<N> success(@NotNull final N rootNode) {
-        return new ParseResult<N>(rootNode);
+        return new ParseResult<>(rootNode);
     }
 
     public boolean isSuccess() {

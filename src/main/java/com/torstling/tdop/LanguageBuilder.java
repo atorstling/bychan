@@ -33,7 +33,7 @@ public class LanguageBuilder<N extends Node> {
     @NotNull
     public Language<N> build() {
         flushRemainingTokens();
-        return new Language<N>(levels);
+        return new Language<>(levels);
     }
 
     private void flushRemainingTokens() {

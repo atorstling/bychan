@@ -35,7 +35,7 @@ public class TokenDefinitionBuilder<N extends Node> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<N>(pattern, selectPrefix(), infixBuilder, filterOutBeforeParsing);
+        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder, filterOutBeforeParsing);
     }
 
     @Nullable

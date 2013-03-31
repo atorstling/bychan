@@ -34,17 +34,17 @@ public class GenericParser<N extends Node> {
         return Utils2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, DefinitionTokenType<N>>() {
             @Override
             public DefinitionTokenType<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
-                return new DefinitionTokenType<N>(tokenDef, tokenFinder);
+                return new DefinitionTokenType<>(tokenDef, tokenFinder);
             }
         });
     }
 
     private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {
-        List<LeveledTokenDefinition<N>> flatList = new ArrayList<LeveledTokenDefinition<N>>();
+        List<LeveledTokenDefinition<N>> flatList = new ArrayList<>();
         int levelCount=0;
         for (TokenDefinitions<N> level : levels) {
             for (TokenDefinition<N> definition : level) {
-                flatList.add(new LeveledTokenDefinition<N>(definition, levelCount));
+                flatList.add(new LeveledTokenDefinition<>(definition, levelCount));
             }
             ++levelCount;
         }
