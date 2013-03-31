@@ -70,9 +70,4 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     public String toString() {
         return "" + def;
     }
-
-    @NotNull
-    public TokenDefinition<N> getTokenDefinition() {
-        return def.getTokenDefinition();
-    }
 }
