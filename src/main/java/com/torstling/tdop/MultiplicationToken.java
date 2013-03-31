@@ -1,8 +1,16 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MultiplicationToken implements Token<CalculatorNode> {
+
+    @NotNull
+    private final LexingMatch match;
+
+    public MultiplicationToken(@NotNull final LexingMatch match) {
+        this.match = match;
+    }
 
     @NotNull
     public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
@@ -26,5 +34,11 @@ public class MultiplicationToken implements Token<CalculatorNode> {
     @Override
     public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
         return type.equals(MultiplicationTokenType.get());
+    }
+
+    @org.jetbrains.annotations.NotNull
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }

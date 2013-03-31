@@ -1,5 +1,6 @@
 package com.torstling.tdop;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -12,18 +13,23 @@ public class PrattParserTest {
     @Test
     public void singleDigit() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(1),
+                new NumberToken(new LexingMatch("1")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(1), rootNode);
     }
 
+    @NotNull
+    private LexingMatch nextMatch() {
+        return new LexingMatch("test");
+    }
+
     @Test
     public void subtraction() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(1),
-                new SubtractionToken(),
-                new NumberToken(2),
+                new NumberToken(new LexingMatch("1")),
+                new SubtractionToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
@@ -32,9 +38,9 @@ public class PrattParserTest {
     @Test
     public void parenthesis() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new LeftParenthesisToken(),
-                new NumberToken(2),
-                new RightParenthesisToken(),
+                new LeftParenthesisToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
+                new RightParenthesisToken(nextMatch()),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(2), rootNode);
@@ -43,13 +49,13 @@ public class PrattParserTest {
     @Test
     public void ambigous1() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new LeftParenthesisToken(),
-                new NumberToken(1),
-                new SubtractionToken(),
-                new NumberToken(2),
-                new RightParenthesisToken(),
-                new SubtractionToken(),
-                new NumberToken(3),
+                new LeftParenthesisToken(nextMatch()),
+                new NumberToken(new LexingMatch("1")),
+                new SubtractionToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
+                new RightParenthesisToken(nextMatch()),
+                new SubtractionToken(nextMatch()),
+                new NumberToken(new LexingMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
@@ -60,13 +66,13 @@ public class PrattParserTest {
     @Test
     public void ambigous2() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(1),
-                new SubtractionToken(),
-                new LeftParenthesisToken(),
-                new NumberToken(2),
-                new SubtractionToken(),
-                new NumberToken(3),
-                new RightParenthesisToken(),
+                new NumberToken(new LexingMatch("1")),
+                new SubtractionToken(nextMatch()),
+                new LeftParenthesisToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
+                new SubtractionToken(nextMatch()),
+                new NumberToken(new LexingMatch("3")),
+                new RightParenthesisToken(nextMatch()),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
@@ -77,11 +83,11 @@ public class PrattParserTest {
     @Test
     public void prio() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(1),
-                new SubtractionToken(),
-                new NumberToken(2),
-                new MultiplicationToken(),
-                new NumberToken(3),
+                new NumberToken(new LexingMatch("1")),
+                new SubtractionToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
+                new MultiplicationToken(nextMatch()),
+                new NumberToken(new LexingMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
@@ -92,11 +98,11 @@ public class PrattParserTest {
     @Test
     public void prioReverse() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(1),
-                new MultiplicationToken(),
-                new NumberToken(2),
-                new SubtractionToken(),
-                new NumberToken(3),
+                new NumberToken(new LexingMatch("1")),
+                new MultiplicationToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
+                new SubtractionToken(nextMatch()),
+                new NumberToken(new LexingMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
@@ -107,11 +113,11 @@ public class PrattParserTest {
     @Test
     public void multipleSameOp() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(1),
-                new MultiplicationToken(),
-                new NumberToken(2),
-                new MultiplicationToken(),
-                new NumberToken(3),
+                new NumberToken(new LexingMatch("1")),
+                new MultiplicationToken(nextMatch()),
+                new NumberToken(new LexingMatch("2")),
+                new MultiplicationToken(nextMatch()),
+                new NumberToken(new LexingMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
@@ -122,8 +128,8 @@ public class PrattParserTest {
     @Test
     public void unclosedParenthesis() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new LeftParenthesisToken(),
-                new NumberToken(1),
+                new LeftParenthesisToken(nextMatch()),
+                new NumberToken(new LexingMatch("1")),
                 new EndToken()));
         try {
             p.parse();
@@ -136,7 +142,7 @@ public class PrattParserTest {
     @Test
     public void wrongOrderParenthesis() {
         PrattParser<CalculatorNode> p = new PrattParser<CalculatorNode>(Arrays.<Token<CalculatorNode>>asList(
-                new RightParenthesisToken(),
+                new RightParenthesisToken(nextMatch()),
                 new EndToken()));
         try {
             p.parse();

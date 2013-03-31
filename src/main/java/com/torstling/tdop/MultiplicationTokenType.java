@@ -4,7 +4,7 @@ public class MultiplicationTokenType implements TokenType<CalculatorNode> {
     public static final MultiplicationTokenType INSTANCE = new MultiplicationTokenType();
 
     public Token toToken(LexingMatch match) {
-        return new MultiplicationToken();
+        return new MultiplicationToken(match);
     }
 
     public String getPattern() {

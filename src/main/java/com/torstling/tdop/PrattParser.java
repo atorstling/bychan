@@ -56,10 +56,12 @@ public class PrattParser<N extends Node> implements TokenParserCallback<N> {
         return currentLeftHandSide;
     }
 
-    public void swallow(@NotNull TokenType<N> type) {
+    @NotNull
+    public LexingMatch swallow(@NotNull TokenType<N> type) {
         Token<N> next = tokens.pop();
         if (!next.isOfType(type)) {
             throw new IllegalStateException("Expected a token of type " + type + ", but got '" + next + "'");
         }
+        return next.getMatch();
     }
 }

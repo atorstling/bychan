@@ -5,6 +5,13 @@ import com.sun.istack.internal.NotNull;
 
 public class AdditionToken implements Token<CalculatorNode> {
     @NotNull
+    private final LexingMatch match;
+
+    public AdditionToken(@NotNull final LexingMatch match) {
+        this.match = match;
+    }
+
+    @NotNull
     public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
@@ -26,5 +33,10 @@ public class AdditionToken implements Token<CalculatorNode> {
     @Override
     public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
         return type.equals(AdditionTokenType.get());
+    }
+
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }

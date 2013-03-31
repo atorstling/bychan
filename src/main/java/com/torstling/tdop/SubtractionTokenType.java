@@ -4,7 +4,7 @@ public class SubtractionTokenType implements TokenType<CalculatorNode> {
     public static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
 
     public Token toToken(LexingMatch match) {
-        return new SubtractionToken();
+        return new SubtractionToken(match);
     }
 
     public String getPattern() {

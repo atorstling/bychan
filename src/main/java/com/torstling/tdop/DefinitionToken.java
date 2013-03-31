@@ -34,6 +34,7 @@ public class DefinitionToken<N extends Node> implements Token<N> {
         });
     }
 
+    @NotNull
     private LexingMatch swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
         DefinitionTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
         parser.swallow(type);
@@ -44,7 +45,7 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     @Override
     public N infixParse(@NotNull final N left, @NotNull final TokenParserCallback<N> parser) {
         InfixAstBuilder<N> infixBuilder = def.getInfixBuilder();
-        return infixBuilder.build(new LexingMatch("fake"), left, new ParserCallback2<N>() {
+        return infixBuilder.build(match, left, new ParserCallback2<N>() {
             @Override
             public N expression() {
                 return parser.expression(infixBindingPower());
@@ -69,5 +70,10 @@ public class DefinitionToken<N extends Node> implements Token<N> {
 
     public String toString() {
         return "" + def;
+    }
+
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }

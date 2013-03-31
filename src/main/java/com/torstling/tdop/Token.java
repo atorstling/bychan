@@ -14,4 +14,7 @@ interface Token<N extends Node> {
     int infixBindingPower();
     @NotNull
     boolean isOfType(@NotNull TokenType<N> type);
+    @org.jetbrains.annotations.NotNull
+    @NotNull
+    LexingMatch getMatch();
 }

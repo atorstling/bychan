@@ -13,7 +13,7 @@ public class LexerTest {
         List<Token> tokens = new Lexer(CalculatorTokenTypes.get()).lex("(1 -) ");
         assertEquals(5, tokens.size());
         assertTrue(tokens.get(0) instanceof LeftParenthesisToken);
-        assertEquals(new NumberToken(1), tokens.get(1));
+        assertEquals(new NumberToken(new LexingMatch("1")), tokens.get(1));
         assertTrue(tokens.get(2) instanceof SubtractionToken);
         assertTrue(tokens.get(3) instanceof RightParenthesisToken);
         assertTrue(tokens.get(4) instanceof EndToken);

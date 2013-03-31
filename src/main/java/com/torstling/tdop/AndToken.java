@@ -1,8 +1,14 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class AndToken implements Token<BooleanExpressionNode> {
+    private final LexingMatch match;
+
+    public AndToken(@NotNull final LexingMatch match) {
+        this.match = match;
+    }
+
     @NotNull
     public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException("'And' operator cannot be used as a prefix");
@@ -21,6 +27,12 @@ public class AndToken implements Token<BooleanExpressionNode> {
     @Override
     public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
         return type.equals(AndTokenType.get());
+    }
+
+    @org.jetbrains.annotations.NotNull
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }
 

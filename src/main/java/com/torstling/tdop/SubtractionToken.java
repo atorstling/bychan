@@ -1,11 +1,23 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class SubtractionToken implements Token<CalculatorNode> {
     @NotNull
+    private final LexingMatch match;
+
+    public SubtractionToken(@NotNull final LexingMatch match) {
+        this.match = match;
+    }
+
+    @NotNull
     public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 
     @NotNull

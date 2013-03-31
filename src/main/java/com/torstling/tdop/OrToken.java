@@ -3,7 +3,11 @@ package com.torstling.tdop;
 import com.sun.istack.internal.NotNull;
 
 public class OrToken implements Token<BooleanExpressionNode> {
-    public OrToken() {
+    @NotNull
+    private final LexingMatch match;
+
+    public OrToken(@NotNull final LexingMatch match) {
+        this.match = match;
     }
 
     @NotNull
@@ -23,5 +27,10 @@ public class OrToken implements Token<BooleanExpressionNode> {
     @Override
     public boolean isOfType(@NotNull TokenType<BooleanExpressionNode> type) {
         return type.equals(OrTokenType.get());
+    }
+
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }

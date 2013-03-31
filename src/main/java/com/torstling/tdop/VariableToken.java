@@ -5,17 +5,20 @@ import com.sun.istack.internal.NotNull;
 public class VariableToken implements Token<BooleanExpressionNode> {
     @NotNull
     private final String name;
+    @NotNull
+    private final LexingMatch match;
 
-    public VariableToken(@NotNull final String name) {
+    public VariableToken(@NotNull final LexingMatch match) {
+        this.match = match;
+        this.name = match.getText();
         if (!name.matches("[a-z]+")) {
             throw new IllegalArgumentException("Variable name can only contain lower-case letters, was '" + name + "'");
         }
-        this.name = name;
     }
 
     @NotNull
-    public static VariableToken valueOf(@NotNull final String value) {
-        return new VariableToken(value);
+    public static VariableToken valueOf(@NotNull final LexingMatch match) {
+        return new VariableToken(match);
     }
 
     public String getName() {
@@ -39,6 +42,11 @@ public class VariableToken implements Token<BooleanExpressionNode> {
     @Override
     public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
         return type.equals(VariableTokenType.get());
+    }
+
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }
 

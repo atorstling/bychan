@@ -5,7 +5,7 @@ public class AndTokenType implements TokenType<BooleanExpressionNode> {
     public static final AndTokenType INSTANCE = new AndTokenType();
 
     public Token<BooleanExpressionNode> toToken(LexingMatch match) {
-        return new AndToken();
+        return new AndToken(match);
     }
 
     public String getPattern() {

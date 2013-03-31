@@ -1,8 +1,15 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class NotToken implements Token<BooleanExpressionNode> {
+
+    @NotNull
+    private final LexingMatch match;
+
+    public NotToken(LexingMatch match) {
+        this.match = match;
+    }
 
     @NotNull
     public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback<BooleanExpressionNode> parser) {
@@ -21,5 +28,10 @@ public class NotToken implements Token<BooleanExpressionNode> {
     @Override
     public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
         return type.equals(NotTokenType.get());
+    }
+
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 }

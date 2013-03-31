@@ -6,7 +6,7 @@ public class OrTokenType implements TokenType<BooleanExpressionNode> {
     public static final OrTokenType INSTANCE = new OrTokenType();
 
     public Token<BooleanExpressionNode> toToken(LexingMatch match) {
-        return new OrToken();
+        return new OrToken(match);
     }
 
     public String getPattern() {

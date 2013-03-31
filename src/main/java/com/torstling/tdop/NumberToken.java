@@ -1,21 +1,31 @@
 package com.torstling.tdop;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class NumberToken implements Token<CalculatorNode> {
+    @NotNull
+    private final LexingMatch match;
+
     @Override
-    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
+    public boolean isOfType(@NotNull final TokenType<CalculatorNode> type) {
         return type.equals(NumberTokenType.get());
+    }
+
+    @NotNull
+    @Override
+    public LexingMatch getMatch() {
+        return match;
     }
 
     private int value;
 
-    public NumberToken(int value) {
-        this.value = value;
+    public NumberToken(LexingMatch match) {
+        this.match = match;
+        this.value = Integer.parseInt(match.getText());
     }
 
-    public static Token valueOf(String digit) {
-        return new NumberToken(Integer.parseInt(digit));
+    public static Token valueOf(@NotNull final LexingMatch match) {
+        return new NumberToken(match);
     }
 
     @Override
