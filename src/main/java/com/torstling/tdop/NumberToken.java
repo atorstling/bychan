@@ -4,8 +4,8 @@ import com.sun.istack.internal.NotNull;
 
 public class NumberToken implements Token<CalculatorNode> {
     @Override
-    public TokenType<CalculatorNode> getType() {
-        return NumberTokenType.get();
+    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
+        return type.equals(NumberTokenType.get());
     }
 
     private int value;

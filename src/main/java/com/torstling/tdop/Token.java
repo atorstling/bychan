@@ -13,5 +13,5 @@ interface Token<N extends Node> {
      */
     int infixBindingPower();
     @NotNull
-    TokenType<N> getType();
+    boolean isOfType(@NotNull TokenType<N> type);
 }

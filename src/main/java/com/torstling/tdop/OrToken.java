@@ -21,7 +21,7 @@ public class OrToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public TokenType<BooleanExpressionNode> getType() {
-        return OrTokenType.get();
+    public boolean isOfType(@NotNull TokenType<BooleanExpressionNode> type) {
+        return type.equals(OrTokenType.get());
     }
 }

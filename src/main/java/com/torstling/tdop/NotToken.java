@@ -19,7 +19,7 @@ public class NotToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public TokenType<BooleanExpressionNode> getType() {
-        return NotTokenType.get();
+    public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
+        return type.equals(NotTokenType.get());
     }
 }

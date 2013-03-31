@@ -18,8 +18,8 @@ public class EndToken<N extends Node> implements Token<N> {
     }
 
     @Override
-    public TokenType<N> getType() {
-        return EndTokenType.get();
+    public boolean isOfType(@NotNull TokenType<N> type) {
+        return type.equals(EndTokenType.get());
     }
 
     public String toString() {

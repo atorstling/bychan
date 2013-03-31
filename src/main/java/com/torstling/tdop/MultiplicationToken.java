@@ -24,7 +24,7 @@ public class MultiplicationToken implements Token<CalculatorNode> {
     }
 
     @Override
-    public TokenType<CalculatorNode> getType() {
-        return MultiplicationTokenType.get();
+    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
+        return type.equals(MultiplicationTokenType.get());
     }
 }

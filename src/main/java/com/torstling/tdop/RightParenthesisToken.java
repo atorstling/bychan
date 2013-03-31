@@ -23,7 +23,7 @@ public class RightParenthesisToken<N extends Node> implements Token<N> {
     }
 
     @Override
-    public TokenType<N> getType() {
-        return RightParenthesisTokenType.get();
+    public boolean isOfType(@NotNull final TokenType<N> type) {
+        return type.equals(RightParenthesisTokenType.get());
     }
 }

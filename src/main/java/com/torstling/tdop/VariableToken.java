@@ -37,8 +37,8 @@ public class VariableToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public TokenType<BooleanExpressionNode> getType() {
-        return VariableTokenType.get();
+    public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
+        return type.equals(VariableTokenType.get());
     }
 }
 

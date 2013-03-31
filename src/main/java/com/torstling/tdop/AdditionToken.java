@@ -24,7 +24,7 @@ public class AdditionToken implements Token<CalculatorNode> {
     }
 
     @Override
-    public TokenType<CalculatorNode> getType() {
-        return AdditionTokenType.get();
+    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
+        return type.equals(AdditionTokenType.get());
     }
 }

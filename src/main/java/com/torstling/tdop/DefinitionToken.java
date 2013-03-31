@@ -63,8 +63,8 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     }
 
     @Override
-    public TokenType<N> getType() {
-        return tokenType;
+    public boolean isOfType(@NotNull TokenType<N> type) {
+        return type.equals(tokenType);
     }
 
     public String toString() {

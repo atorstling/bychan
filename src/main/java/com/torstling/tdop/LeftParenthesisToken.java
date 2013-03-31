@@ -25,7 +25,7 @@ public class LeftParenthesisToken<N extends Node> implements Token<N> {
     }
 
     @Override
-    public TokenType<N> getType() {
-        return LeftParenthesisTokenType.<N>get();
+    public boolean isOfType(@NotNull TokenType<N> type) {
+        return type.equals(LeftParenthesisTokenType.<N>get());
     }
 }

@@ -57,10 +57,9 @@ public class PrattParser<N extends Node> implements TokenParserCallback<N> {
     }
 
     public void swallow(@NotNull TokenType<N> type) {
-        Token next = tokens.pop();
-        TokenType actualType = next.getType();
-        if (!actualType.equals(type)) {
-            throw new IllegalStateException("Expected " + type + ", got " + actualType + ": '" + next + "'");
+        Token<N> next = tokens.pop();
+        if (!next.isOfType(type)) {
+            throw new IllegalStateException("Expected a token of type " + type + ", but got '" + next + "'");
         }
     }
 }
