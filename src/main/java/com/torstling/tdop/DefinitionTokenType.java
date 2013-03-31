@@ -14,7 +14,7 @@ public class DefinitionTokenType<N extends Node> implements TokenType<N> {
 
     @Override
     public Token<N> toToken(@NotNull final LexingMatch match) {
-        return new DefinitionToken<N>(def, tokenFinder);
+        return new DefinitionToken<N>(this, def, tokenFinder);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class DefinitionTokenType<N extends Node> implements TokenType<N> {
     }
 
     public String toString() {
-        return "" + def;
+        return "type of '" + def.getPattern() + "'" + System.identityHashCode(this);
     }
 
     @NotNull

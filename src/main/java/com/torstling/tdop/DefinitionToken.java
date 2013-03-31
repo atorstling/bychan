@@ -3,11 +3,13 @@ package com.torstling.tdop;
 import com.sun.istack.internal.NotNull;
 
 public class DefinitionToken<N extends Node> implements Token<N> {
+    private DefinitionTokenType<N> tokenType;
     @NotNull
     private final LeveledTokenDefinition<N> def;
     private TokenFinder<N> tokenFinder;
 
-    public DefinitionToken(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public DefinitionToken(@NotNull final DefinitionTokenType<N> tokenType, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+        this.tokenType = tokenType;
         this.def = def;
         this.tokenFinder = tokenFinder;
     }
@@ -59,7 +61,7 @@ public class DefinitionToken<N extends Node> implements Token<N> {
 
     @Override
     public TokenType<N> getType() {
-        throw new UnsupportedOperationException();
+        return tokenType;
     }
 
     public String toString() {

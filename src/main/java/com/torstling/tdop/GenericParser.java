@@ -31,7 +31,7 @@ public class GenericParser<N extends Node> {
     }
 
     private Collection<DefinitionTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder tokenFinder) {
-        return Collections2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, DefinitionTokenType<N>>() {
+        return Utils2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, DefinitionTokenType<N>>() {
             @Override
             public DefinitionTokenType<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
                 return new DefinitionTokenType<N>(tokenDef, tokenFinder);
