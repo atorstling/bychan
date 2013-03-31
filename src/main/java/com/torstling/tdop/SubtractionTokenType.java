@@ -6,7 +6,7 @@ public class SubtractionTokenType implements TokenType<CalculatorNode> {
     private static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
 
     @NotNull
-    public Token toToken(@NotNull LexingMatch match) {
+    public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
         return new SubtractionToken(match);
     }
 

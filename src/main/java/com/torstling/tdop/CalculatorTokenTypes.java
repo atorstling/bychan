@@ -8,7 +8,7 @@ import java.util.List;
 class CalculatorTokenTypes {
     @NotNull
     public static List<TokenType<CalculatorNode>> get() {
-        return Arrays.<TokenType<CalculatorNode>>asList(
+        return Arrays.asList(
                 NumberTokenType.get(),
                 SubtractionTokenType.get(),
                 AdditionTokenType.get(),

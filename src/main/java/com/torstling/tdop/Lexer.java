@@ -45,7 +45,7 @@ class Lexer<N extends Node> {
             tokens.add(matchingToken);
             lastEnd = matcher.end();
         }
-        tokens.add(new EndToken());
+        tokens.add(new EndToken<N>());
         return tokens;
     }
 

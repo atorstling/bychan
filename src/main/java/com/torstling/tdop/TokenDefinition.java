@@ -10,13 +10,11 @@ public class TokenDefinition<N extends Node> {
     private final PrefixAstBuilder<N> prefixBuilder;
     @Nullable
     private final InfixAstBuilder<N> infixBuilder;
-    private final boolean filterOutBeforeParsing;
 
-    public TokenDefinition(@NotNull final String pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, boolean filterOutBeforeParsing) {
+    public TokenDefinition(@NotNull final String pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
-        this.filterOutBeforeParsing = filterOutBeforeParsing;
     }
 
     @NotNull

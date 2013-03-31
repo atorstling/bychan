@@ -11,6 +11,7 @@ public class LexingMatch {
         this.text = text;
     }
 
+    @NotNull
     public String getText() {
         return text;
     }

@@ -11,8 +11,8 @@ public class BooleanExpressionParserTest {
 
     @Test
     public void lexing() {
-        Lexer lexer = new Lexer<>(BooleanExpressionTokens.get());
-        List<Token> tokenStream = lexer.lex("a + b");
+        Lexer<BooleanExpressionNode> lexer = new Lexer<>(BooleanExpressionTokens.get());
+        List<Token<BooleanExpressionNode>> tokenStream = lexer.lex("a + b");
         assertTrue(tokenStream.get(0) instanceof VariableToken);
         assertTrue(tokenStream.get(1) instanceof OrToken);
         assertTrue(tokenStream.get(2) instanceof VariableToken);
@@ -46,7 +46,7 @@ public class BooleanExpressionParserTest {
     }
 
     @Test
-    public void notPrio() {
+    public void priorityOfNotOperator() {
         BooleanExpressionNode root = parse("!a+b");
         checkTruth(root, false, false, true);
     }

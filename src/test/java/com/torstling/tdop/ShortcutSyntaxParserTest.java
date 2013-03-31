@@ -66,7 +66,7 @@ public class ShortcutSyntaxParserTest {
 
 
     @Test
-    public void paranthesisPrio() {
+    public void parenthesisPrio() {
         check(l, "!( a & b) ", true, false, true);
         check(l, "!  a & b  ", false, true, true);
     }

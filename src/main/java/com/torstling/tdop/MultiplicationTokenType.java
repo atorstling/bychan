@@ -6,7 +6,7 @@ public class MultiplicationTokenType implements TokenType<CalculatorNode> {
     private static final MultiplicationTokenType INSTANCE = new MultiplicationTokenType();
 
     @NotNull
-    public Token toToken(@NotNull LexingMatch match) {
+    public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
         return new MultiplicationToken(match);
     }
 

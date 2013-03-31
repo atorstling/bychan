@@ -35,13 +35,13 @@ public class TokenDefinitionBuilder<N extends Node> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder, filterOutBeforeParsing);
+        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder);
     }
 
     @Nullable
     private PrefixAstBuilder<N> selectPrefix() {
         if (standaloneBuilder != null && prefixBuilder != null) {
-            throw new IllegalStateException("Prefix and standalone matchers cannot be simultaniously defined.");
+            throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
         }
         if (standaloneBuilder != null) {
              return new PrefixAstBuilder<N>() {

@@ -25,7 +25,7 @@ public class PrattParser<N extends Node> implements TokenParserCallback<N> {
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
         // "-" as in "negative", used in for instance "-3 + 5", parses to -(rest of expression)
-        // "(" as in "start subexpression", used in for instance "(3)", parses rest of expression with 0 strength,
+        // "(" as in "start sub-expression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         N currentLeftHandSide = tokens.pop().prefixParse(this);

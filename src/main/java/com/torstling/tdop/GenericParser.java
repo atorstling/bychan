@@ -14,7 +14,7 @@ public class GenericParser<N extends Node> {
 
     public GenericParser(List<TokenDefinitions<N>> levels) {
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(levels);
-        DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<N>();
+        DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
         final Collection<DefinitionTokenType<N>> definitionTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
         delegatingFinder.setDelegate(new TokenFinder<N>() {
             @NotNull

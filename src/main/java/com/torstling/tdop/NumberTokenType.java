@@ -6,7 +6,7 @@ public class NumberTokenType implements TokenType<CalculatorNode> {
     private static final NumberTokenType INSTANCE = new NumberTokenType();
 
     @NotNull
-    public Token toToken(@NotNull LexingMatch match) {
+    public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
         return NumberToken.valueOf(match);
     }
 

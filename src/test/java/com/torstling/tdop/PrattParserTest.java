@@ -47,7 +47,7 @@ public class PrattParserTest {
     }
 
     @Test
-    public void ambigous1() {
+    public void ambiguous() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(new LexingMatch("1")),
@@ -64,7 +64,7 @@ public class PrattParserTest {
     }
 
     @Test
-    public void ambigous2() {
+    public void ambiguous2() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(new LexingMatch("1")),
                 new SubtractionToken(nextMatch()),
@@ -81,7 +81,7 @@ public class PrattParserTest {
     }
 
     @Test
-    public void prio() {
+    public void priority() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(new LexingMatch("1")),
                 new SubtractionToken(nextMatch()),
@@ -96,7 +96,7 @@ public class PrattParserTest {
     }
 
     @Test
-    public void prioReverse() {
+    public void priorityReverse() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(new LexingMatch("1")),
                 new MultiplicationToken(nextMatch()),

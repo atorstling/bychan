@@ -13,9 +13,6 @@ public class OrNode implements BooleanExpressionNode {
 
     public boolean evaluate(@NotNull VariableBindings bindings) {
         boolean leftResult = left.evaluate(bindings);
-        if (leftResult) {
-            return true;
-        }
-        return right.evaluate(bindings);
+        return leftResult || right.evaluate(bindings);
     }
 }

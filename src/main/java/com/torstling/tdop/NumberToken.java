@@ -24,7 +24,7 @@ public class NumberToken implements Token<CalculatorNode> {
         this.value = Integer.parseInt(match.getText());
     }
 
-    public static Token valueOf(@NotNull final LexingMatch match) {
+    public static Token<CalculatorNode> valueOf(@NotNull final LexingMatch match) {
         return new NumberToken(match);
     }
 
