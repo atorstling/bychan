@@ -14,9 +14,10 @@ public class GenericParser<N extends Node> {
 
     public GenericParser(List<TokenDefinitions<N>> levels) {
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(levels);
-        DelegatingTokenFinder delegatingFinder = new DelegatingTokenFinder();
+        DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<N>();
         final Collection<DefinitionTokenType<N>> definitionTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
         delegatingFinder.setDelegate(new TokenFinder<N>() {
+            @NotNull
             @Override
             public DefinitionTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
                 for (DefinitionTokenType<N> definitionTokenType : definitionTokenTypes) {
@@ -30,10 +31,10 @@ public class GenericParser<N extends Node> {
         lexer = new Lexer<>(definitionTokenTypes);
     }
 
-    private Collection<DefinitionTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder tokenFinder) {
+    private Collection<DefinitionTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
         return Utils2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, DefinitionTokenType<N>>() {
             @Override
-            public DefinitionTokenType<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
+            public DefinitionTokenType<N> apply(final LeveledTokenDefinition<N> tokenDef) {
                 return new DefinitionTokenType<>(tokenDef, tokenFinder);
             }
         });

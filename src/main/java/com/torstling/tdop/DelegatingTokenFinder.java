@@ -2,16 +2,17 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
-public class DelegatingTokenFinder implements TokenFinder {
+public class DelegatingTokenFinder<N extends Node> implements TokenFinder<N> {
     @NotNull
-    private TokenFinder delegate;
+    private TokenFinder<N> delegate;
 
+    @NotNull
     @Override
-    public DefinitionTokenType getTokenTypeFor(@NotNull TokenDefinition tokenDefinition) {
+    public DefinitionTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
         return delegate.getTokenTypeFor(tokenDefinition);
     }
 
-    public void setDelegate(@NotNull final TokenFinder delegate) {
+    public void setDelegate(@NotNull final TokenFinder<N> delegate) {
         this.delegate = delegate;
     }
 }
