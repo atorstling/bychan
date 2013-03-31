@@ -1,12 +1,16 @@
 package com.torstling.tdop;
 
-public class SubtractionTokenType implements TokenType<CalculatorNode> {
-    public static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
+import org.jetbrains.annotations.NotNull;
 
-    public Token toToken(LexingMatch match) {
+public class SubtractionTokenType implements TokenType<CalculatorNode> {
+    private static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
+
+    @NotNull
+    public Token toToken(@NotNull LexingMatch match) {
         return new SubtractionToken(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "-";
     }

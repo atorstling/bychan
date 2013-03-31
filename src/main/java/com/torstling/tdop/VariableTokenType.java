@@ -4,12 +4,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class VariableTokenType implements TokenType<BooleanExpressionNode> {
 
-    public static final VariableTokenType INSTANCE = new VariableTokenType();
+    private static final VariableTokenType INSTANCE = new VariableTokenType();
 
-    public Token<BooleanExpressionNode> toToken(LexingMatch match) {
+    @NotNull
+    public Token<BooleanExpressionNode> toToken(@NotNull LexingMatch match) {
         return VariableToken.valueOf(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "[a-z]+";
     }

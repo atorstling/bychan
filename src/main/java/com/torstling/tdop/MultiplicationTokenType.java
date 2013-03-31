@@ -1,12 +1,16 @@
 package com.torstling.tdop;
 
-public class MultiplicationTokenType implements TokenType<CalculatorNode> {
-    public static final MultiplicationTokenType INSTANCE = new MultiplicationTokenType();
+import org.jetbrains.annotations.NotNull;
 
-    public Token toToken(LexingMatch match) {
+public class MultiplicationTokenType implements TokenType<CalculatorNode> {
+    private static final MultiplicationTokenType INSTANCE = new MultiplicationTokenType();
+
+    @NotNull
+    public Token toToken(@NotNull LexingMatch match) {
         return new MultiplicationToken(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "\\*";
     }

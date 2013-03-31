@@ -1,12 +1,16 @@
 package com.torstling.tdop;
 
-public class NumberTokenType implements TokenType<CalculatorNode> {
-    public static final NumberTokenType INSTANCE = new NumberTokenType();
+import org.jetbrains.annotations.NotNull;
 
-    public Token toToken(LexingMatch match) {
+public class NumberTokenType implements TokenType<CalculatorNode> {
+    private static final NumberTokenType INSTANCE = new NumberTokenType();
+
+    @NotNull
+    public Token toToken(@NotNull LexingMatch match) {
         return NumberToken.valueOf(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "\\d+";
     }

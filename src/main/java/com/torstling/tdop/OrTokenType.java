@@ -3,12 +3,14 @@ package com.torstling.tdop;
 import org.jetbrains.annotations.NotNull;
 
 public class OrTokenType implements TokenType<BooleanExpressionNode> {
-    public static final OrTokenType INSTANCE = new OrTokenType();
+    private static final OrTokenType INSTANCE = new OrTokenType();
 
-    public Token<BooleanExpressionNode> toToken(LexingMatch match) {
+    @NotNull
+    public Token<BooleanExpressionNode> toToken(@NotNull LexingMatch match) {
         return new OrToken(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "\\+";
     }

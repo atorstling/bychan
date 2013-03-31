@@ -3,7 +3,7 @@ package com.torstling.tdop;
 import org.jetbrains.annotations.NotNull;
 
 public class NotNode implements BooleanExpressionNode {
-    private BooleanExpressionNode expression;
+    private final BooleanExpressionNode expression;
 
     public NotNode(BooleanExpressionNode expression) {
         this.expression = expression;

@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BooleanExpressionParser {
+class BooleanExpressionParser {
     @NotNull
     public BooleanExpressionNode parse(@NotNull final String input) {
         List<Token<BooleanExpressionNode>> tokens = new Lexer<BooleanExpressionNode>(BooleanExpressionTokens.get()).lex(input);

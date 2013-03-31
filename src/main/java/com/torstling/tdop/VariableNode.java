@@ -3,7 +3,7 @@ package com.torstling.tdop;
 import org.jetbrains.annotations.NotNull;
 
 public class VariableNode implements BooleanExpressionNode {
-    private String name;
+    private final String name;
 
     public VariableNode(@NotNull final String name) {
         this.name = name;

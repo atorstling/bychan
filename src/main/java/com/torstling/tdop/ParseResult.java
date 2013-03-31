@@ -7,7 +7,7 @@ public class ParseResult<N extends Node> {
     @Nullable
     private final N rootNode;
 
-    public ParseResult(@NotNull final N rootNode) {
+    private ParseResult(@NotNull final N rootNode) {
         this.rootNode = rootNode;
     }
 
@@ -30,9 +30,5 @@ public class ParseResult<N extends Node> {
     public N getRootNode() {
         checkSuccess();
         return rootNode;
-    }
-
-    public boolean isFailure() {
-        return !isSuccess();
     }
 }

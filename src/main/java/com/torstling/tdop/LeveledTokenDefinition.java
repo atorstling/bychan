@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LeveledTokenDefinition<N extends Node> {
+class LeveledTokenDefinition<N extends Node> {
     @NotNull
     private final TokenDefinition<N> definition;
     private final int levelCount;

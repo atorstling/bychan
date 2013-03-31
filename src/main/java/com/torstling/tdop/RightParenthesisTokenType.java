@@ -1,13 +1,17 @@
 package com.torstling.tdop;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RightParenthesisTokenType<N extends Node> implements TokenType<N> {
 
-    public static final RightParenthesisTokenType INSTANCE = new RightParenthesisTokenType<>();
+    private static final RightParenthesisTokenType INSTANCE = new RightParenthesisTokenType<>();
 
-    public Token<N> toToken(LexingMatch match) {
+    @NotNull
+    public Token<N> toToken(@NotNull LexingMatch match) {
         return new RightParenthesisToken<N>(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "\\)";
     }

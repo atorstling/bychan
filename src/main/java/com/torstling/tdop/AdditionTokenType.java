@@ -1,12 +1,16 @@
 package com.torstling.tdop;
 
+import org.jetbrains.annotations.NotNull;
+
 public class AdditionTokenType implements TokenType<CalculatorNode> {
     private static final AdditionTokenType INSTANCE = new AdditionTokenType();
 
-    public Token<CalculatorNode> toToken(LexingMatch match) {
+    @NotNull
+    public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
         return new AdditionToken(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "\\+";
     }

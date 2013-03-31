@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VariableBindings {
-    private Map<String, Boolean> bindings;
+    private final Map<String, Boolean> bindings;
 
     public VariableBindings(@NotNull final Map<String, Boolean> bindings) {
         this.bindings = new HashMap<String, Boolean>(bindings);

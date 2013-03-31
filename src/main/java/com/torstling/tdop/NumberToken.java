@@ -17,7 +17,7 @@ public class NumberToken implements Token<CalculatorNode> {
         return match;
     }
 
-    private int value;
+    private final int value;
 
     public NumberToken(LexingMatch match) {
         this.match = match;

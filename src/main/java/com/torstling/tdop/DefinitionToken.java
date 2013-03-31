@@ -3,12 +3,12 @@ package com.torstling.tdop;
 import org.jetbrains.annotations.NotNull;
 
 public class DefinitionToken<N extends Node> implements Token<N> {
-    private DefinitionTokenType<N> tokenType;
+    private final DefinitionTokenType<N> tokenType;
     @NotNull
-    private LexingMatch match;
+    private final LexingMatch match;
     @NotNull
     private final LeveledTokenDefinition<N> def;
-    private TokenFinder<N> tokenFinder;
+    private final TokenFinder<N> tokenFinder;
 
     public DefinitionToken(@NotNull final DefinitionTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.tokenType = tokenType;
@@ -22,11 +22,13 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     public N prefixParse(@NotNull final TokenParserCallback<N> parser) {
         final PrefixAstBuilder<N> builder = def.getPrefixBuilder();
         return builder.build(match, new ParserCallback2<N>() {
+            @NotNull
             @Override
             public N expression() {
                 return parser.expression(infixBindingPower());
             }
 
+            @NotNull
             @Override
             public Token<N> expect(TokenDefinition<N> tokenD) {
                 return swallow(tokenD, parser);
@@ -45,11 +47,13 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     public N infixParse(@NotNull final N left, @NotNull final TokenParserCallback<N> parser) {
         InfixAstBuilder<N> infixBuilder = def.getInfixBuilder();
         return infixBuilder.build(match, left, new ParserCallback2<N>() {
+            @NotNull
             @Override
             public N expression() {
                 return parser.expression(infixBindingPower());
             }
 
+            @NotNull
             @Override
             public Token<N> expect(TokenDefinition<N> tokenD) {
                 return swallow(tokenD, parser);

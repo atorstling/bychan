@@ -1,13 +1,17 @@
 package com.torstling.tdop;
 
+import org.jetbrains.annotations.NotNull;
+
 public class NotTokenType implements TokenType<BooleanExpressionNode> {
 
-    public static final NotTokenType INSTANCE = new NotTokenType();
+    private static final NotTokenType INSTANCE = new NotTokenType();
 
-    public Token<BooleanExpressionNode> toToken(LexingMatch match) {
+    @NotNull
+    public Token<BooleanExpressionNode> toToken(@NotNull LexingMatch match) {
         return new NotToken(match);
     }
 
+    @NotNull
     public String getPattern() {
         return "\\!";
     }

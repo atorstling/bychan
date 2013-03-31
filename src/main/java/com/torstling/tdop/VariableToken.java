@@ -8,7 +8,7 @@ public class VariableToken implements Token<BooleanExpressionNode> {
     @NotNull
     private final LexingMatch match;
 
-    public VariableToken(@NotNull final LexingMatch match) {
+    private VariableToken(@NotNull final LexingMatch match) {
         this.match = match;
         this.name = match.getText();
         if (!name.matches("[a-z]+")) {
@@ -21,6 +21,7 @@ public class VariableToken implements Token<BooleanExpressionNode> {
         return new VariableToken(match);
     }
 
+    @NotNull
     public String getName() {
         return name;
     }

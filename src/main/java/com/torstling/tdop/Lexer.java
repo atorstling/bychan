@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lexer<N extends Node> {
+class Lexer<N extends Node> {
 
     private final Pattern pattern;
     private final List<? extends TokenType<N>> tokenTypes;

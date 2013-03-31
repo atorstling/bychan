@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-public class CalculatorTokenTypes {
+class CalculatorTokenTypes {
     @NotNull
     public static List<TokenType<CalculatorNode>> get() {
         return Arrays.<TokenType<CalculatorNode>>asList(
