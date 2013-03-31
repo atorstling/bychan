@@ -129,7 +129,7 @@ public class PrattParserTest {
             p.parse();
             fail("expected exception");
         } catch (IllegalStateException e) {
-            assertEquals("Expected RightParenthesisToken, got EndToken: '.'", e.getMessage());
+            assertEquals("Expected RightParenthesisTokenType, got EndTokenType: '.'", e.getMessage());
         }
     }
 

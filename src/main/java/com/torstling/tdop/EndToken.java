@@ -19,7 +19,7 @@ public class EndToken<N extends Node> implements Token<N> {
 
     @Override
     public TokenType<N> getType() {
-        throw new UnsupportedOperationException();
+        return EndTokenType.get();
     }
 
     public String toString() {
