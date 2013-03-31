@@ -7,8 +7,8 @@ public class DelegatingTokenFinder implements TokenFinder {
     private TokenFinder delegate;
 
     @Override
-    public DefinitionTokenType getTokenFor(@NotNull TokenDefinition tokenDefinition) {
-        return delegate.getTokenFor(tokenDefinition);
+    public DefinitionTokenType getTokenTypeFor(@NotNull TokenDefinition tokenDefinition) {
+        return delegate.getTokenTypeFor(tokenDefinition);
     }
 
     public void setDelegate(@NotNull final TokenFinder delegate) {

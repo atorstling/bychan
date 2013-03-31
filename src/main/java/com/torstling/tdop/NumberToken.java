@@ -3,6 +3,11 @@ package com.torstling.tdop;
 import com.sun.istack.internal.NotNull;
 
 public class NumberToken implements Token<CalculatorNode> {
+    @Override
+    public TokenType<CalculatorNode> getType() {
+        return NumberTokenType.get();
+    }
+
     private int value;
 
     public NumberToken(int value) {

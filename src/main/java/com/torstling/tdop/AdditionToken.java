@@ -22,4 +22,9 @@ public class AdditionToken implements Token<CalculatorNode> {
     public String toString() {
         return "+";
     }
+
+    @Override
+    public TokenType<CalculatorNode> getType() {
+        return AdditionTokenType.get();
+    }
 }

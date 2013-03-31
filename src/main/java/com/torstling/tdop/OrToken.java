@@ -19,4 +19,9 @@ public class OrToken implements Token<BooleanExpressionNode> {
     public int infixBindingPower() {
         return 20;
     }
+
+    @Override
+    public TokenType<BooleanExpressionNode> getType() {
+        return OrTokenType.get();
+    }
 }

@@ -7,7 +7,7 @@ public class LeftParenthesisToken<N extends Node> implements Token<N> {
     @NotNull
     public N prefixParse(@NotNull TokenParserCallback<N> parser) {
         N expression = parser.expression(0);
-        parser.swallow((Class) RightParenthesisToken.class);
+        parser.swallow(RightParenthesisTokenType.<N>get());
         return expression;
     }
 
@@ -22,5 +22,10 @@ public class LeftParenthesisToken<N extends Node> implements Token<N> {
 
     public String toString() {
         return "(";
+    }
+
+    @Override
+    public TokenType<N> getType() {
+        return LeftParenthesisTokenType.<N>get();
     }
 }

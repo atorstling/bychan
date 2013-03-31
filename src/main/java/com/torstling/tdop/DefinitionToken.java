@@ -30,8 +30,8 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     }
 
     private LexingMatch swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
-        Class<? extends Token<N>> aClass = (Class) tokenFinder.getTokenFor(tokenD).getClass();
-        parser.swallow(aClass);
+        DefinitionTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
+        parser.swallow(type);
         return new LexingMatch("fake");
     }
 
@@ -55,6 +55,11 @@ public class DefinitionToken<N extends Node> implements Token<N> {
     @Override
     public int infixBindingPower() {
         return def.getLevel();
+    }
+
+    @Override
+    public TokenType<N> getType() {
+        throw new UnsupportedOperationException();
     }
 
     public String toString() {

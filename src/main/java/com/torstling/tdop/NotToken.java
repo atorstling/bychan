@@ -17,4 +17,9 @@ public class NotToken implements Token<BooleanExpressionNode> {
     public int infixBindingPower() {
         return 1;
     }
+
+    @Override
+    public TokenType<BooleanExpressionNode> getType() {
+        return NotTokenType.get();
+    }
 }

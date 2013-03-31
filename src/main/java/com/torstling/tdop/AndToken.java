@@ -17,5 +17,10 @@ public class AndToken implements Token<BooleanExpressionNode> {
     public int infixBindingPower() {
         return 10;
     }
+
+    @Override
+    public TokenType<BooleanExpressionNode> getType() {
+        return AndTokenType.get();
+    }
 }
 

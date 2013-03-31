@@ -28,4 +28,9 @@ public class SubtractionToken implements Token<CalculatorNode> {
     public String toString() {
         return "-";
     }
+
+    @Override
+    public TokenType<CalculatorNode> getType() {
+        return SubtractionTokenType.get();
+    }
 }

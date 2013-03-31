@@ -21,4 +21,9 @@ public class RightParenthesisToken<N extends Node> implements Token<N> {
     public String toString() {
         return ")";
     }
+
+    @Override
+    public TokenType<N> getType() {
+        return RightParenthesisTokenType.get();
+    }
 }

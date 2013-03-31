@@ -35,5 +35,10 @@ public class VariableToken implements Token<BooleanExpressionNode> {
     public int infixBindingPower() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public TokenType<BooleanExpressionNode> getType() {
+        return VariableTokenType.get();
+    }
 }
 

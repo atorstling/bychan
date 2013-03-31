@@ -18,7 +18,7 @@ public class GenericParser<N extends Node> {
         final Collection<DefinitionTokenType<N>> definitionTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
         delegatingFinder.setDelegate(new TokenFinder<N>() {
             @Override
-            public DefinitionTokenType<N> getTokenFor(@NotNull TokenDefinition<N> tokenDefinition) {
+            public DefinitionTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
                 for (DefinitionTokenType<N> definitionTokenType : definitionTokenTypes) {
                     if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
                         return definitionTokenType;

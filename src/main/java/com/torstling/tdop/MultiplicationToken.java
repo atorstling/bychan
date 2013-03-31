@@ -22,4 +22,9 @@ public class MultiplicationToken implements Token<CalculatorNode> {
     public String toString() {
         return "*";
     }
+
+    @Override
+    public TokenType<CalculatorNode> getType() {
+        return MultiplicationTokenType.get();
+    }
 }

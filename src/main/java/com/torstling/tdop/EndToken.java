@@ -17,6 +17,11 @@ public class EndToken<N extends Node> implements Token<N> {
         return 0;
     }
 
+    @Override
+    public TokenType<N> getType() {
+        throw new UnsupportedOperationException();
+    }
+
     public String toString() {
         return ".";
     }
