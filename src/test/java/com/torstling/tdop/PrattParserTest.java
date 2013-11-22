@@ -1,5 +1,6 @@
 package com.torstling.tdop;
 
+import com.torstling.tdop.calculator.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 

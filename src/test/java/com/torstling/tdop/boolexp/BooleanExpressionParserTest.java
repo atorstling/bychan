@@ -1,5 +1,6 @@
-package com.torstling.tdop;
+package com.torstling.tdop.boolexp;
 
+import com.torstling.tdop.*;
 import org.junit.Test;
 
 import java.util.List;

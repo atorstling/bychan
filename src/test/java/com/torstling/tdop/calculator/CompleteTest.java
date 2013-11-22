@@ -1,5 +1,6 @@
-package com.torstling.tdop;
+package com.torstling.tdop.calculator;
 
+import com.torstling.tdop.calculator.*;
 import org.junit.Test;
 
 import java.io.BufferedReader;

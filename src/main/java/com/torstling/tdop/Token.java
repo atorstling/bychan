@@ -3,7 +3,7 @@ package com.torstling.tdop;
 import org.jetbrains.annotations.NotNull;
 import sun.font.AttributeValues;
 
-interface Token<N extends Node> {
+public interface Token<N extends Node> {
     @NotNull
     N prefixParse(@NotNull TokenParserCallback<N> parser);
     @NotNull

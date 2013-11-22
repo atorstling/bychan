@@ -1,5 +1,8 @@
-package com.torstling.tdop;
+package com.torstling.tdop.boolexp;
 
+import com.torstling.tdop.LexingMatch;
+import com.torstling.tdop.Token;
+import com.torstling.tdop.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 public class VariableTokenType implements TokenType<BooleanExpressionNode> {
