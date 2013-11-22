@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
-public class RightParenthesisToken<N extends Node> implements Token<N> {
+public class RightParenthesisToken<N extends AstNode> implements Token<N> {
 
     @NotNull
     private final LexingMatch match;

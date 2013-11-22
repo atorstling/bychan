@@ -1,13 +1,13 @@
 package com.torstling.tdop.fluid;
 
+import com.torstling.tdop.AstNode;
 import com.torstling.tdop.LexingMatch;
-import com.torstling.tdop.Node;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
-public class TokenDefinitionBuilder<N extends Node> {
+public class TokenDefinitionBuilder<N extends AstNode> {
     private String pattern;
     private PrefixAstBuilder<N> prefixBuilder;
     private InfixAstBuilder<N> infixBuilder;

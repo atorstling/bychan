@@ -1,12 +1,10 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.Node;
-import com.torstling.tdop.fluid.InfixAstBuilder;
-import com.torstling.tdop.fluid.PrefixAstBuilder;
+import com.torstling.tdop.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class TokenDefinition<N extends Node> {
+public class TokenDefinition<N extends AstNode> {
     @NotNull
     private final String pattern;
     @Nullable

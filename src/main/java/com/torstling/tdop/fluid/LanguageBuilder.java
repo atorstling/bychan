@@ -1,12 +1,12 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.Node;
+import com.torstling.tdop.AstNode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LanguageBuilder<N extends Node> {
+public class LanguageBuilder<N extends AstNode> {
     @NotNull
     private final List<TokenDefinitions<N>> levels;
     @NotNull

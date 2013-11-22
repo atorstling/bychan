@@ -3,7 +3,7 @@ package com.torstling.tdop;
 import org.jetbrains.annotations.NotNull;
 import com.sun.istack.internal.Nullable;
 
-public class ParseResult<N extends Node> {
+public class ParseResult<N extends AstNode> {
     @Nullable
     private final N rootNode;
 
@@ -12,7 +12,7 @@ public class ParseResult<N extends Node> {
     }
 
     @NotNull
-    public static <N extends Node> ParseResult<N> success(@NotNull final N rootNode) {
+    public static <N extends AstNode> ParseResult<N> success(@NotNull final N rootNode) {
         return new ParseResult<>(rootNode);
     }
 

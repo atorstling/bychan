@@ -1,11 +1,11 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.Node;
+import com.torstling.tdop.AstNode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-class TokenDefinitions<N extends Node> implements Iterable<TokenDefinition<N>> {
+class TokenDefinitions<N extends AstNode> implements Iterable<TokenDefinition<N>> {
     @NotNull
     private final List<TokenDefinition<N>> tokenDefinitions;
 

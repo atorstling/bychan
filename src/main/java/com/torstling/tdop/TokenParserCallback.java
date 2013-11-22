@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
-public interface TokenParserCallback<N extends Node> {
+public interface TokenParserCallback<N extends AstNode> {
     @NotNull
     N expression(int rightBindingPower);
     @NotNull

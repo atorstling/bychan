@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayDeque;
 import java.util.List;
 
-public class PrattParser<N extends Node> implements TokenParserCallback<N> {
+public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
 
     @NotNull
     private final ArrayDeque<Token<N>> tokens;

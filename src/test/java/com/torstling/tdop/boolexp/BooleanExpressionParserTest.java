@@ -1,6 +1,7 @@
 package com.torstling.tdop.boolexp;
 
 import com.torstling.tdop.*;
+import com.torstling.tdop.fluid.VariableBindingBuilder;
 import org.junit.Test;
 
 import java.util.List;

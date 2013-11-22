@@ -1,9 +1,9 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.Node;
+import com.torstling.tdop.AstNode;
 import org.jetbrains.annotations.NotNull;
 
-class LeveledTokenDefinition<N extends Node> {
+class LeveledTokenDefinition<N extends AstNode> {
     @NotNull
     private final TokenDefinition<N> definition;
     private final int levelCount;

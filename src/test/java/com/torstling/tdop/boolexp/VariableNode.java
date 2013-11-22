@@ -1,7 +1,6 @@
 package com.torstling.tdop.boolexp;
 
-import com.torstling.tdop.VariableBindings;
-import com.torstling.tdop.boolexp.BooleanExpressionNode;
+import com.torstling.tdop.fluid.VariableBindings;
 import org.jetbrains.annotations.NotNull;
 
 public class VariableNode implements BooleanExpressionNode {

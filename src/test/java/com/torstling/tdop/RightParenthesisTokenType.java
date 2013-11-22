@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
-public class RightParenthesisTokenType<N extends Node> implements TokenType<N> {
+public class RightParenthesisTokenType<N extends AstNode> implements TokenType<N> {
 
     private static final RightParenthesisTokenType INSTANCE = new RightParenthesisTokenType<>();
 
@@ -16,7 +16,7 @@ public class RightParenthesisTokenType<N extends Node> implements TokenType<N> {
         return "\\)";
     }
 
-    public static <N extends Node> RightParenthesisTokenType<N> get() {
+    public static <N extends AstNode> RightParenthesisTokenType<N> get() {
         //noinspection unchecked
         return (RightParenthesisTokenType<N>) INSTANCE;
     }

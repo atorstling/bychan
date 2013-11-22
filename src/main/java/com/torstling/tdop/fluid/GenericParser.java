@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class GenericParser<N extends Node> {
+public class GenericParser<N extends AstNode> {
     @NotNull
     private final Lexer<N> lexer;
 

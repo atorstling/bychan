@@ -1,10 +1,10 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.Node;
+import com.torstling.tdop.AstNode;
 import com.torstling.tdop.Token;
 import org.jetbrains.annotations.NotNull;
 
-public interface ParserCallback2<N extends Node> {
+public interface ParserCallback2<N extends AstNode> {
     /**
      * Parse the trailing expression. Continue as long as only tokens
      * with higher priority than the current token are found.

@@ -2,7 +2,7 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
-public class EndTokenType<N extends Node> implements TokenType<N> {
+public class EndTokenType<N extends AstNode> implements TokenType<N> {
 
     private static final EndTokenType INSTANCE = new EndTokenType<>();
 
@@ -19,7 +19,7 @@ public class EndTokenType<N extends Node> implements TokenType<N> {
     }
 
     @NotNull
-    public static <N extends Node> EndTokenType<N> get() {
+    public static <N extends AstNode> EndTokenType<N> get() {
         //noinspection unchecked
         return (EndTokenType<N>) INSTANCE;
     }

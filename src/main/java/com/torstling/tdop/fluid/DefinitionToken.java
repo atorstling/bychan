@@ -3,7 +3,7 @@ package com.torstling.tdop.fluid;
 import com.torstling.tdop.*;
 import org.jetbrains.annotations.NotNull;
 
-public class DefinitionToken<N extends Node> implements Token<N> {
+public class DefinitionToken<N extends AstNode> implements Token<N> {
     private final DefinitionTokenType<N> tokenType;
     @NotNull
     private final LexingMatch match;
