@@ -8,30 +8,46 @@ import com.sun.istack.internal.Nullable;
  */
 public class ParseResult<N extends AstNode> {
     @Nullable
-    private final N rootNode;
+    private final N node;
+    @Nullable
+    private final String errorMessage;
 
-    private ParseResult(@NotNull final N rootNode) {
-        this.rootNode = rootNode;
+    private ParseResult(@Nullable final N node, @Nullable final String errorMessage) {
+        this.node = node;
+        this.errorMessage = errorMessage;
     }
 
     @NotNull
-    public static <N extends AstNode> ParseResult<N> success(@NotNull final N rootNode) {
-        return new ParseResult<>(rootNode);
+    public static <N extends AstNode> ParseResult<N> success(@NotNull final N node) {
+        return new ParseResult<>(node, null);
+    }
+
+    @NotNull
+    public static <N extends AstNode> ParseResult<N> failure(@NotNull final String errorMessage) {
+        return new ParseResult<>(null, errorMessage);
     }
 
     public boolean isSuccess() {
-        return rootNode != null;
-    }
-
-    private void checkSuccess() {
-        if (!isSuccess()) {
-            throw new IllegalStateException("Parsing wasn't successful");
-        }
+        return node != null;
     }
 
     @NotNull
-    public N getRootNode() {
-        checkSuccess();
-        return rootNode;
+    public N getNode() {
+        if (!isSuccess()) {
+            throw new IllegalStateException("Cannot get node when parsing wasn't successful");
+        }
+        return node;
+    }
+
+    @NotNull
+    public String getErrorMessage() {
+        if (!isFailure()) {
+            throw new IllegalStateException("Cannot fetch error message when parsing was successful.");
+        }
+        return errorMessage;
+    }
+
+    public boolean isFailure() {
+        return !isSuccess();
     }
 }

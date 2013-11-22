@@ -1,10 +1,7 @@
 package com.torstling.tdop;
 
 import com.torstling.tdop.calculator.*;
-import com.torstling.tdop.core.EndToken;
-import com.torstling.tdop.core.LexingMatch;
-import com.torstling.tdop.core.PrattParser;
-import com.torstling.tdop.core.Token;
+import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -139,8 +136,8 @@ public class PrattParserTest {
         try {
             p.parse();
             fail("expected exception");
-        } catch (IllegalStateException e) {
-            assertEquals("Expected a token of type RightParenthesisTokenType, but got '.'", e.getMessage());
+        } catch (ParsingFailedException e) {
+            assertEquals("Expected a token of type 'RightParenthesisTokenType', but got '.'", e.getMessage());
         }
     }
 

@@ -8,6 +8,7 @@ import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.fluid.*;
 import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -78,18 +79,18 @@ public class ShortcutSyntaxParserTest {
         check(l, "!  a & b  ", false, true, true);
     }
 
-    /*
+
     @Test
     public void parseFailure() {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().parse("(a");
         Assert.assertTrue(parseResult.isFailure());
     }
-    */
+
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
         ParseResult<BooleanExpressionNode> result = l.getParser().parse(expression);
         assertTrue(result.isSuccess());
         VariableBindings bindings = new VariableBindingBuilder().bind("a", aValue).bind("b", bValue).build();
-        assertEquals(result.getRootNode().evaluate(bindings), expectedOutcome);
+        assertEquals(result.getNode().evaluate(bindings), expectedOutcome);
     }
 }

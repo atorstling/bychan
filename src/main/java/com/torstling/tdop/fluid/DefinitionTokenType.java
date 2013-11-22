@@ -29,7 +29,7 @@ public class DefinitionTokenType<N extends AstNode> implements TokenType<N> {
     }
 
     public String toString() {
-        return "type of '" + def.getPattern() + "'" + System.identityHashCode(this);
+        return "unnamed type matching '" + def.getPattern() + "'@" + System.identityHashCode(this);
     }
 
     @NotNull
