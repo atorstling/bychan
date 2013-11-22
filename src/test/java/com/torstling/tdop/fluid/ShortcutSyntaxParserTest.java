@@ -1,4 +1,4 @@
-package com.torstling.tdop;
+package com.torstling.tdop.fluid;
 
 import com.torstling.tdop.boolexp.AndNode;
 import com.torstling.tdop.boolexp.BooleanExpressionNode;

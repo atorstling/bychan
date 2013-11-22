@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 import static org.junit.Assert.assertEquals;
 
-public class CompleteTest {
+public class CalculatorParserTest {
 
     @Test
     public void test() {
