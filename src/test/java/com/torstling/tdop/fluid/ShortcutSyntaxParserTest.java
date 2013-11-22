@@ -84,6 +84,7 @@ public class ShortcutSyntaxParserTest {
     public void parseFailure() {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().parse("(a");
         Assert.assertTrue(parseResult.isFailure());
+        assertTrue(parseResult.getErrorMessage().startsWith("Expected a token of type 'unnamed type matching '\\Q)\\E'"));
     }
 
 
