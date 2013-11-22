@@ -1,7 +1,6 @@
 package com.torstling.tdop.calculator;
 
 import com.torstling.tdop.*;
-import com.torstling.tdop.calculator.*;
 import org.junit.Test;
 
 import java.util.List;
