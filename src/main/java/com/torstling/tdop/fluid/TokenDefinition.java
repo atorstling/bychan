@@ -1,5 +1,8 @@
-package com.torstling.tdop;
+package com.torstling.tdop.fluid;
 
+import com.torstling.tdop.Node;
+import com.torstling.tdop.fluid.InfixAstBuilder;
+import com.torstling.tdop.fluid.PrefixAstBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

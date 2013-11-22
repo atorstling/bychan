@@ -1,7 +1,7 @@
-package com.torstling.tdop;
+package com.torstling.tdop.fluid;
 
 import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
+import com.torstling.tdop.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

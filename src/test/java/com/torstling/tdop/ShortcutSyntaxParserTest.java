@@ -4,6 +4,7 @@ import com.torstling.tdop.boolexp.AndNode;
 import com.torstling.tdop.boolexp.BooleanExpressionNode;
 import com.torstling.tdop.boolexp.NotNode;
 import com.torstling.tdop.boolexp.VariableNode;
+import com.torstling.tdop.fluid.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;

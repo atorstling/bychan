@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-class Utils2 {
+public class Utils2 {
     @NotNull
     public static <S,T> Collection<T> transform(@NotNull final Collection<? extends S> ss, @NotNull final Function<S, T> f) {
         ArrayList<T> ts = new ArrayList<>(ss.size());

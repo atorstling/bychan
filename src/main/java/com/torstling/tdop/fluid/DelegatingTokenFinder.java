@@ -1,5 +1,7 @@
-package com.torstling.tdop;
+package com.torstling.tdop.fluid;
 
+import com.torstling.tdop.Node;
+import com.torstling.tdop.TokenFinder;
 import org.jetbrains.annotations.NotNull;
 
 public class DelegatingTokenFinder<N extends Node> implements TokenFinder<N> {

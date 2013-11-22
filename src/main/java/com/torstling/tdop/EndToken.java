@@ -2,6 +2,10 @@ package com.torstling.tdop;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A token signaling the end of the lexing stream
+ * @param <N>
+ */
 public class EndToken<N extends Node> implements Token<N> {
 
     @NotNull

@@ -1,9 +1,9 @@
-package com.torstling.tdop;
+package com.torstling.tdop.fluid;
 
+import com.torstling.tdop.Node;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LanguageBuilder<N extends Node> {
