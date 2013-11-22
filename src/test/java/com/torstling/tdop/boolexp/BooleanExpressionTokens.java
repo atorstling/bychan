@@ -1,7 +1,7 @@
 package com.torstling.tdop.boolexp;
 
 import com.torstling.tdop.RightParenthesisTokenType;
-import com.torstling.tdop.TokenType;
+import com.torstling.tdop.core.TokenType;
 import com.torstling.tdop.calculator.LeftParenthesisTokenType;
 
 import java.util.Arrays;

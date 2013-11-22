@@ -1,8 +1,11 @@
-package com.torstling.tdop;
+package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
 import com.sun.istack.internal.Nullable;
 
+/**
+ * The result of a possibly unsuccessful parse
+ */
 public class ParseResult<N extends AstNode> {
     @Nullable
     private final N rootNode;

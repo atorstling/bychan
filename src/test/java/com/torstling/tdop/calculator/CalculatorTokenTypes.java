@@ -1,7 +1,7 @@
 package com.torstling.tdop.calculator;
 
 import com.torstling.tdop.RightParenthesisTokenType;
-import com.torstling.tdop.TokenType;
+import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.*;
+import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
 public class DefinitionToken<N extends AstNode> implements Token<N> {

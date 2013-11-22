@@ -1,7 +1,7 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.AstNode;
-import com.torstling.tdop.Token;
+import com.torstling.tdop.core.AstNode;
+import com.torstling.tdop.core.Token;
 import org.jetbrains.annotations.NotNull;
 
 public interface ParserCallback2<N extends AstNode> {

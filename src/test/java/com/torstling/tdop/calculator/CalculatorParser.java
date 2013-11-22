@@ -1,8 +1,8 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.Lexer;
-import com.torstling.tdop.PrattParser;
-import com.torstling.tdop.Token;
+import com.torstling.tdop.core.Lexer;
+import com.torstling.tdop.core.PrattParser;
+import com.torstling.tdop.core.Token;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

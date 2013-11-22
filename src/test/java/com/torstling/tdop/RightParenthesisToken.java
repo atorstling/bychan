@@ -1,5 +1,6 @@
 package com.torstling.tdop;
 
+import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
 public class RightParenthesisToken<N extends AstNode> implements Token<N> {

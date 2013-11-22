@@ -1,9 +1,9 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.AstNode;
-import com.torstling.tdop.LexingMatch;
-import com.torstling.tdop.Token;
-import com.torstling.tdop.TokenType;
+import com.torstling.tdop.core.AstNode;
+import com.torstling.tdop.core.LexingMatch;
+import com.torstling.tdop.core.Token;
+import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 public class LeftParenthesisTokenType<N extends AstNode> implements TokenType<N> {

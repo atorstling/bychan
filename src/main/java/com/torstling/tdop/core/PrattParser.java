@@ -1,4 +1,4 @@
-package com.torstling.tdop;
+package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
 

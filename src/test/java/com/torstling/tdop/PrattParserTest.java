@@ -1,6 +1,10 @@
 package com.torstling.tdop;
 
 import com.torstling.tdop.calculator.*;
+import com.torstling.tdop.core.EndToken;
+import com.torstling.tdop.core.LexingMatch;
+import com.torstling.tdop.core.PrattParser;
+import com.torstling.tdop.core.Token;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 

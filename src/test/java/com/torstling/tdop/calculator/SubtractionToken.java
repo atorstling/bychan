@@ -1,9 +1,9 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.LexingMatch;
-import com.torstling.tdop.Token;
-import com.torstling.tdop.TokenParserCallback;
-import com.torstling.tdop.TokenType;
+import com.torstling.tdop.core.LexingMatch;
+import com.torstling.tdop.core.Token;
+import com.torstling.tdop.core.TokenParserCallback;
+import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 public class SubtractionToken implements Token<CalculatorNode> {

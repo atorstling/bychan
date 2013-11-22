@@ -1,8 +1,6 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.AstNode;
-import com.torstling.tdop.fluid.DefinitionTokenType;
-import com.torstling.tdop.fluid.TokenDefinition;
+import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
 public interface TokenFinder<N extends AstNode> {

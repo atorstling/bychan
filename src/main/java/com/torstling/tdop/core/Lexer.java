@@ -1,4 +1,4 @@
-package com.torstling.tdop;
+package com.torstling.tdop.core;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A lexer
+ */
 public class Lexer<N extends AstNode> {
     private final Pattern pattern;
     private final List<? extends TokenType<N>> tokenTypes;

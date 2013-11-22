@@ -1,6 +1,8 @@
 package com.torstling.tdop.boolexp;
 
-import com.torstling.tdop.*;
+import com.torstling.tdop.core.EndToken;
+import com.torstling.tdop.core.Lexer;
+import com.torstling.tdop.core.Token;
 import com.torstling.tdop.fluid.VariableBindingBuilder;
 import org.junit.Test;
 

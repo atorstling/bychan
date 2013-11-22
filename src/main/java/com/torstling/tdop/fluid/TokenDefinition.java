@@ -1,6 +1,6 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.AstNode;
+import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
