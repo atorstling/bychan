@@ -19,7 +19,7 @@ public class DefinitionTokenType<N extends AstNode> implements TokenType<N> {
     @NotNull
     @Override
     public Token<N> toToken(@NotNull final LexingMatch match) {
-        return new DefinitionToken<>(this, match, def, tokenFinder);
+        return new GenericToken<>(this, match, def, tokenFinder);
     }
 
     @NotNull

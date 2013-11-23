@@ -10,7 +10,7 @@ public interface Token<N extends AstNode> {
     /**
      * Parse this token as a prefix operator or standalone expression.
      * Feel free to continue the parsing using the provided parser callback,
-     * but always end by returning the resulting AST node.
+     * @return the resulting AST node.
      */
     @NotNull
     N prefixParse(@NotNull TokenParserCallback<N> parser);
@@ -19,7 +19,7 @@ public interface Token<N extends AstNode> {
      * Parse this token as an infix operator. A typical binary operator implementation uses the parser callback
      * to parse the RHS of the expression and returns a binary operator node linking the LHS and RHS together.
      * @param left the AST node resulting from parsing the expression to the left of this token, up until this
-     *             higher binding power token was found.
+     *             lower binding power token was found.
      *
      */
     @NotNull
