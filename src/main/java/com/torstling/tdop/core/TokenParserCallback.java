@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public interface TokenParserCallback<N extends AstNode> {
     /**
      * Parse upcoming tokens from the stream into an expression, and keep going
-     * until token binding powers drop down to or below the supplied level. If this
+     * until token binding powers drop down to or below the supplied floor. If this
      * feels backwards, remember that weak operands end up higher in the parse tree, consider for instance
      * <code>1*2 + 3 </code> which becomes
      * <pre>
@@ -21,7 +21,7 @@ public interface TokenParserCallback<N extends AstNode> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    N expression(int rightBindingPower);
+    N expression(int powerFloor);
 
     /**
      * Swallow a token of the specified type.

@@ -28,8 +28,12 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         }
     }
 
+    /**
+     * @param powerFloor parsing will continue until the binding power floor is reached
+     * @return an expression
+     */
     @NotNull
-    public N expression(int continueWhileTokensHavePowerAbove) {
+    public N expression(int powerFloor) {
         // An expression always starts with a symbol which can qualify as a prefix value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -37,7 +41,7 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         // "(" as in "start sub-expression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
-        N currentLeftHandSide = tokens.pop().prefixParse(this);
+        final N first = tokens.pop().prefixParse(this);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -58,9 +62,14 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         // The addition operators infix-parser is then called by the top-level expression parser,
         // passing (1*2) into it as the expression parsed so far. It will then proceed to swallow the 3,
         // completing the expression.
-        while (tokens.peek().infixBindingPower() > continueWhileTokensHavePowerAbove) {
+        return parseLoop(first, powerFloor);
+    }
+
+    private N parseLoop(N currentLeftHandSide, int powerFloor) {
+        if (tokens.peek().infixBindingPower() > powerFloor) {
             //Parsing happens by passing the current LHS to the operator, which will continue parsing.
-            currentLeftHandSide = tokens.pop().infixParse(currentLeftHandSide, this);
+            N nextExpression = tokens.pop().infixParse(currentLeftHandSide, this);
+            return parseLoop(nextExpression, powerFloor);
         }
         return currentLeftHandSide;
     }
