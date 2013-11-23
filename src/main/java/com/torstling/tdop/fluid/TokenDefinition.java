@@ -4,6 +4,10 @@ import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * A combined definition of a token type and token
+ * @param <N>
+ */
 public class TokenDefinition<N extends AstNode> {
     @NotNull
     private final String pattern;
