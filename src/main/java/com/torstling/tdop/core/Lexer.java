@@ -57,7 +57,9 @@ public class Lexer<N extends AstNode> {
             String groupValue = matcher.group(group);
             if (groupValue != null) {
                 TokenType<N> correspondingTokenType = tokenTypes.get(group - 1);
-                return correspondingTokenType.toToken(new LexingMatch(groupValue));
+                int start = matcher.start();
+                int end = matcher.end();
+                return correspondingTokenType.toToken(new LexingMatch(start, end, groupValue));
             }
         }
         return null;

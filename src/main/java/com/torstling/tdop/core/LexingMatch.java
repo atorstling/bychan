@@ -10,7 +10,7 @@ public class LexingMatch {
     @NotNull
     private final String text;
 
-    public LexingMatch(@NotNull final String text) {
+    public LexingMatch(int startPosition, int endPosition, @NotNull final String text) {
         this.text = text;
     }
 

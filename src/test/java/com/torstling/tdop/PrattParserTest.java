@@ -14,24 +14,29 @@ public class PrattParserTest {
 
     @Test
     public void singleDigit() {
+        String text = "1";
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch(text)),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(1), rootNode);
     }
 
+    private LexingMatch createTestMatch(String text) {
+        return new LexingMatch(0, 1, text);
+    }
+
     @NotNull
     private LexingMatch nextMatch() {
-        return new LexingMatch("test");
+        return createTestMatch("test");
     }
 
     @Test
     public void subtraction() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
@@ -41,7 +46,7 @@ public class PrattParserTest {
     public void parenthesis() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new RightParenthesisToken(nextMatch()),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
@@ -52,12 +57,12 @@ public class PrattParserTest {
     public void ambiguous() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(nextMatch()),
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new RightParenthesisToken(nextMatch()),
                 new SubtractionToken(nextMatch()),
-                new NumberToken(new LexingMatch("3")),
+                new NumberToken(createTestMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
@@ -68,12 +73,12 @@ public class PrattParserTest {
     @Test
     public void ambiguous2() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
                 new LeftParenthesisToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new SubtractionToken(nextMatch()),
-                new NumberToken(new LexingMatch("3")),
+                new NumberToken(createTestMatch("3")),
                 new RightParenthesisToken(nextMatch()),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
@@ -85,11 +90,11 @@ public class PrattParserTest {
     @Test
     public void priority() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new MultiplicationToken(nextMatch()),
-                new NumberToken(new LexingMatch("3")),
+                new NumberToken(createTestMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
@@ -100,11 +105,11 @@ public class PrattParserTest {
     @Test
     public void priorityReverse() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new MultiplicationToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new SubtractionToken(nextMatch()),
-                new NumberToken(new LexingMatch("3")),
+                new NumberToken(createTestMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
@@ -115,11 +120,11 @@ public class PrattParserTest {
     @Test
     public void multipleSameOp() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new MultiplicationToken(nextMatch()),
-                new NumberToken(new LexingMatch("2")),
+                new NumberToken(createTestMatch("2")),
                 new MultiplicationToken(nextMatch()),
-                new NumberToken(new LexingMatch("3")),
+                new NumberToken(createTestMatch("3")),
                 new EndToken()));
         CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
@@ -131,7 +136,7 @@ public class PrattParserTest {
     public void unclosedParenthesis() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(nextMatch()),
-                new NumberToken(new LexingMatch("1")),
+                new NumberToken(createTestMatch("1")),
                 new EndToken()));
         try {
             p.parse();
