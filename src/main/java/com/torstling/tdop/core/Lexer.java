@@ -3,6 +3,7 @@ package com.torstling.tdop.core;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A lexer
+ * A regex sub-pattern-based lexer
  */
 public class Lexer<N extends AstNode> {
     private final Pattern pattern;
@@ -20,12 +21,14 @@ public class Lexer<N extends AstNode> {
 
     public Lexer(@NotNull final Collection<? extends TokenType<N>> tokenTypes) {
         this.tokenTypes = new ArrayList<>(tokenTypes);
-        Collection<String> subPatterns = makeSubPatterns();
-        String patternString = "\\s*(?:" + Joiner.on("|").join(subPatterns) + ")";
+        Collection<String> includedTokensSubPatterns = makeSubPatterns(this.tokenTypes);
+        Joiner orJoiner = Joiner.on("|");
+        Collection<String> ignoredPatterns = Lists.newArrayList("\\s*");
+        String patternString = orJoiner.join(ignoredPatterns) + "(?:" + orJoiner.join(includedTokensSubPatterns) + ")";
         pattern = Pattern.compile(patternString);
     }
 
-    private Collection<String> makeSubPatterns() {
+    private Collection<String> makeSubPatterns(List<? extends TokenType<N>> tokenTypes) {
         return Collections2.transform(tokenTypes, new Function<TokenType, String>() {
             public String apply(TokenType tokenType) {
                 return "(" + tokenType.getPattern() + ")";

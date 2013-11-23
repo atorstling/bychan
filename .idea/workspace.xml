@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/ShortcutSyntaxParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java" />
     </list>
     <ignored path="tdop.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,7 +48,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java" line="44" class="com.torstling.tdop.core.Lexer" package="com.torstling.tdop.core">
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java" line="47" class="com.torstling.tdop.core.Lexer" package="com.torstling.tdop.core">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -144,19 +144,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Lexer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java">
+      <file leaf-file-name="PrattParser.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/PrattParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="26" selection-start="1147" selection-end="1147" vertical-scroll-proportion="0.0">
+            <state line="42" column="16" selection-start="1391" selection-end="1391" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GenericParserTest.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Lexer.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="61" selection-start="966" selection-end="966" vertical-scroll-proportion="0.46583852">
+              <folding>
+                <element signature="e#1222#1395#0" expanded="true" />
+                <element signature="e#1384#1385#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GenericParserTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="20" selection-start="545" selection-end="545" vertical-scroll-proportion="0.13422818">
+            <state line="16" column="20" selection-start="545" selection-end="545" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -175,15 +187,6 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinition.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="7" column="50" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TokenType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/TokenType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="17" selection-start="311" selection-end="311" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -239,7 +242,6 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/EndToken.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/PrattParserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/TokenParserCallback.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/PrattParser.java" />
@@ -254,6 +256,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericTokenType.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/ShortcutSyntaxParserTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java" />
       </list>
     </option>
   </component>
@@ -1111,7 +1114,11 @@
       <created>1385232103954</created>
       <updated>1385232103955</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="refactor">
+      <created>1385232128248</created>
+      <updated>1385232128248</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1141,7 +1148,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38227513" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2989418" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3994709" sideWeight="0.50037456" order="7" side_tool="true" content_ui="tabs" />
@@ -1149,11 +1156,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.18650794" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.2010582" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19325842" sideWeight="0.6706349" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.47486773" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28174603" sideWeight="0.4973783" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.50793654" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28174603" sideWeight="0.4973783" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1251,13 +1258,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/PrattParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="43" selection-start="3425" selection-end="3425" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LeveledTokenDefinition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="38" selection-start="583" selection-end="583" vertical-scroll-proportion="0.0">
@@ -1321,9 +1321,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericTokenType.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="18" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0">
+        <state line="16" column="20" selection-start="545" selection-end="545" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1331,6 +1331,13 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericToken.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="39" selection-start="1269" selection-end="1269" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericTokenType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="18" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1345,17 +1352,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/PrattParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="26" selection-start="1147" selection-end="1147" vertical-scroll-proportion="0.0">
+        <state line="42" column="16" selection-start="1391" selection-end="1391" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="20" selection-start="545" selection-end="545" vertical-scroll-proportion="0.13422818">
-          <folding />
+        <state line="26" column="61" selection-start="966" selection-end="966" vertical-scroll-proportion="0.46583852">
+          <folding>
+            <element signature="e#1222#1395#0" expanded="true" />
+            <element signature="e#1384#1385#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
