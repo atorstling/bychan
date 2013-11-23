@@ -6,7 +6,6 @@ import com.torstling.tdop.boolexp.NotNode;
 import com.torstling.tdop.boolexp.VariableNode;
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
-import com.torstling.tdop.fluid.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
@@ -82,14 +81,15 @@ public class ShortcutSyntaxParserTest {
 
     @Test
     public void parseFailure() {
-        ParseResult<BooleanExpressionNode> parseResult = l.getParser().parse("(a");
+        ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
-        assertTrue(parseResult.getErrorMessage().startsWith("Expected a token of type 'unnamed type matching '\\Q)\\E'"));
+        String errorMessage = parseResult.getErrorMessage();
+        assertTrue(errorMessage, errorMessage.startsWith("Parsing terminated at position 2: Expected a token of type 'unnamed type matching '\\Q)\\E'"));
     }
 
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
-        ParseResult<BooleanExpressionNode> result = l.getParser().parse(expression);
+        ParseResult<BooleanExpressionNode> result = l.getParser().tryParse(expression);
         assertTrue(result.isSuccess());
         VariableBindings bindings = new VariableBindingBuilder().bind("a", aValue).bind("b", bValue).build();
         assertEquals(result.getNode().evaluate(bindings), expectedOutcome);

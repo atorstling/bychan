@@ -12,14 +12,20 @@ import static junit.framework.Assert.fail;
 
 public class PrattParserTest {
 
+    public static final int TEST_END_TOKEN_POSITION = Integer.MAX_VALUE;
+
     @Test
     public void singleDigit() {
         String text = "1";
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new NumberToken(createTestMatch(text)),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(1), rootNode);
+    }
+
+    private EndToken createTestEndToken() {
+        return new EndToken(new LexingMatch(Integer.MAX_VALUE, Integer.MAX_VALUE, "END"));
     }
 
     private LexingMatch createTestMatch(String text) {
@@ -37,7 +43,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
     }
@@ -48,7 +54,7 @@ public class PrattParserTest {
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
                 new RightParenthesisToken(nextMatch()),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         assertEquals(new NumberNode(2), rootNode);
     }
@@ -63,7 +69,7 @@ public class PrattParserTest {
                 new RightParenthesisToken(nextMatch()),
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
@@ -80,7 +86,7 @@ public class PrattParserTest {
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
                 new RightParenthesisToken(nextMatch()),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
@@ -95,7 +101,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("2")),
                 new MultiplicationToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         NumberNode left = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
@@ -110,7 +116,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("2")),
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
@@ -125,7 +131,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("2")),
                 new MultiplicationToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
-                new EndToken()));
+                createTestEndToken()));
         CalculatorNode rootNode = p.parse();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
@@ -137,12 +143,12 @@ public class PrattParserTest {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(createTestMatch("1")),
-                new EndToken()));
+                createTestEndToken()));
         try {
             p.parse();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Expected a token of type 'RightParenthesisTokenType', but got '.'", e.getMessage());
+            assertEquals("Parsing terminated at position " + TEST_END_TOKEN_POSITION + ": Expected a token of type 'RightParenthesisTokenType', but got '.'", e.getMessage());
         }
     }
 
@@ -150,7 +156,7 @@ public class PrattParserTest {
     public void wrongOrderParenthesis() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
                 new RightParenthesisToken(nextMatch()),
-                new EndToken()));
+                createTestEndToken()));
         try {
             p.parse();
             fail("expected exception");
@@ -162,7 +168,7 @@ public class PrattParserTest {
     @Test
     public void empty() {
         PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
-                new EndToken()));
+                createTestEndToken()));
         try {
             p.parse();
             fail("expected exception");

@@ -8,6 +8,13 @@ import org.jetbrains.annotations.NotNull;
  */
 public class EndToken<N extends AstNode> implements Token<N> {
 
+
+    private LexingMatch lexingMatch;
+
+    public EndToken(@NotNull final LexingMatch lexingMatch) {
+        this.lexingMatch = lexingMatch;
+    }
+
     @NotNull
     public N prefixParse(@NotNull final TokenParserCallback parser) {
         throw new IllegalStateException("Cannot parse end as expression");
@@ -30,7 +37,7 @@ public class EndToken<N extends AstNode> implements Token<N> {
     @org.jetbrains.annotations.NotNull
     @Override
     public LexingMatch getMatch() {
-        throw new UnsupportedOperationException("Never really matched, always at end");
+        return lexingMatch;
     }
 
     public String toString() {

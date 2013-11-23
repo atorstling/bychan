@@ -69,7 +69,7 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
     public Token<N> swallow(@NotNull TokenType<N> type) {
         Token<N> next = tokens.pop();
         if (!next.isOfType(type)) {
-            throw new ParsingFailedException("Expected a token of type '" + type + "', but got '" + next + "'");
+            throw new ParsingFailedException("Expected a token of type '" + type + "', but got '" + next + "'", next.getMatch());
         }
         return next;
     }

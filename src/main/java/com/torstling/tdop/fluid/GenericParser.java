@@ -53,7 +53,7 @@ public class GenericParser<N extends AstNode> {
     }
 
     @NotNull
-    public ParseResult<N> parse(@NotNull final String text) {
+    public ParseResult<N> tryParse(@NotNull final String text) {
         List<Token<N>> tokens = lexer.lex(text);
         PrattParser<N> parser = new PrattParser<>(tokens);
         return parser.tryParse();

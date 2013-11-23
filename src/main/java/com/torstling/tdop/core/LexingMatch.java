@@ -7,15 +7,23 @@ import org.jetbrains.annotations.NotNull;
  */
 public class LexingMatch {
 
+    private final int startPosition;
+    private final int endPosition;
     @NotNull
     private final String text;
 
     public LexingMatch(int startPosition, int endPosition, @NotNull final String text) {
+        this.startPosition = startPosition;
+        this.endPosition = endPosition;
         this.text = text;
     }
 
     @NotNull
     public String getText() {
         return text;
+    }
+
+    public int getStartPosition() {
+        return startPosition;
     }
 }
