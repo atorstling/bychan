@@ -17,6 +17,11 @@ class LeveledTokenDefinition<N extends AstNode> {
         return definition.getPattern();
     }
 
+    @NotNull
+    public String getTokenTypeName() {
+        return definition.getTokenTypeName();
+    }
+
     public int getLevel() {
         return levelCount;
     }

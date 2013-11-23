@@ -13,6 +13,7 @@ public class TokenDefinitionBuilder<N extends AstNode> {
     private InfixAstBuilder<N> infixBuilder;
     private StandaloneAstBuilder<N> standaloneBuilder;
     private boolean filterOutBeforeParsing;
+    private String tokenTypeName;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
         return matchesPattern(Pattern.quote(text));
@@ -37,7 +38,7 @@ public class TokenDefinitionBuilder<N extends AstNode> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder);
+        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder, tokenTypeName);
     }
 
     @Nullable
@@ -69,6 +70,11 @@ public class TokenDefinitionBuilder<N extends AstNode> {
 
     public TokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<N> standaloneAstBuilder) {
         this.standaloneBuilder = standaloneAstBuilder;
+        return this;
+    }
+
+    public TokenDefinitionBuilder<N> named(String name) {
+        this.tokenTypeName = name;
         return this;
     }
 }

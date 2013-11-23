@@ -22,6 +22,7 @@ public class ShortcutSyntaxParserTest {
     public void setupLanguage() {
         TokenDefinition<BooleanExpressionNode> not = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString("!")
+                .named("not")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         return new NotNode(parser.expression());
@@ -29,6 +30,7 @@ public class ShortcutSyntaxParserTest {
                 }).build();
         TokenDefinition<BooleanExpressionNode> and = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString("&")
+                .named("and")
                 .supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         return new AndNode(left, parser.expression());
@@ -36,6 +38,7 @@ public class ShortcutSyntaxParserTest {
                 }).build();
         TokenDefinition<BooleanExpressionNode> variable = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesPattern("[a-z]+")
+                .named("variable")
                 .supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull final LexingMatch match) {
                         return new VariableNode(match.getText());
@@ -43,9 +46,11 @@ public class ShortcutSyntaxParserTest {
                 }).build();
         final TokenDefinition<BooleanExpressionNode> rparen = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString(")")
+                .named("rparen")
                 .build();
         TokenDefinition<BooleanExpressionNode> lparen = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesString("(")
+                .named("lparen")
                 .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         BooleanExpressionNode trailingExpression = parser.expression();
@@ -55,6 +60,7 @@ public class ShortcutSyntaxParserTest {
                 }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = new TokenDefinitionBuilder<BooleanExpressionNode>()
                 .matchesPattern("\\s+")
+                .named("whitespace")
                 .filterOutBeforeParsing()
                 .build();
         l = new LanguageBuilder<BooleanExpressionNode>()
@@ -84,7 +90,7 @@ public class ShortcutSyntaxParserTest {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
         String errorMessage = parseResult.getErrorMessage();
-        assertTrue(errorMessage, errorMessage.startsWith("Parsing terminated at position 2: Expected a token of type 'unnamed type matching '\\Q)\\E'"));
+        assertEquals("Parsing terminated at position 2: Expected a token of type 'rparen', but got '.'", errorMessage);
     }
 
 
