@@ -4,14 +4,14 @@ import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
 public class GenericToken<N extends AstNode> implements Token<N> {
-    private final DefinitionTokenType<N> tokenType;
+    private final GenericTokenType<N> tokenType;
     @NotNull
     private final LexingMatch match;
     @NotNull
     private final LeveledTokenDefinition<N> def;
     private final TokenFinder<N> tokenFinder;
 
-    public GenericToken(@NotNull final DefinitionTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public GenericToken(@NotNull final GenericTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.tokenType = tokenType;
         this.match = match;
         this.def = def;
@@ -39,7 +39,7 @@ public class GenericToken<N extends AstNode> implements Token<N> {
 
     @NotNull
     private Token<N> swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
-        DefinitionTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
+        GenericTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
         return parser.swallow(type);
     }
 

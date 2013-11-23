@@ -9,7 +9,7 @@ public class DelegatingTokenFinder<N extends AstNode> implements TokenFinder<N> 
 
     @NotNull
     @Override
-    public DefinitionTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
+    public GenericTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
         return delegate.getTokenTypeFor(tokenDefinition);
     }
 

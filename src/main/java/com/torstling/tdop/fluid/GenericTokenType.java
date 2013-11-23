@@ -6,12 +6,12 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class DefinitionTokenType<N extends AstNode> implements TokenType<N> {
+public class GenericTokenType<N extends AstNode> implements TokenType<N> {
     @NotNull
     private final LeveledTokenDefinition<N> def;
     private final TokenFinder<N> tokenFinder;
 
-    public DefinitionTokenType(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public GenericTokenType(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
     }

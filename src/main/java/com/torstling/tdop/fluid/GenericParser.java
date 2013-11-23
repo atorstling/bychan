@@ -14,28 +14,32 @@ public class GenericParser<N extends AstNode> {
 
     public GenericParser(List<TokenDefinitions<N>> levels) {
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(levels);
+        // Use a delegating finder to break the circular dependency between GenericTokenType
+        // and TokenFinder. First build all token types with an empty finder, then build the
+        // finder with the resulting DefinitionTokenTypes.
         DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
-        final Collection<DefinitionTokenType<N>> definitionTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
-        delegatingFinder.setDelegate(new TokenFinder<N>() {
+        final Collection<GenericTokenType<N>> genericTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
+        TokenFinder<N> tokenFinder = new TokenFinder<N>() {
             @NotNull
             @Override
-            public DefinitionTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
-                for (DefinitionTokenType<N> definitionTokenType : definitionTokenTypes) {
+            public GenericTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
+                for (GenericTokenType<N> definitionTokenType : genericTokenTypes) {
                     if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
                         return definitionTokenType;
                     }
                 }
                 throw new IllegalStateException("No token found for definition " + tokenDefinition);
             }
-        });
-        lexer = new Lexer<>(definitionTokenTypes);
+        };
+        delegatingFinder.setDelegate(tokenFinder);
+        lexer = new Lexer<>(genericTokenTypes);
     }
 
-    private Collection<DefinitionTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return Utils2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, DefinitionTokenType<N>>() {
+    private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
+        return Utils2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, GenericTokenType<N>>() {
             @Override
-            public DefinitionTokenType<N> apply(final LeveledTokenDefinition<N> tokenDef) {
-                return new DefinitionTokenType<>(tokenDef, tokenFinder);
+            public GenericTokenType<N> apply(final LeveledTokenDefinition<N> tokenDef) {
+                return new GenericTokenType<>(tokenDef, tokenFinder);
             }
         });
     }

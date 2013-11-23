@@ -5,5 +5,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface TokenFinder<N extends AstNode> {
     @NotNull
-    DefinitionTokenType<N> getTokenTypeFor(@NotNull final TokenDefinition<N> definition);
+    GenericTokenType<N> getTokenTypeFor(@NotNull final TokenDefinition<N> definition);
 }
