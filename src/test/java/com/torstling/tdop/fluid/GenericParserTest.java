@@ -14,7 +14,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ShortcutSyntaxParserTest {
+public class GenericParserTest {
 
     private Language<BooleanExpressionNode> l;
 
