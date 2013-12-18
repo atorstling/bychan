@@ -41,4 +41,9 @@ public class LanguageBuilder<N extends AstNode> {
             newLevel();
         }
     }
+
+    @NotNull
+    public WrappedTokenDefinitionBuilder<N> newPriorityLevel() {
+        return new WrappedTokenDefinitionBuilder<N>(this);
+    }
 }

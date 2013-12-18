@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/RightParenthesisToken.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/RightParenthesisToken.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/RightParenthesisTokenType.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/RightParenthesisTokenType.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/WhitespaceToken.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/WhitespaceToken.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/WhitespaceTokenType.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/WhitespaceTokenType.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/LeftParenthesisToken.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/LeftParenthesisToken.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/LeftParenthesisTokenType.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/LeftParenthesisTokenType.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/WrappedTokenDefinitionBuilder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/LexerTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/LexerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/PrattParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/PrattParserTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/BooleanExpressionTokens.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/BooleanExpressionTokens.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/CalculatorTokenTypes.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/CalculatorTokenTypes.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" />
     </list>
     <ignored path="tdop.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -163,11 +156,65 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WhitespaceTokenType.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="WhitespaceTokenType.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/WhitespaceTokenType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="28" selection-start="616" selection-end="616" vertical-scroll-proportion="0.71428573">
+            <state line="22" column="28" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GenericParserTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="37" column="33" selection-start="1513" selection-end="1513" vertical-scroll-proportion="0.8108108">
+              <folding>
+                <element signature="e#1042#1461#0" expanded="true" />
+                <element signature="e#1442#1443#0" expanded="true" />
+                <element signature="e#2304#2639#0" expanded="true" />
+                <element signature="e#2620#2621#0" expanded="true" />
+                <element signature="e#2835#3083#0" expanded="true" />
+                <element signature="e#3064#3065#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TokenDefinition.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinition.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="57" column="5" selection-start="1571" selection-end="1571" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TokenDefinitionBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinitionBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="30" selection-start="1093" selection-end="1093" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LanguageBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="44" selection-start="1124" selection-end="1124" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WrappedTokenDefinitionBuilder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/WrappedTokenDefinitionBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="32" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -190,55 +237,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LeftParenthesisToken.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/LeftParenthesisToken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="127" selection-end="127" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="LeftParenthesisTokenType.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/LeftParenthesisTokenType.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="8" column="13" selection-start="257" selection-end="257" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EndToken.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/EndToken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="24" selection-start="176" selection-end="176" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VariableToken.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/VariableToken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="0" selection-start="1360" selection-end="1360" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndNode.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/AndNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndToken.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/AndToken.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="5" selection-start="1115" selection-end="1115" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -257,10 +259,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/NumberToken.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/MultiplicationToken.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/calculator/AdditionToken.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/AndToken.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/WhitespaceTokenType.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/WhitespaceToken.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/collections/Function.java" />
@@ -273,6 +271,10 @@
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/WhitespaceToken.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/RightParenthesisToken.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/LeftParenthesisToken.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinition.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/WrappedTokenDefinitionBuilder.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" />
       </list>
     </option>
   </component>
@@ -512,6 +514,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fluid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -521,6 +553,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tdop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fluid" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -582,6 +644,7 @@
       <recent name="" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.torstling.tdop.fluid" />
       <recent name="com.torstling.tdop.boolexp" />
       <recent name="com.torstling.tdop.core" />
       <recent name="com.torstling.tdop" />
@@ -1143,7 +1206,11 @@
       <created>1387394825126</created>
       <updated>1387394825126</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="reorder">
+      <created>1387395117003</created>
+      <updated>1387395117003</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1170,27 +1237,27 @@
     <frame x="56" y="-2" width="1385" height="903" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38227513" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38227513" sideWeight="0.0" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2989418" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3994709" sideWeight="0.50037456" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2989418" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3994709" sideWeight="0.50037456" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.21825397" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19325842" sideWeight="0.6177249" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Regex Tester" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30441287" sideWeight="0.3611111" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19296934" sideWeight="0.6177249" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3048689" sideWeight="0.39021164" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28042328" sideWeight="0.4973783" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30441287" sideWeight="0.6296296" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28042328" sideWeight="0.4973783" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3994709" sideWeight="0.49438202" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3994709" sideWeight="0.49438202" order="6" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -1230,7 +1297,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove guava dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="reorder" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1243,7 +1310,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="hacketyhack" />
     <MESSAGE value="almost there" />
     <MESSAGE value="getting to undefined variables" />
     <MESSAGE value="start incorporating LexingMatch" />
@@ -1268,6 +1334,7 @@
     <MESSAGE value="add whitespace token type" />
     <MESSAGE value="Nicer skip logic" />
     <MESSAGE value="remove guava dependency" />
+    <MESSAGE value="reorder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1277,52 +1344,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/utils/StringUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="29" selection-start="522" selection-end="522" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="87" selection-start="2095" selection-end="2095" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2188#2189#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/utils/CollectionUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="149" selection-end="149" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/core/Lexer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="8" selection-start="788" selection-end="788" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1061#1264#0" expanded="true" />
-            <element signature="e#1253#1254#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="26" selection-start="328" selection-end="328" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/boolexp/VariableTokenType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="13" selection-start="217" selection-end="217" vertical-scroll-proportion="0.0">
@@ -1379,13 +1400,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/RightParenthesisTokenType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="13" selection-start="257" selection-end="257" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/WhitespaceToken.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="5" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0">
@@ -1395,8 +1409,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/WhitespaceTokenType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="28" selection-start="616" selection-end="616" vertical-scroll-proportion="0.71428573">
+        <state line="22" column="28" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinitionBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="30" selection-start="1093" selection-end="1093" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/generic/RightParenthesisTokenType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="257" selection-end="257" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="44" selection-start="1124" selection-end="1124" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="5" selection-start="1571" selection-end="1571" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/WrappedTokenDefinitionBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="32" selection-start="1942" selection-end="1942" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="33" selection-start="1513" selection-end="1513" vertical-scroll-proportion="0.8108108">
+          <folding>
+            <element signature="e#1042#1461#0" expanded="true" />
+            <element signature="e#1442#1443#0" expanded="true" />
+            <element signature="e#2304#2639#0" expanded="true" />
+            <element signature="e#2620#2621#0" expanded="true" />
+            <element signature="e#2835#3083#0" expanded="true" />
+            <element signature="e#3064#3065#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
