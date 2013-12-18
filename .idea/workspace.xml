@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="">
+    <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="terse syntax!">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericToken.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericTokenType.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/GenericTokenType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/ParserCallback2.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/ParserCallback2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinition.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinition.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinitionBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/TokenDefinitionBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/WrappedTokenDefinitionBuilder.java" afterPath="$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/WrappedTokenDefinitionBuilder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java" />
     </list>
     <ignored path="tdop.iws" />
@@ -173,16 +166,16 @@
       <file leaf-file-name="GenericParserTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="88" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.4054054">
+            <state line="29" column="101" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.44226044">
               <folding>
                 <element signature="e#923#1300#0" expanded="true" />
                 <element signature="e#1289#1290#0" expanded="true" />
-                <element signature="e#1488#1749#0" expanded="true" />
-                <element signature="e#1738#1739#0" expanded="true" />
-                <element signature="e#1836#2139#0" expanded="true" />
-                <element signature="e#2128#2129#0" expanded="true" />
-                <element signature="e#2242#2458#0" expanded="true" />
-                <element signature="e#2447#2448#0" expanded="true" />
+                <element signature="e#1479#1740#0" expanded="true" />
+                <element signature="e#1729#1730#0" expanded="true" />
+                <element signature="e#1827#2130#0" expanded="true" />
+                <element signature="e#2119#2120#0" expanded="true" />
+                <element signature="e#2233#2449#0" expanded="true" />
+                <element signature="e#2438#2439#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1221,7 +1214,11 @@
       <created>1387396735921</created>
       <updated>1387396735921</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="terse syntax!">
+      <created>1387397312849</created>
+      <updated>1387397312849</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1248,7 +1245,7 @@
     <frame x="56" y="-2" width="1385" height="903" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38227513" sideWeight="0.0" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38227513" sideWeight="0.0" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1464,16 +1461,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/torstling/tdop/fluid/GenericParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="88" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.4054054">
+        <state line="29" column="101" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.44226044">
           <folding>
             <element signature="e#923#1300#0" expanded="true" />
             <element signature="e#1289#1290#0" expanded="true" />
-            <element signature="e#1488#1749#0" expanded="true" />
-            <element signature="e#1738#1739#0" expanded="true" />
-            <element signature="e#1836#2139#0" expanded="true" />
-            <element signature="e#2128#2129#0" expanded="true" />
-            <element signature="e#2242#2458#0" expanded="true" />
-            <element signature="e#2447#2448#0" expanded="true" />
+            <element signature="e#1479#1740#0" expanded="true" />
+            <element signature="e#1729#1730#0" expanded="true" />
+            <element signature="e#1827#2130#0" expanded="true" />
+            <element signature="e#2119#2120#0" expanded="true" />
+            <element signature="e#2233#2449#0" expanded="true" />
+            <element signature="e#2438#2439#0" expanded="true" />
           </folding>
         </state>
       </provider>

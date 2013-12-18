@@ -27,20 +27,19 @@ public class GenericParserTest {
                 parser.expectSingleToken(rparen);
                 return trailingExpression;
             }
-        }).addAndContinue().newToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing()
-                .addAndContinue().newLevel().newToken().matchesString("!").named("not").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
-                    public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
-                        return new NotNode(parser.expression());
-                    }
-                }).addAndContinue().newLevel().newToken().matchesString("&").named("and").supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
-                    public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
-                        return new AndNode(left, parser.expression());
-                    }
-                }).addAndContinue().newLevel().newToken().matchesPattern("[a-z]+").named("variable").supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
-                    public BooleanExpressionNode build(@NotNull final LexingMatch match) {
-                        return new VariableNode(match.getText());
-                    }
-                }).addAndContinue().build();
+        }).addAndContinue().newToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().addAndContinue().newLevel().newToken().matchesString("!").named("not").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
+            public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
+                return new NotNode(parser.expression());
+            }
+        }).addAndContinue().newLevel().newToken().matchesString("&").named("and").supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
+            public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
+                return new AndNode(left, parser.expression());
+            }
+        }).addAndContinue().newLevel().newToken().matchesPattern("[a-z]+").named("variable").supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
+            public BooleanExpressionNode build(@NotNull final LexingMatch match) {
+                return new VariableNode(match.getText());
+            }
+        }).addAndContinue().build();
     }
 
     @Test
