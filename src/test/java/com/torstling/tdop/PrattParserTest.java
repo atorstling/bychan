@@ -13,9 +13,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
 public class PrattParserTest {
-
-    public static final int TEST_END_TOKEN_POSITION = Integer.MAX_VALUE;
-
     @Test
     public void singleDigit() {
         String text = "1";
@@ -150,7 +147,7 @@ public class PrattParserTest {
             p.parse();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing terminated at position " + TEST_END_TOKEN_POSITION + ": Expected a token of type 'RightParenthesisTokenType', but got '.'", e.getMessage());
+            assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Expected a token of type 'RightParenthesisTokenType', but got '.'", e.getMessage());
         }
     }
 

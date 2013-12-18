@@ -23,7 +23,12 @@ public class LexingMatch {
         return text;
     }
 
-    public int getStartPosition() {
-        return startPosition;
+    @Override
+    public String toString() {
+        return "LexingMatch{" +
+                "startPosition=" + startPosition +
+                ", endPosition=" + endPosition +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

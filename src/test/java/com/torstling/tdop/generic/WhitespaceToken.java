@@ -4,7 +4,7 @@ import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
 public class WhitespaceToken<N extends AstNode> implements Token<N> {
-    private WhitespaceTokenType<N> type;
+    private final WhitespaceTokenType<N> type;
     @NotNull
     private final LexingMatch match;
 

@@ -7,7 +7,7 @@ import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 public class WhitespaceTokenType<N extends AstNode> implements TokenType<N> {
-    private String pattern;
+    private final String pattern;
 
     public WhitespaceTokenType() {
         this("\\s+");
@@ -20,7 +20,7 @@ public class WhitespaceTokenType<N extends AstNode> implements TokenType<N> {
     @NotNull
     @Override
     public Token<N> toToken(@NotNull LexingMatch match) {
-        return new WhitespaceToken(this, match);
+        return new WhitespaceToken<N>(this, match);
     }
 
     @NotNull

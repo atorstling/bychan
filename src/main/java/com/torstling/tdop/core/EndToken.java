@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class EndToken<N extends AstNode> implements Token<N> {
 
 
-    private LexingMatch lexingMatch;
+    private final LexingMatch lexingMatch;
 
     public EndToken(@NotNull final LexingMatch lexingMatch) {
         this.lexingMatch = lexingMatch;
