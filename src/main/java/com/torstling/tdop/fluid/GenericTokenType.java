@@ -28,6 +28,11 @@ public class GenericTokenType<N extends AstNode> implements TokenType<N> {
         return def.getPattern();
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return def.getTokenDefinition().shouldFilterOutBeforeParsing();
+    }
+
     public String toString() {
         return def.getTokenTypeName();
     }

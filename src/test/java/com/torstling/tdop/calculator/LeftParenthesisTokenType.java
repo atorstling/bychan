@@ -18,6 +18,11 @@ public class LeftParenthesisTokenType<N extends AstNode> implements TokenType<N>
         return "\\(";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static <N extends AstNode> LeftParenthesisTokenType<N> get() {
         return new LeftParenthesisTokenType<>();
     }

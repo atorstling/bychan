@@ -19,6 +19,11 @@ public class AndTokenType implements TokenType<BooleanExpressionNode> {
         return "\\*";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     @NotNull
     public static AndTokenType get() {
         return INSTANCE;

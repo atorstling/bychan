@@ -19,6 +19,11 @@ public class NotTokenType implements TokenType<BooleanExpressionNode> {
         return "\\!";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static NotTokenType get() {
         return INSTANCE;
     }

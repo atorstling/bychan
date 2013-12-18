@@ -38,7 +38,7 @@ public class TokenDefinitionBuilder<N extends AstNode> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder, tokenTypeName);
+        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder, tokenTypeName, filterOutBeforeParsing);
     }
 
     @Nullable
@@ -47,14 +47,14 @@ public class TokenDefinitionBuilder<N extends AstNode> {
             throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
         }
         if (standaloneBuilder != null) {
-             return new PrefixAstBuilder<N>() {
+            return new PrefixAstBuilder<N>() {
                 @Override
                 public N build(@NotNull LexingMatch match, @NotNull ParserCallback2<N> callback) {
                     return standaloneBuilder.build(match);
                 }
             };
         } else {
-           return prefixBuilder;
+            return prefixBuilder;
         }
     }
 

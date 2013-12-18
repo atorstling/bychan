@@ -18,6 +18,11 @@ public class MultiplicationTokenType implements TokenType<CalculatorNode> {
         return "\\*";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static MultiplicationTokenType get() {
         return INSTANCE;
     }

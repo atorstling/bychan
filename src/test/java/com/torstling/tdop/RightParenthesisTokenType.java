@@ -20,6 +20,11 @@ public class RightParenthesisTokenType<N extends AstNode> implements TokenType<N
         return "\\)";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static <N extends AstNode> RightParenthesisTokenType<N> get() {
         //noinspection unchecked
         return (RightParenthesisTokenType<N>) INSTANCE;

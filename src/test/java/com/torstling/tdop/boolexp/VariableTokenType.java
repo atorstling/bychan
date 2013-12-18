@@ -19,6 +19,11 @@ public class VariableTokenType implements TokenType<BooleanExpressionNode> {
         return "[a-z]+";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     @NotNull
     public static VariableTokenType get() {
         return INSTANCE;

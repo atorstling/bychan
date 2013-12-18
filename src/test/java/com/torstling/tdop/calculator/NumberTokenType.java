@@ -18,6 +18,11 @@ public class NumberTokenType implements TokenType<CalculatorNode> {
         return "\\d+";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static NumberTokenType get() {
         return INSTANCE;
     }

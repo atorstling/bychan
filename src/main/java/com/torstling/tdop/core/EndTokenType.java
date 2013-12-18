@@ -18,6 +18,11 @@ public class EndTokenType<N extends AstNode> implements TokenType<N> {
         throw new UnsupportedOperationException("End token should not be lexed");
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     @NotNull
     public static <N extends AstNode> EndTokenType<N> get() {
         //noinspection unchecked

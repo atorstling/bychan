@@ -18,6 +18,11 @@ public class OrTokenType implements TokenType<BooleanExpressionNode> {
         return "\\+";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     @NotNull
     public static OrTokenType get() {
         return INSTANCE;

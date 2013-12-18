@@ -18,6 +18,11 @@ public class SubtractionTokenType implements TokenType<CalculatorNode> {
         return "-";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static SubtractionTokenType get() {
         return INSTANCE;
     }

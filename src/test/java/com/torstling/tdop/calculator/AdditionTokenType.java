@@ -18,6 +18,11 @@ public class AdditionTokenType implements TokenType<CalculatorNode> {
         return "\\+";
     }
 
+    @Override
+    public boolean shouldSkip() {
+        return false;
+    }
+
     public static AdditionTokenType get() {
         return INSTANCE;
     }
