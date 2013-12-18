@@ -44,8 +44,8 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode> {
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N> filterOutBeforeParsing() {
-        delegate.filterOutBeforeParsing();
+    public WrappedTokenDefinitionBuilder<N> ignoreWhenParsing() {
+        delegate.ignoredWhenParsing();
         return this;
     }
 

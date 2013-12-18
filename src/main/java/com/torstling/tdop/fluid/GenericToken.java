@@ -31,7 +31,7 @@ public class GenericToken<N extends AstNode> implements Token<N> {
 
             @NotNull
             @Override
-            public Token<N> singleToken(TokenDefinition<N> tokenTypeDefinition) {
+            public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
                 return swallow(tokenTypeDefinition, parser);
             }
         });
@@ -56,7 +56,7 @@ public class GenericToken<N extends AstNode> implements Token<N> {
 
             @NotNull
             @Override
-            public Token<N> singleToken(TokenDefinition<N> tokenTypeDefinition) {
+            public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
                 return swallow(tokenTypeDefinition, parser);
             }
         });

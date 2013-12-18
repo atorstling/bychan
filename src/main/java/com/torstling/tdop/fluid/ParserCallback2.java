@@ -16,5 +16,5 @@ public interface ParserCallback2<N extends AstNode> {
      * Parse a single token of the type indicated by the token definition passed in.
      */
     @NotNull
-    Token<N> singleToken(TokenDefinition<N> tokenTypeDefinition);
+    Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition);
 }

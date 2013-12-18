@@ -15,61 +15,33 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GenericParserTest {
-
     private Language<BooleanExpressionNode> l;
 
     @Before
     public void setupLanguage() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
-        final TokenDefinition<BooleanExpressionNode> rparen = lb.newPriorityLevel()
-                .matchesString(")")
-                .named("rparen")
-                .add();
-        l = lb.newPriorityLevel()
-                .matchesString("(")
-                .named("lparen")
-                .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
-                    public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
-                        BooleanExpressionNode trailingExpression = parser.expression();
-                        parser.singleToken(rparen);
-                        return trailingExpression;
-                    }
-                }).addAndContinue()
-                .newPriorityLevel()
-                .matchesPattern("\\s+")
-                .named("whitespace")
-                .filterOutBeforeParsing()
-                .addAndContinue()
-                .newLevel()
-                .newPriorityLevel()
-                .matchesString("!")
-                .named("not")
-                .supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
+        final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").add();
+        l = lb.newToken().matchesString("(").named("lparen").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
+            public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
+                BooleanExpressionNode trailingExpression = parser.expression();
+                parser.expectSingleToken(rparen);
+                return trailingExpression;
+            }
+        }).addAndContinue().newToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing()
+                .addAndContinue().newLevel().newToken().matchesString("!").named("not").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         return new NotNode(parser.expression());
                     }
-                }).addAndContinue()
-                .newLevel()
-                .newPriorityLevel()
-                .matchesString("&")
-                .named("and")
-                .supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
+                }).addAndContinue().newLevel().newToken().matchesString("&").named("and").supportsInfix(new InfixAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode> parser) {
                         return new AndNode(left, parser.expression());
                     }
-                }).addAndContinue()
-                .newLevel()
-                .newPriorityLevel()
-                .matchesPattern("[a-z]+")
-                .named("variable")
-                .supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
+                }).addAndContinue().newLevel().newToken().matchesPattern("[a-z]+").named("variable").supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
                     public BooleanExpressionNode build(@NotNull final LexingMatch match) {
                         return new VariableNode(match.getText());
                     }
-                }).addAndContinue()
-                .build();
+                }).addAndContinue().build();
     }
-
 
     @Test
     public void parenthesisPrio() {
@@ -78,7 +50,6 @@ public class GenericParserTest {
         check(l, "!  a & b  ", false, true, true);
     }
 
-
     @Test
     public void parseFailure() {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse("(a");
@@ -86,7 +57,6 @@ public class GenericParserTest {
         String errorMessage = parseResult.getErrorMessage();
         assertEquals("Parsing terminated at position 2: Expected a token of type 'rparen', but got '.'", errorMessage);
     }
-
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
         ParseResult<BooleanExpressionNode> result = l.getParser().tryParse(expression);

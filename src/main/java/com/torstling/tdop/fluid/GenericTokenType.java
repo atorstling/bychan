@@ -30,7 +30,7 @@ public class GenericTokenType<N extends AstNode> implements TokenType<N> {
 
     @Override
     public boolean shouldSkip() {
-        return def.getTokenDefinition().shouldFilterOutBeforeParsing();
+        return def.getTokenDefinition().shouldIgnoreWhenParsing();
     }
 
     public String toString() {
