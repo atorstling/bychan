@@ -3,7 +3,10 @@ package com.torstling.tdop.fluid;
 import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 class TokenDefinitions<N extends AstNode> implements Iterable<TokenDefinition<N>> {
     @NotNull

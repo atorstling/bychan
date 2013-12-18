@@ -1,8 +1,8 @@
 package com.torstling.tdop.core;
 
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
+import com.torstling.tdop.utils.CollectionUtils;
+import com.torstling.tdop.utils.Function;
+import com.torstling.tdop.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,14 +22,14 @@ public class Lexer<N extends AstNode> {
     public Lexer(@NotNull final Collection<? extends TokenType<N>> tokenTypes) {
         this.tokenTypes = new ArrayList<>(tokenTypes);
         Collection<String> allPatterns = makeSubPatterns(this.tokenTypes);
-        Joiner orJoiner = Joiner.on("|");
-        String includedPattern = "(?:" + orJoiner.join(allPatterns) + ")";
+        String includedPattern = "(?:" + StringUtils.join(allPatterns, "|") + ")";
         pattern = Pattern.compile(includedPattern);
     }
 
     private Collection<String> makeSubPatterns(Collection<TokenType<N>> tokenTypes) {
-        return Collections2.transform(tokenTypes, new Function<TokenType, String>() {
-            public String apply(TokenType tokenType) {
+        return CollectionUtils.transform(tokenTypes, new Function<TokenType, String>() {
+            @NotNull
+            public String apply(@NotNull TokenType tokenType) {
                 return "(" + tokenType.getPattern() + ")";
             }
         });

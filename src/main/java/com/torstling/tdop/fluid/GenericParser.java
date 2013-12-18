@@ -1,7 +1,8 @@
 package com.torstling.tdop.fluid;
 
-import com.google.common.base.Function;
 import com.torstling.tdop.core.*;
+import com.torstling.tdop.utils.CollectionUtils;
+import com.torstling.tdop.utils.Function;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -36,9 +37,10 @@ public class GenericParser<N extends AstNode> {
     }
 
     private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return Utils2.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, GenericTokenType<N>>() {
+        return CollectionUtils.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, GenericTokenType<N>>() {
+            @NotNull
             @Override
-            public GenericTokenType<N> apply(final LeveledTokenDefinition<N> tokenDef) {
+            public GenericTokenType<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
                 return new GenericTokenType<>(tokenDef, tokenFinder);
             }
         });
@@ -46,7 +48,7 @@ public class GenericParser<N extends AstNode> {
 
     private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {
         List<LeveledTokenDefinition<N>> flatList = new ArrayList<>();
-        int levelCount=0;
+        int levelCount = 0;
         for (TokenDefinitions<N> level : levels) {
             for (TokenDefinition<N> definition : level) {
                 flatList.add(new LeveledTokenDefinition<>(definition, levelCount));
