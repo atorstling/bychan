@@ -31,7 +31,7 @@ public class LanguageBuilder<N extends AstNode> {
     }
 
     @NotNull
-    public Language<N> build() {
+    public Language<N> completeLanguage() {
         flushRemainingTokens();
         return new Language<>(levels);
     }
@@ -43,7 +43,7 @@ public class LanguageBuilder<N extends AstNode> {
     }
 
     @NotNull
-    public WrappedTokenDefinitionBuilder<N> newToken() {
-        return new WrappedTokenDefinitionBuilder<N>(this);
+    public TokenDefinitionBuilder<N> newToken() {
+        return new TokenDefinitionBuilder<N>();
     }
 }

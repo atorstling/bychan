@@ -12,11 +12,11 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode> {
     @NotNull
     private final TokenDefinitionBuilder<N> delegate;
     @NotNull
-    private final LanguageBuilder<N> languageBuilder;
+    private final LanguageBuilder2<N> languageBuilder;
 
-    public WrappedTokenDefinitionBuilder(LanguageBuilder<N> languageBuilder) {
+    public WrappedTokenDefinitionBuilder(LanguageBuilder2<N> languageBuilder, @NotNull final TokenDefinitionBuilder<N> delegate) {
         this.languageBuilder = languageBuilder;
-        this.delegate = new TokenDefinitionBuilder<N>();
+        this.delegate = delegate;
     }
 
     public WrappedTokenDefinitionBuilder<N> matchesString(String text) {
@@ -49,19 +49,24 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode> {
         return this;
     }
 
-    @NotNull
-    public LanguageBuilder<N> addAndContinue() {
-        TokenDefinition<N> tokenDefinition = delegate.build();
-        languageBuilder.addToken(tokenDefinition);
-        return languageBuilder;
-    }
-
     public WrappedTokenDefinitionBuilder<N> matchesPattern(String pattern) {
         delegate.matchesPattern(pattern);
         return this;
     }
 
-    public TokenDefinition<N> add() {
+    @NotNull
+    public LanguageBuilder2<N> completeToken() {
+        buildAndAdd();
+        return languageBuilder;
+    }
+
+    @NotNull
+    public TokenDefinition<N> completeTokenAndPause() {
+        return buildAndAdd();
+    }
+
+    @NotNull
+    private TokenDefinition<N> buildAndAdd() {
         TokenDefinition<N> tokenDefinition = delegate.build();
         languageBuilder.addToken(tokenDefinition);
         return tokenDefinition;
