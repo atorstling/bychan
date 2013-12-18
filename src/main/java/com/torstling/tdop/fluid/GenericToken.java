@@ -68,8 +68,9 @@ public class GenericToken<N extends AstNode> implements Token<N> {
     }
 
     @Override
-    public boolean isOfType(@NotNull TokenType<N> type) {
-        return type.equals(tokenType);
+    @NotNull
+    public TokenType<N> getType() {
+        return tokenType;
     }
 
     public String toString() {

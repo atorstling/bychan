@@ -35,9 +35,11 @@ public class MultiplicationToken implements Token<CalculatorNode> {
         return "*";
     }
 
+
     @Override
-    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
-        return type.equals(MultiplicationTokenType.get());
+    @NotNull
+    public TokenType<CalculatorNode> getType() {
+        return MultiplicationTokenType.get();
     }
 
     @org.jetbrains.annotations.NotNull

@@ -1,6 +1,6 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.*;
+import com.torstling.tdop.RightParenthesisTokenType;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,9 +34,11 @@ public class LeftParenthesisToken<N extends AstNode> implements Token<N> {
     }
 
     @Override
-    public boolean isOfType(@NotNull TokenType<N> type) {
-        return type.equals(LeftParenthesisTokenType.<N>get());
+    @NotNull
+    public TokenType<N> getType() {
+        return LeftParenthesisTokenType.<N>get();
     }
+
 
     @NotNull
     @Override

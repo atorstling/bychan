@@ -39,8 +39,11 @@ public class SubtractionToken implements Token<CalculatorNode> {
         return "-";
     }
 
+
     @Override
-    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
-        return type.equals(SubtractionTokenType.get());
+    @NotNull
+    public TokenType<CalculatorNode> getType() {
+        return SubtractionTokenType.get();
     }
+
 }

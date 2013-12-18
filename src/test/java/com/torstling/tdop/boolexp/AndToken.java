@@ -29,8 +29,9 @@ public class AndToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
-        return type.equals(AndTokenType.get());
+    @NotNull
+    public TokenType<BooleanExpressionNode> getType() {
+        return AndTokenType.get();
     }
 
     @org.jetbrains.annotations.NotNull

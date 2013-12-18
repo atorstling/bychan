@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * A token signaling the end of the lexing stream
+ *
  * @param <N>
  */
 public class EndToken<N extends AstNode> implements Token<N> {
@@ -29,9 +30,11 @@ public class EndToken<N extends AstNode> implements Token<N> {
         return 0;
     }
 
+
     @Override
-    public boolean isOfType(@NotNull TokenType<N> type) {
-        return type.equals(EndTokenType.get());
+    @NotNull
+    public TokenType<N> getType() {
+        return EndTokenType.get();
     }
 
     @org.jetbrains.annotations.NotNull

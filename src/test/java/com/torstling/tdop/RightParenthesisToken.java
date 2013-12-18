@@ -30,10 +30,13 @@ public class RightParenthesisToken<N extends AstNode> implements Token<N> {
         return ")";
     }
 
+
     @Override
-    public boolean isOfType(@NotNull final TokenType<N> type) {
-        return type.equals(RightParenthesisTokenType.get());
+    @NotNull
+    public TokenType<N> getType() {
+        return RightParenthesisTokenType.get();
     }
+
 
     @NotNull
     @Override

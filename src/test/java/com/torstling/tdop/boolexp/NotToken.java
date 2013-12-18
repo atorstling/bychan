@@ -30,8 +30,9 @@ public class NotToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public boolean isOfType(@NotNull final TokenType<BooleanExpressionNode> type) {
-        return type.equals(NotTokenType.get());
+    @NotNull
+    public TokenType<BooleanExpressionNode> getType() {
+        return NotTokenType.get();
     }
 
     @NotNull

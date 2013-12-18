@@ -10,9 +10,11 @@ public class NumberToken implements Token<CalculatorNode> {
     @NotNull
     private final LexingMatch match;
 
+
     @Override
-    public boolean isOfType(@NotNull final TokenType<CalculatorNode> type) {
-        return type.equals(NumberTokenType.get());
+    @NotNull
+    public TokenType<CalculatorNode> getType() {
+        return NumberTokenType.get();
     }
 
     @NotNull

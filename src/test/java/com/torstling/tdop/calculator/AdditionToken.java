@@ -35,8 +35,9 @@ public class AdditionToken implements Token<CalculatorNode> {
     }
 
     @Override
-    public boolean isOfType(@NotNull TokenType<CalculatorNode> type) {
-        return type.equals(AdditionTokenType.get());
+    @NotNull
+    public TokenType<CalculatorNode> getType() {
+        return AdditionTokenType.get();
     }
 
     @NotNull
