@@ -30,6 +30,6 @@ public class LanguageBuilder2<N extends AstNode> {
 
     @NotNull
     public WrappedTokenDefinitionBuilder<N> startToken() {
-        return new WrappedTokenDefinitionBuilder<N>(this, delegate.newToken());
+        return new WrappedTokenDefinitionBuilder<>(this, delegate.newToken());
     }
 }

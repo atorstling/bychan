@@ -35,7 +35,7 @@ public class LeftParenthesisToken<N extends AstNode> implements Token<N> {
     @Override
     @NotNull
     public TokenType<N> getType() {
-        return LeftParenthesisTokenType.<N>get();
+        return LeftParenthesisTokenType.get();
     }
 
 

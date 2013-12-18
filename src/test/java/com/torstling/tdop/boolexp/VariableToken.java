@@ -26,11 +26,6 @@ public class VariableToken implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public String getName() {
-        return name;
-    }
-
-    @NotNull
     public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
         return new VariableNode(name);
     }

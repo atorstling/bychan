@@ -44,6 +44,6 @@ public class LanguageBuilder<N extends AstNode> {
 
     @NotNull
     public TokenDefinitionBuilder<N> newToken() {
-        return new TokenDefinitionBuilder<N>();
+        return new TokenDefinitionBuilder<>();
     }
 }

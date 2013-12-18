@@ -20,7 +20,7 @@ public class WhitespaceTokenType<N extends AstNode> implements TokenType<N> {
     @NotNull
     @Override
     public Token<N> toToken(@NotNull LexingMatch match) {
-        return new WhitespaceToken<N>(this, match);
+        return new WhitespaceToken<>(this, match);
     }
 
     @NotNull
