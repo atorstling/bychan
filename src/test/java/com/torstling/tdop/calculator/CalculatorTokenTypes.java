@@ -1,8 +1,9 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.RightParenthesisTokenType;
-import com.torstling.tdop.boolexp.WhitespaceTokenType;
 import com.torstling.tdop.core.TokenType;
+import com.torstling.tdop.generic.LeftParenthesisTokenType;
+import com.torstling.tdop.generic.RightParenthesisTokenType;
+import com.torstling.tdop.generic.WhitespaceTokenType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.torstling.tdop.boolexp;
+package com.torstling.tdop.generic;
 
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;

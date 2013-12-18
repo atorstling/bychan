@@ -1,10 +1,15 @@
 package com.torstling.tdop;
 
-import com.torstling.tdop.calculator.*;
+import com.torstling.tdop.calculator.CalculatorNode;
+import com.torstling.tdop.calculator.CalculatorTokenTypes;
+import com.torstling.tdop.calculator.NumberToken;
+import com.torstling.tdop.calculator.SubtractionToken;
 import com.torstling.tdop.core.EndToken;
 import com.torstling.tdop.core.Lexer;
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.Token;
+import com.torstling.tdop.generic.LeftParenthesisToken;
+import com.torstling.tdop.generic.RightParenthesisToken;
 import junit.framework.Assert;
 import org.junit.Test;
 

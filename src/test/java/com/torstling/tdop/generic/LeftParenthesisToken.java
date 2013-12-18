@@ -1,6 +1,5 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.generic;
 
-import com.torstling.tdop.RightParenthesisTokenType;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 

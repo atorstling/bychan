@@ -1,4 +1,4 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.generic;
 
 import com.torstling.tdop.core.AstNode;
 import com.torstling.tdop.core.LexingMatch;
