@@ -4,7 +4,6 @@ import com.torstling.tdop.utils.CollectionUtils;
 import com.torstling.tdop.utils.Function;
 import com.torstling.tdop.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,22 +40,27 @@ public class Lexer<N extends AstNode> {
         int lastEnd = 0;
         while (matcher.find()) {
             int currentStart = matcher.start();
+            checkMiss(input, currentStart, lastEnd);
             Token<N> matchingToken = findMatchingToken(matcher);
-            if (matchingToken == null) {
-                final String missedText = input.substring(lastEnd, currentStart);
-                throw new RuntimeException("No matching rule for char-range from " + lastEnd + " to " + currentStart + ": '" + missedText + "'");
-            }
             if (!matchingToken.getType().shouldSkip()) {
                 tokens.add(matchingToken);
             }
             lastEnd = matcher.end();
         }
+        checkMiss(input, input.length(), lastEnd);
         tokens.add(new EndToken<N>(new LexingMatch(input.length(), input.length(), "END")));
         return tokens;
     }
 
+    private void checkMiss(@NotNull final String input, int currentStart, int lastEnd) {
+        if (currentStart > lastEnd) {
+            final String missedText = input.substring(lastEnd, currentStart);
+            throw new LexingFailedException("No matching rule for char-range from " + lastEnd + " to " + currentStart + ": '" + missedText + "'");
+        }
+    }
 
-    @Nullable
+
+    @NotNull
     private Token<N> findMatchingToken(@NotNull final Matcher matcher) {
         for (int group = 1; group <= matcher.groupCount(); group++) {
             String groupValue = matcher.group(group);
@@ -67,6 +71,6 @@ public class Lexer<N extends AstNode> {
                 return correspondingTokenType.toToken(new LexingMatch(start, end, groupValue));
             }
         }
-        return null;
+        throw new IllegalStateException("Got parsing match but could not locate corresponding token.");
     }
 }
