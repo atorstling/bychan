@@ -18,12 +18,12 @@ public class EndToken<N extends AstNode> implements Token<N> {
 
     @NotNull
     public N prefixParse(@NotNull final TokenParserCallback parser) {
-        throw new IllegalStateException("Cannot parse end as expression");
+        throw new ParsingFailedException("Cannot parse expression, end reached", lexingMatch);
     }
 
     @NotNull
     public N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser) {
-        throw new UnsupportedOperationException();
+        throw new ParsingFailedException("Cannot parse expression, end reached", lexingMatch);
     }
 
     public int infixBindingPower() {
@@ -44,6 +44,6 @@ public class EndToken<N extends AstNode> implements Token<N> {
     }
 
     public String toString() {
-        return ".";
+        return "END";
     }
 }

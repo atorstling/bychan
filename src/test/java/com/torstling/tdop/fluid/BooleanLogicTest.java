@@ -102,7 +102,7 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
         String errorMessage = parseResult.getErrorMessage();
-        assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2, endPosition=2, text='END'}: Expected a token of type 'rparen', but got '.'", errorMessage);
+        assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2, endPosition=2, text='END'}: Expected a token of type 'rparen', but got 'END'", errorMessage);
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {

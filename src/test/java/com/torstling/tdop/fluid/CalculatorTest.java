@@ -75,7 +75,9 @@ public class CalculatorTest {
                     }
                 }).build();
         Language<CalculatorNode> l = lb
-                .addToken(lparen).addToken(rparen).addToken(whitespace)
+                .addToken(lparen)
+                .addToken(rparen)
+                .addToken(whitespace)
                 .newLevel()
                 .addToken(plus)
                 .newLevel()

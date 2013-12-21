@@ -74,7 +74,7 @@ public class GenericToken<N extends AstNode> implements Token<N> {
     }
 
     public String toString() {
-        return "" + def;
+        return tokenType.getTokenDefinition().getTokenTypeName() + "(" + match.getText() + ")";
     }
 
     @NotNull

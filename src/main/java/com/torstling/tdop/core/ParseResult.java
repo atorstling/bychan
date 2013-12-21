@@ -1,7 +1,7 @@
 package com.torstling.tdop.core;
 
-import org.jetbrains.annotations.NotNull;
 import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The result of a possibly unsuccessful parse
@@ -34,7 +34,7 @@ public class ParseResult<N extends AstNode> {
     @NotNull
     public N getNode() {
         if (!isSuccess()) {
-            throw new IllegalStateException("Cannot get node when parsing wasn't successful");
+            throw new IllegalStateException("Cannot get node when parsing wasn't successful. Failure:" + errorMessage);
         }
         return node;
     }
