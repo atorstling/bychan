@@ -8,13 +8,12 @@ import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class LanguageBuilderTest {
+public class BooleanLogicTest {
 
     @Test
     public void terserSyntax() {
@@ -53,7 +52,7 @@ public class LanguageBuilderTest {
         checkParseFailure(l);
     }
 
-    @Before
+    @Test
     public void clearerSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();

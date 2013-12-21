@@ -5,5 +5,5 @@ import com.torstling.tdop.core.LexingMatch;
 import org.jetbrains.annotations.NotNull;
 
 public interface PrefixAstBuilder<N extends AstNode> {
-    N build(@NotNull LexingMatch match, @NotNull ParserCallback2<N> callback);
+    N build(@NotNull LexingMatch match, @NotNull ParserCallback2<N> parser);
 }
