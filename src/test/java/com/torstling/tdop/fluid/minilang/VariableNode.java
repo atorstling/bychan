@@ -1,13 +1,18 @@
 package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class VariableNode implements LaiLaiNode {
     @NotNull
+    private final ExpressionType type;
+    @NotNull
     private final String name;
+    @Nullable
     private Object value;
 
-    public VariableNode(@NotNull final String name) {
+    public VariableNode(@NotNull final ExpressionType type, @NotNull final String name) {
+        this.type = type;
         this.name = name;
         this.value = null;
     }
@@ -21,12 +26,18 @@ public class VariableNode implements LaiLaiNode {
         return value;
     }
 
+    @NotNull
     @Override
-    public String toString() {
-        return name;
+    public ExpressionType getExpressionType() {
+        return type;
     }
 
-    public void setValue(@NotNull final Object value) {
+    @Override
+    public String toString() {
+        return type.name().toLowerCase() + "(" + name + ")";
+    }
+
+    public void setValue(@SuppressWarnings("NullableProblems") @NotNull final Object value) {
         this.value = value;
     }
 }

@@ -19,6 +19,12 @@ public class AssignNode implements LaiLaiNode {
         return rhsValue;
     }
 
+    @NotNull
+    @Override
+    public ExpressionType getExpressionType() {
+        return ExpressionType.union(left.getExpressionType(), right.getExpressionType());
+    }
+
     public String toString() {
         return "(= " + left + " " + right + ")";
     }

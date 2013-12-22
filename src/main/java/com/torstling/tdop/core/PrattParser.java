@@ -85,4 +85,10 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         }
         return next;
     }
+
+    @NotNull
+    @Override
+    public Token<N> peek() {
+        return tokens.peek();
+    }
 }

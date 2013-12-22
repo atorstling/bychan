@@ -22,6 +22,7 @@ public class CalculatorTest {
                 .matchesString("(")
                 .named("lparen")
                 .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
+                    @NotNull
                     public CalculatorNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
                         CalculatorNode trailingExpression = parser.expression();
                         parser.expectSingleToken(rparen);
@@ -39,6 +40,7 @@ public class CalculatorTest {
                 .matchesString("+")
                 .named("plus")
                 .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
+                    @NotNull
                     public CalculatorNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
                         return parser.expression();
                     }
@@ -55,6 +57,7 @@ public class CalculatorTest {
                 .matchesString("-")
                 .named("minus")
                 .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
+                    @NotNull
                     @Override
                     public CalculatorNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
                         return new NegationNode(parser.expression());
@@ -70,6 +73,7 @@ public class CalculatorTest {
                 .matchesPattern("[0-9]+")
                 .named("number")
                 .supportsStandalone(new StandaloneAstBuilder<CalculatorNode>() {
+                    @NotNull
                     public CalculatorNode build(@NotNull final LexingMatch match) {
                         return new NumberNode(Integer.parseInt(match.getText()));
                     }

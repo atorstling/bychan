@@ -34,6 +34,12 @@ public class GenericToken<N extends AstNode> implements Token<N> {
             public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
                 return swallow(tokenTypeDefinition, parser);
             }
+
+            @Override
+            public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
+                GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
+                return parser.peek().getType().equals(expectedType);
+            }
         });
     }
 
@@ -47,6 +53,9 @@ public class GenericToken<N extends AstNode> implements Token<N> {
     @Override
     public N infixParse(@NotNull final N left, @NotNull final TokenParserCallback<N> parser) {
         InfixAstBuilder<N> infixBuilder = def.getInfixBuilder();
+        if (infixBuilder == null) {
+            throw new IllegalStateException("Definition does not support infix parsing: " + this);
+        }
         return infixBuilder.build(match, left, new ParserCallback2<N>() {
             @NotNull
             @Override
@@ -58,6 +67,12 @@ public class GenericToken<N extends AstNode> implements Token<N> {
             @Override
             public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
                 return swallow(tokenTypeDefinition, parser);
+            }
+
+            @Override
+            public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
+                GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
+                return parser.peek().getType().equals(expectedType);
             }
         });
     }

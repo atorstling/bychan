@@ -17,4 +17,6 @@ public interface ParserCallback2<N extends AstNode> {
      */
     @NotNull
     Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition);
+
+    boolean nextIs(@NotNull final TokenDefinition<N> tokenTypeDefinition);
 }

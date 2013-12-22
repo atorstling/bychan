@@ -2,10 +2,10 @@ package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
 
-public class FloatLiteralNode implements LiteralNode {
-    private final float value;
+public class BooleanLiteralNode implements LaiLaiNode {
+    private final boolean value;
 
-    public FloatLiteralNode(float value) {
+    public BooleanLiteralNode(boolean value) {
         this.value = value;
     }
 
@@ -18,11 +18,11 @@ public class FloatLiteralNode implements LiteralNode {
     @NotNull
     @Override
     public ExpressionType getExpressionType() {
-        return ExpressionType.FLOAT;
+        return ExpressionType.BOOL;
     }
 
     @Override
     public String toString() {
-        return value + "f";
+        return Boolean.toString(value);
     }
 }

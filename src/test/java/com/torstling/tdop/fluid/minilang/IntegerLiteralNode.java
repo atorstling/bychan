@@ -15,6 +15,12 @@ public class IntegerLiteralNode implements LiteralNode {
         return value;
     }
 
+    @NotNull
+    @Override
+    public ExpressionType getExpressionType() {
+        return ExpressionType.INT;
+    }
+
     @Override
     public String toString() {
         return value + "i";

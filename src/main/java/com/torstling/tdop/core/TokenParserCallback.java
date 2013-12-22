@@ -28,4 +28,7 @@ public interface TokenParserCallback<N extends AstNode> {
      */
     @NotNull
     Token<N> swallow(@NotNull TokenType<N> type);
+
+    @NotNull
+    Token<N> peek();
 }

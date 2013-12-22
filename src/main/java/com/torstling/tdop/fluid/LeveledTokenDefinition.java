@@ -2,6 +2,7 @@ package com.torstling.tdop.fluid;
 
 import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 class LeveledTokenDefinition<N extends AstNode> {
     @NotNull
@@ -27,7 +28,7 @@ class LeveledTokenDefinition<N extends AstNode> {
     }
 
     public String toString() {
-        return levelCount + ":"  + definition;
+        return levelCount + ":" + definition;
     }
 
     public PrefixAstBuilder<N> getPrefixBuilder() {
@@ -39,6 +40,7 @@ class LeveledTokenDefinition<N extends AstNode> {
         return definition;
     }
 
+    @Nullable
     public InfixAstBuilder<N> getInfixBuilder() {
         return definition.getInfixBuilder();
     }

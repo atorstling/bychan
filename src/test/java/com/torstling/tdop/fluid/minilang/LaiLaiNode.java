@@ -6,4 +6,7 @@ import org.jetbrains.annotations.NotNull;
 public interface LaiLaiNode extends AstNode {
     @NotNull
     Object evaluate();
+
+    @NotNull
+    ExpressionType getExpressionType();
 }
