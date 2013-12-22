@@ -81,11 +81,11 @@ public class BooleanLogicTest {
         }).build();
         Language<BooleanExpressionNode> l = lb
                 .addToken(lparen).addToken(rparen).addToken(whitespace)
-                .newLevel()
+                .newLowerPriorityLevel()
                 .addToken(not)
-                .newLevel()
+                .newLowerPriorityLevel()
                 .addToken(and)
-                .newLevel()
+                .newLowerPriorityLevel()
                 .addToken(variable)
                 .completeLanguage();
         checkParenthesisPrio(l);
@@ -109,6 +109,6 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> result = l.getParser().tryParse(expression);
         assertTrue(result.isSuccess());
         VariableBindings bindings = new VariableBindingBuilder().bind("a", aValue).bind("b", bValue).build();
-        assertEquals(result.getNode().evaluate(bindings), expectedOutcome);
+        assertEquals(result.getRootNode().evaluate(bindings), expectedOutcome);
     }
 }

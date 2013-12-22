@@ -8,18 +8,18 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ParseResult<N extends AstNode> {
     @Nullable
-    private final N node;
+    private final N rootNode;
     @Nullable
     private final String errorMessage;
 
-    private ParseResult(@Nullable final N node, @Nullable final String errorMessage) {
-        this.node = node;
+    private ParseResult(@Nullable final N rootNode, @Nullable final String errorMessage) {
+        this.rootNode = rootNode;
         this.errorMessage = errorMessage;
     }
 
     @NotNull
-    public static <N extends AstNode> ParseResult<N> success(@NotNull final N node) {
-        return new ParseResult<>(node, null);
+    public static <N extends AstNode> ParseResult<N> success(@NotNull final N rootNode) {
+        return new ParseResult<>(rootNode, null);
     }
 
     @NotNull
@@ -28,15 +28,15 @@ public class ParseResult<N extends AstNode> {
     }
 
     public boolean isSuccess() {
-        return node != null;
+        return rootNode != null;
     }
 
     @NotNull
-    public N getNode() {
+    public N getRootNode() {
         if (!isSuccess()) {
-            throw new IllegalStateException("Cannot get node when parsing wasn't successful. Failure:" + errorMessage);
+            throw new IllegalStateException("Cannot get rootNode when parsing wasn't successful. Failure:" + errorMessage);
         }
-        return node;
+        return rootNode;
     }
 
     @NotNull

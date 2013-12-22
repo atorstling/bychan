@@ -41,7 +41,8 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         // "(" as in "start sub-expression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
-        final N first = tokens.pop().prefixParse(this);
+        Token<N> firstToken = tokens.pop();
+        final N first = firstToken.prefixParse(this);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -66,9 +67,11 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
     }
 
     private N parseLoop(N currentLeftHandSide, int powerFloor) {
-        if (tokens.peek().infixBindingPower() > powerFloor) {
+        Token<N> peekedToken = tokens.peek();
+        if (peekedToken.infixBindingPower() > powerFloor) {
             //Parsing happens by passing the current LHS to the operator, which will continue parsing.
-            N nextExpression = tokens.pop().infixParse(currentLeftHandSide, this);
+            Token<N> takenToken = tokens.pop();
+            N nextExpression = takenToken.infixParse(currentLeftHandSide, this);
             return parseLoop(nextExpression, powerFloor);
         }
         return currentLeftHandSide;

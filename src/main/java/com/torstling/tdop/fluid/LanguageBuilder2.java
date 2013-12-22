@@ -19,7 +19,7 @@ public class LanguageBuilder2<N extends AstNode> {
 
     @NotNull
     public LanguageBuilder2<N> newLevel() {
-        delegate.newLevel();
+        delegate.newLowerPriorityLevel();
         return this;
     }
 

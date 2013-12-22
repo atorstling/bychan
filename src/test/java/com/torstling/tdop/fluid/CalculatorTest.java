@@ -78,15 +78,15 @@ public class CalculatorTest {
                 .addToken(lparen)
                 .addToken(rparen)
                 .addToken(whitespace)
-                .newLevel()
+                .newLowerPriorityLevel()
                 .addToken(plus)
-                .newLevel()
+                .newLowerPriorityLevel()
                 .addToken(minus)
-                .newLevel()
+                .newLowerPriorityLevel()
                 .addToken(number)
                 .completeLanguage();
-        assertEquals(3, l.getParser().tryParse("1+2").getNode().evaluate());
-        assertEquals(-1, l.getParser().tryParse("1+-2").getNode().evaluate());
-        assertEquals(3, l.getParser().tryParse("1--2").getNode().evaluate());
+        assertEquals(3, l.getParser().tryParse("1+2").getRootNode().evaluate());
+        assertEquals(-1, l.getParser().tryParse("1+-2").getRootNode().evaluate());
+        assertEquals(3, l.getParser().tryParse("1--2").getRootNode().evaluate());
     }
 }

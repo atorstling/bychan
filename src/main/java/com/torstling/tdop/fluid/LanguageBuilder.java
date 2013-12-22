@@ -24,7 +24,7 @@ public class LanguageBuilder<N extends AstNode> {
     }
 
     @NotNull
-    public LanguageBuilder<N> newLevel() {
+    public LanguageBuilder<N> newLowerPriorityLevel() {
         this.levels.add(new TokenDefinitions<>(currentTokens));
         currentTokens.clear();
         return this;
@@ -38,7 +38,7 @@ public class LanguageBuilder<N extends AstNode> {
 
     private void flushRemainingTokens() {
         if (!currentTokens.isEmpty()) {
-            newLevel();
+            newLowerPriorityLevel();
         }
     }
 

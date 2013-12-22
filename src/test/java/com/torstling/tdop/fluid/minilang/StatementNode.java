@@ -2,11 +2,14 @@ package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
 
-public class AdditionNode implements LaiLaiNode {
+/**
+ * Created by alext on 12/22/13.
+ */
+public class StatementNode implements LaiLaiNode {
     private final LaiLaiNode left;
     private final LaiLaiNode right;
 
-    public AdditionNode(LaiLaiNode left, LaiLaiNode right) {
+    public StatementNode(LaiLaiNode left, LaiLaiNode right) {
         this.left = left;
         this.right = right;
     }
@@ -14,11 +17,12 @@ public class AdditionNode implements LaiLaiNode {
     @NotNull
     @Override
     public Object evaluate() {
-        return ((Integer) left.evaluate()) + ((Integer) right.evaluate());
+        left.evaluate();
+        return right.evaluate();
     }
 
     @Override
     public String toString() {
-        return "(+ " + left + " " + right + ")";
+        return "(x " + left + " " + right + ")";
     }
 }
