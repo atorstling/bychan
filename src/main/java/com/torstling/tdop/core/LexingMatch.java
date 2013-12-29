@@ -31,4 +31,12 @@ public class LexingMatch {
                 ", text='" + text + '\'' +
                 '}';
     }
+
+    public int getEndPosition() {
+        return endPosition;
+    }
+
+    public int getStartPosition() {
+        return startPosition;
+    }
 }

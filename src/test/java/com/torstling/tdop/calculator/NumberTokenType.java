@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class NumberTokenType implements TokenType<CalculatorNode> {
     private static final NumberTokenType INSTANCE = new NumberTokenType();
 
@@ -14,8 +16,8 @@ public class NumberTokenType implements TokenType<CalculatorNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "\\d+";
+    public Pattern getPattern() {
+        return Pattern.compile("\\d+");
     }
 
     @Override

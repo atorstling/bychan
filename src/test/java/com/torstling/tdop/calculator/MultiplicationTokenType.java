@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class MultiplicationTokenType implements TokenType<CalculatorNode> {
     private static final MultiplicationTokenType INSTANCE = new MultiplicationTokenType();
 
@@ -14,8 +16,8 @@ public class MultiplicationTokenType implements TokenType<CalculatorNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "\\*";
+    public Pattern getPattern() {
+        return Pattern.compile("\\*");
     }
 
     @Override

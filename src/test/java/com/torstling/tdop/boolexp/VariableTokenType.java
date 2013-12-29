@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class VariableTokenType implements TokenType<BooleanExpressionNode> {
 
     private static final VariableTokenType INSTANCE = new VariableTokenType();
@@ -15,8 +17,8 @@ public class VariableTokenType implements TokenType<BooleanExpressionNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "[a-z]+";
+    public Pattern getPattern() {
+        return Pattern.compile("[a-z]+");
     }
 
     @Override

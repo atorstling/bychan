@@ -2,6 +2,8 @@ package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class EndTokenType<N extends AstNode> implements TokenType<N> {
 
     private static final EndTokenType INSTANCE = new EndTokenType<>();
@@ -14,7 +16,7 @@ public class EndTokenType<N extends AstNode> implements TokenType<N> {
 
     @NotNull
     @Override
-    public String getPattern() {
+    public Pattern getPattern() {
         throw new UnsupportedOperationException("End token should not be lexed");
     }
 

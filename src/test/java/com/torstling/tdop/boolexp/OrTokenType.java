@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class OrTokenType implements TokenType<BooleanExpressionNode> {
     private static final OrTokenType INSTANCE = new OrTokenType();
 
@@ -14,8 +16,8 @@ public class OrTokenType implements TokenType<BooleanExpressionNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "\\+";
+    public Pattern getPattern() {
+        return Pattern.compile("\\+");
     }
 
     @Override

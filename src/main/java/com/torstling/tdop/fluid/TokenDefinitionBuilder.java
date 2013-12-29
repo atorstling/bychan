@@ -38,7 +38,7 @@ public class TokenDefinitionBuilder<N extends AstNode> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(pattern, selectPrefix(), infixBuilder, tokenTypeName, ignoredWhenParsing);
+        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, ignoredWhenParsing);
     }
 
     @Nullable

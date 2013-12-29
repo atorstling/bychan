@@ -6,6 +6,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class RightParenthesisTokenType<N extends AstNode> implements TokenType<N> {
 
     private static final RightParenthesisTokenType INSTANCE = new RightParenthesisTokenType<>();
@@ -16,8 +18,8 @@ public class RightParenthesisTokenType<N extends AstNode> implements TokenType<N
     }
 
     @NotNull
-    public String getPattern() {
-        return "\\)";
+    public Pattern getPattern() {
+        return Pattern.compile("\\)");
     }
 
     @Override

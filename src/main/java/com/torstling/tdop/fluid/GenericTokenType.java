@@ -6,6 +6,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class GenericTokenType<N extends AstNode> implements TokenType<N> {
     @NotNull
     private final LeveledTokenDefinition<N> def;
@@ -24,7 +26,7 @@ public class GenericTokenType<N extends AstNode> implements TokenType<N> {
 
     @NotNull
     @Override
-    public String getPattern() {
+    public Pattern getPattern() {
         return def.getPattern();
     }
 

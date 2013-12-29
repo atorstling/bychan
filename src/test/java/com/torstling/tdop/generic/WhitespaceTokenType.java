@@ -6,6 +6,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class WhitespaceTokenType<N extends AstNode> implements TokenType<N> {
     private final String pattern;
 
@@ -25,8 +27,8 @@ public class WhitespaceTokenType<N extends AstNode> implements TokenType<N> {
 
     @NotNull
     @Override
-    public String getPattern() {
-        return pattern;
+    public Pattern getPattern() {
+        return Pattern.compile(pattern);
     }
 
     @Override

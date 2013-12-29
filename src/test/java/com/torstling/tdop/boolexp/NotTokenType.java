@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class NotTokenType implements TokenType<BooleanExpressionNode> {
 
     private static final NotTokenType INSTANCE = new NotTokenType();
@@ -15,8 +17,8 @@ public class NotTokenType implements TokenType<BooleanExpressionNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "\\!";
+    public Pattern getPattern() {
+        return Pattern.compile("\\!");
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.regex.Pattern;
+
 /**
  * A combined definition of a token type and token
  *
@@ -11,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class TokenDefinition<N extends AstNode> {
     @NotNull
-    private final String pattern;
+    private final Pattern pattern;
     @Nullable
     private final PrefixAstBuilder<N> prefixBuilder;
     @Nullable
@@ -20,7 +22,7 @@ public class TokenDefinition<N extends AstNode> {
     private final String tokenTypeName;
     private final boolean ignoredWhenParsing;
 
-    public TokenDefinition(@NotNull final String pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, @NotNull final String tokenTypeName, boolean ignoredWhenParsing) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, @NotNull final String tokenTypeName, boolean ignoredWhenParsing) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
@@ -29,7 +31,7 @@ public class TokenDefinition<N extends AstNode> {
     }
 
     @NotNull
-    public String getPattern() {
+    public Pattern getPattern() {
         return pattern;
     }
 
@@ -39,7 +41,7 @@ public class TokenDefinition<N extends AstNode> {
 
     @Override
     public String toString() {
-        return pattern;
+        return pattern.pattern();
     }
 
     @Nullable

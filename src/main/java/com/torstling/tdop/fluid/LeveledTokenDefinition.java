@@ -4,6 +4,8 @@ import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.regex.Pattern;
+
 class LeveledTokenDefinition<N extends AstNode> {
     @NotNull
     private final TokenDefinition<N> definition;
@@ -14,7 +16,7 @@ class LeveledTokenDefinition<N extends AstNode> {
         this.levelCount = levelCount;
     }
 
-    public String getPattern() {
+    public Pattern getPattern() {
         return definition.getPattern();
     }
 

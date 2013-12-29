@@ -20,7 +20,7 @@ public class LexerTest {
     @Test
     public void calculatorTest() {
         List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.get()).lex("(1 -) ");
-        assertEquals(5, tokens.size());
+        assertEquals(tokens.toString(), 5, tokens.size());
         assertTrue(tokens.get(0) instanceof LeftParenthesisToken);
         Assert.assertEquals(new NumberToken(new LexingMatch(0, 1, "1")), tokens.get(1));
         assertTrue(tokens.get(2) instanceof SubtractionToken);
@@ -34,7 +34,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokenTypes.get()).lex("1;1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range from 1 to 2: ';'", e.getMessage());
+            assertEquals("No matching rule for char-range starting at 1: ';1'", e.getMessage());
         }
     }
 
@@ -44,7 +44,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokenTypes.get()).lex(";1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range from 0 to 1: ';'", e.getMessage());
+            assertEquals("No matching rule for char-range starting at 0: ';1'", e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokenTypes.get()).lex("1;");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range from 1 to 2: ';'", e.getMessage());
+            assertEquals("No matching rule for char-range starting at 1: ';'", e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokenTypes.get()).lex(";");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range from 0 to 1: ';'", e.getMessage());
+            assertEquals("No matching rule for char-range starting at 0: ';'", e.getMessage());
         }
     }
 }

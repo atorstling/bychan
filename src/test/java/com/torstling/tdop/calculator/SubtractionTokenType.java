@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class SubtractionTokenType implements TokenType<CalculatorNode> {
     private static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
 
@@ -14,8 +16,8 @@ public class SubtractionTokenType implements TokenType<CalculatorNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "-";
+    public Pattern getPattern() {
+        return Pattern.compile("-");
     }
 
     @Override

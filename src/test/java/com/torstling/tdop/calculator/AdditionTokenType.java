@@ -5,6 +5,8 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class AdditionTokenType implements TokenType<CalculatorNode> {
     private static final AdditionTokenType INSTANCE = new AdditionTokenType();
 
@@ -14,8 +16,8 @@ public class AdditionTokenType implements TokenType<CalculatorNode> {
     }
 
     @NotNull
-    public String getPattern() {
-        return "\\+";
+    public Pattern getPattern() {
+        return Pattern.compile("\\+");
     }
 
     @Override
