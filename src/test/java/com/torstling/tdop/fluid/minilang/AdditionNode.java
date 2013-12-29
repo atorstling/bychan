@@ -2,11 +2,18 @@ package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
 
-public class AdditionNode implements LaiLaiNode {
-    private final LaiLaiNode left;
-    private final LaiLaiNode right;
+import java.util.Map;
 
-    public AdditionNode(LaiLaiNode left, LaiLaiNode right) {
+public class AdditionNode implements LaiLaiNode {
+    @NotNull
+    private final LaiLaiNode left;
+    @NotNull
+    private final LaiLaiNode right;
+    @NotNull
+    private final LaiLaiNode parent;
+
+    public AdditionNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
+        this.parent = parent;
         if (!ExpressionType.INT.equals(left.getExpressionType())) {
             throw new IllegalArgumentException("Left not of type int: " + left);
         }
@@ -29,6 +36,12 @@ public class AdditionNode implements LaiLaiNode {
         ExpressionType leftType = left.getExpressionType();
         ExpressionType rightType = right.getExpressionType();
         return ExpressionType.union(leftType, rightType);
+    }
+
+    @NotNull
+    @Override
+    public Map<String, VariableNode> getVariables() {
+        return parent.getVariables();
     }
 
     @Override

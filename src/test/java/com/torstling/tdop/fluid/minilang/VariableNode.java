@@ -3,7 +3,11 @@ package com.torstling.tdop.fluid.minilang;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
+
 public class VariableNode implements LaiLaiNode {
+    @NotNull
+    private final LaiLaiNode parent;
     @NotNull
     private final ExpressionType type;
     @NotNull
@@ -11,7 +15,8 @@ public class VariableNode implements LaiLaiNode {
     @Nullable
     private Object value;
 
-    public VariableNode(@NotNull final ExpressionType type, @NotNull final String name) {
+    public VariableNode(@NotNull final LaiLaiNode parent, @NotNull final ExpressionType type, @NotNull final String name) {
+        this.parent = parent;
         this.type = type;
         this.name = name;
         this.value = null;
@@ -24,6 +29,12 @@ public class VariableNode implements LaiLaiNode {
             throw new RuntimeException("Value of variable '" + name + "' has not been set.");
         }
         return value;
+    }
+
+    @NotNull
+    @Override
+    public Map<String, VariableNode> getVariables() {
+        return parent.getVariables();
     }
 
     @NotNull

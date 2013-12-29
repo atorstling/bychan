@@ -22,7 +22,8 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
     @NotNull
     public ParseResult<N> tryParse(@NotNull N parent) {
         try {
-            return ParseResult.success(expression(parent, 0));
+            N rootNode = expression(parent, 0);
+            return ParseResult.success(rootNode);
         } catch (ParsingFailedException e) {
             return ParseResult.failure(e.getMessage());
         }

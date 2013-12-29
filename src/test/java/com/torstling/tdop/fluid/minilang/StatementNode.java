@@ -2,13 +2,20 @@ package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
 
-public class StatementNode implements LaiLaiNode {
-    private final LaiLaiNode left;
-    private final LaiLaiNode right;
+import java.util.Map;
 
-    public StatementNode(LaiLaiNode left, LaiLaiNode right) {
+public class StatementNode implements LaiLaiNode {
+    @NotNull
+    private final LaiLaiNode left;
+    @NotNull
+    private final LaiLaiNode right;
+    @NotNull
+    private final LaiLaiNode parent;
+
+    public StatementNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
         this.left = left;
         this.right = right;
+        this.parent = parent;
     }
 
     @NotNull
@@ -16,6 +23,12 @@ public class StatementNode implements LaiLaiNode {
     public Object evaluate() {
         left.evaluate();
         return right.evaluate();
+    }
+
+    @NotNull
+    @Override
+    public Map<String, VariableNode> getVariables() {
+        return parent.getVariables();
     }
 
     @NotNull

@@ -3,13 +3,19 @@ package com.torstling.tdop.fluid.minilang;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScopeNode implements LaiLaiNode {
 
     @Nullable
     private LaiLaiNode child;
+    @NotNull
+    private final Map<String, VariableNode> variablesByName;
 
     public ScopeNode() {
         this.child = null;
+        variablesByName = new HashMap<>();
     }
 
     @NotNull
@@ -30,6 +36,12 @@ public class ScopeNode implements LaiLaiNode {
     @Override
     public ExpressionType getExpressionType() {
         return getChild().getExpressionType();
+    }
+
+    @NotNull
+    @Override
+    public Map<String, VariableNode> getVariables() {
+        return variablesByName;
     }
 
     @Override

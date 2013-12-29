@@ -43,7 +43,7 @@ public class BooleanLogicTest {
                 .newLevel()
                 .startToken().matchesPattern("[a-z]+").named("variable").supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
                     @NotNull
-                    public BooleanExpressionNode build(@NotNull final LexingMatch match) {
+                    public BooleanExpressionNode build(@NotNull BooleanExpressionNode parent, @NotNull final LexingMatch match) {
                         return new VariableNode(match.getText());
                     }
                 }).completeToken()
@@ -78,7 +78,7 @@ public class BooleanLogicTest {
         }).build();
         TokenDefinition<BooleanExpressionNode> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode>() {
             @NotNull
-            public BooleanExpressionNode build(@NotNull final LexingMatch match) {
+            public BooleanExpressionNode build(@NotNull BooleanExpressionNode parent, @NotNull final LexingMatch match) {
                 return new VariableNode(match.getText());
             }
         }).build();

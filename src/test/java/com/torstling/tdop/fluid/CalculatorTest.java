@@ -74,7 +74,7 @@ public class CalculatorTest {
                 .named("number")
                 .supportsStandalone(new StandaloneAstBuilder<CalculatorNode>() {
                     @NotNull
-                    public CalculatorNode build(@NotNull final LexingMatch match) {
+                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull final LexingMatch match) {
                         return new NumberNode(Integer.parseInt(match.getText()));
                     }
                 }).build();

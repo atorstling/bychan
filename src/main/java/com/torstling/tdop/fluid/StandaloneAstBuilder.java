@@ -6,5 +6,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface StandaloneAstBuilder<N extends AstNode> {
     @NotNull
-    N build(@NotNull LexingMatch match);
+    N build(@NotNull N parent, @NotNull LexingMatch match);
 }

@@ -2,11 +2,18 @@ package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
 
-public class XorNode implements LaiLaiNode {
-    private final LaiLaiNode left;
-    private final LaiLaiNode right;
+import java.util.Map;
 
-    public XorNode(LaiLaiNode left, LaiLaiNode right) {
+public class XorNode implements LaiLaiNode {
+    @NotNull
+    private final LaiLaiNode left;
+    @NotNull
+    private final LaiLaiNode right;
+    @NotNull
+    private final LaiLaiNode parent;
+
+    public XorNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
+        this.parent = parent;
         if (!ExpressionType.BOOL.equals(left.getExpressionType())) {
             throw new IllegalArgumentException("Left expression needs to be of type bool: " + left);
         }
@@ -21,6 +28,12 @@ public class XorNode implements LaiLaiNode {
     @Override
     public Object evaluate() {
         return ((Boolean) left.evaluate()) ^ ((Boolean) right.evaluate());
+    }
+
+    @NotNull
+    @Override
+    public Map<String, VariableNode> getVariables() {
+        return parent.getVariables();
     }
 
     @NotNull

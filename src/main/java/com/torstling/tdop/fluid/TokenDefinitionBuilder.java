@@ -51,7 +51,7 @@ public class TokenDefinitionBuilder<N extends AstNode> {
                 @NotNull
                 @Override
                 public N build(@NotNull N parent, @NotNull LexingMatch match, @NotNull ParserCallback2<N> parser) {
-                    return standaloneBuilder.build(match);
+                    return standaloneBuilder.build(parent, match);
                 }
             };
         } else {

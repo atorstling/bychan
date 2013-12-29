@@ -7,11 +7,16 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class ListNode implements LaiLaiNode {
+    @NotNull
+    private final LaiLaiNode parent;
+    @NotNull
     private final List<LaiLaiNode> expressions;
 
-    public ListNode(List<LaiLaiNode> expressions) {
+    public ListNode(@NotNull final LaiLaiNode parent, @NotNull final List<LaiLaiNode> expressions) {
+        this.parent = parent;
         this.expressions = expressions;
     }
 
@@ -23,6 +28,12 @@ public class ListNode implements LaiLaiNode {
             results.add(expression.evaluate());
         }
         return results;
+    }
+
+    @NotNull
+    @Override
+    public Map<String, VariableNode> getVariables() {
+        return parent.getVariables();
     }
 
     @NotNull
