@@ -23,6 +23,25 @@ public class MiniLangTest {
         LanguageBuilder<LaiLaiNode> lb = new LanguageBuilder<>();
         final HashMap<String, VariableNode> variables = new HashMap<>();
 
+        final TokenDefinition<LaiLaiNode> rcurly = lb.newToken()
+                .matchesString("}")
+                .named("rcurly")
+                .build();
+
+        final TokenDefinition<LaiLaiNode> lcurly = lb.newToken()
+                .matchesString("{")
+                .named("lcurly")
+                .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
+                    @NotNull
+                    @Override
+                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        ScopeNode scopeNode = new ScopeNode(parser.expression());
+                        parser.expectSingleToken(rcurly);
+                        return scopeNode;
+                    }
+                })
+                .build();
+
         final TokenDefinition<LaiLaiNode> rparen = lb.newToken()
                 .matchesString(")")
                 .named("rparen")
@@ -204,6 +223,8 @@ public class MiniLangTest {
         Language<LaiLaiNode> l = lb
                 .addToken(booleanLiteral)
                 .newLowerPriorityLevel()
+                .addToken(lcurly)
+                .addToken(rcurly)
                 .addToken(listEnd)
                 .addToken(lparen)
                 .addToken(rparen)
@@ -226,9 +247,9 @@ public class MiniLangTest {
                 .completeLanguage();
         testOne(l);
 
-        ParseResult<LaiLaiNode> r = l.getParser().tryParse("bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]");
+        ParseResult<LaiLaiNode> r = l.getParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
-        assertEquals("(x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (xor bool(b) bool(c)))) (= float(g) (pow float(d) float(e)))) (l bool(f) float(g) ))", root.toString());
+        assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (xor bool(b) bool(c)))) (= float(g) (pow float(d) float(e)))) (l bool(f) float(g) )))", root.toString());
         assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate());
     }
 
