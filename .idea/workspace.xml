@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="xor ambigous">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+    <list default="true" id="b0786ef2-8833-49e6-ac34-9e1f7952ad4d" name="Default" comment="ignore workspace.xml">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tdop.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -163,12 +162,12 @@
       <file leaf-file-name="workspace.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="29670">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="29340">
               <folding>
-                <marker date="1388347108828" expanded="true" signature="100772:100835" placeholder="..." />
-                <marker date="1388347108828" expanded="true" signature="100772:100820" placeholder="..." />
-                <marker date="1388347108828" expanded="true" signature="100772:100807" placeholder="..." />
-                <marker date="1388347108828" expanded="true" signature="100772:100789" placeholder="..." />
+                <marker date="1388347193888" expanded="true" signature="98418:98481" placeholder="..." />
+                <marker date="1388347193888" expanded="true" signature="98418:98466" placeholder="..." />
+                <marker date="1388347193888" expanded="true" signature="98418:98453" placeholder="..." />
+                <marker date="1388347193888" expanded="true" signature="98418:98435" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -177,7 +176,7 @@
       <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="19" selection-start="42" selection-end="42" vertical-scroll-proportion="0.054249547" vertical-offset="0" max-vertical-offset="553">
+            <state line="2" column="19" selection-start="42" selection-end="42" vertical-scroll-proportion="0.054446463" vertical-offset="0" max-vertical-offset="551">
               <folding />
             </state>
           </provider>
@@ -196,15 +195,6 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="43" column="12" selection-start="1103" selection-end="1103" vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="765">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ParsingStarter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/ParsingStarter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
               <folding />
             </state>
           </provider>
@@ -1417,7 +1407,11 @@
       <created>1387755850226</created>
       <updated>1387755851986</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="ignore workspace.xml">
+      <created>1388347172966</created>
+      <updated>1388347172969</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <option name="clearContext" value="false" />
     <option name="createChangelist" value="false" />
     <option name="createBranch" value="false" />
@@ -1459,9 +1453,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="-2" width="1385" height="903" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23506989" sideWeight="0.0" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2356688" sideWeight="0.0" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19617835" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32866243" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1500,7 +1494,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="tokens remember their matches" />
     <MESSAGE value="make expect return token" />
     <MESSAGE value="parsing fine" />
     <MESSAGE value="replace all nullable annotations" />
@@ -1525,7 +1518,8 @@
     <MESSAGE value="lexer detecting misses" />
     <MESSAGE value="statements" />
     <MESSAGE value="xor ambigous" />
-    <option name="LAST_COMMIT_MESSAGE" value="xor ambigous" />
+    <MESSAGE value="ignore workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="ignore workspace.xml" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1776,13 +1770,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/ParsingStarter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/torstling/tdop/fluid/LanguageBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="12" selection-start="1103" selection-end="1103" vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="765">
@@ -1855,17 +1842,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="34350">
           <folding>
-            <marker date="1388347108828" expanded="true" signature="100772:100835" placeholder="..." />
-            <marker date="1388347108828" expanded="true" signature="100772:100820" placeholder="..." />
-            <marker date="1388347108828" expanded="true" signature="100772:100807" placeholder="..." />
-            <marker date="1388347108828" expanded="true" signature="100772:100789" placeholder="..." />
+            <marker date="1388347193888" expanded="true" signature="98418:98481" placeholder="..." />
+            <marker date="1388347193888" expanded="true" signature="98418:98466" placeholder="..." />
+            <marker date="1388347193888" expanded="true" signature="98418:98453" placeholder="..." />
+            <marker date="1388347193888" expanded="true" signature="98418:98435" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="19" selection-start="42" selection-end="42" vertical-scroll-proportion="0.054249547" vertical-offset="0" max-vertical-offset="553">
+        <state line="2" column="19" selection-start="42" selection-end="42" vertical-scroll-proportion="0.054446463" vertical-offset="0" max-vertical-offset="551">
           <folding />
         </state>
       </provider>
