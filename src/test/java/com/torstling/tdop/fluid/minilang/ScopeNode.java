@@ -12,10 +12,27 @@ public class ScopeNode implements LaiLaiNode {
     private LaiLaiNode child;
     @NotNull
     private final Map<String, VariableNode> variablesByName;
+    @NotNull
+    private final Variables variables;
 
-    public ScopeNode() {
+    public ScopeNode(@NotNull final LaiLaiNode parent) {
         this.child = null;
         variablesByName = new HashMap<>();
+        variables = new Variables() {
+            @Nullable
+            @Override
+            public VariableNode find(@NotNull String name) {
+                if (variablesByName.containsKey(name)) {
+                    return variablesByName.get(name);
+                }
+                return parent.getVariables().find(name);
+            }
+
+            @Override
+            public void put(@NotNull String name, @NotNull VariableNode node) {
+                variablesByName.put(name, node);
+            }
+        };
     }
 
     @NotNull
@@ -40,8 +57,8 @@ public class ScopeNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Map<String, VariableNode> getVariables() {
-        return variablesByName;
+    public Variables getVariables() {
+        return variables;
     }
 
     @Override

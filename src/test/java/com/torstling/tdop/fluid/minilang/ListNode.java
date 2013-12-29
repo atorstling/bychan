@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class ListNode implements LaiLaiNode {
     @NotNull
@@ -32,7 +31,7 @@ public class ListNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Map<String, VariableNode> getVariables() {
+    public Variables getVariables() {
         return parent.getVariables();
     }
 

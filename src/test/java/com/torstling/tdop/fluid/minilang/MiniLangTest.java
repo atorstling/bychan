@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +20,6 @@ public class MiniLangTest {
     @Test
     public void test() {
         LanguageBuilder<LaiLaiNode> lb = new LanguageBuilder<>();
-
 
         final TokenDefinition<LaiLaiNode> rcurly = lb.newToken()
                 .matchesString("}")
@@ -35,7 +33,7 @@ public class MiniLangTest {
                     @NotNull
                     @Override
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        ScopeNode scopeNode = new ScopeNode();
+                        ScopeNode scopeNode = new ScopeNode(parent);
                         LaiLaiNode expression = parser.expression(scopeNode);
                         scopeNode.setChild(expression);
                         parser.expectSingleToken(rcurly);
@@ -128,12 +126,15 @@ public class MiniLangTest {
                         }
                         String typeDeclaration = matcher.group(1);
                         String nameDeclaration = matcher.group(2);
-                        Map<String, VariableNode> variables = parent.getVariables();
-                        if (!variables.containsKey(nameDeclaration)) {
+                        Variables variables = parent.getVariables();
+                        VariableNode variable = variables.find(nameDeclaration);
+                        if (variable == null) {
                             ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
-                            variables.put(nameDeclaration, new VariableNode(parent, type, nameDeclaration));
+                            VariableNode newNode = new VariableNode(parent, type, nameDeclaration);
+                            variables.put(nameDeclaration, newNode);
+                            return newNode;
                         }
-                        return variables.get(nameDeclaration);
+                        return variable;
                     }
                 }).build();
 
@@ -144,8 +145,8 @@ public class MiniLangTest {
                     @NotNull
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
                         String name = match.getText();
-                        Map<String, VariableNode> variables = parent.getVariables();
-                        VariableNode variable = variables.get(name);
+                        Variables variables = parent.getVariables();
+                        VariableNode variable = variables.find(name);
                         if (variable == null) {
                             throw new IllegalStateException("Variable '" + name + "' cannot be referenced, not yet defined or not in scope.");
                         }
@@ -252,8 +253,8 @@ public class MiniLangTest {
 
         testTwo(l);
 
-        //ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{int a=1i; int b=2i; { int a=3i; a+b; }}");
-        //assertEquals(5, r.getRootNode().evaluate());
+        ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{int a=1i; int b=2i; { int a=3i; a+b}}");
+        assertEquals(5, r.getRootNode().evaluate());
     }
 
     private void testTwo(Language<LaiLaiNode> l) {

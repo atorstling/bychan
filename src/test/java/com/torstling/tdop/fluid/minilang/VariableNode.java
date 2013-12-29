@@ -3,8 +3,6 @@ package com.torstling.tdop.fluid.minilang;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
-
 public class VariableNode implements LaiLaiNode {
     @NotNull
     private final LaiLaiNode parent;
@@ -33,7 +31,7 @@ public class VariableNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Map<String, VariableNode> getVariables() {
+    public Variables getVariables() {
         return parent.getVariables();
     }
 

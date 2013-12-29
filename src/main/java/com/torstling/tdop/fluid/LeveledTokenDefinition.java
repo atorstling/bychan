@@ -16,6 +16,7 @@ class LeveledTokenDefinition<N extends AstNode> {
         this.levelCount = levelCount;
     }
 
+    @NotNull
     public Pattern getPattern() {
         return definition.getPattern();
     }
@@ -29,10 +30,12 @@ class LeveledTokenDefinition<N extends AstNode> {
         return levelCount;
     }
 
+    @NotNull
     public String toString() {
         return levelCount + ":" + definition;
     }
 
+    @Nullable
     public PrefixAstBuilder<N> getPrefixBuilder() {
         return definition.getPrefixBuilder();
     }

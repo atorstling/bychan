@@ -22,6 +22,9 @@ public class GenericToken<N extends AstNode> implements Token<N> {
     @Override
     public N prefixParse(@NotNull N parent, @NotNull final TokenParserCallback<N> parser) {
         final PrefixAstBuilder<N> builder = def.getPrefixBuilder();
+        if (builder == null) {
+            throw new IllegalStateException("Prefix parsing not registered for token type: '" + toString() + "'");
+        }
         return builder.build(parent, match, new ParserCallback2<N>() {
             @NotNull
             @Override
