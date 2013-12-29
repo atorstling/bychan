@@ -15,17 +15,17 @@ public interface Token<N extends AstNode> {
      * @return the resulting AST node.
      */
     @NotNull
-    N prefixParse(@NotNull TokenParserCallback<N> parser);
+    N prefixParse(@NotNull N parent, @NotNull TokenParserCallback<N> parser);
 
     /**
      * Parse this token as an infix operator. A typical binary operator implementation uses the parser callback
      * to parse the RHS of the expression and returns a binary operator node linking the LHS and RHS together.
      *
-     * @param left the AST node resulting from parsing the expression to the left of this token, up until this
-     *             lower binding power token was found.
+     * @param parent
+     * @param left   the AST node resulting from parsing the expression to the left of this token, up until this
      */
     @NotNull
-    N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser);
+    N infixParse(N parent, @NotNull N left, @NotNull TokenParserCallback<N> parser);
 
     /**
      * @return How strongly this token, when interpreted as an infix operator, binds to the left argument.

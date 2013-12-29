@@ -10,7 +10,7 @@ public interface ParserCallback2<N extends AstNode> {
      * with higher priority than the current token are found.
      */
     @NotNull
-    N expression();
+    N expression(@NotNull final N parent);
 
     /**
      * Parse a single token of the type indicated by the token definition passed in.

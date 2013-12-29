@@ -21,7 +21,7 @@ public interface TokenParserCallback<N extends AstNode> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    N expression(int powerFloor);
+    N expression(N parent, int powerFloor);
 
     /**
      * Swallow a token of the specified type.

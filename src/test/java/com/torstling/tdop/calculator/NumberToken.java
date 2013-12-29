@@ -52,12 +52,12 @@ public class NumberToken implements Token<CalculatorNode> {
 
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
+    public CalculatorNode prefixParse(@NotNull CalculatorNode parent, @NotNull TokenParserCallback parser) {
         return new NumberNode(value);
     }
 
     @NotNull
-    public CalculatorNode infixParse(@NotNull CalculatorNode left, @NotNull TokenParserCallback parser) {
+    public CalculatorNode infixParse(CalculatorNode parent, @NotNull CalculatorNode left, @NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 

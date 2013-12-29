@@ -15,25 +15,26 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
     }
 
 
-    public N parse() {
-        return expression(0);
+    public N parse(@NotNull N parent) {
+        return expression(parent, 0);
     }
 
     @NotNull
-    public ParseResult<N> tryParse() {
+    public ParseResult<N> tryParse(@NotNull N parent) {
         try {
-            return ParseResult.success(expression(0));
+            return ParseResult.success(expression(parent, 0));
         } catch (ParsingFailedException e) {
             return ParseResult.failure(e.getMessage());
         }
     }
 
     /**
+     * @param parent
      * @param powerFloor parsing will continue until the binding power floor is reached
      * @return an expression
      */
     @NotNull
-    public N expression(int powerFloor) {
+    public N expression(N parent, int powerFloor) {
         // An expression always starts with a symbol which can qualify as a prefix value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -42,7 +43,7 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         Token<N> firstToken = tokens.pop();
-        final N first = firstToken.prefixParse(this);
+        final N first = firstToken.prefixParse(parent, this);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -63,16 +64,16 @@ public class PrattParser<N extends AstNode> implements TokenParserCallback<N> {
         // The addition operators infix-parser is then called by the top-level expression parser,
         // passing (1*2) into it as the expression parsed so far. It will then proceed to swallow the 3,
         // completing the expression.
-        return parseLoop(first, powerFloor);
+        return parseLoop(parent, first, powerFloor);
     }
 
-    private N parseLoop(N currentLeftHandSide, int powerFloor) {
+    private N parseLoop(N parent, @NotNull final N currentLeftHandSide, final int powerFloor) {
         Token<N> peekedToken = tokens.peek();
         if (peekedToken.infixBindingPower() > powerFloor) {
             //Parsing happens by passing the current LHS to the operator, which will continue parsing.
             Token<N> takenToken = tokens.pop();
-            N nextExpression = takenToken.infixParse(currentLeftHandSide, this);
-            return parseLoop(nextExpression, powerFloor);
+            N nextExpression = takenToken.infixParse(parent, currentLeftHandSide, this);
+            return parseLoop(parent, nextExpression, powerFloor);
         }
         return currentLeftHandSide;
     }

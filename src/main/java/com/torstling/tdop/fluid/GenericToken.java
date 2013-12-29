@@ -20,13 +20,13 @@ public class GenericToken<N extends AstNode> implements Token<N> {
 
     @NotNull
     @Override
-    public N prefixParse(@NotNull final TokenParserCallback<N> parser) {
+    public N prefixParse(@NotNull N parent, @NotNull final TokenParserCallback<N> parser) {
         final PrefixAstBuilder<N> builder = def.getPrefixBuilder();
-        return builder.build(match, new ParserCallback2<N>() {
+        return builder.build(parent, match, new ParserCallback2<N>() {
             @NotNull
             @Override
-            public N expression() {
-                return parser.expression(infixBindingPower());
+            public N expression(@NotNull N parent) {
+                return parser.expression(parent, infixBindingPower());
             }
 
             @NotNull
@@ -51,16 +51,16 @@ public class GenericToken<N extends AstNode> implements Token<N> {
 
     @NotNull
     @Override
-    public N infixParse(@NotNull final N left, @NotNull final TokenParserCallback<N> parser) {
+    public N infixParse(N parent, @NotNull final N left, @NotNull final TokenParserCallback<N> parser) {
         InfixAstBuilder<N> infixBuilder = def.getInfixBuilder();
         if (infixBuilder == null) {
             throw new IllegalStateException("Definition does not support infix parsing: " + this);
         }
-        return infixBuilder.build(match, left, new ParserCallback2<N>() {
+        return infixBuilder.build(parent, match, left, new ParserCallback2<N>() {
             @NotNull
             @Override
-            public N expression() {
-                return parser.expression(infixBindingPower());
+            public N expression(@NotNull N parent) {
+                return parser.expression(parent, infixBindingPower());
             }
 
             @NotNull

@@ -15,13 +15,13 @@ public class OrToken implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
+    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode parent, @NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(@NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new OrNode(left, parser.expression(infixBindingPower()));
+    public BooleanExpressionNode infixParse(BooleanExpressionNode parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+        return new OrNode(left, parser.expression(parent, infixBindingPower()));
     }
 
     public int infixBindingPower() {

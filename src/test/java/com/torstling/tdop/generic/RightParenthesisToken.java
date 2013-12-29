@@ -13,12 +13,12 @@ public class RightParenthesisToken<N extends AstNode> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull TokenParserCallback<N> parser) {
+    public N prefixParse(@NotNull N parent, @NotNull TokenParserCallback<N> parser) {
         throw new IllegalStateException("Cannot use right parenthesis as prefix to expression");
     }
 
     @NotNull
-    public N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(N parent, @NotNull N left, @NotNull TokenParserCallback<N> parser) {
         throw new UnsupportedOperationException();
     }
 

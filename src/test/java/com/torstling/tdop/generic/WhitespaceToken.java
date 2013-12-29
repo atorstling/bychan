@@ -15,13 +15,13 @@ public class WhitespaceToken<N extends AstNode> implements Token<N> {
 
     @NotNull
     @Override
-    public N prefixParse(@NotNull TokenParserCallback<N> parser) {
+    public N prefixParse(@NotNull N parent, @NotNull TokenParserCallback<N> parser) {
         throw new ParsingFailedException("Cannot parse whitespace", match);
     }
 
     @NotNull
     @Override
-    public N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(N parent, @NotNull N left, @NotNull TokenParserCallback<N> parser) {
         throw new ParsingFailedException("Cannot parse whitespace", match);
     }
 

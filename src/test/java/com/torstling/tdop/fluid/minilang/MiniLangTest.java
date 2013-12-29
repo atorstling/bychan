@@ -34,8 +34,10 @@ public class MiniLangTest {
                 .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
                     @NotNull
                     @Override
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        ScopeNode scopeNode = new ScopeNode(parser.expression());
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        ScopeNode scopeNode = new ScopeNode();
+                        LaiLaiNode expression = parser.expression(scopeNode);
+                        scopeNode.setChild(expression);
                         parser.expectSingleToken(rcurly);
                         return scopeNode;
                     }
@@ -52,8 +54,8 @@ public class MiniLangTest {
                 .named("lparen")
                 .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
                     @NotNull
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        LaiLaiNode trailingExpression = parser.expression();
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        LaiLaiNode trailingExpression = parser.expression(parent);
                         parser.expectSingleToken(rparen);
                         return trailingExpression;
                     }
@@ -70,14 +72,14 @@ public class MiniLangTest {
                 .named("plus")
                 .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
                     @NotNull
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return parser.expression();
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        return parser.expression(parent);
                     }
                 })
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return new AdditionNode(left, parser.expression());
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        return new AdditionNode(left, parser.expression(parent));
                     }
                 })
                 .build();
@@ -87,12 +89,12 @@ public class MiniLangTest {
                 .named("hat")
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
                         ExpressionType actualExpressionType = left.getExpressionType();
                         if (ExpressionType.BOOL.equals(actualExpressionType)) {
-                            return new XorNode(left, parser.expression());
+                            return new XorNode(left, parser.expression(parent));
                         } else if (ExpressionType.FLOAT.equals(actualExpressionType)) {
-                            return new PowNode(left, parser.expression());
+                            return new PowNode(left, parser.expression(parent));
                         }
                         throw new IllegalStateException("'hat' only applicable to bool and float, got '" + left + "' of type '" + actualExpressionType + "'");
                     }
@@ -104,8 +106,8 @@ public class MiniLangTest {
                 .named("assign")
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        LaiLaiNode right = parser.expression();
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        LaiLaiNode right = parser.expression(parent);
                         return new AssignNode((VariableNode) left, right);
                     }
                 })
@@ -186,8 +188,8 @@ public class MiniLangTest {
                 .named("statement")
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return new StatementNode(left, parser.expression());
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                        return new StatementNode(left, parser.expression(parent));
                     }
                 }).build();
 
@@ -207,10 +209,10 @@ public class MiniLangTest {
                 .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
                     @NotNull
                     @Override
-                    public LaiLaiNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
+                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
                         ArrayList<LaiLaiNode> expressions = new ArrayList<>();
                         while (!parser.nextIs(listEnd)) {
-                            expressions.add(parser.expression());
+                            expressions.add(parser.expression(parent));
                             if (!parser.nextIs(listEnd)) {
                                 parser.expectSingleToken(comma);
                             }
@@ -247,7 +249,7 @@ public class MiniLangTest {
                 .completeLanguage();
         testOne(l);
 
-        ParseResult<LaiLaiNode> r = l.getParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
+        ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (xor bool(b) bool(c)))) (= float(g) (pow float(d) float(e)))) (l bool(f) float(g) )))", root.toString());
         assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate());
@@ -256,7 +258,7 @@ public class MiniLangTest {
     private void testOne(Language<LaiLaiNode> l) {
         String expr = "int a=5i; a=a+4i; a";
         List<Token<LaiLaiNode>> tokens = l.getLexer().lex(expr);
-        ParseResult<LaiLaiNode> result = l.getParser().tryParse(tokens);
+        ParseResult<LaiLaiNode> result = l.getParser().tryParse(new MiniLangRootNode(), tokens);
         LaiLaiNode rootNode = result.getRootNode();
         assertEquals("(x (x (= int(a) 5i) (= int(a) (+ int(a) 4i))) int(a))", rootNode.toString());
         assertEquals(9, rootNode.evaluate());

@@ -14,13 +14,13 @@ public class AndToken implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull TokenParserCallback parser) {
+    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode parent, @NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException("'And' operator cannot be used as a prefix");
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(@NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        BooleanExpressionNode right = parser.expression(infixBindingPower());
+    public BooleanExpressionNode infixParse(BooleanExpressionNode parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+        BooleanExpressionNode right = parser.expression(parent, infixBindingPower());
         return new AndNode(left, right);
     }
 

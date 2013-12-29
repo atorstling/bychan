@@ -50,7 +50,7 @@ public class TokenDefinitionBuilder<N extends AstNode> {
             return new PrefixAstBuilder<N>() {
                 @NotNull
                 @Override
-                public N build(@NotNull LexingMatch match, @NotNull ParserCallback2<N> parser) {
+                public N build(@NotNull N parent, @NotNull LexingMatch match, @NotNull ParserCallback2<N> parser) {
                     return standaloneBuilder.build(match);
                 }
             };

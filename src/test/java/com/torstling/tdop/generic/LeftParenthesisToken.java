@@ -13,14 +13,14 @@ public class LeftParenthesisToken<N extends AstNode> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull TokenParserCallback<N> parser) {
-        N expression = parser.expression(0);
+    public N prefixParse(@NotNull N parent, @NotNull TokenParserCallback<N> parser) {
+        N expression = parser.expression(parent, 0);
         parser.swallow(RightParenthesisTokenType.<N>get());
         return expression;
     }
 
     @NotNull
-    public N infixParse(@NotNull N left, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(N parent, @NotNull N left, @NotNull TokenParserCallback<N> parser) {
         throw new UnsupportedOperationException();
     }
 

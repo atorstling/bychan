@@ -17,13 +17,13 @@ public class MultiplicationToken implements Token<CalculatorNode> {
     }
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull TokenParserCallback parser) {
+    public CalculatorNode prefixParse(@NotNull CalculatorNode parent, @NotNull TokenParserCallback parser) {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
-    public CalculatorNode infixParse(@NotNull CalculatorNode left, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        CalculatorNode right = parser.expression(infixBindingPower());
+    public CalculatorNode infixParse(CalculatorNode parent, @NotNull CalculatorNode left, @NotNull TokenParserCallback<CalculatorNode> parser) {
+        CalculatorNode right = parser.expression(parent, infixBindingPower());
         return new MultiplicationNode(left, right);
     }
 

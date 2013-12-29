@@ -23,8 +23,8 @@ public class CalculatorTest {
                 .named("lparen")
                 .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
                     @NotNull
-                    public CalculatorNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
-                        CalculatorNode trailingExpression = parser.expression();
+                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
+                        CalculatorNode trailingExpression = parser.expression(parent);
                         parser.expectSingleToken(rparen);
                         return trailingExpression;
                     }
@@ -41,14 +41,14 @@ public class CalculatorTest {
                 .named("plus")
                 .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
                     @NotNull
-                    public CalculatorNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
-                        return parser.expression();
+                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
+                        return parser.expression(parent);
                     }
                 })
                 .supportsInfix(new InfixAstBuilder<CalculatorNode>() {
                     @Override
-                    public CalculatorNode build(@NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode> parser) {
-                        return new AdditionNode(left, parser.expression());
+                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode> parser) {
+                        return new AdditionNode(left, parser.expression(parent));
                     }
                 })
                 .build();
@@ -59,13 +59,13 @@ public class CalculatorTest {
                 .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
                     @NotNull
                     @Override
-                    public CalculatorNode build(@NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
-                        return new NegationNode(parser.expression());
+                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
+                        return new NegationNode(parser.expression(parent));
                     }
                 })
                 .supportsInfix(new InfixAstBuilder<CalculatorNode>() {
-                    public CalculatorNode build(@NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode> parser) {
-                        return new SubtractionNode(left, parser.expression());
+                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode> parser) {
+                        return new SubtractionNode(left, parser.expression(parent));
                     }
                 }).build();
 
@@ -89,8 +89,8 @@ public class CalculatorTest {
                 .newLowerPriorityLevel()
                 .addToken(number)
                 .completeLanguage();
-        assertEquals(3, l.getParser().tryParse("1+2").getRootNode().evaluate());
-        assertEquals(-1, l.getParser().tryParse("1+-2").getRootNode().evaluate());
-        assertEquals(3, l.getParser().tryParse("1--2").getRootNode().evaluate());
+        assertEquals(3, l.getParser().tryParse(new RootCalculatorNode(), "1+2").getRootNode().evaluate());
+        assertEquals(-1, l.getParser().tryParse(new RootCalculatorNode(), "1+-2").getRootNode().evaluate());
+        assertEquals(3, l.getParser().tryParse(new RootCalculatorNode(), "1--2").getRootNode().evaluate());
     }
 }
