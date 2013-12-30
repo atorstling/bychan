@@ -1,6 +1,7 @@
 package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class BooleanLiteralNode implements LaiLaiNode {
     @NotNull
@@ -14,7 +15,7 @@ public class BooleanLiteralNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Object evaluate() {
+    public Object evaluate(@Nullable ScopeNode currentScope) {
         return value;
     }
 
@@ -26,7 +27,7 @@ public class BooleanLiteralNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.BOOL;
     }
 

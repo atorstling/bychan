@@ -1,6 +1,7 @@
 package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 
 public class PowNode implements LaiLaiNode {
@@ -13,20 +14,24 @@ public class PowNode implements LaiLaiNode {
 
     public PowNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
         this.parent = parent;
-        if (!ExpressionType.FLOAT.equals(left.getExpressionType())) {
-            throw new IllegalArgumentException("Left must be of float type:" + left);
-        }
-        if (!ExpressionType.FLOAT.equals(right.getExpressionType())) {
-            throw new IllegalArgumentException("Right must be of float type:" + left);
-        }
         this.left = left;
         this.right = right;
     }
 
+    private void checkTypes(ScopeNode currentScope) {
+        if (!ExpressionType.FLOAT.equals(left.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("Left must be of float type:" + left);
+        }
+        if (!ExpressionType.FLOAT.equals(right.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("Right must be of float type:" + left);
+        }
+    }
+
     @NotNull
     @Override
-    public Object evaluate() {
-        return (float) Math.pow(((float) left.evaluate()), ((float) right.evaluate()));
+    public Object evaluate(@Nullable ScopeNode currentScope) {
+        checkTypes(currentScope);
+        return (float) Math.pow(((float) left.evaluate(currentScope)), ((float) right.evaluate(currentScope)));
     }
 
     @NotNull
@@ -37,7 +42,7 @@ public class PowNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.FLOAT;
     }
 

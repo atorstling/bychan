@@ -6,13 +6,13 @@ import org.jetbrains.annotations.Nullable;
 public class MiniLangRootNode implements LaiLaiNode {
     @NotNull
     @Override
-    public Object evaluate() {
+    public Object evaluate(@Nullable ScopeNode currentScope) {
         throw new IllegalStateException();
     }
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         throw new IllegalStateException();
     }
 
@@ -22,12 +22,12 @@ public class MiniLangRootNode implements LaiLaiNode {
         return new Variables() {
             @Nullable
             @Override
-            public VariableNode find(@NotNull String name) {
+            public VariableDefNode find(@NotNull String name) {
                 return null;
             }
 
             @Override
-            public void put(@NotNull String name, @NotNull VariableNode node) {
+            public void put(@NotNull String name, @NotNull VariableDefNode node) {
                 throw new IllegalStateException();
             }
         };

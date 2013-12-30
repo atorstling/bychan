@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 public interface Variables {
     @Nullable
-    VariableNode find(@NotNull final String name);
+    VariableDefNode find(@NotNull final String name);
 
-    void put(@NotNull final String name, @NotNull final VariableNode node);
+    void put(@NotNull final String name, @NotNull final VariableDefNode node);
 }

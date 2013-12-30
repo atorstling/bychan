@@ -88,13 +88,7 @@ public class MiniLangTest {
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        ExpressionType actualExpressionType = left.getExpressionType();
-                        if (ExpressionType.BOOL.equals(actualExpressionType)) {
-                            return new XorNode(parent, left, parser.expression(parent));
-                        } else if (ExpressionType.FLOAT.equals(actualExpressionType)) {
-                            return new PowNode(parent, left, parser.expression(parent));
-                        }
-                        throw new IllegalStateException("'hat' only applicable to bool and float, got '" + left + "' of type '" + actualExpressionType + "'");
+                        return new HatNode(parent, left, parser.expression(parent));
                     }
                 })
                 .build();
@@ -106,7 +100,7 @@ public class MiniLangTest {
                     @Override
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
                         LaiLaiNode right = parser.expression(parent);
-                        return new AssignNode(parent, (VariableNode) left, right);
+                        return new AssignNode(parent, left, right);
                     }
                 })
                 .build();
@@ -126,15 +120,8 @@ public class MiniLangTest {
                         }
                         String typeDeclaration = matcher.group(1);
                         String nameDeclaration = matcher.group(2);
-                        Variables variables = parent.getVariables();
-                        VariableNode variable = variables.find(nameDeclaration);
-                        if (variable == null) {
-                            ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
-                            VariableNode newNode = new VariableNode(parent, type, nameDeclaration);
-                            variables.put(nameDeclaration, newNode);
-                            return newNode;
-                        }
-                        return variable;
+                        ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
+                        return new VariableDefNode(parent, type, nameDeclaration);
                     }
                 }).build();
 
@@ -145,12 +132,7 @@ public class MiniLangTest {
                     @NotNull
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
                         String name = match.getText();
-                        Variables variables = parent.getVariables();
-                        VariableNode variable = variables.find(name);
-                        if (variable == null) {
-                            throw new IllegalStateException("Variable '" + name + "' cannot be referenced, not yet defined or not in scope.");
-                        }
-                        return variable;
+                        return new VariableRefNode(parent, name);
                     }
                 }).build();
 
@@ -254,14 +236,14 @@ public class MiniLangTest {
         testTwo(l);
 
         ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{int a=1i; int b=2i; { int a=3i; a+b}}");
-        assertEquals(5, r.getRootNode().evaluate());
+        assertEquals(5, r.getRootNode().evaluate(null));
     }
 
     private void testTwo(Language<LaiLaiNode> l) {
         ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
-        assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (xor bool(b) bool(c)))) (= float(g) (pow float(d) float(e)))) (l bool(f) float(g) )))", root.toString());
-        assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate());
+        assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
+        assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate(null));
     }
 
     private void testOne(Language<LaiLaiNode> l) {
@@ -269,7 +251,7 @@ public class MiniLangTest {
         List<Token<LaiLaiNode>> tokens = l.getLexer().lex(expr);
         ParseResult<LaiLaiNode> result = l.getParser().tryParse(new MiniLangRootNode(), tokens);
         LaiLaiNode rootNode = result.getRootNode();
-        assertEquals("(s (x (x (= int(a) 5i) (= int(a) (+ int(a) 4i))) int(a)))", rootNode.toString());
-        assertEquals(9, rootNode.evaluate());
+        assertEquals("(s (x (x (= int(a) 5i) (= a (+ a 4i))) a))", rootNode.toString());
+        assertEquals(9, rootNode.evaluate(null));
     }
 }

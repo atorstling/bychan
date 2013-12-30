@@ -1,6 +1,7 @@
 package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class StatementNode implements LaiLaiNode {
     @NotNull
@@ -18,9 +19,9 @@ public class StatementNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Object evaluate() {
-        left.evaluate();
-        return right.evaluate();
+    public Object evaluate(@Nullable ScopeNode currentScope) {
+        left.evaluate(currentScope);
+        return right.evaluate(currentScope);
     }
 
     @NotNull
@@ -31,8 +32,8 @@ public class StatementNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
-        return ExpressionType.union(left.getExpressionType(), right.getExpressionType());
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
+        return ExpressionType.union(left.getExpressionType(currentScope), right.getExpressionType(currentScope));
     }
 
     @Override

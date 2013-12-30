@@ -1,6 +1,7 @@
 package com.torstling.tdop.fluid.minilang;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class AdditionNode implements LaiLaiNode {
     @NotNull
@@ -12,27 +13,31 @@ public class AdditionNode implements LaiLaiNode {
 
     public AdditionNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
         this.parent = parent;
-        if (!ExpressionType.INT.equals(left.getExpressionType())) {
-            throw new IllegalArgumentException("Left not of type int: " + left);
-        }
-        if (!ExpressionType.INT.equals(right.getExpressionType())) {
-            throw new IllegalArgumentException("Right not of type int: " + right);
-        }
         this.left = left;
         this.right = right;
     }
 
-    @NotNull
-    @Override
-    public Object evaluate() {
-        return ((Integer) left.evaluate()) + ((Integer) right.evaluate());
+    private void checkTypes(ScopeNode currentScope) {
+        if (!ExpressionType.INT.equals(left.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("Left not of type int: " + left);
+        }
+        if (!ExpressionType.INT.equals(right.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("Right not of type int: " + right);
+        }
     }
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
-        ExpressionType leftType = left.getExpressionType();
-        ExpressionType rightType = right.getExpressionType();
+    public Object evaluate(@Nullable ScopeNode currentScope) {
+        checkTypes(currentScope);
+        return ((Integer) left.evaluate(currentScope)) + ((Integer) right.evaluate(currentScope));
+    }
+
+    @NotNull
+    @Override
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
+        ExpressionType leftType = left.getExpressionType(currentScope);
+        ExpressionType rightType = right.getExpressionType(currentScope);
         return ExpressionType.union(leftType, rightType);
     }
 

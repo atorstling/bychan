@@ -11,7 +11,7 @@ public class ScopeNode implements LaiLaiNode {
     @Nullable
     private LaiLaiNode child;
     @NotNull
-    private final Map<String, VariableNode> variablesByName;
+    private final Map<String, VariableDefNode> variablesByName;
     @NotNull
     private final Variables variables;
 
@@ -21,7 +21,7 @@ public class ScopeNode implements LaiLaiNode {
         variables = new Variables() {
             @Nullable
             @Override
-            public VariableNode find(@NotNull String name) {
+            public VariableDefNode find(@NotNull String name) {
                 if (variablesByName.containsKey(name)) {
                     return variablesByName.get(name);
                 }
@@ -29,8 +29,11 @@ public class ScopeNode implements LaiLaiNode {
             }
 
             @Override
-            public void put(@NotNull String name, @NotNull VariableNode node) {
-                variablesByName.put(name, node);
+            public void put(@NotNull String name, @NotNull VariableDefNode node) {
+                VariableDefNode oldValue = variablesByName.put(name, node);
+                if (oldValue != null) {
+                    throw new IllegalStateException("Duplicate definition of variable '" + name + "'");
+                }
             }
         };
     }
@@ -45,14 +48,14 @@ public class ScopeNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Object evaluate() {
-        return getChild().evaluate();
+    public Object evaluate(@Nullable ScopeNode currentScope) {
+        return getChild().evaluate(this);
     }
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
-        return getChild().getExpressionType();
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
+        return getChild().getExpressionType(currentScope);
     }
 
     @NotNull

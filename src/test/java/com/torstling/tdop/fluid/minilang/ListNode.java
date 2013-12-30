@@ -3,6 +3,7 @@ package com.torstling.tdop.fluid.minilang;
 import com.torstling.tdop.utils.CollectionUtils;
 import com.torstling.tdop.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,10 +22,10 @@ public class ListNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Object evaluate() {
+    public Object evaluate(@Nullable ScopeNode currentScope) {
         ArrayList<Object> results = new ArrayList<>(expressions.size());
         for (LaiLaiNode expression : expressions) {
-            results.add(expression.evaluate());
+            results.add(expression.evaluate(currentScope));
         }
         return results;
     }
@@ -37,7 +38,7 @@ public class ListNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public ExpressionType getExpressionType() {
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.LIST;
     }
 
