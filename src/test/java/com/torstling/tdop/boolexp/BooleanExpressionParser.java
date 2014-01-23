@@ -10,7 +10,7 @@ import java.util.List;
 class BooleanExpressionParser {
     @NotNull
     public BooleanExpressionNode parse(@NotNull final String input) {
-        List<Token<BooleanExpressionNode>> tokens = new Lexer<>(BooleanExpressionTokens.get()).lex(input);
+        List<Token<BooleanExpressionNode, BooleanSymbolTable>> tokens = new Lexer<>(BooleanExpressionTokens.<BooleanSymbolTable>get()).lex(input);
         return new PrattParser<>(tokens).parse(new BooleanExpressionRootNode());
     }
 }

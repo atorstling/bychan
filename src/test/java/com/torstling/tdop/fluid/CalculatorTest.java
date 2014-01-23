@@ -11,74 +11,74 @@ import static org.junit.Assert.assertEquals;
 public class CalculatorTest {
     @Test
     public void test() {
-        LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
+        LanguageBuilder<CalculatorNode, CalculatorSymbolTable> lb = new LanguageBuilder<>();
 
-        final TokenDefinition<CalculatorNode> rparen = lb.newToken()
+        final TokenDefinition<CalculatorNode, CalculatorSymbolTable> rparen = lb.newToken()
                 .matchesString(")")
                 .named("rparen")
                 .build();
 
-        TokenDefinition<CalculatorNode> lparen = lb.newToken()
+        TokenDefinition<CalculatorNode, CalculatorSymbolTable> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
-                .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
+                .supportsPrefix(new PrefixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
                     @NotNull
-                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
+                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
                         CalculatorNode trailingExpression = parser.expression(parent);
                         parser.expectSingleToken(rparen);
                         return trailingExpression;
                     }
                 }).build();
 
-        TokenDefinition<CalculatorNode> whitespace = lb.newToken()
+        TokenDefinition<CalculatorNode, CalculatorSymbolTable> whitespace = lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing()
                 .build();
 
-        TokenDefinition<CalculatorNode> plus = lb.newToken()
+        TokenDefinition<CalculatorNode, CalculatorSymbolTable> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
+                .supportsPrefix(new PrefixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
                     @NotNull
-                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
+                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
                         return parser.expression(parent);
                     }
                 })
-                .supportsInfix(new InfixAstBuilder<CalculatorNode>() {
+                .supportsInfix(new InfixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
                     @Override
-                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode> parser) {
+                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
                         return new AdditionNode(left, parser.expression(parent));
                     }
                 })
                 .build();
 
-        TokenDefinition<CalculatorNode> minus = lb.newToken()
+        TokenDefinition<CalculatorNode, CalculatorSymbolTable> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .supportsPrefix(new PrefixAstBuilder<CalculatorNode>() {
+                .supportsPrefix(new PrefixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
                     @NotNull
                     @Override
-                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode> parser) {
+                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
                         return new NegationNode(parser.expression(parent));
                     }
                 })
-                .supportsInfix(new InfixAstBuilder<CalculatorNode>() {
-                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode> parser) {
+                .supportsInfix(new InfixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
+                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
                         return new SubtractionNode(left, parser.expression(parent));
                     }
                 }).build();
 
-        TokenDefinition<CalculatorNode> number = lb.newToken()
+        TokenDefinition<CalculatorNode, CalculatorSymbolTable> number = lb.newToken()
                 .matchesPattern("[0-9]+")
                 .named("number")
-                .supportsStandalone(new StandaloneAstBuilder<CalculatorNode>() {
+                .supportsStandalone(new StandaloneAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
                     @NotNull
-                    public CalculatorNode build(@NotNull CalculatorNode parent, @NotNull final LexingMatch match) {
+                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull final LexingMatch match) {
                         return new NumberNode(Integer.parseInt(match.getText()));
                     }
                 }).build();
-        Language<CalculatorNode> l = lb
+        Language<CalculatorNode, CalculatorSymbolTable> l = lb
                 .addToken(lparen)
                 .addToken(rparen)
                 .addToken(whitespace)

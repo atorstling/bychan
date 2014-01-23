@@ -4,6 +4,6 @@ import com.torstling.tdop.core.AstNode;
 import com.torstling.tdop.core.LexingMatch;
 import org.jetbrains.annotations.NotNull;
 
-public interface InfixAstBuilder<N extends AstNode> {
-    N build(@NotNull N parent, @NotNull LexingMatch match, @NotNull N left, @NotNull ParserCallback2<N> parser);
+public interface InfixAstBuilder<N extends AstNode, S> {
+    N build(@NotNull S parent, @NotNull LexingMatch match, @NotNull N left, @NotNull ParserCallback2<N, S> parser);
 }

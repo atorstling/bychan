@@ -6,11 +6,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LanguageBuilder<N extends AstNode> {
+public class LanguageBuilder<N extends AstNode,S> {
     @NotNull
-    private final List<TokenDefinitions<N>> levels;
+    private final List<TokenDefinitions<N, S>> levels;
     @NotNull
-    private final List<TokenDefinition<N>> currentTokens;
+    private final List<TokenDefinition<N, S>> currentTokens;
 
     public LanguageBuilder() {
         this.levels = new ArrayList<>();
@@ -18,20 +18,20 @@ public class LanguageBuilder<N extends AstNode> {
     }
 
     @NotNull
-    public LanguageBuilder<N> addToken(@NotNull final TokenDefinition<N> token) {
+    public LanguageBuilder<N,S> addToken(@NotNull final TokenDefinition<N, S> token) {
         currentTokens.add(token);
         return this;
     }
 
     @NotNull
-    public LanguageBuilder<N> newLowerPriorityLevel() {
-        this.levels.add(new TokenDefinitions<>(currentTokens));
+    public LanguageBuilder<N,S> newLowerPriorityLevel() {
+        this.levels.add(new TokenDefinitions<N, S>(currentTokens));
         currentTokens.clear();
         return this;
     }
 
     @NotNull
-    public Language<N> completeLanguage() {
+    public Language<N,S> completeLanguage() {
         flushRemainingTokens();
         return new Language<>(levels);
     }
@@ -43,7 +43,7 @@ public class LanguageBuilder<N extends AstNode> {
     }
 
     @NotNull
-    public TokenDefinitionBuilder<N> newToken() {
-        return new TokenDefinitionBuilder<>();
+    public TokenDefinitionBuilder<N, S> newToken() {
+        return new TokenDefinitionBuilder<N, S>();
     }
 }

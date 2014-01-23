@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * An interface to the parser, which the nodes can use to
  * continue the parsing
  */
-public interface TokenParserCallback<N extends AstNode> {
+public interface TokenParserCallback<N extends AstNode, S> {
     /**
      * Parse upcoming tokens from the stream into an expression, and keep going
      * until token binding powers drop down to or below the supplied floor. If this
@@ -21,14 +21,14 @@ public interface TokenParserCallback<N extends AstNode> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    N expression(N parent, int powerFloor);
+    N expression(S symbolTable, int powerFloor);
 
     /**
      * Swallow a token of the specified type.
      */
     @NotNull
-    Token<N> swallow(@NotNull TokenType<N> type);
+    Token<N, S> swallow(@NotNull TokenType<N,S> type);
 
     @NotNull
-    Token<N> peek();
+    Token<N, S> peek();
 }

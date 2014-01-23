@@ -11,18 +11,18 @@ import java.util.regex.Pattern;
  *
  * @param <N>
  */
-public class TokenDefinition<N extends AstNode> {
+public class TokenDefinition<N extends AstNode, S> {
     @NotNull
     private final Pattern pattern;
     @Nullable
-    private final PrefixAstBuilder<N> prefixBuilder;
+    private final PrefixAstBuilder<N, S> prefixBuilder;
     @Nullable
-    private final InfixAstBuilder<N> infixBuilder;
+    private final InfixAstBuilder<N, S> infixBuilder;
     @NotNull
     private final String tokenTypeName;
     private final boolean ignoredWhenParsing;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, @NotNull final String tokenTypeName, boolean ignoredWhenParsing) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N, S> prefixBuilder, @Nullable final InfixAstBuilder<N, S> infixBuilder, @NotNull final String tokenTypeName, boolean ignoredWhenParsing) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
@@ -45,12 +45,12 @@ public class TokenDefinition<N extends AstNode> {
     }
 
     @Nullable
-    public PrefixAstBuilder<N> getPrefixBuilder() {
+    public PrefixAstBuilder<N, S> getPrefixBuilder() {
         return prefixBuilder;
     }
 
     @Nullable
-    public InfixAstBuilder<N> getInfixBuilder() {
+    public InfixAstBuilder<N, S> getInfixBuilder() {
         return infixBuilder;
     }
 

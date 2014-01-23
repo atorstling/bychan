@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param <N>
  */
-public class EndToken<N extends AstNode> implements Token<N> {
+public class EndToken<N extends AstNode,S> implements Token<N,S> {
 
 
     private final LexingMatch lexingMatch;
@@ -17,12 +17,12 @@ public class EndToken<N extends AstNode> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull N parent, @NotNull final TokenParserCallback<N> parser) {
+    public N prefixParse(@NotNull S parent, @NotNull final TokenParserCallback<N,S> parser) {
         throw new ParsingFailedException("Cannot parse expression, end reached", lexingMatch);
     }
 
     @NotNull
-    public N infixParse(N parent, @NotNull N left, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(S parent, @NotNull N left, @NotNull TokenParserCallback<N,S> parser) {
         throw new ParsingFailedException("Cannot parse expression, end reached", lexingMatch);
     }
 
@@ -33,7 +33,7 @@ public class EndToken<N extends AstNode> implements Token<N> {
 
     @Override
     @NotNull
-    public TokenType<N> getType() {
+    public TokenType<N,S> getType() {
         return EndTokenType.get();
     }
 

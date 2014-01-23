@@ -6,7 +6,7 @@ import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class AndToken implements Token<BooleanExpressionNode> {
+public class AndToken<S> implements Token<BooleanExpressionNode, S> {
     private final LexingMatch match;
 
     public AndToken(@NotNull final LexingMatch match) {
@@ -14,12 +14,12 @@ public class AndToken implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode parent, @NotNull TokenParserCallback parser) {
+    public BooleanExpressionNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
         throw new UnsupportedOperationException("'And' operator cannot be used as a prefix");
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(BooleanExpressionNode parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+    public BooleanExpressionNode infixParse(S parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
         BooleanExpressionNode right = parser.expression(parent, infixBindingPower());
         return new AndNode(left, right);
     }
@@ -30,7 +30,7 @@ public class AndToken implements Token<BooleanExpressionNode> {
 
     @Override
     @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
+    public TokenType<BooleanExpressionNode, S> getType() {
         return AndTokenType.get();
     }
 

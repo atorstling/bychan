@@ -7,7 +7,7 @@ import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class AdditionToken implements Token<CalculatorNode> {
+public class AdditionToken<S> implements Token<CalculatorNode,S> {
     @NotNull
     private final LexingMatch match;
 
@@ -16,12 +16,12 @@ public class AdditionToken implements Token<CalculatorNode> {
     }
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull CalculatorNode parent, @NotNull TokenParserCallback parser) {
+    public CalculatorNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<CalculatorNode, S> parser) {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
-    public CalculatorNode infixParse(CalculatorNode parent, @NotNull CalculatorNode left, @NotNull TokenParserCallback<CalculatorNode> parser) {
+    public CalculatorNode infixParse(S parent, @NotNull CalculatorNode left, @NotNull TokenParserCallback<CalculatorNode,S> parser) {
         CalculatorNode right = parser.expression(parent, infixBindingPower());
         return new AdditionNode(left, right);
     }
@@ -36,7 +36,7 @@ public class AdditionToken implements Token<CalculatorNode> {
 
     @Override
     @NotNull
-    public TokenType<CalculatorNode> getType() {
+    public TokenType<CalculatorNode,S> getType() {
         return AdditionTokenType.get();
     }
 

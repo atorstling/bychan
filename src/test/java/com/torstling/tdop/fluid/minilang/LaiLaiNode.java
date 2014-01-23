@@ -9,7 +9,4 @@ public interface LaiLaiNode extends AstNode {
 
     @NotNull
     ExpressionType getExpressionType();
-
-    @NotNull
-    Variables getVariables();
 }

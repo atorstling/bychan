@@ -6,7 +6,7 @@ import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class OrToken implements Token<BooleanExpressionNode> {
+public class OrToken<S> implements Token<BooleanExpressionNode, S> {
     @NotNull
     private final LexingMatch match;
 
@@ -15,12 +15,12 @@ public class OrToken implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode parent, @NotNull TokenParserCallback parser) {
+    public BooleanExpressionNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(BooleanExpressionNode parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+    public BooleanExpressionNode infixParse(S parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
         return new OrNode(left, parser.expression(parent, infixBindingPower()));
     }
 
@@ -31,7 +31,7 @@ public class OrToken implements Token<BooleanExpressionNode> {
 
     @Override
     @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
+    public TokenType<BooleanExpressionNode, S> getType() {
         return OrTokenType.get();
     }
 

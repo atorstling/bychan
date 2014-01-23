@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class AdditionTokenType implements TokenType<CalculatorNode> {
+public class AdditionTokenType<S> implements TokenType<CalculatorNode, S> {
     private static final AdditionTokenType INSTANCE = new AdditionTokenType();
 
     @NotNull
-    public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
-        return new AdditionToken(match);
+    public Token<CalculatorNode, S> toToken(@NotNull LexingMatch match) {
+        return new AdditionToken<S>(match);
     }
 
     @NotNull

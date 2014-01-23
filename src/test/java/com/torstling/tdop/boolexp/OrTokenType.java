@@ -7,11 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class OrTokenType implements TokenType<BooleanExpressionNode> {
+public class OrTokenType<S> implements TokenType<BooleanExpressionNode, S> {
     private static final OrTokenType INSTANCE = new OrTokenType();
 
     @NotNull
-    public Token<BooleanExpressionNode> toToken(@NotNull LexingMatch match) {
+    public Token<BooleanExpressionNode, S> toToken(@NotNull LexingMatch match) {
         return new OrToken(match);
     }
 

@@ -5,16 +5,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class VariableNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode parent;
-    @NotNull
     private final ExpressionType type;
     @NotNull
     private final String name;
     @Nullable
     private Object value;
 
-    public VariableNode(@NotNull final LaiLaiNode parent, @NotNull final ExpressionType type, @NotNull final String name) {
-        this.parent = parent;
+    public VariableNode(@NotNull final ExpressionType type, @NotNull final String name) {
         this.type = type;
         this.name = name;
         this.value = null;
@@ -27,12 +24,6 @@ public class VariableNode implements LaiLaiNode {
             throw new RuntimeException("Value of variable '" + name + "' has not been set.");
         }
         return value;
-    }
-
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return parent.getVariables();
     }
 
     @NotNull

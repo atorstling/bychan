@@ -10,22 +10,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Language<N extends AstNode> {
-    private final Lexer<N> lexer;
-    private final GenericParser<N> parser;
+public class Language<N extends AstNode,S> {
+    private final Lexer<N,S> lexer;
+    private final GenericParser<N,S> parser;
 
-    public Language(@NotNull final List<TokenDefinitions<N>> tokenDefinitions) {
-        List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitions);
+    public Language(@NotNull final List<TokenDefinitions<N, S>> tokenDefinitions) {
+        List<LeveledTokenDefinition<N, S>> leveledDefinitions = flatten(tokenDefinitions);
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
         // finder with the resulting DefinitionTokenTypes.
-        DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
-        final Collection<GenericTokenType<N>> genericTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
-        TokenFinder<N> tokenFinder = new TokenFinder<N>() {
+        DelegatingTokenFinder<N, S> delegatingFinder = new DelegatingTokenFinder<N, S>();
+        final Collection<GenericTokenType<N,S>> genericTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
+        TokenFinder<N, S> tokenFinder = new TokenFinder<N, S>() {
             @NotNull
             @Override
-            public GenericTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
-                for (GenericTokenType<N> definitionTokenType : genericTokenTypes) {
+            public GenericTokenType<N,S> getTokenTypeFor(@NotNull TokenDefinition<N, S> tokenDefinition) {
+                for (GenericTokenType<N,S> definitionTokenType : genericTokenTypes) {
                     if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
                         return definitionTokenType;
                     }
@@ -35,35 +35,35 @@ public class Language<N extends AstNode> {
         };
         delegatingFinder.setDelegate(tokenFinder);
         lexer = new Lexer<>(genericTokenTypes);
-        parser = new GenericParser<N>(lexer);
+        parser = new GenericParser<N,S>(lexer);
     }
 
 
-    public Lexer<N> getLexer() {
+    public Lexer<N,S> getLexer() {
         return lexer;
     }
 
-    public GenericParser<N> getParser() {
+    public GenericParser<N,S> getParser() {
         return parser;
     }
 
 
-    private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return CollectionUtils.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N>, GenericTokenType<N>>() {
+    private Collection<GenericTokenType<N,S>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N, S>> leveledDefinitions, @NotNull final TokenFinder<N, S> tokenFinder) {
+        return CollectionUtils.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N, S>, GenericTokenType<N,S>>() {
             @NotNull
             @Override
-            public GenericTokenType<N> apply(@NotNull final LeveledTokenDefinition<N> tokenDef) {
+            public GenericTokenType<N,S> apply(@NotNull final LeveledTokenDefinition<N, S> tokenDef) {
                 return new GenericTokenType<>(tokenDef, tokenFinder);
             }
         });
     }
 
-    private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {
-        List<LeveledTokenDefinition<N>> flatList = new ArrayList<>();
+    private List<LeveledTokenDefinition<N, S>> flatten(List<TokenDefinitions<N, S>> levels) {
+        List<LeveledTokenDefinition<N, S>> flatList = new ArrayList<>();
         int levelCount = 0;
-        for (TokenDefinitions<N> level : levels) {
-            for (TokenDefinition<N> definition : level) {
-                flatList.add(new LeveledTokenDefinition<>(definition, levelCount));
+        for (TokenDefinitions<N, S> level : levels) {
+            for (TokenDefinition<N, S> definition : level) {
+                flatList.add(new LeveledTokenDefinition<N, S>(definition, levelCount));
             }
             ++levelCount;
         }

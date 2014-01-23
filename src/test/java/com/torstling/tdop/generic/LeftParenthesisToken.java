@@ -3,7 +3,7 @@ package com.torstling.tdop.generic;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
-public class LeftParenthesisToken<N extends AstNode> implements Token<N> {
+public class LeftParenthesisToken<N extends AstNode, S> implements Token<N, S> {
 
     @NotNull
     private final LexingMatch match;
@@ -13,14 +13,14 @@ public class LeftParenthesisToken<N extends AstNode> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull N parent, @NotNull TokenParserCallback<N> parser) {
+    public N prefixParse(@NotNull S parent, @NotNull TokenParserCallback<N, S> parser) {
         N expression = parser.expression(parent, 0);
-        parser.swallow(RightParenthesisTokenType.<N>get());
+        parser.swallow(RightParenthesisTokenType.<N, S>get());
         return expression;
     }
 
     @NotNull
-    public N infixParse(N parent, @NotNull N left, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(S parent, @NotNull N left, @NotNull TokenParserCallback<N, S> parser) {
         throw new UnsupportedOperationException();
     }
 
@@ -34,7 +34,7 @@ public class LeftParenthesisToken<N extends AstNode> implements Token<N> {
 
     @Override
     @NotNull
-    public TokenType<N> getType() {
+    public TokenType<N, S> getType() {
         return LeftParenthesisTokenType.get();
     }
 

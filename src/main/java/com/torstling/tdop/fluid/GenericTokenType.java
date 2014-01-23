@@ -8,20 +8,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class GenericTokenType<N extends AstNode> implements TokenType<N> {
+public class GenericTokenType<N extends AstNode,S> implements TokenType<N,S> {
     @NotNull
-    private final LeveledTokenDefinition<N> def;
-    private final TokenFinder<N> tokenFinder;
+    private final LeveledTokenDefinition<N, S> def;
+    private final TokenFinder<N, S> tokenFinder;
 
-    public GenericTokenType(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public GenericTokenType(@NotNull final LeveledTokenDefinition<N, S> def, @NotNull final TokenFinder<N, S> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
     }
 
     @NotNull
     @Override
-    public Token<N> toToken(@NotNull final LexingMatch match) {
-        return new GenericToken<>(this, match, def, tokenFinder);
+    public Token<N,S> toToken(@NotNull final LexingMatch match) {
+        return new GenericToken<N, S>(this, match, def, tokenFinder);
     }
 
     @NotNull
@@ -40,7 +40,7 @@ public class GenericTokenType<N extends AstNode> implements TokenType<N> {
     }
 
     @NotNull
-    public TokenDefinition<N> getTokenDefinition() {
+    public TokenDefinition<N, S> getTokenDefinition() {
         return def.getTokenDefinition();
     }
 }

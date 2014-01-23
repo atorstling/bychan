@@ -10,7 +10,7 @@ import java.util.List;
 class CalculatorParser {
     @NotNull
     public CalculatorNode parse(@NotNull final String input) {
-        List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.get()).lex(input);
+        List<Token<CalculatorNode, CalculatorSymbolTable>> tokens = new Lexer<CalculatorNode, CalculatorSymbolTable>(CalculatorTokenTypes.<CalculatorSymbolTable>get()).lex(input);
         return new PrattParser<>(tokens).parse(new RootCalculatorNode());
     }
 }
