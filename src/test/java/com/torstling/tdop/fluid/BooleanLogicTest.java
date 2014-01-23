@@ -16,9 +16,9 @@ public class BooleanLogicTest {
     public void terserSyntax() {
         LanguageBuilder2<BooleanExpressionNode, Object> lb = new LanguageBuilder2<BooleanExpressionNode, Object>();
         final TokenDefinition<BooleanExpressionNode, Object> rparen = lb
-                .startToken().matchesString(")").named("rparen").completeTokenAndPause();
+                .newLevel().startToken().matchesString(")").named("rparen").completeTokenAndPause();
         Language<BooleanExpressionNode, Object> l = lb
-                .startToken().matchesString("(").named("lparen").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode, Object>() {
+                .newLevel().startToken().matchesString("(").named("lparen").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode, Object>() {
                     @NotNull
                     public BooleanExpressionNode build(@NotNull Object parent, @NotNull LexingMatch match, @NotNull ParserCallback2<BooleanExpressionNode, Object> parser) {
                         BooleanExpressionNode trailingExpression = parser.expression(parent);
@@ -26,7 +26,7 @@ public class BooleanLogicTest {
                         return trailingExpression;
                     }
                 }).completeToken()
-                .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken()
+                .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken().endLevel()
                 .newLevel()
                 .startToken().matchesString("!").named("not").supportsPrefix(new PrefixAstBuilder<BooleanExpressionNode, Object>() {
                     @NotNull
@@ -34,12 +34,14 @@ public class BooleanLogicTest {
                         return new NotNode(parser.expression(parent));
                     }
                 }).completeToken()
+                .endLevel()
                 .newLevel()
                 .startToken().matchesString("&").named("and").supportsInfix(new InfixAstBuilder<BooleanExpressionNode, Object>() {
                     public BooleanExpressionNode build(@NotNull Object parent, @NotNull LexingMatch match, @NotNull BooleanExpressionNode left, @NotNull ParserCallback2<BooleanExpressionNode, Object> parser) {
                         return new AndNode(left, parser.expression(parent));
                     }
                 }).completeToken()
+                .endLevel()
                 .newLevel()
                 .startToken().matchesPattern("[a-z]+").named("variable").supportsStandalone(new StandaloneAstBuilder<BooleanExpressionNode, Object>() {
                     @NotNull
@@ -47,6 +49,7 @@ public class BooleanLogicTest {
                         return new VariableNode(match.getText());
                     }
                 }).completeToken()
+                .endLevel()
                 .completeLanguage();
         checkParenthesisPrio(l);
         checkParseFailure(l);
@@ -83,13 +86,18 @@ public class BooleanLogicTest {
             }
         }).build();
         Language<BooleanExpressionNode, Object> l = lb
+                .newLowerPriorityLevel()
                 .addToken(lparen).addToken(rparen).addToken(whitespace)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(not)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(and)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(variable)
+                .endLevel()
                 .completeLanguage();
         checkParenthesisPrio(l);
         checkParseFailure(l);

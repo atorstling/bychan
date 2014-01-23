@@ -12,24 +12,12 @@ public class LanguageBuilder2<N extends AstNode, S> {
     }
 
     @NotNull
-    public LanguageBuilder2<N, S> addToken(@NotNull final TokenDefinition<N, S> token) {
-        delegate.addToken(token);
-        return this;
-    }
-
-    @NotNull
-    public LanguageBuilder2<N, S> newLevel() {
-        delegate.newLowerPriorityLevel();
-        return this;
+    public LevelLanguageBuilder2<N,S> newLevel() {
+        return new LevelLanguageBuilder2<N,S>(delegate.newLowerPriorityLevel(), this);
     }
 
     @NotNull
     public Language<N,S> completeLanguage() {
         return delegate.completeLanguage();
-    }
-
-    @NotNull
-    public WrappedTokenDefinitionBuilder<N, S> startToken() {
-        return new WrappedTokenDefinitionBuilder<N, S>(this, delegate.newToken());
     }
 }

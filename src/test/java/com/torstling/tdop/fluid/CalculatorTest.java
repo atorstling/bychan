@@ -79,15 +79,20 @@ public class CalculatorTest {
                     }
                 }).build();
         Language<CalculatorNode, CalculatorSymbolTable> l = lb
+                .newLowerPriorityLevel()
                 .addToken(lparen)
                 .addToken(rparen)
                 .addToken(whitespace)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(plus)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(minus)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(number)
+                .endLevel()
                 .completeLanguage();
         assertEquals(3, l.getParser().tryParse(new RootCalculatorNode(), "1+2").getRootNode().evaluate());
         assertEquals(-1, l.getParser().tryParse(new RootCalculatorNode(), "1+-2").getRootNode().evaluate());

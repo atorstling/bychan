@@ -224,7 +224,9 @@ public class MiniLangTest {
                 }).build();
 
         Language<LaiLaiNode, LaiLaiSymbolTable> l = lb
+                .newLowerPriorityLevel()
                 .addToken(booleanLiteral)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(lcurly)
                 .addToken(rcurly)
@@ -237,16 +239,20 @@ public class MiniLangTest {
                 .addToken(integerLiteral)
                 .addToken(floatLiteral)
                 .addToken(variableDeclaration)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(variableReference)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(semicolon)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(assign)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(plus)
                 .addToken(hat)
-                .newLowerPriorityLevel()
+                .endLevel()
                 .completeLanguage();
         testOne(l);
 

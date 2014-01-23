@@ -9,37 +9,23 @@ import java.util.List;
 public class LanguageBuilder<N extends AstNode,S> {
     @NotNull
     private final List<TokenDefinitions<N, S>> levels;
-    @NotNull
-    private final List<TokenDefinition<N, S>> currentTokens;
 
     public LanguageBuilder() {
         this.levels = new ArrayList<>();
-        this.currentTokens = new ArrayList<>();
     }
 
     @NotNull
-    public LanguageBuilder<N,S> addToken(@NotNull final TokenDefinition<N, S> token) {
-        currentTokens.add(token);
-        return this;
+    public LevelLanguageBuilder<N,S> newLowerPriorityLevel() {
+        return new LevelLanguageBuilder<N,S>(this);
     }
 
-    @NotNull
-    public LanguageBuilder<N,S> newLowerPriorityLevel() {
-        this.levels.add(new TokenDefinitions<N, S>(currentTokens));
-        currentTokens.clear();
-        return this;
+    void addLevel(List<TokenDefinition<N, S>> tokens) {
+        this.levels.add(new TokenDefinitions<N, S>(tokens));
     }
 
     @NotNull
     public Language<N,S> completeLanguage() {
-        flushRemainingTokens();
         return new Language<>(levels);
-    }
-
-    private void flushRemainingTokens() {
-        if (!currentTokens.isEmpty()) {
-            newLowerPriorityLevel();
-        }
     }
 
     @NotNull

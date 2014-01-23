@@ -12,9 +12,9 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode, S> {
     @NotNull
     private final TokenDefinitionBuilder<N, S> delegate;
     @NotNull
-    private final LanguageBuilder2<N, S> languageBuilder;
+    private final LevelLanguageBuilder2<N, S> languageBuilder;
 
-    public WrappedTokenDefinitionBuilder(LanguageBuilder2<N, S> languageBuilder, @NotNull final TokenDefinitionBuilder<N, S> delegate) {
+    public WrappedTokenDefinitionBuilder(LevelLanguageBuilder2<N, S> languageBuilder, @NotNull final TokenDefinitionBuilder<N, S> delegate) {
         this.languageBuilder = languageBuilder;
         this.delegate = delegate;
     }
@@ -55,7 +55,7 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode, S> {
     }
 
     @NotNull
-    public LanguageBuilder2<N, S> completeToken() {
+    public LevelLanguageBuilder2<N, S> completeToken() {
         buildAndAdd();
         return languageBuilder;
     }
@@ -68,7 +68,8 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode, S> {
     @NotNull
     private TokenDefinition<N, S> buildAndAdd() {
         TokenDefinition<N, S> tokenDefinition = delegate.build();
-        languageBuilder.addToken(tokenDefinition);
+        languageBuilder.startToken(tokenDefinition);
+        languageBuilder.endLevel();
         return tokenDefinition;
     }
 }
