@@ -1,7 +1,18 @@
 package com.torstling.tdop.core;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ParsingFailedException extends RuntimeException {
-    public ParsingFailedException(String message, LexingMatch match) {
-        super("Parsing terminated at lexing match " + match + ": " + message);
+    @NotNull
+    private final ParsingFailedInformation parsingFailedInformation;
+
+    public ParsingFailedException(@NotNull ParsingFailedInformation parsingFailedInformation) {
+        super(parsingFailedInformation.toString());
+        this.parsingFailedInformation = parsingFailedInformation;
+    }
+
+    @NotNull
+    public ParsingFailedInformation getParsingFailedInformation() {
+        return parsingFailedInformation;
     }
 }

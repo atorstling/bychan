@@ -29,7 +29,7 @@ public class GenericToken<N extends AstNode, S> implements Token<N,S> {
             @NotNull
             @Override
             public N expression(@NotNull S parent) {
-                return parser.expression(parent, infixBindingPower());
+                return parser.tryParse(new ExpressionParserStrategy<N, S>(parent, infixBindingPower())).getRootNode();
             }
 
             @NotNull
@@ -63,7 +63,7 @@ public class GenericToken<N extends AstNode, S> implements Token<N,S> {
             @NotNull
             @Override
             public N expression(@NotNull S parent) {
-                return parser.expression(parent, infixBindingPower());
+                return parser.tryParse(new ExpressionParserStrategy<N, S>(parent, infixBindingPower())).getRootNode();
             }
 
             @NotNull

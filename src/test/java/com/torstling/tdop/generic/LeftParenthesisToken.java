@@ -14,7 +14,7 @@ public class LeftParenthesisToken<N extends AstNode, S> implements Token<N, S> {
 
     @NotNull
     public N prefixParse(@NotNull S parent, @NotNull TokenParserCallback<N, S> parser) {
-        N expression = parser.expression(parent, 0);
+        N expression = parser.tryParse(new ExpressionParserStrategy<N, S>(parent, 0)).getRootNode();
         parser.swallow(RightParenthesisTokenType.<N, S>get());
         return expression;
     }

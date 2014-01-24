@@ -1,9 +1,6 @@
 package com.torstling.tdop.boolexp;
 
-import com.torstling.tdop.core.LexingMatch;
-import com.torstling.tdop.core.Token;
-import com.torstling.tdop.core.TokenParserCallback;
-import com.torstling.tdop.core.TokenType;
+import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
 public class NotToken<S> implements Token<BooleanExpressionNode, S> {
@@ -17,7 +14,7 @@ public class NotToken<S> implements Token<BooleanExpressionNode, S> {
 
     @NotNull
     public BooleanExpressionNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
-        return new NotNode(parser.expression(parent, infixBindingPower()));
+        return new NotNode(parser.tryParse(new ExpressionParserStrategy<BooleanExpressionNode, S>(parent, infixBindingPower())).getRootNode());
     }
 
     @NotNull

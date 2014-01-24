@@ -3,6 +3,7 @@ package com.torstling.tdop.fluid;
 import com.torstling.tdop.boolexp.*;
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
+import com.torstling.tdop.core.ParsingFailedInformation;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
@@ -112,8 +113,8 @@ public class BooleanLogicTest {
     private void checkParseFailure(@NotNull final Language<BooleanExpressionNode, Object> l) {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse(new BooleanExpressionRootNode(), "(a");
         Assert.assertTrue(parseResult.isFailure());
-        String errorMessage = parseResult.getErrorMessage();
-        assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2, endPosition=2, text='END'}: Expected a token of type 'rparen', but got 'END'", errorMessage);
+        ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
+        assertEquals(new ParsingFailedInformation("Expected a token of type 'rparen', but got 'END'", new LexingMatch(2,2,"END")), errorMessage);
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode, Object> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {

@@ -18,12 +18,12 @@ public class EndToken<N extends AstNode,S> implements Token<N,S> {
 
     @NotNull
     public N prefixParse(@NotNull S parent, @NotNull final TokenParserCallback<N,S> parser) {
-        throw new ParsingFailedException("Cannot parse expression, end reached", lexingMatch);
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
     }
 
     @NotNull
     public N infixParse(S parent, @NotNull N left, @NotNull TokenParserCallback<N,S> parser) {
-        throw new ParsingFailedException("Cannot parse expression, end reached", lexingMatch);
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
     }
 
     public int infixBindingPower() {

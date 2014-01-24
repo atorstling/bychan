@@ -1,9 +1,6 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.core.LexingMatch;
-import com.torstling.tdop.core.Token;
-import com.torstling.tdop.core.TokenParserCallback;
-import com.torstling.tdop.core.TokenType;
+import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
 public class SubtractionToken<S> implements Token<CalculatorNode, S> {
@@ -27,7 +24,7 @@ public class SubtractionToken<S> implements Token<CalculatorNode, S> {
 
     @NotNull
     public CalculatorNode infixParse(S parent, @NotNull CalculatorNode left, @NotNull TokenParserCallback<CalculatorNode, S> parser) {
-        CalculatorNode right = parser.expression(parent, infixBindingPower());
+        CalculatorNode right = parser.tryParse(new ExpressionParserStrategy<CalculatorNode,S>(parent, infixBindingPower())).getRootNode();
         return new SubtractionNode(left, right);
     }
 

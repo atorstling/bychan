@@ -10,9 +10,9 @@ public class ParseResult<N extends AstNode> {
     @Nullable
     private final N rootNode;
     @Nullable
-    private final String errorMessage;
+    private final ParsingFailedInformation errorMessage;
 
-    private ParseResult(@Nullable final N rootNode, @Nullable final String errorMessage) {
+    private ParseResult(@Nullable final N rootNode, @Nullable final ParsingFailedInformation errorMessage) {
         this.rootNode = rootNode;
         this.errorMessage = errorMessage;
     }
@@ -23,7 +23,7 @@ public class ParseResult<N extends AstNode> {
     }
 
     @NotNull
-    public static <N extends AstNode> ParseResult<N> failure(@NotNull final String errorMessage) {
+    public static <N extends AstNode> ParseResult<N> failure(@NotNull final ParsingFailedInformation errorMessage) {
         return new ParseResult<>(null, errorMessage);
     }
 
@@ -34,13 +34,13 @@ public class ParseResult<N extends AstNode> {
     @NotNull
     public N getRootNode() {
         if (!isSuccess()) {
-            throw new IllegalStateException("Cannot get rootNode when parsing wasn't successful. Failure:" + errorMessage);
+            throw new ParsingFailedException(errorMessage);
         }
         return rootNode;
     }
 
     @NotNull
-    public String getErrorMessage() {
+    public ParsingFailedInformation getErrorMessage() {
         if (!isFailure()) {
             throw new IllegalStateException("Cannot fetch error message when parsing was successful.");
         }

@@ -14,31 +14,26 @@ public class PrattParser<N extends AstNode, S> implements TokenParserCallback<N,
         this.tokens = new ArrayDeque<>(tokens);
     }
 
+    @Override
     @NotNull
     public ParseResult<N> tryParse(@NotNull ParserStrategy<N, S> strategy) {
         try {
             N rootNode = parse(strategy);
             return ParseResult.success(rootNode);
         } catch (ParsingFailedException e) {
-            return ParseResult.failure(e.getMessage());
+            return ParseResult.failure(e.getParsingFailedInformation());
         }
     }
 
-    public N parse(@NotNull ParserStrategy<N, S> strategy) {
+    private N parse(@NotNull ParserStrategy<N, S> strategy) {
         return strategy.parse(tokens, this);
-    }
-
-    @NotNull
-    @Override
-    public N expression(S symbolTable, int powerFloor) {
-        return parse(new ExpressionParserStrategy<N, S>(symbolTable, powerFloor));
     }
 
     @NotNull
     public Token<N,S> swallow(@NotNull TokenType<N,S> type) {
         Token<N,S> next = tokens.pop();
         if (!next.getType().equals(type)) {
-            throw new ParsingFailedException("Expected a token of type '" + type + "', but got '" + next + "'", next.getMatch());
+            throw new ParsingFailedException(new ParsingFailedInformation("Expected a token of type '" + type + "', but got '" + next + "'", next.getMatch()));
         }
         return next;
     }
