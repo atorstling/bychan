@@ -17,12 +17,6 @@ public class CollectionUtils {
 
     @NotNull
     public static <S> Function<S, String> toStringFunction() {
-        return new Function<S, String>() {
-            @NotNull
-            @Override
-            public String apply(@NotNull S s) {
-                return s.toString();
-            }
-        };
+        return S::toString;
     }
 }

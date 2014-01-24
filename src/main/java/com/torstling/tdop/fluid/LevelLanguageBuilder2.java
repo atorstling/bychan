@@ -4,8 +4,10 @@ import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
 public class LevelLanguageBuilder2<N extends AstNode, S> {
-    private LevelLanguageBuilder<N, S> delegate;
-    private LanguageBuilder2<N, S> parent;
+    @NotNull
+    private final LevelLanguageBuilder<N, S> delegate;
+    @NotNull
+    private final LanguageBuilder2<N, S> parent;
 
     public LevelLanguageBuilder<N,S> startToken(@NotNull TokenDefinition<N, S> token) {
         return delegate.addToken(token);
@@ -13,7 +15,7 @@ public class LevelLanguageBuilder2<N extends AstNode, S> {
 
     @NotNull
     public WrappedTokenDefinitionBuilder<N, S> startToken() {
-        return new WrappedTokenDefinitionBuilder<N, S>(this, new TokenDefinitionBuilder<N, S>());
+        return new WrappedTokenDefinitionBuilder<>(this, new TokenDefinitionBuilder<>());
     }
 
     public LanguageBuilder2<N,S> endLevel() {

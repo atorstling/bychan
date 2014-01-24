@@ -12,7 +12,7 @@ public class AdditionTokenType<S> implements TokenType<CalculatorNode, S> {
 
     @NotNull
     public Token<CalculatorNode, S> toToken(@NotNull LexingMatch match) {
-        return new AdditionToken<S>(match);
+        return new AdditionToken<>(match);
     }
 
     @NotNull

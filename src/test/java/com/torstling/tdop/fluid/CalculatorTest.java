@@ -2,8 +2,6 @@ package com.torstling.tdop.fluid;
 
 
 import com.torstling.tdop.calculator.*;
-import com.torstling.tdop.core.LexingMatch;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,13 +19,10 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
-                .supportsPrefix(new PrefixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
-                    @NotNull
-                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
-                        CalculatorNode trailingExpression = parser.expression(parent);
-                        parser.expectSingleToken(rparen);
-                        return trailingExpression;
-                    }
+                .supportsPrefix((parent, match, parser) -> {
+                    CalculatorNode trailingExpression = parser.expression(parent);
+                    parser.expectSingleToken(rparen);
+                    return trailingExpression;
                 }).build();
 
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> whitespace = lb.newToken()
@@ -39,45 +34,20 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .supportsPrefix(new PrefixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
-                    @NotNull
-                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
-                        return parser.expression(parent);
-                    }
-                })
-                .supportsInfix(new InfixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
-                    @Override
-                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
-                        return new AdditionNode(left, parser.expression(parent));
-                    }
-                })
+                .supportsPrefix((parent, match, parser) -> parser.expression(parent))
+                .supportsInfix((parent, match, left, parser) -> new AdditionNode(left, parser.expression(parent)))
                 .build();
 
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .supportsPrefix(new PrefixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
-                    @NotNull
-                    @Override
-                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
-                        return new NegationNode(parser.expression(parent));
-                    }
-                })
-                .supportsInfix(new InfixAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
-                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull LexingMatch match, @NotNull CalculatorNode left, @NotNull ParserCallback2<CalculatorNode, CalculatorSymbolTable> parser) {
-                        return new SubtractionNode(left, parser.expression(parent));
-                    }
-                }).build();
+                .supportsPrefix((parent, match, parser) -> new NegationNode(parser.expression(parent)))
+                .supportsInfix((parent, match, left, parser) -> new SubtractionNode(left, parser.expression(parent))).build();
 
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> number = lb.newToken()
                 .matchesPattern("[0-9]+")
                 .named("number")
-                .supportsStandalone(new StandaloneAstBuilder<CalculatorNode, CalculatorSymbolTable>() {
-                    @NotNull
-                    public CalculatorNode build(@NotNull CalculatorSymbolTable parent, @NotNull final LexingMatch match) {
-                        return new NumberNode(Integer.parseInt(match.getText()));
-                    }
-                }).build();
+                .supportsStandalone((parent, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
         Language<CalculatorNode, CalculatorSymbolTable> l = lb
                 .newLowerPriorityLevel()
                 .addToken(lparen)

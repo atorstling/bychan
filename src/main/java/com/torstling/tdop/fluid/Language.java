@@ -3,7 +3,6 @@ package com.torstling.tdop.fluid;
 import com.torstling.tdop.core.AstNode;
 import com.torstling.tdop.core.Lexer;
 import com.torstling.tdop.utils.CollectionUtils;
-import com.torstling.tdop.utils.Function;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -19,23 +18,19 @@ public class Language<N extends AstNode,S> {
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
         // finder with the resulting DefinitionTokenTypes.
-        DelegatingTokenFinder<N, S> delegatingFinder = new DelegatingTokenFinder<N, S>();
+        DelegatingTokenFinder<N, S> delegatingFinder = new DelegatingTokenFinder<>();
         final Collection<GenericTokenType<N,S>> genericTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
-        TokenFinder<N, S> tokenFinder = new TokenFinder<N, S>() {
-            @NotNull
-            @Override
-            public GenericTokenType<N,S> getTokenTypeFor(@NotNull TokenDefinition<N, S> tokenDefinition) {
-                for (GenericTokenType<N,S> definitionTokenType : genericTokenTypes) {
-                    if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
-                        return definitionTokenType;
-                    }
+        TokenFinder<N, S> tokenFinder = tokenDefinition -> {
+            for (GenericTokenType<N,S> definitionTokenType : genericTokenTypes) {
+                if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
+                    return definitionTokenType;
                 }
-                throw new IllegalStateException("No token found for definition " + tokenDefinition);
             }
+            throw new IllegalStateException("No token found for definition " + tokenDefinition);
         };
         delegatingFinder.setDelegate(tokenFinder);
         lexer = new Lexer<>(genericTokenTypes);
-        parser = new GenericParser<N,S>(lexer);
+        parser = new GenericParser<>(lexer);
     }
 
 
@@ -49,13 +44,7 @@ public class Language<N extends AstNode,S> {
 
 
     private Collection<GenericTokenType<N,S>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N, S>> leveledDefinitions, @NotNull final TokenFinder<N, S> tokenFinder) {
-        return CollectionUtils.transform(leveledDefinitions, new Function<LeveledTokenDefinition<N, S>, GenericTokenType<N,S>>() {
-            @NotNull
-            @Override
-            public GenericTokenType<N,S> apply(@NotNull final LeveledTokenDefinition<N, S> tokenDef) {
-                return new GenericTokenType<>(tokenDef, tokenFinder);
-            }
-        });
+        return CollectionUtils.transform(leveledDefinitions, tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder));
     }
 
     private List<LeveledTokenDefinition<N, S>> flatten(List<TokenDefinitions<N, S>> levels) {
@@ -63,7 +52,7 @@ public class Language<N extends AstNode,S> {
         int levelCount = 0;
         for (TokenDefinitions<N, S> level : levels) {
             for (TokenDefinition<N, S> definition : level) {
-                flatList.add(new LeveledTokenDefinition<N, S>(definition, levelCount));
+                flatList.add(new LeveledTokenDefinition<>(definition, levelCount));
             }
             ++levelCount;
         }

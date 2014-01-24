@@ -18,7 +18,7 @@ public class NotTokenType<S> implements TokenType<BooleanExpressionNode, S> {
 
     @NotNull
     public Pattern getPattern() {
-        return Pattern.compile("\\!");
+        return Pattern.compile("!");
     }
 
     @Override

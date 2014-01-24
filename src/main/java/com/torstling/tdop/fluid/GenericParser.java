@@ -22,6 +22,6 @@ public class GenericParser<N extends AstNode, S> {
     @NotNull
     public ParseResult<N> tryParse(@NotNull S symbolTable, @NotNull final List<Token<N,S>> tokens) {
         PrattParser<N,S> parser = new PrattParser<>(tokens);
-        return parser.tryParse(new ExpressionParserStrategy<N, S>(symbolTable, 0));
+        return parser.tryParse(new ExpressionParserStrategy<>(symbolTable, 0));
     }
 }

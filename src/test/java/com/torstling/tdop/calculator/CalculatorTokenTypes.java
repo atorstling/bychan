@@ -13,7 +13,7 @@ public class CalculatorTokenTypes {
     @NotNull
     public static <S> List<TokenType<CalculatorNode, S>> get() {
         return Arrays.<TokenType<CalculatorNode, S>>asList(
-                new WhitespaceTokenType<CalculatorNode, S>(),
+                new WhitespaceTokenType<>(),
                 NumberTokenType.get(),
                 SubtractionTokenType.get(),
                 AdditionTokenType.get(),

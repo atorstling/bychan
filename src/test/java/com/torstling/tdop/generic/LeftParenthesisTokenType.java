@@ -26,6 +26,6 @@ public class LeftParenthesisTokenType<N extends AstNode, S> implements TokenType
     }
 
     public static <N extends AstNode, S> LeftParenthesisTokenType<N, S> get() {
-        return new LeftParenthesisTokenType<N, S>();
+        return new LeftParenthesisTokenType<>();
     }
 }

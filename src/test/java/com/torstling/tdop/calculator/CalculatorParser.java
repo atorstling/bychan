@@ -11,8 +11,8 @@ import java.util.List;
 class CalculatorParser {
     @NotNull
     public CalculatorNode parse(@NotNull final String input) {
-        List<Token<CalculatorNode, CalculatorSymbolTable>> tokens = new Lexer<CalculatorNode, CalculatorSymbolTable>(CalculatorTokenTypes.<CalculatorSymbolTable>get()).lex(input);
+        List<Token<CalculatorNode, CalculatorSymbolTable>> tokens = new Lexer<>(CalculatorTokenTypes.<CalculatorSymbolTable>get()).lex(input);
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        return new PrattParser<>(tokens).tryParse(new ExpressionParserStrategy<CalculatorNode, CalculatorSymbolTable>(rootCalculatorNode, 0)).getRootNode();
+        return new PrattParser<>(tokens).tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
     }
 }

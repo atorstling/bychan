@@ -21,7 +21,7 @@ public class GenericTokenType<N extends AstNode,S> implements TokenType<N,S> {
     @NotNull
     @Override
     public Token<N,S> toToken(@NotNull final LexingMatch match) {
-        return new GenericToken<N, S>(this, match, def, tokenFinder);
+        return new GenericToken<>(this, match, def, tokenFinder);
     }
 
     @NotNull

@@ -1,7 +1,6 @@
 package com.torstling.tdop.fluid;
 
 import com.torstling.tdop.core.AstNode;
-import com.torstling.tdop.core.LexingMatch;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,7 +37,7 @@ public class TokenDefinitionBuilder<N extends AstNode, S> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<N, S>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, ignoredWhenParsing);
+        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, ignoredWhenParsing);
     }
 
     @Nullable
@@ -47,13 +46,7 @@ public class TokenDefinitionBuilder<N extends AstNode, S> {
             throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
         }
         if (standaloneBuilder != null) {
-            return new PrefixAstBuilder<N, S>() {
-                @NotNull
-                @Override
-                public N build(@NotNull S parent, @NotNull LexingMatch match, @NotNull ParserCallback2<N, S> parser) {
-                    return standaloneBuilder.build(parent, match);
-                }
-            };
+            return (parent, match, parser) -> standaloneBuilder.build(parent, match);
         } else {
             return prefixBuilder;
         }

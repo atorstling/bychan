@@ -14,7 +14,7 @@ public class RightParenthesisTokenType<N extends AstNode, S> implements TokenTyp
 
     @NotNull
     public Token<N, S> toToken(@NotNull LexingMatch match) {
-        return new RightParenthesisToken<N, S>(match);
+        return new RightParenthesisToken<>(match);
     }
 
     @NotNull

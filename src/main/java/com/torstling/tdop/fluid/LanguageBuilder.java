@@ -16,11 +16,11 @@ public class LanguageBuilder<N extends AstNode,S> {
 
     @NotNull
     public LevelLanguageBuilder<N,S> newLowerPriorityLevel() {
-        return new LevelLanguageBuilder<N,S>(this);
+        return new LevelLanguageBuilder<>(this);
     }
 
     void addLevel(List<TokenDefinition<N, S>> tokens) {
-        this.levels.add(new TokenDefinitions<N, S>(tokens));
+        this.levels.add(new TokenDefinitions<>(tokens));
     }
 
     @NotNull
@@ -30,6 +30,6 @@ public class LanguageBuilder<N extends AstNode,S> {
 
     @NotNull
     public TokenDefinitionBuilder<N, S> newToken() {
-        return new TokenDefinitionBuilder<N, S>();
+        return new TokenDefinitionBuilder<>();
     }
 }

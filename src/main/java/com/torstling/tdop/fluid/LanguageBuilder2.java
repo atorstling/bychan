@@ -13,7 +13,7 @@ public class LanguageBuilder2<N extends AstNode, S> {
 
     @NotNull
     public LevelLanguageBuilder2<N,S> newLevel() {
-        return new LevelLanguageBuilder2<N,S>(delegate.newLowerPriorityLevel(), this);
+        return new LevelLanguageBuilder2<>(delegate.newLowerPriorityLevel(), this);
     }
 
     @NotNull

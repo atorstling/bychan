@@ -13,6 +13,6 @@ class BooleanExpressionParser {
     public BooleanExpressionNode parse(@NotNull final String input) {
         List<Token<BooleanExpressionNode, BooleanSymbolTable>> tokens = new Lexer<>(BooleanExpressionTokens.<BooleanSymbolTable>get()).lex(input);
         final BooleanExpressionRootNode booleanExpressionRootNode = new BooleanExpressionRootNode();
-        return new PrattParser<>(tokens).tryParse(new ExpressionParserStrategy<BooleanExpressionNode, BooleanSymbolTable>(booleanExpressionRootNode, 0)).getRootNode();
+        return new PrattParser<>(tokens).tryParse(new ExpressionParserStrategy<>(booleanExpressionRootNode, 0)).getRootNode();
     }
 }

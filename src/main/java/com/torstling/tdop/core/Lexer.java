@@ -32,7 +32,7 @@ public class Lexer<N extends AstNode,S> {
             LexingMatch match = token.getMatch();
             i += (match.getEndPosition() - match.getStartPosition());
         }
-        tokens.add(new EndToken<N,S>(new LexingMatch(input.length(), input.length(), "END")));
+        tokens.add(new EndToken<>(new LexingMatch(input.length(), input.length(), "END")));
         return tokens;
     }
 

@@ -8,13 +8,13 @@ public class NotToken<S> implements Token<BooleanExpressionNode, S> {
     @NotNull
     private final LexingMatch match;
 
-    public NotToken(LexingMatch match) {
+    public NotToken(@NotNull LexingMatch match) {
         this.match = match;
     }
 
     @NotNull
     public BooleanExpressionNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
-        return new NotNode(parser.tryParse(new ExpressionParserStrategy<BooleanExpressionNode, S>(parent, infixBindingPower())).getRootNode());
+        return new NotNode(parser.tryParse(new ExpressionParserStrategy<>(parent, infixBindingPower())).getRootNode());
     }
 
     @NotNull

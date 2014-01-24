@@ -14,7 +14,7 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode, S> {
     @NotNull
     private final LevelLanguageBuilder2<N, S> languageBuilder;
 
-    public WrappedTokenDefinitionBuilder(LevelLanguageBuilder2<N, S> languageBuilder, @NotNull final TokenDefinitionBuilder<N, S> delegate) {
+    public WrappedTokenDefinitionBuilder(@NotNull LevelLanguageBuilder2<N, S> languageBuilder, @NotNull final TokenDefinitionBuilder<N, S> delegate) {
         this.languageBuilder = languageBuilder;
         this.delegate = delegate;
     }

@@ -13,7 +13,7 @@ public class AndTokenType<S> implements TokenType<BooleanExpressionNode, S> {
 
     @NotNull
     public Token<BooleanExpressionNode, S> toToken(@NotNull LexingMatch match) {
-        return new AndToken<S>(match);
+        return new AndToken<>(match);
     }
 
     @NotNull
