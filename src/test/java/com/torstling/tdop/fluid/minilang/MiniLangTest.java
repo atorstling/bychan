@@ -1,9 +1,11 @@
 package com.torstling.tdop.fluid.minilang;
 
 
+import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.Token;
 import com.torstling.tdop.fluid.*;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,11 +29,13 @@ public class MiniLangTest {
         final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> lcurly = lb.newToken()
                 .matchesString("{")
                 .named("lcurly")
-                .supportsPrefix((parent, match, parser) -> {
-                    NestedScope nestedScope = new NestedScope(parent);
+                .supportsPrefix((parentSymbolTable, match, parser) -> {
+                    NestedScope nestedScope = new NestedScope(parentSymbolTable);
                     LaiLaiNode expression = parser.expression(nestedScope);
                     parser.expectSingleToken(rcurly);
-                    return new ScopeNode(expression);
+                    ScopeNode scopeNode = new ScopeNode(nestedScope);
+                    scopeNode.setChild(expression);
+                    return scopeNode;
                 })
                 .build();
 
@@ -65,18 +69,11 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .supportsInfix((parent, match, left, parser) -> {
-                    ExpressionType actualExpressionType = left.getExpressionType();
-                    if (ExpressionType.BOOL.equals(actualExpressionType)) {
-                        return new XorNode(left, parser.expression(parent));
-                    } else if (ExpressionType.FLOAT.equals(actualExpressionType)) {
-                        return new PowNode(left, parser.expression(parent));
-                .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
+                .supportsInfix(new InfixAstBuilder<LaiLaiNode, LaiLaiSymbolTable>() {
                     @Override
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return new HatNode(parent, left, parser.expression(parent));
+                    public LaiLaiNode build(@NotNull LaiLaiSymbolTable symbolTable, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode, LaiLaiSymbolTable> parser) {
+                        return new HatNode(left, parser.expression(symbolTable));
                     }
-                    throw new IllegalStateException("'hat' only applicable to bool and float, got '" + left + "' of type '" + actualExpressionType + "'");
                 })
                 .build();
 
@@ -86,12 +83,6 @@ public class MiniLangTest {
                 .supportsInfix((parent, match, left, parser) -> {
                     LaiLaiNode right = parser.expression(parent);
                     return new AssignNode((VariableNode) left, right);
-                .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
-                    @Override
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        LaiLaiNode right = parser.expression(parent);
-                        return new AssignNode(parent, left, right);
-                    }
                 })
                 .build();
 
@@ -105,50 +96,18 @@ public class MiniLangTest {
                     boolean matches = matcher.matches();
                     if (!matches) {
                         throw new IllegalStateException("No match for variable declaration'" + declaration + "'");
-                .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
-                        String declaration = match.getText();
-                        Pattern variablePattern = Pattern.compile("^(float|int|bool) ([a-z]+)$");
-                        Matcher matcher = variablePattern.matcher(declaration);
-                        boolean matches = matcher.matches();
-                        if (!matches) {
-                            throw new IllegalStateException("No match for variable declaration'" + declaration + "'");
-                        }
-                        String typeDeclaration = matcher.group(1);
-                        String nameDeclaration = matcher.group(2);
-                        ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
-                        return new VariableDefNode(parent, type, nameDeclaration);
+
                     }
-                    String typeDeclaration = matcher.group(1);
-                    String nameDeclaration = matcher.group(2);
-                    Variables variables = parent.getVariables();
-                    VariableNode variable = variables.find(nameDeclaration);
-                    if (variable == null) {
-                        ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
-                        VariableNode newNode = new VariableNode(type, nameDeclaration);
-                        variables.put(nameDeclaration, newNode);
-                        return newNode;
-                    }
-                    return variable;
+                    return new VariableDefNode(ExpressionType.forTypeDeclaration(matcher.group(1)), matcher.group(2));
                 }).build();
 
         TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> variableReference = lb.newToken()
                 .matchesPattern("[a-z]+")
                 .named("variableRef")
-                .supportsStandalone((parent, match) -> {
+
+                .supportsStandalone((symbolTable, match) -> {
                     String name = match.getText();
-                    Variables variables = parent.getVariables();
-                    VariableNode variable = variables.find(name);
-                    if (variable == null) {
-                        throw new IllegalStateException("Variable '" + name + "' cannot be referenced, not yet defined or not in scope.");
-                .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
-                        String name = match.getText();
-                        return new VariableRefNode(parent, name);
-                    }
-                    return variable;
+                    return new VariableRefNode(name);
                 }).build();
 
         TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> booleanLiteral = lb.newToken()

@@ -3,20 +3,7 @@ package com.torstling.tdop.fluid.minilang;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MiniLangRootNode implements LaiLaiNode {
-    @NotNull
-    @Override
-    public Object evaluate(@Nullable ScopeNode currentScope) {
-        throw new IllegalStateException();
-    }
-
-    @NotNull
-    @Override
-    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
-        throw new IllegalStateException();
-    }
 public class MiniLangRootNode implements LaiLaiSymbolTable {
-
     @NotNull
     @Override
     public Variables getVariables() {

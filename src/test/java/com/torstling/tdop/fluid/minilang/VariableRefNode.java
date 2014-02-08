@@ -5,12 +5,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class VariableRefNode implements VariableNode {
     @NotNull
-    private final LaiLaiNode parent;
-    @NotNull
     private final String name;
 
-    public VariableRefNode(@NotNull final LaiLaiNode parent, @NotNull final String name) {
-        this.parent = parent;
+    public VariableRefNode(@NotNull final String name) {
         this.name = name;
     }
 
@@ -28,7 +25,7 @@ public class VariableRefNode implements VariableNode {
         }
         VariableDefNode variable = currentScope.getVariables().find(name);
         if (variable == null) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("No variable named '" + name + "' found in the current scope: " + currentScope);
         }
         return variable;
     }
@@ -38,12 +35,6 @@ public class VariableRefNode implements VariableNode {
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         VariableDefNode variable = getVariable(currentScope);
         return variable.getExpressionType(currentScope);
-    }
-
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return parent.getVariables();
     }
 
     @Override

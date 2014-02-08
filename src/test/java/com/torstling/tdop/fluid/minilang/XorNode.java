@@ -32,14 +32,6 @@ public class XorNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
-        return parent.getVariables();
-    public Object evaluate() {
-        return ((Boolean) left.evaluate()) ^ ((Boolean) right.evaluate());
-    }
-
-    @NotNull
-    @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.BOOL;
     }

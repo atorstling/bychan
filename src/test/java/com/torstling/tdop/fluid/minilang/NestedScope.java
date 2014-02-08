@@ -11,25 +11,25 @@ public class NestedScope implements LaiLaiSymbolTable {
     @Nullable
     private LaiLaiNode child;
     @NotNull
-    private final Map<String, VariableNode> variablesByName;
+    private final Map<String, VariableDefNode> variablesByName;
     @NotNull
     private final Variables variables;
 
-    public NestedScope(@NotNull final LaiLaiSymbolTable parent) {
+    public NestedScope(@NotNull final LaiLaiSymbolTable previousScope) {
         this.child = null;
         variablesByName = new HashMap<>();
         variables = new Variables() {
             @Nullable
             @Override
-            public VariableNode find(@NotNull String name) {
+            public VariableDefNode find(@NotNull String name) {
                 if (variablesByName.containsKey(name)) {
                     return variablesByName.get(name);
                 }
-                return parent.getVariables().find(name);
+                return previousScope.getVariables().find(name);
             }
 
             @Override
-            public void put(@NotNull String name, @NotNull VariableNode node) {
+            public void put(@NotNull String name, @NotNull VariableDefNode node) {
                 variablesByName.put(name, node);
             }
         };

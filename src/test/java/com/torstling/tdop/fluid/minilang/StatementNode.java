@@ -23,12 +23,6 @@ public class StatementNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
-        return parent.getVariables();
-    }
-
-    @NotNull
-    @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.union(left.getExpressionType(currentScope), right.getExpressionType(currentScope));
     }

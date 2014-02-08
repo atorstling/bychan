@@ -9,7 +9,7 @@ public class AssignNode implements LaiLaiNode {
     @NotNull
     private final LaiLaiNode right;
 
-    public AssignNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
+    public AssignNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
         if (!(left instanceof VariableNode)) {
             throw new IllegalArgumentException("Cannot assign to non-variable node '" + left + "'");
         }

@@ -9,7 +9,7 @@ public class AdditionNode implements LaiLaiNode {
     @NotNull
     private final LaiLaiNode right;
 
-    public AdditionNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
+    public AdditionNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
         this.left = left;
         this.right = right;
     }

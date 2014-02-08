@@ -3,39 +3,15 @@ package com.torstling.tdop.fluid.minilang;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ScopeNode implements LaiLaiNode {
-
+    @NotNull
+    private final LaiLaiSymbolTable parent;
     @Nullable
     private LaiLaiNode child;
-    @NotNull
-    private final Map<String, VariableDefNode> variablesByName;
-    @NotNull
-    private final Variables variables;
 
-    public ScopeNode(@NotNull final LaiLaiNode parent) {
+    public ScopeNode(@NotNull final LaiLaiSymbolTable parent) {
+        this.parent = parent;
         this.child = null;
-        variablesByName = new HashMap<>();
-        variables = new Variables() {
-            @Nullable
-            @Override
-            public VariableDefNode find(@NotNull String name) {
-                if (variablesByName.containsKey(name)) {
-                    return variablesByName.get(name);
-                }
-                return parent.getVariables().find(name);
-            }
-
-            @Override
-            public void put(@NotNull String name, @NotNull VariableDefNode node) {
-                VariableDefNode oldValue = variablesByName.put(name, node);
-                if (oldValue != null) {
-                    throw new IllegalStateException("Duplicate definition of variable '" + name + "'");
-                }
-            }
-        };
     }
 
     @NotNull
@@ -58,12 +34,6 @@ public class ScopeNode implements LaiLaiNode {
         return getChild().getExpressionType(currentScope);
     }
 
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return variables;
-    }
-
     @Override
     public String toString() {
         return "(s " + child + ")";
@@ -71,5 +41,10 @@ public class ScopeNode implements LaiLaiNode {
 
     public void setChild(@SuppressWarnings("NullableProblems") @NotNull final LaiLaiNode child) {
         this.child = child;
+    }
+
+    @NotNull
+    public Variables getVariables() {
+        return parent.getVariables();
     }
 }
