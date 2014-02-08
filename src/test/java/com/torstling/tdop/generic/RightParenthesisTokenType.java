@@ -1,6 +1,5 @@
 package com.torstling.tdop.generic;
 
-import com.torstling.tdop.core.AstNode;
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenType;
@@ -8,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class RightParenthesisTokenType<N extends AstNode, S> implements TokenType<N, S> {
+public class RightParenthesisTokenType<N, S> implements TokenType<N, S> {
 
     private static final RightParenthesisTokenType INSTANCE = new RightParenthesisTokenType<>();
 
@@ -27,7 +26,7 @@ public class RightParenthesisTokenType<N extends AstNode, S> implements TokenTyp
         return true;
     }
 
-    public static <N extends AstNode, S> RightParenthesisTokenType<N, S> get() {
+    public static <N, S> RightParenthesisTokenType<N, S> get() {
         //noinspection unchecked
         return (RightParenthesisTokenType<N, S>) INSTANCE;
     }

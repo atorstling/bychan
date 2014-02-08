@@ -1,9 +1,12 @@
 package com.torstling.tdop.generic;
 
-import com.torstling.tdop.core.*;
+import com.torstling.tdop.core.LexingMatch;
+import com.torstling.tdop.core.Token;
+import com.torstling.tdop.core.TokenParserCallback;
+import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class RightParenthesisToken<N extends AstNode, S> implements Token<N, S> {
+public class RightParenthesisToken<N, S> implements Token<N, S> {
 
     @NotNull
     private final LexingMatch match;

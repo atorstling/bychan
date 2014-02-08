@@ -1,12 +1,11 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
-class LeveledTokenDefinition<N extends AstNode, S> {
+class LeveledTokenDefinition<N, S> {
     @NotNull
     private final TokenDefinition<N, S> definition;
     private final int levelCount;

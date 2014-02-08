@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GenericParser<N extends AstNode, S> {
+public class GenericParser<N, S> {
     @NotNull
     private final Lexer<N,S> lexer;
 

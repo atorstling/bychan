@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 /**
  * A regex sub-pattern-based lexer
  */
-public class Lexer<N extends AstNode, S> {
+public class Lexer<N, S> {
     private final List<TokenType<N, S>> tokenTypes;
 
     public Lexer(@NotNull final Collection<? extends TokenType<N, S>> tokenTypes) {

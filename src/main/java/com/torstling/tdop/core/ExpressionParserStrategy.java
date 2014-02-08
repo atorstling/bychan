@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayDeque;
 
-public class ExpressionParserStrategy<N extends AstNode, S> implements ParserStrategy<N, S> {
+public class ExpressionParserStrategy<N, S> implements ParserStrategy<N, S> {
     private final S symbolTable;
     private final int powerFloor;
 

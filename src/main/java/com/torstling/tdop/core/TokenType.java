@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
  *
  * @param <N>
  */
-public interface TokenType<N extends AstNode,S> {
+public interface TokenType<N, S> {
     @NotNull
-    Token<N,S> toToken(@NotNull final LexingMatch match);
+    Token<N, S> toToken(@NotNull final LexingMatch match);
 
     @NotNull
     Pattern getPattern();

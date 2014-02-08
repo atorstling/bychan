@@ -1,6 +1,5 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -8,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param <N>
  */
-public class WrappedTokenDefinitionBuilder<N extends AstNode, S> {
+public class WrappedTokenDefinitionBuilder<N, S> {
     @NotNull
     private final TokenDefinitionBuilder<N, S> delegate;
     @NotNull

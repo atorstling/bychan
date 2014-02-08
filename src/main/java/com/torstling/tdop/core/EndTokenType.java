@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class EndTokenType<N extends AstNode, S> implements TokenType<N, S> {
+public class EndTokenType<N, S> implements TokenType<N, S> {
 
     private static final EndTokenType INSTANCE = new EndTokenType<>();
 
@@ -26,7 +26,7 @@ public class EndTokenType<N extends AstNode, S> implements TokenType<N, S> {
     }
 
     @NotNull
-    public static <N extends AstNode, S> EndTokenType<N, S> get() {
+    public static <N, S> EndTokenType<N, S> get() {
         //noinspection unchecked
         return (EndTokenType<N, S>) INSTANCE;
     }

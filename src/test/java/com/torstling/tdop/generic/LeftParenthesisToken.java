@@ -3,7 +3,7 @@ package com.torstling.tdop.generic;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
-public class LeftParenthesisToken<N extends AstNode, S> implements Token<N, S> {
+public class LeftParenthesisToken<N, S> implements Token<N, S> {
 
     @NotNull
     private final LexingMatch match;

@@ -3,7 +3,7 @@ package com.torstling.tdop.generic;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
-public class WhitespaceToken<N extends AstNode, S> implements Token<N, S> {
+public class WhitespaceToken<N, S> implements Token<N, S> {
     private final WhitespaceTokenType<N, S> type;
     @NotNull
     private final LexingMatch match;

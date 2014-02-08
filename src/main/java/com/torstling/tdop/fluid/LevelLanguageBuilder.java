@@ -1,11 +1,9 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.AstNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelLanguageBuilder<N extends AstNode, S> {
+public class LevelLanguageBuilder<N, S> {
     private final LanguageBuilder<N, S> languageBuilder;
     private final List<TokenDefinition<N, S>> tokens;
 

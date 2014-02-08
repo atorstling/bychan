@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The result of a possibly unsuccessful parse
  */
-public class ParseResult<N extends AstNode> {
+public class ParseResult<N> {
     @Nullable
     private final N rootNode;
     @Nullable
@@ -18,12 +18,12 @@ public class ParseResult<N extends AstNode> {
     }
 
     @NotNull
-    public static <N extends AstNode> ParseResult<N> success(@NotNull final N rootNode) {
+    public static <N> ParseResult<N> success(@NotNull final N rootNode) {
         return new ParseResult<>(rootNode, null);
     }
 
     @NotNull
-    public static <N extends AstNode> ParseResult<N> failure(@NotNull final ParsingFailedInformation errorMessage) {
+    public static <N> ParseResult<N> failure(@NotNull final ParsingFailedInformation errorMessage) {
         return new ParseResult<>(null, errorMessage);
     }
 
@@ -49,5 +49,13 @@ public class ParseResult<N extends AstNode> {
 
     public boolean isFailure() {
         return !isSuccess();
+    }
+
+    @Override
+    public String toString() {
+        return "ParseResult{" +
+                "rootNode=" + rootNode +
+                ", errorMessage=" + errorMessage +
+                '}';
     }
 }

@@ -3,7 +3,7 @@ package com.torstling.tdop.fluid;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
-public class GenericToken<N extends AstNode, S> implements Token<N,S> {
+public class GenericToken<N, S> implements Token<N, S> {
     private final GenericTokenType<N,S> tokenType;
     @NotNull
     private final LexingMatch match;

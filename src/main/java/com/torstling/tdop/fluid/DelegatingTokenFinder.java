@@ -1,9 +1,8 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
-public class DelegatingTokenFinder<N extends AstNode, S> implements TokenFinder<N, S> {
+public class DelegatingTokenFinder<N, S> implements TokenFinder<N, S> {
     @NotNull
     private TokenFinder<N, S> delegate;
 

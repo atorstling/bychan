@@ -1,12 +1,11 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LanguageBuilder<N extends AstNode,S> {
+public class LanguageBuilder<N, S> {
     @NotNull
     private final List<TokenDefinitions<N, S>> levels;
 
@@ -15,7 +14,7 @@ public class LanguageBuilder<N extends AstNode,S> {
     }
 
     @NotNull
-    public LevelLanguageBuilder<N,S> newLowerPriorityLevel() {
+    public LevelLanguageBuilder<N, S> newLowerPriorityLevel() {
         return new LevelLanguageBuilder<>(this);
     }
 
@@ -24,7 +23,7 @@ public class LanguageBuilder<N extends AstNode,S> {
     }
 
     @NotNull
-    public Language<N,S> completeLanguage() {
+    public Language<N, S> completeLanguage() {
         return new Language<>(levels);
     }
 

@@ -1,9 +1,8 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 
-public class LevelLanguageBuilder2<N extends AstNode, S> {
+public class LevelLanguageBuilder2<N, S> {
     @NotNull
     private final LevelLanguageBuilder<N, S> delegate;
     @NotNull
