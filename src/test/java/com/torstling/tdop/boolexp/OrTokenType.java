@@ -12,7 +12,7 @@ public class OrTokenType<S> implements TokenType<BooleanExpressionNode, S> {
 
     @NotNull
     public Token<BooleanExpressionNode, S> toToken(@NotNull LexingMatch match) {
-        return new OrToken(match);
+        return new OrToken<>(match);
     }
 
     @NotNull
@@ -21,12 +21,13 @@ public class OrTokenType<S> implements TokenType<BooleanExpressionNode, S> {
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
     @NotNull
-    public static OrTokenType get() {
+    public static <S> OrTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

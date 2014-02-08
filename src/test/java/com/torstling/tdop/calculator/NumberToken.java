@@ -31,7 +31,7 @@ public class NumberToken<S> implements Token<CalculatorNode, S> {
     }
 
     public static <S> Token<CalculatorNode, S> valueOf(@NotNull final LexingMatch match) {
-        return new NumberToken(match);
+        return new NumberToken<>(match);
     }
 
     @Override

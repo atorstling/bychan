@@ -21,11 +21,12 @@ public class AdditionTokenType<S> implements TokenType<CalculatorNode, S> {
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
-    public static AdditionTokenType get() {
+    public static <S> AdditionTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

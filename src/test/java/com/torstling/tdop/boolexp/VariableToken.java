@@ -21,8 +21,8 @@ public class VariableToken<S> implements Token<BooleanExpressionNode, S> {
     }
 
     @NotNull
-    public static VariableToken valueOf(@NotNull final LexingMatch match) {
-        return new VariableToken(match);
+    public static <S> VariableToken<S> valueOf(@NotNull final LexingMatch match) {
+        return new VariableToken<>(match);
     }
 
     @NotNull

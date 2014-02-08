@@ -13,7 +13,7 @@ public class VariableTokenType<S> implements TokenType<BooleanExpressionNode, S>
 
     @NotNull
     public Token<BooleanExpressionNode, S> toToken(@NotNull LexingMatch match) {
-        return VariableToken.valueOf(match);
+        return VariableToken.<S>valueOf(match);
     }
 
     @NotNull
@@ -22,12 +22,13 @@ public class VariableTokenType<S> implements TokenType<BooleanExpressionNode, S>
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
     @NotNull
-    public static VariableTokenType get() {
+    public static <S> VariableTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

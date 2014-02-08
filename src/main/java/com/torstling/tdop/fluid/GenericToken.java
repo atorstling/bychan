@@ -39,9 +39,9 @@ public class GenericToken<N extends AstNode, S> implements Token<N,S> {
             }
 
             @Override
-            public boolean nextIs(@NotNull TokenDefinition<N, S> tokenTypeDefinition) {
+            public boolean nextIsNot(@NotNull TokenDefinition<N, S> tokenTypeDefinition) {
                 GenericTokenType<N,S> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
-                return parser.peek().getType().equals(expectedType);
+                return !parser.peek().getType().equals(expectedType);
             }
         });
     }
@@ -73,9 +73,9 @@ public class GenericToken<N extends AstNode, S> implements Token<N,S> {
             }
 
             @Override
-            public boolean nextIs(@NotNull TokenDefinition<N, S> tokenTypeDefinition) {
+            public boolean nextIsNot(@NotNull TokenDefinition<N, S> tokenTypeDefinition) {
                 GenericTokenType<N,S> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
-                return parser.peek().getType().equals(expectedType);
+                return !parser.peek().getType().equals(expectedType);
             }
         });
     }

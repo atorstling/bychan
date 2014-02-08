@@ -26,6 +26,7 @@ public class XorNode implements LaiLaiNode {
     @NotNull
     @Override
     public Object evaluate(@Nullable ScopeNode currentScope) {
+        assert currentScope != null;
         checkTypes(currentScope);
         return ((Boolean) left.evaluate(currentScope)) ^ ((Boolean) right.evaluate(currentScope));
     }

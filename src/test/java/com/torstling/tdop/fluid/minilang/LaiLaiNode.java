@@ -4,7 +4,7 @@ import com.torstling.tdop.core.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface LaiLaiNode extends AstNode {
+interface LaiLaiNode extends AstNode {
     @NotNull
     Object evaluate(@Nullable ScopeNode currentScope);
 

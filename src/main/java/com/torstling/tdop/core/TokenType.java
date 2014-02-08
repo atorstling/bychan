@@ -23,5 +23,5 @@ public interface TokenType<N extends AstNode,S> {
      * Ignored token types will not be part of the token stream which the lexer produces, but they
      * might still be useful to ignore certain patterns (such as whitespace and comments).
      */
-    boolean shouldSkip();
+    boolean include();
 }

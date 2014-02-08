@@ -21,11 +21,12 @@ public class NumberTokenType<S> implements TokenType<CalculatorNode, S> {
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
-    public static NumberTokenType get() {
+    public static <S> NumberTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

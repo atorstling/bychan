@@ -12,7 +12,7 @@ public class MultiplicationTokenType<S> implements TokenType<CalculatorNode, S> 
 
     @NotNull
     public Token<CalculatorNode, S> toToken(@NotNull LexingMatch match) {
-        return new MultiplicationToken(match);
+        return new MultiplicationToken<>(match);
     }
 
     @NotNull
@@ -21,11 +21,12 @@ public class MultiplicationTokenType<S> implements TokenType<CalculatorNode, S> 
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
-    public static MultiplicationTokenType get() {
+    public static <S> MultiplicationTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

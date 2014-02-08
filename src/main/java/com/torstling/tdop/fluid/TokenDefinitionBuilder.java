@@ -11,7 +11,7 @@ public class TokenDefinitionBuilder<N extends AstNode, S> {
     private PrefixAstBuilder<N, S> prefixBuilder;
     private InfixAstBuilder<N, S> infixBuilder;
     private StandaloneAstBuilder<N, S> standaloneBuilder;
-    private boolean ignoredWhenParsing;
+    private boolean parsed;
     private String tokenTypeName;
 
     public TokenDefinitionBuilder<N, S> matchesString(String text) {
@@ -24,7 +24,7 @@ public class TokenDefinitionBuilder<N extends AstNode, S> {
     }
 
     public TokenDefinitionBuilder() {
-        ignoredWhenParsing = false;
+        parsed = true;
     }
 
     public TokenDefinitionBuilder<N, S> supportsPrefix(PrefixAstBuilder<N, S> prefixBuilder) {
@@ -37,7 +37,7 @@ public class TokenDefinitionBuilder<N extends AstNode, S> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, ignoredWhenParsing);
+        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, parsed);
     }
 
     @Nullable
@@ -58,7 +58,7 @@ public class TokenDefinitionBuilder<N extends AstNode, S> {
     }
 
     public TokenDefinitionBuilder<N, S> ignoredWhenParsing() {
-        this.ignoredWhenParsing = true;
+        this.parsed = false;
         return this;
     }
 

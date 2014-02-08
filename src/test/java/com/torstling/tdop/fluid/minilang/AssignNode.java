@@ -21,6 +21,7 @@ public class AssignNode implements LaiLaiNode {
     @Override
     public Object evaluate(@Nullable ScopeNode currentScope) {
         Object rhsValue = right.evaluate(currentScope);
+        assert currentScope != null;
         left.assign(rhsValue, currentScope);
         return rhsValue;
     }

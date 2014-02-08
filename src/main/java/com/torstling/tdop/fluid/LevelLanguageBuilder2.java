@@ -9,7 +9,7 @@ public class LevelLanguageBuilder2<N extends AstNode, S> {
     @NotNull
     private final LanguageBuilder2<N, S> parent;
 
-    public LevelLanguageBuilder<N,S> startToken(@NotNull TokenDefinition<N, S> token) {
+    public LevelLanguageBuilder<N, S> startToken(@NotNull TokenDefinition<N, S> token) {
         return delegate.addToken(token);
     }
 
@@ -18,12 +18,12 @@ public class LevelLanguageBuilder2<N extends AstNode, S> {
         return new WrappedTokenDefinitionBuilder<>(this, new TokenDefinitionBuilder<>());
     }
 
-    public LanguageBuilder2<N,S> endLevel() {
+    public LanguageBuilder2<N, S> endLevel() {
         delegate.endLevel();
         return parent;
     }
 
-    public LevelLanguageBuilder2(LevelLanguageBuilder<N, S> delegate, LanguageBuilder2<N, S> parent) {
+    public LevelLanguageBuilder2(@NotNull LevelLanguageBuilder<N, S> delegate, @NotNull LanguageBuilder2<N, S> parent) {
         this.delegate = delegate;
         this.parent = parent;
     }

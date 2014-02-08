@@ -68,8 +68,7 @@ public class WrappedTokenDefinitionBuilder<N extends AstNode, S> {
     @NotNull
     private TokenDefinition<N, S> buildAndAdd() {
         TokenDefinition<N, S> tokenDefinition = delegate.build();
-        languageBuilder.startToken(tokenDefinition);
-        languageBuilder.endLevel();
+        languageBuilder.startToken(tokenDefinition).endLevel();
         return tokenDefinition;
     }
 }

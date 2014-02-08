@@ -9,13 +9,13 @@ import java.util.Map;
 public class NestedScope implements LaiLaiSymbolTable {
 
     @Nullable
-    private LaiLaiNode child;
+    private final LaiLaiNode child;
     @NotNull
     private final Map<String, VariableDefNode> variablesByName;
     @NotNull
     private final Variables variables;
 
-    public NestedScope(@NotNull final LaiLaiSymbolTable previousScope) {
+    public NestedScope(@NotNull final LaiLaiSymbolTable previousTable) {
         this.child = null;
         variablesByName = new HashMap<>();
         variables = new Variables() {
@@ -25,7 +25,7 @@ public class NestedScope implements LaiLaiSymbolTable {
                 if (variablesByName.containsKey(name)) {
                     return variablesByName.get(name);
                 }
-                return previousScope.getVariables().find(name);
+                return previousTable.getVariables().find(name);
             }
 
             @Override

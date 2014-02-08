@@ -12,7 +12,7 @@ public class SubtractionTokenType<S> implements TokenType<CalculatorNode, S> {
 
     @NotNull
     public Token<CalculatorNode, S> toToken(@NotNull LexingMatch match) {
-        return new SubtractionToken(match);
+        return new SubtractionToken<>(match);
     }
 
     @NotNull
@@ -21,11 +21,12 @@ public class SubtractionTokenType<S> implements TokenType<CalculatorNode, S> {
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
-    public static SubtractionTokenType get() {
+    public static <S> SubtractionTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

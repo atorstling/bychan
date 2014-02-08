@@ -2,11 +2,13 @@
   <dictionary name="alext">
     <words>
       <w>junit</w>
+      <w>lcurly</w>
       <w>lexed</w>
       <w>lexing</w>
       <w>lparen</w>
       <w>matchers</w>
       <w>prio</w>
+      <w>rcurly</w>
       <w>rparen</w>
       <w>tdop</w>
     </words>

@@ -23,8 +23,8 @@ public class RightParenthesisTokenType<N extends AstNode, S> implements TokenTyp
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
     public static <N extends AstNode, S> RightParenthesisTokenType<N, S> get() {

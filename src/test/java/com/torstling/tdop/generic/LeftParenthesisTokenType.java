@@ -21,8 +21,8 @@ public class LeftParenthesisTokenType<N extends AstNode, S> implements TokenType
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
     public static <N extends AstNode, S> LeftParenthesisTokenType<N, S> get() {

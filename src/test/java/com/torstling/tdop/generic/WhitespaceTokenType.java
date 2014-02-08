@@ -32,7 +32,7 @@ public class WhitespaceTokenType<N extends AstNode, S> implements TokenType<N, S
     }
 
     @Override
-    public boolean shouldSkip() {
-        return true;
+    public boolean include() {
+        return false;
     }
 }

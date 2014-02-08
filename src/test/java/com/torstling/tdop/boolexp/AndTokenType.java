@@ -22,12 +22,13 @@ public class AndTokenType<S> implements TokenType<BooleanExpressionNode, S> {
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
     @NotNull
     public static <S> AndTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

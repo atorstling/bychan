@@ -8,7 +8,7 @@ public enum ExpressionType {
     @NotNull
     public static ExpressionType union(@NotNull final ExpressionType leftType, @NotNull final ExpressionType rightType) {
         if (!leftType.equals(rightType)) {
-            throw new IllegalStateException("Ambigous type information");
+            throw new IllegalStateException("Ambiguous type information");
         }
         return leftType;
     }

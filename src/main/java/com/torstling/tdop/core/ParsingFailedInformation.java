@@ -13,16 +13,6 @@ public class ParsingFailedInformation {
         this.match = match;
     }
 
-    @NotNull
-    public String getFailureMessage() {
-        return failureMessage;
-    }
-
-    @NotNull
-    public LexingMatch getMatch() {
-        return match;
-    }
-
     @Override
     public String toString() {
         return "Parsing terminated at lexing match " + match + ": " + failureMessage;

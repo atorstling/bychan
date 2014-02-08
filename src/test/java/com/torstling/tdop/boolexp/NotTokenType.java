@@ -13,7 +13,7 @@ public class NotTokenType<S> implements TokenType<BooleanExpressionNode, S> {
 
     @NotNull
     public Token<BooleanExpressionNode, S> toToken(@NotNull LexingMatch match) {
-        return new NotToken(match);
+        return new NotToken<>(match);
     }
 
     @NotNull
@@ -22,11 +22,12 @@ public class NotTokenType<S> implements TokenType<BooleanExpressionNode, S> {
     }
 
     @Override
-    public boolean shouldSkip() {
-        return false;
+    public boolean include() {
+        return true;
     }
 
-    public static NotTokenType get() {
+    public static <S> NotTokenType<S> get() {
+        //noinspection unchecked
         return INSTANCE;
     }
 }

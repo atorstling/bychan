@@ -1,11 +1,11 @@
 package com.torstling.tdop.fluid.minilang;
 
 
-import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.Token;
-import com.torstling.tdop.fluid.*;
-import org.jetbrains.annotations.NotNull;
+import com.torstling.tdop.fluid.Language;
+import com.torstling.tdop.fluid.LanguageBuilder;
+import com.torstling.tdop.fluid.TokenDefinition;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -69,12 +69,7 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .supportsInfix(new InfixAstBuilder<LaiLaiNode, LaiLaiSymbolTable>() {
-                    @Override
-                    public LaiLaiNode build(@NotNull LaiLaiSymbolTable symbolTable, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode, LaiLaiSymbolTable> parser) {
-                        return new HatNode(left, parser.expression(symbolTable));
-                    }
-                })
+                .supportsInfix((symbolTable, match, left, parser) -> new HatNode(left, parser.expression(symbolTable)))
                 .build();
 
         TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> assign = lb.newToken()
@@ -82,7 +77,7 @@ public class MiniLangTest {
                 .named("assign")
                 .supportsInfix((parent, match, left, parser) -> {
                     LaiLaiNode right = parser.expression(parent);
-                    return new AssignNode((VariableNode) left, right);
+                    return new AssignNode(left, right);
                 })
                 .build();
 
@@ -148,9 +143,9 @@ public class MiniLangTest {
                 .named("listStart")
                 .supportsPrefix((parent, match, parser) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs(listEnd)) {
+                    while (parser.nextIsNot(listEnd)) {
                         expressions.add(parser.expression(parent));
-                        if (!parser.nextIs(listEnd)) {
+                        if (parser.nextIsNot(listEnd)) {
                             parser.expectSingleToken(comma);
                         }
                     }

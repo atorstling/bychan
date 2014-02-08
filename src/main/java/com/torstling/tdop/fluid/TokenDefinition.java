@@ -20,14 +20,14 @@ public class TokenDefinition<N extends AstNode, S> {
     private final InfixAstBuilder<N, S> infixBuilder;
     @NotNull
     private final String tokenTypeName;
-    private final boolean ignoredWhenParsing;
+    private final boolean parse;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N, S> prefixBuilder, @Nullable final InfixAstBuilder<N, S> infixBuilder, @NotNull final String tokenTypeName, boolean ignoredWhenParsing) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N, S> prefixBuilder, @Nullable final InfixAstBuilder<N, S> infixBuilder, @NotNull final String tokenTypeName, boolean parse) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
         this.tokenTypeName = tokenTypeName;
-        this.ignoredWhenParsing = ignoredWhenParsing;
+        this.parse = parse;
     }
 
     @NotNull
@@ -35,8 +35,8 @@ public class TokenDefinition<N extends AstNode, S> {
         return pattern;
     }
 
-    public boolean shouldIgnoreWhenParsing() {
-        return ignoredWhenParsing;
+    public boolean parse() {
+        return parse;
     }
 
     @Override
