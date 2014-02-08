@@ -11,12 +11,9 @@ import java.util.List;
 
 public class ListNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode parent;
-    @NotNull
     private final List<LaiLaiNode> expressions;
 
-    public ListNode(@NotNull final LaiLaiNode parent, @NotNull final List<LaiLaiNode> expressions) {
-        this.parent = parent;
+    public ListNode(@NotNull final List<LaiLaiNode> expressions) {
         this.expressions = expressions;
     }
 
@@ -28,12 +25,6 @@ public class ListNode implements LaiLaiNode {
             results.add(expression.evaluate(currentScope));
         }
         return results;
-    }
-
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return parent.getVariables();
     }
 
     @NotNull

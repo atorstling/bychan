@@ -8,10 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class LeftParenthesisTokenType<N extends AstNode> implements TokenType<N> {
+public class LeftParenthesisTokenType<N extends AstNode, S> implements TokenType<N, S> {
 
     @NotNull
-    public Token<N> toToken(@NotNull LexingMatch match) {
+    public Token<N, S> toToken(@NotNull LexingMatch match) {
         return new LeftParenthesisToken<>(match);
     }
 
@@ -25,7 +25,7 @@ public class LeftParenthesisTokenType<N extends AstNode> implements TokenType<N>
         return false;
     }
 
-    public static <N extends AstNode> LeftParenthesisTokenType<N> get() {
+    public static <N extends AstNode, S> LeftParenthesisTokenType<N, S> get() {
         return new LeftParenthesisTokenType<>();
     }
 }

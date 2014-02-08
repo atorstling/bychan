@@ -5,8 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class AssignNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode parent;
-    @NotNull
     private final VariableNode left;
     @NotNull
     private final LaiLaiNode right;
@@ -15,7 +13,6 @@ public class AssignNode implements LaiLaiNode {
         if (!(left instanceof VariableNode)) {
             throw new IllegalArgumentException("Cannot assign to non-variable node '" + left + "'");
         }
-        this.parent = parent;
         this.left = (VariableNode) left;
         this.right = right;
     }
@@ -26,12 +23,6 @@ public class AssignNode implements LaiLaiNode {
         Object rhsValue = right.evaluate(currentScope);
         left.assign(rhsValue, currentScope);
         return rhsValue;
-    }
-
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return parent.getVariables();
     }
 
     @NotNull

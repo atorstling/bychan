@@ -1,27 +1,24 @@
 package com.torstling.tdop.boolexp;
 
-import com.torstling.tdop.core.LexingMatch;
-import com.torstling.tdop.core.Token;
-import com.torstling.tdop.core.TokenParserCallback;
-import com.torstling.tdop.core.TokenType;
+import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
-public class NotToken implements Token<BooleanExpressionNode> {
+public class NotToken<S> implements Token<BooleanExpressionNode, S> {
 
     @NotNull
     private final LexingMatch match;
 
-    public NotToken(LexingMatch match) {
+    public NotToken(@NotNull LexingMatch match) {
         this.match = match;
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode parent, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new NotNode(parser.expression(parent, infixBindingPower()));
+    public BooleanExpressionNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
+        return new NotNode(parser.tryParse(new ExpressionParserStrategy<>(parent, infixBindingPower())).getRootNode());
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(BooleanExpressionNode parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+    public BooleanExpressionNode infixParse(S parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
         throw new UnsupportedOperationException();
     }
 
@@ -31,7 +28,7 @@ public class NotToken implements Token<BooleanExpressionNode> {
 
     @Override
     @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
+    public TokenType<BooleanExpressionNode, S> getType() {
         return NotTokenType.get();
     }
 

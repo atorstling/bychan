@@ -8,13 +8,10 @@ public class StatementNode implements LaiLaiNode {
     private final LaiLaiNode left;
     @NotNull
     private final LaiLaiNode right;
-    @NotNull
-    private final LaiLaiNode parent;
 
-    public StatementNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
+    public StatementNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
         this.left = left;
         this.right = right;
-        this.parent = parent;
     }
 
     @NotNull

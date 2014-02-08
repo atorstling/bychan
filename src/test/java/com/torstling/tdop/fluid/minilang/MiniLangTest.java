@@ -1,11 +1,9 @@
 package com.torstling.tdop.fluid.minilang;
 
 
-import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.Token;
 import com.torstling.tdop.fluid.*;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,83 +17,75 @@ import static org.junit.Assert.assertEquals;
 public class MiniLangTest {
     @Test
     public void test() {
-        LanguageBuilder<LaiLaiNode> lb = new LanguageBuilder<>();
+        LanguageBuilder<LaiLaiNode, LaiLaiSymbolTable> lb = new LanguageBuilder<>();
 
-        final TokenDefinition<LaiLaiNode> rcurly = lb.newToken()
+        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> rcurly = lb.newToken()
                 .matchesString("}")
                 .named("rcurly")
                 .build();
 
-        final TokenDefinition<LaiLaiNode> lcurly = lb.newToken()
+        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> lcurly = lb.newToken()
                 .matchesString("{")
                 .named("lcurly")
-                .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    @Override
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        ScopeNode scopeNode = new ScopeNode(parent);
-                        LaiLaiNode expression = parser.expression(scopeNode);
-                        scopeNode.setChild(expression);
-                        parser.expectSingleToken(rcurly);
-                        return scopeNode;
-                    }
+                .supportsPrefix((parent, match, parser) -> {
+                    NestedScope nestedScope = new NestedScope(parent);
+                    LaiLaiNode expression = parser.expression(nestedScope);
+                    parser.expectSingleToken(rcurly);
+                    return new ScopeNode(expression);
                 })
                 .build();
 
-        final TokenDefinition<LaiLaiNode> rparen = lb.newToken()
+        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> rparen = lb.newToken()
                 .matchesString(")")
                 .named("rparen")
                 .build();
 
-        TokenDefinition<LaiLaiNode> lparen = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
-                .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        LaiLaiNode trailingExpression = parser.expression(parent);
-                        parser.expectSingleToken(rparen);
-                        return trailingExpression;
-                    }
+                .supportsPrefix((parent, match, parser) -> {
+                    LaiLaiNode trailingExpression = parser.expression(parent);
+                    parser.expectSingleToken(rparen);
+                    return trailingExpression;
                 }).build();
 
-        TokenDefinition<LaiLaiNode> whitespace = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> whitespace = lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing()
                 .build();
 
-        TokenDefinition<LaiLaiNode> plus = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return parser.expression(parent);
-                    }
-                })
-                .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
-                    @Override
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return new AdditionNode(parent, left, parser.expression(parent));
-                    }
-                })
+                .supportsPrefix((parent, match, parser) -> parser.expression(parent))
+                .supportsInfix((parent, match, left, parser) -> new AdditionNode(left, parser.expression(parent)))
                 .build();
 
-        TokenDefinition<LaiLaiNode> hat = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
+                .supportsInfix((parent, match, left, parser) -> {
+                    ExpressionType actualExpressionType = left.getExpressionType();
+                    if (ExpressionType.BOOL.equals(actualExpressionType)) {
+                        return new XorNode(left, parser.expression(parent));
+                    } else if (ExpressionType.FLOAT.equals(actualExpressionType)) {
+                        return new PowNode(left, parser.expression(parent));
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
                         return new HatNode(parent, left, parser.expression(parent));
                     }
+                    throw new IllegalStateException("'hat' only applicable to bool and float, got '" + left + "' of type '" + actualExpressionType + "'");
                 })
                 .build();
 
-        TokenDefinition<LaiLaiNode> assign = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
+                .supportsInfix((parent, match, left, parser) -> {
+                    LaiLaiNode right = parser.expression(parent);
+                    return new AssignNode((VariableNode) left, right);
                 .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
                     @Override
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
@@ -105,9 +95,16 @@ public class MiniLangTest {
                 })
                 .build();
 
-        TokenDefinition<LaiLaiNode> variableDeclaration = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> variableDeclaration = lb.newToken()
                 .matchesPattern("(?:float|int|bool) [a-z]+")
                 .named("variableDef")
+                .supportsStandalone((parent, match) -> {
+                    String declaration = match.getText();
+                    Pattern variablePattern = Pattern.compile("^(float|int|bool) ([a-z]+)$");
+                    Matcher matcher = variablePattern.matcher(declaration);
+                    boolean matches = matcher.matches();
+                    if (!matches) {
+                        throw new IllegalStateException("No match for variable declaration'" + declaration + "'");
                 .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
                     @NotNull
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
@@ -123,91 +120,89 @@ public class MiniLangTest {
                         ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
                         return new VariableDefNode(parent, type, nameDeclaration);
                     }
+                    String typeDeclaration = matcher.group(1);
+                    String nameDeclaration = matcher.group(2);
+                    Variables variables = parent.getVariables();
+                    VariableNode variable = variables.find(nameDeclaration);
+                    if (variable == null) {
+                        ExpressionType type = ExpressionType.forTypeDeclaration(typeDeclaration);
+                        VariableNode newNode = new VariableNode(type, nameDeclaration);
+                        variables.put(nameDeclaration, newNode);
+                        return newNode;
+                    }
+                    return variable;
                 }).build();
 
-        TokenDefinition<LaiLaiNode> variableReference = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> variableReference = lb.newToken()
                 .matchesPattern("[a-z]+")
                 .named("variableRef")
+                .supportsStandalone((parent, match) -> {
+                    String name = match.getText();
+                    Variables variables = parent.getVariables();
+                    VariableNode variable = variables.find(name);
+                    if (variable == null) {
+                        throw new IllegalStateException("Variable '" + name + "' cannot be referenced, not yet defined or not in scope.");
                 .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
                     @NotNull
                     public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
                         String name = match.getText();
                         return new VariableRefNode(parent, name);
                     }
+                    return variable;
                 }).build();
 
-        TokenDefinition<LaiLaiNode> booleanLiteral = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> booleanLiteral = lb.newToken()
                 .matchesPattern("true|false")
                 .named("bool")
-                .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
-                        return new BooleanLiteralNode(parent, Boolean.parseBoolean(match.getText()));
-                    }
-                }).build();
+                .supportsStandalone((parent, match) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
 
-        TokenDefinition<LaiLaiNode> integerLiteral = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> integerLiteral = lb.newToken()
                 .matchesPattern("[0-9]+i")
                 .named("int")
-                .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
-                        String text = match.getText();
-                        return new IntegerLiteralNode(parent, Integer.parseInt(text.substring(0, text.length() - 1)));
-                    }
+                .supportsStandalone((parent, match) -> {
+                    String text = match.getText();
+                    return new IntegerLiteralNode(Integer.parseInt(text.substring(0, text.length() - 1)));
                 }).build();
 
-        TokenDefinition<LaiLaiNode> floatLiteral = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> floatLiteral = lb.newToken()
                 .matchesPattern("[0-9]+f")
                 .named("float")
-                .supportsStandalone(new StandaloneAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull final LexingMatch match) {
-                        return new FloatLiteralNode(parent, Float.parseFloat(match.getText()));
-                    }
-                }).build();
+                .supportsStandalone((parent, match) -> new FloatLiteralNode(Float.parseFloat(match.getText()))).build();
 
-        TokenDefinition<LaiLaiNode> semicolon = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
-                .supportsInfix(new InfixAstBuilder<LaiLaiNode>() {
-                    @Override
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull LaiLaiNode left, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        return new StatementNode(parent, left, parser.expression(parent));
-                    }
-                }).build();
+                .supportsInfix((parent, match, left, parser) -> new StatementNode(left, parser.expression(parent))).build();
 
-        final TokenDefinition<LaiLaiNode> listEnd = lb.newToken()
+        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> listEnd = lb.newToken()
                 .matchesString("]")
                 .named("listEnd")
                 .build();
 
-        final TokenDefinition<LaiLaiNode> comma = lb.newToken()
+        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> comma = lb.newToken()
                 .matchesString(",")
                 .named("comma")
                 .build();
 
-        TokenDefinition<LaiLaiNode> listStart = lb.newToken()
+        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> listStart = lb.newToken()
                 .matchesString("[")
                 .named("listStart")
-                .supportsPrefix(new PrefixAstBuilder<LaiLaiNode>() {
-                    @NotNull
-                    @Override
-                    public LaiLaiNode build(@NotNull LaiLaiNode parent, @NotNull LexingMatch match, @NotNull ParserCallback2<LaiLaiNode> parser) {
-                        ArrayList<LaiLaiNode> expressions = new ArrayList<>();
-                        while (!parser.nextIs(listEnd)) {
-                            expressions.add(parser.expression(parent));
-                            if (!parser.nextIs(listEnd)) {
-                                parser.expectSingleToken(comma);
-                            }
+                .supportsPrefix((parent, match, parser) -> {
+                    ArrayList<LaiLaiNode> expressions = new ArrayList<>();
+                    while (!parser.nextIs(listEnd)) {
+                        expressions.add(parser.expression(parent));
+                        if (!parser.nextIs(listEnd)) {
+                            parser.expectSingleToken(comma);
                         }
-                        parser.expectSingleToken(listEnd);
-                        return new ListNode(parent, expressions);
                     }
+                    parser.expectSingleToken(listEnd);
+                    return new ListNode(expressions);
                 }).build();
 
-        Language<LaiLaiNode> l = lb
+        Language<LaiLaiNode, LaiLaiSymbolTable> l = lb
+                .newLowerPriorityLevel()
                 .addToken(booleanLiteral)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(lcurly)
                 .addToken(rcurly)
@@ -220,16 +215,20 @@ public class MiniLangTest {
                 .addToken(integerLiteral)
                 .addToken(floatLiteral)
                 .addToken(variableDeclaration)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(variableReference)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(semicolon)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(assign)
+                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(plus)
                 .addToken(hat)
-                .newLowerPriorityLevel()
+                .endLevel()
                 .completeLanguage();
         testOne(l);
 
@@ -239,16 +238,16 @@ public class MiniLangTest {
         assertEquals(5, r.getRootNode().evaluate(null));
     }
 
-    private void testTwo(Language<LaiLaiNode> l) {
+    private void testTwo(Language<LaiLaiNode, LaiLaiSymbolTable> l) {
         ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
         assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate(null));
     }
 
-    private void testOne(Language<LaiLaiNode> l) {
+    private void testOne(Language<LaiLaiNode, LaiLaiSymbolTable> l) {
         String expr = "{int a=5i; a=a+4i; a}";
-        List<Token<LaiLaiNode>> tokens = l.getLexer().lex(expr);
+        List<Token<LaiLaiNode, LaiLaiSymbolTable>> tokens = l.getLexer().lex(expr);
         ParseResult<LaiLaiNode> result = l.getParser().tryParse(new MiniLangRootNode(), tokens);
         LaiLaiNode rootNode = result.getRootNode();
         assertEquals("(s (x (x (= int(a) 5i) (= a (+ a 4i))) a))", rootNode.toString());

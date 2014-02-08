@@ -16,10 +16,11 @@ public class PrattParserTest {
     @Test
     public void singleDigit() {
         String text = "1";
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new NumberToken(createTestMatch(text)),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         assertEquals(new NumberNode(1), rootNode);
     }
 
@@ -38,29 +39,31 @@ public class PrattParserTest {
 
     @Test
     public void subtraction() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
     }
 
     @Test
     public void parenthesis() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
                 new RightParenthesisToken(nextMatch()),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         assertEquals(new NumberNode(2), rootNode);
     }
 
     @Test
     public void ambiguous() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
@@ -69,7 +72,8 @@ public class PrattParserTest {
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -77,7 +81,7 @@ public class PrattParserTest {
 
     @Test
     public void ambiguous2() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
                 new LeftParenthesisToken(nextMatch()),
@@ -86,7 +90,8 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("3")),
                 new RightParenthesisToken(nextMatch()),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         NumberNode left = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -94,14 +99,15 @@ public class PrattParserTest {
 
     @Test
     public void priority() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new NumberToken(createTestMatch("1")),
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
                 new MultiplicationToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         NumberNode left = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -109,14 +115,15 @@ public class PrattParserTest {
 
     @Test
     public void priorityReverse() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new NumberToken(createTestMatch("1")),
                 new MultiplicationToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
                 new SubtractionToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -124,14 +131,15 @@ public class PrattParserTest {
 
     @Test
     public void multipleSameOp() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new NumberToken(createTestMatch("1")),
                 new MultiplicationToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
                 new MultiplicationToken(nextMatch()),
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.parse(new RootCalculatorNode());
+        final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new MultiplicationNode(left, right), rootNode);
@@ -139,12 +147,13 @@ public class PrattParserTest {
 
     @Test
     public void unclosedParenthesis() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(createTestMatch("1")),
                 createTestEndToken()));
         try {
-            p.parse(new RootCalculatorNode());
+            final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+            p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Expected a token of type 'RightParenthesisTokenType', but got 'END'", e.getMessage());
@@ -153,11 +162,12 @@ public class PrattParserTest {
 
     @Test
     public void wrongOrderParenthesis() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new RightParenthesisToken(nextMatch()),
                 createTestEndToken()));
         try {
-            p.parse(new RootCalculatorNode());
+            final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+            p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
             fail("expected exception");
         } catch (IllegalStateException e) {
             assertEquals("Cannot use right parenthesis as prefix to expression", e.getMessage());
@@ -166,10 +176,11 @@ public class PrattParserTest {
 
     @Test
     public void empty() {
-        PrattParser<CalculatorNode> p = new PrattParser<>(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 createTestEndToken()));
         try {
-            p.parse(new RootCalculatorNode());
+            final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
+            p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Cannot parse expression, end reached", e.getMessage());

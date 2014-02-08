@@ -39,4 +39,22 @@ public class LexingMatch {
     public int getStartPosition() {
         return startPosition;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LexingMatch that = (LexingMatch) o;
+
+        return endPosition == that.endPosition && startPosition == that.startPosition && text.equals(that.text);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startPosition;
+        result = 31 * result + endPosition;
+        result = 31 * result + text.hashCode();
+        return result;
+    }
 }

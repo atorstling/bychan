@@ -15,6 +15,7 @@ public class MiniLangRootNode implements LaiLaiNode {
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         throw new IllegalStateException();
     }
+public class MiniLangRootNode implements LaiLaiSymbolTable {
 
     @NotNull
     @Override

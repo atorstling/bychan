@@ -4,12 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class IntegerLiteralNode implements LiteralNode {
-    @NotNull
-    private final LaiLaiNode parent;
     private final int value;
 
-    public IntegerLiteralNode(@NotNull final LaiLaiNode parent, final int value) {
-        this.parent = parent;
+    public IntegerLiteralNode(final int value) {
         this.value = value;
     }
 
@@ -30,9 +27,4 @@ public class IntegerLiteralNode implements LiteralNode {
         return value + "i";
     }
 
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return parent.getVariables();
-    }
 }

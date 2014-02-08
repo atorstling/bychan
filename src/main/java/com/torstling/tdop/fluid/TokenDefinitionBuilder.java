@@ -1,25 +1,24 @@
 package com.torstling.tdop.fluid;
 
 import com.torstling.tdop.core.AstNode;
-import com.torstling.tdop.core.LexingMatch;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
-public class TokenDefinitionBuilder<N extends AstNode> {
+public class TokenDefinitionBuilder<N extends AstNode, S> {
     private String pattern;
-    private PrefixAstBuilder<N> prefixBuilder;
-    private InfixAstBuilder<N> infixBuilder;
-    private StandaloneAstBuilder<N> standaloneBuilder;
+    private PrefixAstBuilder<N, S> prefixBuilder;
+    private InfixAstBuilder<N, S> infixBuilder;
+    private StandaloneAstBuilder<N, S> standaloneBuilder;
     private boolean ignoredWhenParsing;
     private String tokenTypeName;
 
-    public TokenDefinitionBuilder<N> matchesString(String text) {
+    public TokenDefinitionBuilder<N, S> matchesString(String text) {
         return matchesPattern(Pattern.quote(text));
     }
 
-    public TokenDefinitionBuilder<N> matchesPattern(String pattern) {
+    public TokenDefinitionBuilder<N, S> matchesPattern(String pattern) {
         this.pattern = pattern;
         return this;
     }
@@ -28,13 +27,13 @@ public class TokenDefinitionBuilder<N extends AstNode> {
         ignoredWhenParsing = false;
     }
 
-    public TokenDefinitionBuilder<N> supportsPrefix(PrefixAstBuilder<N> prefixBuilder) {
+    public TokenDefinitionBuilder<N, S> supportsPrefix(PrefixAstBuilder<N, S> prefixBuilder) {
         this.prefixBuilder = prefixBuilder;
         return this;
     }
 
     @NotNull
-    public TokenDefinition<N> build() {
+    public TokenDefinition<N, S> build() {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
@@ -42,39 +41,33 @@ public class TokenDefinitionBuilder<N extends AstNode> {
     }
 
     @Nullable
-    private PrefixAstBuilder<N> selectPrefix() {
+    private PrefixAstBuilder<N, S> selectPrefix() {
         if (standaloneBuilder != null && prefixBuilder != null) {
             throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
         }
         if (standaloneBuilder != null) {
-            return new PrefixAstBuilder<N>() {
-                @NotNull
-                @Override
-                public N build(@NotNull N parent, @NotNull LexingMatch match, @NotNull ParserCallback2<N> parser) {
-                    return standaloneBuilder.build(parent, match);
-                }
-            };
+            return (parent, match, parser) -> standaloneBuilder.build(parent, match);
         } else {
             return prefixBuilder;
         }
     }
 
-    public TokenDefinitionBuilder<N> supportsInfix(InfixAstBuilder<N> infixBuilder) {
+    public TokenDefinitionBuilder<N, S> supportsInfix(InfixAstBuilder<N, S> infixBuilder) {
         this.infixBuilder = infixBuilder;
         return this;
     }
 
-    public TokenDefinitionBuilder<N> ignoredWhenParsing() {
+    public TokenDefinitionBuilder<N, S> ignoredWhenParsing() {
         this.ignoredWhenParsing = true;
         return this;
     }
 
-    public TokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<N> standaloneAstBuilder) {
+    public TokenDefinitionBuilder<N, S> supportsStandalone(StandaloneAstBuilder<N, S> standaloneAstBuilder) {
         this.standaloneBuilder = standaloneAstBuilder;
         return this;
     }
 
-    public TokenDefinitionBuilder<N> named(String name) {
+    public TokenDefinitionBuilder<N, S> named(String name) {
         this.tokenTypeName = name;
         return this;
     }

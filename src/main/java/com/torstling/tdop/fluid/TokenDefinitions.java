@@ -8,16 +8,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-class TokenDefinitions<N extends AstNode> implements Iterable<TokenDefinition<N>> {
+class TokenDefinitions<N extends AstNode, S> implements Iterable<TokenDefinition<N, S>> {
     @NotNull
-    private final List<TokenDefinition<N>> tokenDefinitions;
+    private final List<TokenDefinition<N, S>> tokenDefinitions;
 
-    public TokenDefinitions(@NotNull final Collection<TokenDefinition<N>> tokens) {
+    public TokenDefinitions(@NotNull final Collection<TokenDefinition<N, S>> tokens) {
         this.tokenDefinitions = new ArrayList<>(tokens);
     }
 
     @Override
-    public Iterator<TokenDefinition<N>> iterator() {
+    public Iterator<TokenDefinition<N, S>> iterator() {
         return tokenDefinitions.iterator();
     }
 

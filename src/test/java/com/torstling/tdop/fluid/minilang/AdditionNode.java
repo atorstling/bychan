@@ -8,11 +8,8 @@ public class AdditionNode implements LaiLaiNode {
     private final LaiLaiNode left;
     @NotNull
     private final LaiLaiNode right;
-    @NotNull
-    private final LaiLaiNode parent;
 
     public AdditionNode(@NotNull final LaiLaiNode parent, @NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
-        this.parent = parent;
         this.left = left;
         this.right = right;
     }
@@ -39,12 +36,6 @@ public class AdditionNode implements LaiLaiNode {
         ExpressionType leftType = left.getExpressionType(currentScope);
         ExpressionType rightType = right.getExpressionType(currentScope);
         return ExpressionType.union(leftType, rightType);
-    }
-
-    @NotNull
-    @Override
-    public Variables getVariables() {
-        return parent.getVariables();
     }
 
     @Override
