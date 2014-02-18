@@ -31,10 +31,10 @@ public class MiniLangTest {
                 .named("lcurly")
                 .supportsPrefix((previous, match, parser) -> {
                     NestedScope nestedScope = new NestedScope(previous);
-                    LaiLaiNode expression = parser.expression(nestedScope);
-                    parser.expectSingleToken(rcurly);
                     ScopeNode scopeNode = new ScopeNode(nestedScope);
+                    LaiLaiNode expression = parser.expression(scopeNode);
                     scopeNode.setChild(expression);
+                    parser.expectSingleToken(rcurly);
                     return scopeNode;
                 })
                 .build();
