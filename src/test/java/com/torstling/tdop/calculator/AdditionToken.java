@@ -19,7 +19,7 @@ public class AdditionToken<S> implements Token<CalculatorNode> {
     }
 
     @NotNull
-    public CalculatorNode infixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
+    public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         CalculatorNode right = parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
         return new AdditionNode(previous, right);
     }

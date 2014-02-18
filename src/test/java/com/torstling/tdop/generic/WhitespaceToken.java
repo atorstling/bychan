@@ -22,7 +22,7 @@ public class WhitespaceToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
     }
 

@@ -23,7 +23,7 @@ public class EndToken<N> implements Token<N> {
     }
 
     @NotNull
-    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
+    public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
     }
 

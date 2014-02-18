@@ -25,7 +25,7 @@ public interface Token<N> {
      * @param previous the AST node resulting from parsing the expression to the previous of this token, up until this
      */
     @NotNull
-    N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser);
+    N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
 
     /**
      * @return How strongly this token, when interpreted as an infix operator, binds to the previous argument.

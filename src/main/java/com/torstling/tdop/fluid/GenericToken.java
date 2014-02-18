@@ -29,7 +29,7 @@ public class GenericToken<N> implements Token<N> {
         return builder.build(previous, match, new ParserCallback2<N>() {
             @NotNull
             @Override
-            public N expression(@NotNull N previous) {
+            public N expression(@Nullable N previous) {
                 return parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
             }
 
@@ -55,7 +55,7 @@ public class GenericToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public N infixParse(@NotNull final N previous, @NotNull final TokenParserCallback<N> parser) {
+    public N infixParse(@Nullable final N previous, @NotNull final TokenParserCallback<N> parser) {
         InfixAstBuilder<N> infixBuilder = def.getInfixBuilder();
         if (infixBuilder == null) {
             throw new IllegalStateException("Definition does not support infix parsing: " + this);
@@ -63,7 +63,7 @@ public class GenericToken<N> implements Token<N> {
         return infixBuilder.build(match, previous, new ParserCallback2<N>() {
             @NotNull
             @Override
-            public N expression(@NotNull N previous) {
+            public N expression(@Nullable N previous) {
                 return parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
             }
 
