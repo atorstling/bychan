@@ -4,13 +4,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class EndTokenType<N, S> implements TokenType<N, S> {
+public class EndTokenType<N> implements TokenType<N> {
 
     private static final EndTokenType INSTANCE = new EndTokenType<>();
 
     @NotNull
     @Override
-    public Token<N, S> toToken(@NotNull LexingMatch match) {
+    public Token<N> toToken(@NotNull LexingMatch match) {
         throw new UnsupportedOperationException("End token should not be lexed");
     }
 
@@ -26,9 +26,9 @@ public class EndTokenType<N, S> implements TokenType<N, S> {
     }
 
     @NotNull
-    public static <N, S> EndTokenType<N, S> get() {
+    public static <N> EndTokenType<N> get() {
         //noinspection unchecked
-        return (EndTokenType<N, S>) INSTANCE;
+        return (EndTokenType<N>) INSTANCE;
     }
 
     public String toString() {

@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayDeque;
 
-interface ParserStrategy<N, S> {
+interface ParserStrategy<N> {
     @NotNull
-    N parse(ArrayDeque<Token<N, S>> tokens, PrattParser<N, S> parser);
+    N parse(ArrayDeque<Token<N>> tokens, PrattParser<N> parser);
 }

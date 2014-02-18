@@ -19,14 +19,14 @@ import static org.junit.Assert.assertEquals;
 public class MiniLangTest {
     @Test
     public void test() {
-        LanguageBuilder<LaiLaiNode, LaiLaiSymbolTable> lb = new LanguageBuilder<>();
+        LanguageBuilder<LaiLaiNode> lb = new LanguageBuilder<>();
 
-        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> rcurly = lb.newToken()
+        final TokenDefinition<LaiLaiNode> rcurly = lb.newToken()
                 .matchesString("}")
                 .named("rcurly")
                 .build();
 
-        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> lcurly = lb.newToken()
+        final TokenDefinition<LaiLaiNode> lcurly = lb.newToken()
                 .matchesString("{")
                 .named("lcurly")
                 .supportsPrefix((previous, match, parser) -> {
@@ -39,12 +39,12 @@ public class MiniLangTest {
                 })
                 .build();
 
-        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> rparen = lb.newToken()
+        final TokenDefinition<LaiLaiNode> rparen = lb.newToken()
                 .matchesString(")")
                 .named("rparen")
                 .build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> lparen = lb.newToken()
+        TokenDefinition<LaiLaiNode> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
                 .supportsPrefix((previous, match, parser) -> {
@@ -53,26 +53,26 @@ public class MiniLangTest {
                     return trailingExpression;
                 }).build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> whitespace = lb.newToken()
+        TokenDefinition<LaiLaiNode> whitespace = lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing()
                 .build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> plus = lb.newToken()
+        TokenDefinition<LaiLaiNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
                 .supportsPrefix((previous, match, parser) -> parser.expression(previous))
                 .supportsInfix((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
                 .build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> hat = lb.newToken()
+        TokenDefinition<LaiLaiNode> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
                 .supportsInfix((match, previous, parser) -> new HatNode(previous, parser.expression(previous)))
                 .build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> assign = lb.newToken()
+        TokenDefinition<LaiLaiNode> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
                 .supportsInfix((match, previous, parser) -> {
@@ -81,7 +81,7 @@ public class MiniLangTest {
                 })
                 .build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> variableDeclaration = lb.newToken()
+        TokenDefinition<LaiLaiNode> variableDeclaration = lb.newToken()
                 .matchesPattern("(?:float|int|bool) [a-z]+")
                 .named("variableDef")
                 .supportsStandalone((previous, match) -> {
@@ -96,7 +96,7 @@ public class MiniLangTest {
                     return new VariableDefNode(previous, ExpressionType.forTypeDeclaration(matcher.group(1)), matcher.group(2));
                 }).build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> variableReference = lb.newToken()
+        TokenDefinition<LaiLaiNode> variableReference = lb.newToken()
                 .matchesPattern("[a-z]+")
                 .named("variableRef")
 
@@ -105,12 +105,12 @@ public class MiniLangTest {
                     return new VariableRefNode(name);
                 }).build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> booleanLiteral = lb.newToken()
+        TokenDefinition<LaiLaiNode> booleanLiteral = lb.newToken()
                 .matchesPattern("true|false")
                 .named("bool")
                 .supportsStandalone((previous, match) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> integerLiteral = lb.newToken()
+        TokenDefinition<LaiLaiNode> integerLiteral = lb.newToken()
                 .matchesPattern("[0-9]+i")
                 .named("int")
                 .supportsStandalone((previous, match) -> {
@@ -118,27 +118,27 @@ public class MiniLangTest {
                     return new IntegerLiteralNode(previous, Integer.parseInt(text.substring(0, text.length() - 1)));
                 }).build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> floatLiteral = lb.newToken()
+        TokenDefinition<LaiLaiNode> floatLiteral = lb.newToken()
                 .matchesPattern("[0-9]+f")
                 .named("float")
                 .supportsStandalone((previous, match) -> new FloatLiteralNode(previous, Float.parseFloat(match.getText()))).build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> semicolon = lb.newToken()
+        TokenDefinition<LaiLaiNode> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
                 .supportsInfix((match, previous, parser) -> new StatementNode(previous, parser.expression(previous))).build();
 
-        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> listEnd = lb.newToken()
+        final TokenDefinition<LaiLaiNode> listEnd = lb.newToken()
                 .matchesString("]")
                 .named("listEnd")
                 .build();
 
-        final TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> comma = lb.newToken()
+        final TokenDefinition<LaiLaiNode> comma = lb.newToken()
                 .matchesString(",")
                 .named("comma")
                 .build();
 
-        TokenDefinition<LaiLaiNode, LaiLaiSymbolTable> listStart = lb.newToken()
+        TokenDefinition<LaiLaiNode> listStart = lb.newToken()
                 .matchesString("[")
                 .named("listStart")
                 .supportsPrefix((previous, match, parser) -> {
@@ -153,7 +153,7 @@ public class MiniLangTest {
                     return new ListNode(previous, expressions);
                 }).build();
 
-        Language<LaiLaiNode, LaiLaiSymbolTable> l = lb
+        Language<LaiLaiNode> l = lb
                 .newLowerPriorityLevel()
                 .addToken(booleanLiteral)
                 .endLevel()
@@ -192,16 +192,16 @@ public class MiniLangTest {
         assertEquals(5, r.getRootNode().evaluate(null));
     }
 
-    private void testTwo(Language<LaiLaiNode, LaiLaiSymbolTable> l) {
+    private void testTwo(Language<LaiLaiNode> l) {
         ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
         assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate(null));
     }
 
-    private void testOne(Language<LaiLaiNode, LaiLaiSymbolTable> l) {
+    private void testOne(Language<LaiLaiNode> l) {
         String expr = "{int a=5i; a=a+4i; a}";
-        List<Token<LaiLaiNode, LaiLaiSymbolTable>> tokens = l.getLexer().lex(expr);
+        List<Token<LaiLaiNode>> tokens = l.getLexer().lex(expr);
         ParseResult<LaiLaiNode> result = l.getParser().tryParse(new MiniLangRootNode(), tokens);
         LaiLaiNode rootNode = result.getRootNode();
         assertEquals("(s (x (x (= int(a) 5i) (= a (+ a 4i))) a))", rootNode.toString());

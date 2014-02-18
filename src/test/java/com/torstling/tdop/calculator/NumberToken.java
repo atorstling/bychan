@@ -6,14 +6,14 @@ import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class NumberToken<S> implements Token<CalculatorNode, S> {
+public class NumberToken<S> implements Token<CalculatorNode> {
     @NotNull
     private final LexingMatch match;
 
 
     @Override
     @NotNull
-    public TokenType<CalculatorNode, S> getType() {
+    public TokenType<CalculatorNode> getType() {
         return NumberTokenType.get();
     }
 
@@ -30,7 +30,7 @@ public class NumberToken<S> implements Token<CalculatorNode, S> {
         this.value = Integer.parseInt(match.getText());
     }
 
-    public static <S> Token<CalculatorNode, S> valueOf(@NotNull final LexingMatch match) {
+    public static <S> Token<CalculatorNode> valueOf(@NotNull final LexingMatch match) {
         return new NumberToken<>(match);
     }
 
@@ -52,12 +52,12 @@ public class NumberToken<S> implements Token<CalculatorNode, S> {
 
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode, S> parser) {
+    public CalculatorNode prefixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         return new NumberNode(value);
     }
 
     @NotNull
-    public CalculatorNode infixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode, S> parser) {
+    public CalculatorNode infixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         throw new UnsupportedOperationException();
     }
 

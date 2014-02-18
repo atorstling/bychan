@@ -7,16 +7,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-class TokenDefinitions<N, S> implements Iterable<TokenDefinition<N, S>> {
+class TokenDefinitions<N> implements Iterable<TokenDefinition<N>> {
     @NotNull
-    private final List<TokenDefinition<N, S>> tokenDefinitions;
+    private final List<TokenDefinition<N>> tokenDefinitions;
 
-    public TokenDefinitions(@NotNull final Collection<TokenDefinition<N, S>> tokens) {
+    public TokenDefinitions(@NotNull final Collection<TokenDefinition<N>> tokens) {
         this.tokenDefinitions = new ArrayList<>(tokens);
     }
 
     @Override
-    public Iterator<TokenDefinition<N, S>> iterator() {
+    public Iterator<TokenDefinition<N>> iterator() {
         return tokenDefinitions.iterator();
     }
 

@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class RightParenthesisTokenType<N, S> implements TokenType<N, S> {
+public class RightParenthesisTokenType<N> implements TokenType<N> {
 
     private static final RightParenthesisTokenType INSTANCE = new RightParenthesisTokenType<>();
 
     @NotNull
-    public Token<N, S> toToken(@NotNull LexingMatch match) {
+    public Token<N> toToken(@NotNull LexingMatch match) {
         return new RightParenthesisToken<>(match);
     }
 
@@ -26,9 +26,9 @@ public class RightParenthesisTokenType<N, S> implements TokenType<N, S> {
         return true;
     }
 
-    public static <N, S> RightParenthesisTokenType<N, S> get() {
+    public static <N> RightParenthesisTokenType<N> get() {
         //noinspection unchecked
-        return (RightParenthesisTokenType<N, S>) INSTANCE;
+        return (RightParenthesisTokenType<N>) INSTANCE;
     }
 
     public String toString() {

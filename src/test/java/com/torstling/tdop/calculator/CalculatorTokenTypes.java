@@ -11,14 +11,14 @@ import java.util.List;
 
 public class CalculatorTokenTypes {
     @NotNull
-    public static <S> List<TokenType<CalculatorNode, S>> get() {
-        return Arrays.<TokenType<CalculatorNode, S>>asList(
+    public static <S> List<TokenType<CalculatorNode>> get() {
+        return Arrays.<TokenType<CalculatorNode>>asList(
                 new WhitespaceTokenType<>(),
                 NumberTokenType.get(),
                 SubtractionTokenType.get(),
                 AdditionTokenType.get(),
                 MultiplicationTokenType.get(),
-                LeftParenthesisTokenType.<CalculatorNode, S>get(),
-                RightParenthesisTokenType.<CalculatorNode, S>get());
+                LeftParenthesisTokenType.<CalculatorNode>get(),
+                RightParenthesisTokenType.<CalculatorNode>get());
     }
 }

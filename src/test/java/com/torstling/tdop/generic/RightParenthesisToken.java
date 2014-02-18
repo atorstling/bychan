@@ -6,7 +6,7 @@ import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class RightParenthesisToken<N, S> implements Token<N, S> {
+public class RightParenthesisToken<N> implements Token<N> {
 
     @NotNull
     private final LexingMatch match;
@@ -16,12 +16,12 @@ public class RightParenthesisToken<N, S> implements Token<N, S> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
+    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
         throw new IllegalStateException("Cannot use right paranthesis as prefix to expression");
     }
 
     @NotNull
-    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
+    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
         throw new UnsupportedOperationException();
     }
 
@@ -36,7 +36,7 @@ public class RightParenthesisToken<N, S> implements Token<N, S> {
 
     @Override
     @NotNull
-    public TokenType<N, S> getType() {
+    public TokenType<N> getType() {
         return RightParenthesisTokenType.get();
     }
 

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class WhitespaceTokenType<N, S> implements TokenType<N, S> {
+public class WhitespaceTokenType<N> implements TokenType<N> {
     private final String pattern;
 
     public WhitespaceTokenType() {
@@ -20,7 +20,7 @@ public class WhitespaceTokenType<N, S> implements TokenType<N, S> {
 
     @NotNull
     @Override
-    public Token<N, S> toToken(@NotNull LexingMatch match) {
+    public Token<N> toToken(@NotNull LexingMatch match) {
         return new WhitespaceToken<>(this, match);
     }
 

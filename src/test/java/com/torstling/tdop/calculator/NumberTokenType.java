@@ -7,11 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class NumberTokenType<S> implements TokenType<CalculatorNode, S> {
+public class NumberTokenType<S> implements TokenType<CalculatorNode> {
     private static final NumberTokenType INSTANCE = new NumberTokenType();
 
     @NotNull
-    public Token<CalculatorNode, S> toToken(@NotNull LexingMatch match) {
+    public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
         return NumberToken.valueOf(match);
     }
 

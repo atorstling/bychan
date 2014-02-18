@@ -6,7 +6,7 @@ import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
-public class VariableToken<S> implements Token<BooleanExpressionNode, S> {
+public class VariableToken<S> implements Token<BooleanExpressionNode> {
     @NotNull
     private final String name;
     @NotNull
@@ -26,12 +26,12 @@ public class VariableToken<S> implements Token<BooleanExpressionNode, S> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
+    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
         return new VariableNode(name);
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
+    public BooleanExpressionNode infixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
         throw new UnsupportedOperationException();
     }
 
@@ -41,7 +41,7 @@ public class VariableToken<S> implements Token<BooleanExpressionNode, S> {
 
     @Override
     @NotNull
-    public TokenType<BooleanExpressionNode, S> getType() {
+    public TokenType<BooleanExpressionNode> getType() {
         return VariableTokenType.get();
     }
 

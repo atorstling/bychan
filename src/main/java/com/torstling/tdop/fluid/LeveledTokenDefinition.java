@@ -5,12 +5,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
-class LeveledTokenDefinition<N, S> {
+class LeveledTokenDefinition<N> {
     @NotNull
-    private final TokenDefinition<N, S> definition;
+    private final TokenDefinition<N> definition;
     private final int levelCount;
 
-    public LeveledTokenDefinition(@NotNull final TokenDefinition<N, S> definition, final int levelCount) {
+    public LeveledTokenDefinition(@NotNull final TokenDefinition<N> definition, final int levelCount) {
         this.definition = definition;
         this.levelCount = levelCount;
     }
@@ -35,17 +35,17 @@ class LeveledTokenDefinition<N, S> {
     }
 
     @Nullable
-    public PrefixAstBuilder<N, S> getPrefixBuilder() {
+    public PrefixAstBuilder<N> getPrefixBuilder() {
         return definition.getPrefixBuilder();
     }
 
     @NotNull
-    public TokenDefinition<N, S> getTokenDefinition() {
+    public TokenDefinition<N> getTokenDefinition() {
         return definition;
     }
 
     @Nullable
-    public InfixAstBuilder<N, S> getInfixBuilder() {
+    public InfixAstBuilder<N> getInfixBuilder() {
         return definition.getInfixBuilder();
     }
 }

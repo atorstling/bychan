@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayDeque;
 
-public class ExpressionParserStrategy<N, S> implements ParserStrategy<N, S> {
+public class ExpressionParserStrategy<N> implements ParserStrategy<N> {
     private final N previous;
     private final int powerFloor;
 
@@ -28,7 +28,7 @@ public class ExpressionParserStrategy<N, S> implements ParserStrategy<N, S> {
      */
     @Override
     @NotNull
-    public N parse(@NotNull ArrayDeque<Token<N, S>> tokens, PrattParser<N, S> parser) {
+    public N parse(@NotNull ArrayDeque<Token<N>> tokens, PrattParser<N> parser) {
         // An expression always starts with a symbol which can qualify as a prefix value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -36,7 +36,7 @@ public class ExpressionParserStrategy<N, S> implements ParserStrategy<N, S> {
         // "(" as in "start sub-expression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
-        Token<N,S> firstToken = tokens.pop();
+        Token<N> firstToken = tokens.pop();
         final N first = firstToken.prefixParse(previous, parser);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
@@ -61,11 +61,11 @@ public class ExpressionParserStrategy<N, S> implements ParserStrategy<N, S> {
         return parseLoop(first, powerFloor, tokens, parser);
     }
 
-    private N parseLoop(@NotNull final N currentpreviousHandSide, final int powerFloor, @NotNull ArrayDeque<Token<N, S>> tokens, PrattParser<N, S> parser) {
-        Token<N,S> peekedToken = tokens.peek();
+    private N parseLoop(@NotNull final N currentpreviousHandSide, final int powerFloor, @NotNull ArrayDeque<Token<N>> tokens, PrattParser<N> parser) {
+        Token<N> peekedToken = tokens.peek();
         if (peekedToken.infixBindingPower() > powerFloor) {
             //Parsing happens by passing the current LHS to the operator, which will continue parsing.
-            Token<N,S> takenToken = tokens.pop();
+            Token<N> takenToken = tokens.pop();
             N nextExpression = takenToken.infixParse(currentpreviousHandSide, parser);
             return parseLoop(nextExpression, powerFloor, tokens, parser);
         }

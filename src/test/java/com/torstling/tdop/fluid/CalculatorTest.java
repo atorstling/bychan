@@ -9,14 +9,14 @@ import static org.junit.Assert.assertEquals;
 public class CalculatorTest {
     @Test
     public void test() {
-        LanguageBuilder<CalculatorNode, CalculatorSymbolTable> lb = new LanguageBuilder<>();
+        LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
 
-        final TokenDefinition<CalculatorNode, CalculatorSymbolTable> rparen = lb.newToken()
+        final TokenDefinition<CalculatorNode> rparen = lb.newToken()
                 .matchesString(")")
                 .named("rparen")
                 .build();
 
-        TokenDefinition<CalculatorNode, CalculatorSymbolTable> lparen = lb.newToken()
+        TokenDefinition<CalculatorNode> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
                 .supportsPrefix((previous, match, parser) -> {
@@ -25,30 +25,30 @@ public class CalculatorTest {
                     return trailingExpression;
                 }).build();
 
-        TokenDefinition<CalculatorNode, CalculatorSymbolTable> whitespace = lb.newToken()
+        TokenDefinition<CalculatorNode> whitespace = lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing()
                 .build();
 
-        TokenDefinition<CalculatorNode, CalculatorSymbolTable> plus = lb.newToken()
+        TokenDefinition<CalculatorNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
                 .supportsPrefix((previous, match, parser) -> parser.expression(previous))
                 .supportsInfix((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
                 .build();
 
-        TokenDefinition<CalculatorNode, CalculatorSymbolTable> minus = lb.newToken()
+        TokenDefinition<CalculatorNode> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
                 .supportsPrefix((previous, match, parser) -> new NegationNode(parser.expression(previous)))
                 .supportsInfix((match, previous, parser) -> new SubtractionNode(previous, parser.expression(previous))).build();
 
-        TokenDefinition<CalculatorNode, CalculatorSymbolTable> number = lb.newToken()
+        TokenDefinition<CalculatorNode> number = lb.newToken()
                 .matchesPattern("[0-9]+")
                 .named("number")
                 .supportsStandalone((previous, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
-        Language<CalculatorNode, CalculatorSymbolTable> l = lb
+        Language<CalculatorNode> l = lb
                 .newLowerPriorityLevel()
                 .addToken(lparen)
                 .addToken(rparen)

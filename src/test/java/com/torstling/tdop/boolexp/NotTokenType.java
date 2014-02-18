@@ -7,12 +7,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class NotTokenType<S> implements TokenType<BooleanExpressionNode, S> {
+public class NotTokenType<S> implements TokenType<BooleanExpressionNode> {
 
     private static final NotTokenType INSTANCE = new NotTokenType();
 
     @NotNull
-    public Token<BooleanExpressionNode, S> toToken(@NotNull LexingMatch match) {
+    public Token<BooleanExpressionNode> toToken(@NotNull LexingMatch match) {
         return new NotToken<>(match);
     }
 

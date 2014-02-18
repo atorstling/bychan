@@ -11,18 +11,18 @@ import java.util.regex.Matcher;
 /**
  * A regex sub-pattern-based lexer
  */
-public class Lexer<N, S> {
-    private final List<TokenType<N, S>> tokenTypes;
+public class Lexer<N> {
+    private final List<TokenType<N>> tokenTypes;
 
-    public Lexer(@NotNull final Collection<? extends TokenType<N, S>> tokenTypes) {
+    public Lexer(@NotNull final Collection<? extends TokenType<N>> tokenTypes) {
         this.tokenTypes = new ArrayList<>(tokenTypes);
     }
 
-    public List<Token<N, S>> lex(@NotNull final String input) {
-        final List<Token<N, S>> tokens = new ArrayList<>();
+    public List<Token<N>> lex(@NotNull final String input) {
+        final List<Token<N>> tokens = new ArrayList<>();
         for (int i = 0; i < input.length(); ) {
             String substring = input.substring(i);
-            Token<N, S> token = findMatchingToken2(i, substring);
+            Token<N> token = findMatchingToken2(i, substring);
             if (token == null) {
                 throw new LexingFailedException("No matching rule for char-range starting at " + i + ": '" + substring + "'");
             }
@@ -37,8 +37,8 @@ public class Lexer<N, S> {
     }
 
     @Nullable
-    private Token<N, S> findMatchingToken2(final int i, @NotNull final String substring) {
-        for (TokenType<N, S> tokenType : tokenTypes) {
+    private Token<N> findMatchingToken2(final int i, @NotNull final String substring) {
+        for (TokenType<N> tokenType : tokenTypes) {
             Matcher matcher = tokenType.getPattern().matcher(substring);
             if (matcher.lookingAt()) {
                 int substringStart = matcher.start();

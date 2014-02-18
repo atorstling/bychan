@@ -7,66 +7,66 @@ import org.jetbrains.annotations.NotNull;
  *
  * @param <N>
  */
-public class WrappedTokenDefinitionBuilder<N, S> {
+public class WrappedTokenDefinitionBuilder<N> {
     @NotNull
-    private final TokenDefinitionBuilder<N, S> delegate;
+    private final TokenDefinitionBuilder<N> delegate;
     @NotNull
-    private final LevelLanguageBuilder2<N, S> languageBuilder;
+    private final LevelLanguageBuilder2<N> languageBuilder;
 
-    public WrappedTokenDefinitionBuilder(@NotNull LevelLanguageBuilder2<N, S> languageBuilder, @NotNull final TokenDefinitionBuilder<N, S> delegate) {
+    public WrappedTokenDefinitionBuilder(@NotNull LevelLanguageBuilder2<N> languageBuilder, @NotNull final TokenDefinitionBuilder<N> delegate) {
         this.languageBuilder = languageBuilder;
         this.delegate = delegate;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> matchesString(String text) {
+    public WrappedTokenDefinitionBuilder<N> matchesString(String text) {
         delegate.matchesString(text);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> named(String name) {
+    public WrappedTokenDefinitionBuilder<N> named(String name) {
         delegate.named(name);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> supportsPrefix(PrefixAstBuilder<N, S> prefixBuilder) {
+    public WrappedTokenDefinitionBuilder<N> supportsPrefix(PrefixAstBuilder<N> prefixBuilder) {
         delegate.supportsPrefix(prefixBuilder);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> supportsInfix(InfixAstBuilder<N, S> infixBuilder) {
+    public WrappedTokenDefinitionBuilder<N> supportsInfix(InfixAstBuilder<N> infixBuilder) {
         delegate.supportsInfix(infixBuilder);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> supportsStandalone(StandaloneAstBuilder<N, S> nStandaloneAstBuilder) {
+    public WrappedTokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<N> nStandaloneAstBuilder) {
         delegate.supportsStandalone(nStandaloneAstBuilder);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> ignoreWhenParsing() {
+    public WrappedTokenDefinitionBuilder<N> ignoreWhenParsing() {
         delegate.ignoredWhenParsing();
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N, S> matchesPattern(String pattern) {
+    public WrappedTokenDefinitionBuilder<N> matchesPattern(String pattern) {
         delegate.matchesPattern(pattern);
         return this;
     }
 
     @NotNull
-    public LevelLanguageBuilder2<N, S> completeToken() {
+    public LevelLanguageBuilder2<N> completeToken() {
         buildAndAdd();
         return languageBuilder;
     }
 
     @NotNull
-    public TokenDefinition<N, S> completeTokenAndPause() {
+    public TokenDefinition<N> completeTokenAndPause() {
         return buildAndAdd();
     }
 
     @NotNull
-    private TokenDefinition<N, S> buildAndAdd() {
-        TokenDefinition<N, S> tokenDefinition = delegate.build();
+    private TokenDefinition<N> buildAndAdd() {
+        TokenDefinition<N> tokenDefinition = delegate.build();
         languageBuilder.startToken(tokenDefinition).endLevel();
         return tokenDefinition;
     }

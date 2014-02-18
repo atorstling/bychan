@@ -3,7 +3,7 @@ package com.torstling.tdop.calculator;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 
-public class SubtractionToken<S> implements Token<CalculatorNode, S> {
+public class SubtractionToken<S> implements Token<CalculatorNode> {
     @NotNull
     private final LexingMatch match;
 
@@ -12,7 +12,7 @@ public class SubtractionToken<S> implements Token<CalculatorNode, S> {
     }
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode, S> parser) {
+    public CalculatorNode prefixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         throw new UnsupportedOperationException();
     }
 
@@ -23,7 +23,7 @@ public class SubtractionToken<S> implements Token<CalculatorNode, S> {
     }
 
     @NotNull
-    public CalculatorNode infixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode, S> parser) {
+    public CalculatorNode infixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         CalculatorNode right = parser.tryParse(new ExpressionParserStrategy<>(previous, infixBindingPower())).getRootNode();
         return new SubtractionNode(previous, right);
     }
@@ -39,7 +39,7 @@ public class SubtractionToken<S> implements Token<CalculatorNode, S> {
 
     @Override
     @NotNull
-    public TokenType<CalculatorNode, S> getType() {
+    public TokenType<CalculatorNode> getType() {
         return SubtractionTokenType.get();
     }
 
