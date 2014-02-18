@@ -2,6 +2,7 @@ package com.torstling.tdop.fluid;
 
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class GenericToken<N> implements Token<N> {
     private final GenericTokenType<N> tokenType;
@@ -20,7 +21,7 @@ public class GenericToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public N prefixParse(@NotNull N previous, @NotNull final TokenParserCallback<N> parser) {
+    public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
         final PrefixAstBuilder<N> builder = def.getPrefixBuilder();
         if (builder == null) {
             throw new IllegalStateException("Prefix parsing not registered for token type: '" + toString() + "'");

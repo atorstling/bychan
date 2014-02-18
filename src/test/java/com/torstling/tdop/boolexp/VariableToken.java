@@ -5,6 +5,7 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class VariableToken<S> implements Token<BooleanExpressionNode> {
     @NotNull
@@ -26,7 +27,7 @@ public class VariableToken<S> implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+    public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
         return new VariableNode(name);
     }
 

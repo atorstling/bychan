@@ -2,6 +2,7 @@ package com.torstling.tdop.generic;
 
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class WhitespaceToken<N> implements Token<N> {
     private final WhitespaceTokenType<N> type;
@@ -15,7 +16,7 @@ public class WhitespaceToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
+    public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
     }
 

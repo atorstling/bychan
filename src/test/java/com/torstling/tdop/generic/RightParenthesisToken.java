@@ -5,6 +5,7 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class RightParenthesisToken<N> implements Token<N> {
 
@@ -16,7 +17,7 @@ public class RightParenthesisToken<N> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
+    public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new IllegalStateException("Cannot use right paranthesis as prefix to expression");
     }
 

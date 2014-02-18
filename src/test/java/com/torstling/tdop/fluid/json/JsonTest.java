@@ -20,7 +20,7 @@ public class JsonTest {
                 .build();
         lb.newLowerPriorityLevel().addToken(stringLiteral).endLevel();
         Language<JsonNode> lang = lb.completeLanguage();
-        ParseResult<JsonNode> parseResult = lang.getParser().tryParse(new JsonRootNode(), "\"hey\"");
+        ParseResult<JsonNode> parseResult = lang.getParser().tryParse(null, "\"hey\"");
         assertEquals(parseResult.getRootNode().evaluate(), "hey");
 
     }

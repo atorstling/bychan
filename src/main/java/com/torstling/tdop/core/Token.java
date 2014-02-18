@@ -1,6 +1,7 @@
 package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A token in the lexing stream.
@@ -15,7 +16,7 @@ public interface Token<N> {
      * @return the resulting AST node.
      */
     @NotNull
-    N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser);
+    N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
 
     /**
      * Parse this token as an infix operator. A typical binary operator implementation uses the parser callback

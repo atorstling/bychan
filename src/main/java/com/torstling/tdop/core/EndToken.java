@@ -1,6 +1,7 @@
 package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A token signaling the end of the lexing stream
@@ -17,7 +18,7 @@ public class EndToken<N> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull N previous, @NotNull final TokenParserCallback<N> parser) {
+    public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
     }
 

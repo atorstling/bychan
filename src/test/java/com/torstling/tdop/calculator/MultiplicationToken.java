@@ -3,6 +3,7 @@ package com.torstling.tdop.calculator;
 
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MultiplicationToken<S> implements Token<CalculatorNode> {
 
@@ -14,7 +15,7 @@ public class MultiplicationToken<S> implements Token<CalculatorNode> {
     }
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
+    public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         throw new UnsupportedOperationException();
     }
 

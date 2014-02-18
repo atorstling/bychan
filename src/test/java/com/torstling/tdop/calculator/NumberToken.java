@@ -5,6 +5,7 @@ import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenParserCallback;
 import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class NumberToken<S> implements Token<CalculatorNode> {
     @NotNull
@@ -52,7 +53,7 @@ public class NumberToken<S> implements Token<CalculatorNode> {
 
 
     @NotNull
-    public CalculatorNode prefixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
+    public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         return new NumberNode(value);
     }
 

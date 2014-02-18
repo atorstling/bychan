@@ -1,6 +1,7 @@
 package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.List;
@@ -16,7 +17,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @Override
     @NotNull
-    public ParseResult<N> tryParse(@NotNull N previous, @NotNull ParserStrategy<N> strategy) {
+    public ParseResult<N> tryParse(@Nullable N previous, @NotNull ParserStrategy<N> strategy) {
         try {
             N rootNode = parse(previous, strategy);
             return ParseResult.success(rootNode);
@@ -25,7 +26,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         }
     }
 
-    private N parse(@NotNull N previous, @NotNull ParserStrategy<N> strategy) {
+    private N parse(@Nullable N previous, @NotNull ParserStrategy<N> strategy) {
         return strategy.parse(previous, tokens, this);
     }
 

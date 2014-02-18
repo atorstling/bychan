@@ -64,8 +64,8 @@ public class CalculatorTest {
                 .addToken(number)
                 .endLevel()
                 .completeLanguage();
-        assertEquals(3, l.getParser().tryParse(new RootCalculatorNode(), "1+2").getRootNode().evaluate());
-        assertEquals(-1, l.getParser().tryParse(new RootCalculatorNode(), "1+-2").getRootNode().evaluate());
-        assertEquals(3, l.getParser().tryParse(new RootCalculatorNode(), "1--2").getRootNode().evaluate());
+        assertEquals(3, l.getParser().tryParse(null, "1+2").getRootNode().evaluate());
+        assertEquals(-1, l.getParser().tryParse(null, "1+-2").getRootNode().evaluate());
+        assertEquals(3, l.getParser().tryParse(null, "1--2").getRootNode().evaluate());
     }
 }

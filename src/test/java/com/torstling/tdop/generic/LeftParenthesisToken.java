@@ -2,6 +2,7 @@ package com.torstling.tdop.generic;
 
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class LeftParenthesisToken<N> implements Token<N> {
 
@@ -13,7 +14,7 @@ public class LeftParenthesisToken<N> implements Token<N> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N> parser) {
+    public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         N expression = parser.tryParse(previous, new ExpressionParserStrategy<>(0)).getRootNode();
         parser.swallow(RightParenthesisTokenType.<N>get());
         return expression;

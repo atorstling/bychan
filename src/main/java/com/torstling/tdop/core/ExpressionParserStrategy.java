@@ -1,6 +1,7 @@
 package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
 
@@ -26,7 +27,7 @@ public class ExpressionParserStrategy<N> implements ParserStrategy<N> {
      */
     @Override
     @NotNull
-    public N parse(@NotNull N previous, @NotNull ArrayDeque<Token<N>> tokens, @NotNull PrattParser<N> parser) {
+    public N parse(@Nullable N previous, @NotNull ArrayDeque<Token<N>> tokens, @NotNull PrattParser<N> parser) {
         // An expression always starts with a symbol which can qualify as a prefix value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
