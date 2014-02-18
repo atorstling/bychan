@@ -39,7 +39,7 @@ public class XorNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
+    public Scope getScope() {
         return null;
     }
 

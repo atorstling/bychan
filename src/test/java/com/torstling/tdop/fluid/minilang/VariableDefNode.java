@@ -37,8 +37,8 @@ public class VariableDefNode implements VariableNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
-        return previous.getVariables();
+    public Scope getScope() {
+        return previous.getScope();
     }
 
     @Override
@@ -53,8 +53,8 @@ public class VariableDefNode implements VariableNode {
 
     @Override
     public void assign(@NotNull Object value, @NotNull ScopeNode currentScope) {
-        Variables variables = currentScope.getVariables();
+        Scope scope = currentScope.getScope();
         this.value = value;
-        variables.put(name, this);
+        scope.put(name, this);
     }
 }

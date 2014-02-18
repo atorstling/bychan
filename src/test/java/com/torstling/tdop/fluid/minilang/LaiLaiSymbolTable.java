@@ -4,5 +4,5 @@ import org.jetbrains.annotations.NotNull;
 
 interface LaiLaiSymbolTable {
     @NotNull
-    Variables getVariables();
+    Scope getVariables();
 }

@@ -12,5 +12,5 @@ interface LaiLaiNode extends AstNode {
     ExpressionType getExpressionType(@Nullable ScopeNode currentScope);
 
     @NotNull
-    Variables getVariables();
+    Scope getScope();
 }

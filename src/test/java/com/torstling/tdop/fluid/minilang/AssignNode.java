@@ -34,8 +34,8 @@ public class AssignNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
-        return previous.getVariables();
+    public Scope getScope() {
+        return previous.getScope();
     }
 
     public String toString() {

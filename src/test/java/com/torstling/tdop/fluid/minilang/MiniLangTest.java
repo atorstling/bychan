@@ -30,7 +30,7 @@ public class MiniLangTest {
                 .matchesString("{")
                 .named("lcurly")
                 .supportsPrefix((previous, match, parser) -> {
-                    NestedScope nestedScope = new NestedScope(previous);
+                    NestedScope nestedScope = new NestedScope(previous.getScope());
                     ScopeNode scopeNode = new ScopeNode(nestedScope);
                     LaiLaiNode expression = parser.expression(scopeNode);
                     scopeNode.setChild(expression);
@@ -188,12 +188,12 @@ public class MiniLangTest {
 
         testTwo(l);
 
-        ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{int a=1i; int b=2i; { int a=3i; a+b}}");
+        ParseResult<LaiLaiNode> r = l.getParser().tryParse(new RootNode(), "{int a=1i; int b=2i; { int a=3i; a+b}}");
         assertEquals(5, r.getRootNode().evaluate(null));
     }
 
     private void testTwo(Language<LaiLaiNode> l) {
-        ParseResult<LaiLaiNode> r = l.getParser().tryParse(new MiniLangRootNode(), "{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
+        ParseResult<LaiLaiNode> r = l.getParser().tryParse(new RootNode(), "{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
         assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate(null));
@@ -202,7 +202,7 @@ public class MiniLangTest {
     private void testOne(Language<LaiLaiNode> l) {
         String expr = "{int a=5i; a=a+4i; a}";
         List<Token<LaiLaiNode>> tokens = l.getLexer().lex(expr);
-        ParseResult<LaiLaiNode> result = l.getParser().tryParse(new MiniLangRootNode(), tokens);
+        ParseResult<LaiLaiNode> result = l.getParser().tryParse(new RootNode(), tokens);
         LaiLaiNode rootNode = result.getRootNode();
         assertEquals("(s (x (x (= int(a) 5i) (= a (+ a 4i))) a))", rootNode.toString());
         assertEquals(9, rootNode.evaluate(null));

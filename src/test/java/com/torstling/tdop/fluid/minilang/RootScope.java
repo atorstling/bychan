@@ -6,24 +6,21 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NestedScope implements Scope {
-    @NotNull
-    private final Scope previousScope;
+/**
+ * Created by alext on 2/18/14.
+ */
+public class RootScope implements Scope {
     @NotNull
     private final Map<String, VariableDefNode> variablesByName;
 
-    public NestedScope(@NotNull final Scope previousScope) {
-        this.previousScope = previousScope;
+    public RootScope() {
         variablesByName = new HashMap<>();
     }
 
     @Nullable
     @Override
     public VariableDefNode find(@NotNull String name) {
-        if (variablesByName.containsKey(name)) {
-            return variablesByName.get(name);
-        }
-        return previousScope.find(name);
+        return variablesByName.get(name);
     }
 
     @Override

@@ -5,12 +5,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class ScopeNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode symbolTable;
+    private final Scope scope;
     @Nullable
     private LaiLaiNode child;
 
-    public ScopeNode(@NotNull final LaiLaiNode symbolTable) {
-        this.symbolTable = symbolTable;
+    public ScopeNode(@NotNull final Scope scope) {
+        this.scope = scope;
         this.child = null;
     }
 
@@ -44,7 +44,7 @@ public class ScopeNode implements LaiLaiNode {
     }
 
     @NotNull
-    public Variables getVariables() {
-        return symbolTable.getVariables();
+    public Scope getScope() {
+        return scope;
     }
 }

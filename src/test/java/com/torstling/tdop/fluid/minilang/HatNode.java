@@ -45,8 +45,8 @@ public class HatNode implements LaiLaiNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
-        return previous.getVariables();
+    public Scope getScope() {
+        return previous.getScope();
     }
 
     @Override

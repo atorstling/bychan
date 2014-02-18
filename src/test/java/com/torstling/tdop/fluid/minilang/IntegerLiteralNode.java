@@ -27,8 +27,8 @@ public class IntegerLiteralNode implements LiteralNode {
 
     @NotNull
     @Override
-    public Variables getVariables() {
-        return previous.getVariables();
+    public Scope getScope() {
+        return previous.getScope();
     }
 
     @Override
