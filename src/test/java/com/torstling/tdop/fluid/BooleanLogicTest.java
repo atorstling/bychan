@@ -19,23 +19,23 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode, Object> rparen = lb
                 .newLevel().startToken().matchesString(")").named("rparen").completeTokenAndPause();
         Language<BooleanExpressionNode, Object> l = lb
-                .newLevel().startToken().matchesString("(").named("lparen").supportsPrefix((parent, match, parser) -> {
-                    BooleanExpressionNode trailingExpression = parser.expression(parent);
+                .newLevel().startToken().matchesString("(").named("lparen").supportsPrefix((previous, match, parser) -> {
+                    BooleanExpressionNode trailingExpression = parser.expression(previous);
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).completeToken()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken().endLevel()
                 .newLevel()
-                .startToken().matchesString("!").named("not").supportsPrefix((parent, match, parser) -> new NotNode(parser.expression(parent))).completeToken()
+                .startToken().matchesString("!").named("not").supportsPrefix((previous, match, parser) -> new NotNode(parser.expression(previous))).completeToken()
                 .endLevel()
                 .newLevel()
-                .startToken().matchesString("&").named("and").supportsInfix((parent, match, left, parser) -> new AndNode(left, parser.expression(parent))).completeToken()
+                .startToken().matchesString("&").named("and").supportsInfix((match, previous, parser) -> new AndNode(previous, parser.expression(previous))).completeToken()
                 .endLevel()
                 .newLevel()
-                .startToken().matchesPattern("[a-z]+").named("variable").supportsStandalone((parent, match) -> new VariableNode(match.getText())).completeToken()
+                .startToken().matchesPattern("[a-z]+").named("variable").supportsStandalone((previous, match) -> new VariableNode(match.getText())).completeToken()
                 .endLevel()
                 .completeLanguage();
-        checkParenthesisPrio(l);
+        checkparanthesisPrio(l);
         checkParseFailure(l);
     }
 
@@ -43,15 +43,15 @@ public class BooleanLogicTest {
     public void clearerSyntax() {
         LanguageBuilder<BooleanExpressionNode, Object> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode, Object> rparen = lb.newToken().matchesString(")").named("rparen").build();
-        TokenDefinition<BooleanExpressionNode, Object> lparen = lb.newToken().matchesString("(").named("lparen").supportsPrefix((parent, match, parser) -> {
-            BooleanExpressionNode trailingExpression = parser.expression(parent);
+        TokenDefinition<BooleanExpressionNode, Object> lparen = lb.newToken().matchesString("(").named("lparen").supportsPrefix((previous, match, parser) -> {
+            BooleanExpressionNode trailingExpression = parser.expression(previous);
             parser.expectSingleToken(rparen);
             return trailingExpression;
         }).build();
         TokenDefinition<BooleanExpressionNode, Object> whitespace = lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
-        TokenDefinition<BooleanExpressionNode, Object> not = lb.newToken().matchesString("!").named("not").supportsPrefix((parent, match, parser) -> new NotNode(parser.expression(parent))).build();
-        TokenDefinition<BooleanExpressionNode, Object> and = lb.newToken().matchesString("&").named("and").supportsInfix((parent, match, left, parser) -> new AndNode(left, parser.expression(parent))).build();
-        TokenDefinition<BooleanExpressionNode, Object> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").supportsStandalone((parent, match) -> new VariableNode(match.getText())).build();
+        TokenDefinition<BooleanExpressionNode, Object> not = lb.newToken().matchesString("!").named("not").supportsPrefix((previous, match, parser) -> new NotNode(parser.expression(previous))).build();
+        TokenDefinition<BooleanExpressionNode, Object> and = lb.newToken().matchesString("&").named("and").supportsInfix((match, previous, parser) -> new AndNode(previous, parser.expression(previous))).build();
+        TokenDefinition<BooleanExpressionNode, Object> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").supportsStandalone((previous, match) -> new VariableNode(match.getText())).build();
         Language<BooleanExpressionNode, Object> l = lb
                 .newLowerPriorityLevel()
                 .addToken(lparen).addToken(rparen).addToken(whitespace)
@@ -66,11 +66,11 @@ public class BooleanLogicTest {
                 .addToken(variable)
                 .endLevel()
                 .completeLanguage();
-        checkParenthesisPrio(l);
+        checkparanthesisPrio(l);
         checkParseFailure(l);
     }
 
-    private void checkParenthesisPrio(@NotNull final Language<BooleanExpressionNode, Object> l) {
+    private void checkparanthesisPrio(@NotNull final Language<BooleanExpressionNode, Object> l) {
         check(l, "!( a & b) ", true, false, true);
         check(l, "!( a & b) ", true, true, false);
         check(l, "!  a & b  ", false, true, true);
@@ -80,7 +80,7 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse(new BooleanExpressionRootNode(), "(a");
         Assert.assertTrue(parseResult.isFailure());
         ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
-        assertEquals(new ParsingFailedInformation("Expected a token of type 'rparen', but got 'END'", new LexingMatch(2,2,"END")), errorMessage);
+        assertEquals(new ParsingFailedInformation("Expected a token of type 'rparen', but got 'END'", new LexingMatch(2, 2, "END")), errorMessage);
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode, Object> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {

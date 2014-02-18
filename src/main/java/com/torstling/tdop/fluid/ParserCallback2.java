@@ -9,7 +9,7 @@ public interface ParserCallback2<N, S> {
      * with higher priority than the current token are found.
      */
     @NotNull
-    N expression(@NotNull final S parent);
+    N expression(@NotNull final N previous);
 
     /**
      * Parse a single token of the type indicated by the token definition passed in.

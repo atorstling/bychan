@@ -37,6 +37,12 @@ public class VariableRefNode implements VariableNode {
         return variable.getExpressionType(currentScope);
     }
 
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return null;
+    }
+
     @Override
     public String toString() {
         return name;

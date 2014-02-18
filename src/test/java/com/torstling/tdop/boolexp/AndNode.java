@@ -4,15 +4,15 @@ import com.torstling.tdop.fluid.VariableBindings;
 import org.jetbrains.annotations.NotNull;
 
 public class AndNode implements BooleanExpressionNode {
-    private final BooleanExpressionNode left;
+    private final BooleanExpressionNode previous;
     private final BooleanExpressionNode right;
 
-    public AndNode(BooleanExpressionNode left, BooleanExpressionNode right) {
-        this.left = left;
+    public AndNode(BooleanExpressionNode previous, BooleanExpressionNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
     public boolean evaluate(@NotNull VariableBindings bindings) {
-        return left.evaluate(bindings) && right.evaluate(bindings);
+        return previous.evaluate(bindings) && right.evaluate(bindings);
     }
 }

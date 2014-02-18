@@ -14,14 +14,14 @@ public class GenericParser<N, S> {
     }
 
     @NotNull
-    public ParseResult<N> tryParse(@NotNull S symbolTable, @NotNull final String text) {
+    public ParseResult<N> tryParse(@NotNull N previous, @NotNull final String text) {
         List<Token<N,S>> tokens = lexer.lex(text);
-        return tryParse(symbolTable, tokens);
+        return tryParse(previous, tokens);
     }
 
     @NotNull
-    public ParseResult<N> tryParse(@NotNull S symbolTable, @NotNull final List<Token<N,S>> tokens) {
+    public ParseResult<N> tryParse(@NotNull N previous, @NotNull final List<Token<N, S>> tokens) {
         PrattParser<N,S> parser = new PrattParser<>(tokens);
-        return parser.tryParse(new ExpressionParserStrategy<>(symbolTable, 0));
+        return parser.tryParse(new ExpressionParserStrategy<>(previous, 0));
     }
 }

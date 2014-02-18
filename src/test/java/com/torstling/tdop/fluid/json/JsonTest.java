@@ -16,11 +16,11 @@ public class JsonTest {
         TokenDefinition<JsonNode, String> stringLiteral = lb.newToken()
                 .named("stringLiteral")
                 .matchesPattern("\".*\"")
-                .supportsStandalone((parent, match) -> new StringLiteralNode(match.getText().substring(1, match.getText().length() - 1)))
+                .supportsStandalone((previous, match) -> new StringLiteralNode(match.getText().substring(1, match.getText().length() - 1)))
                 .build();
         lb.newLowerPriorityLevel().addToken(stringLiteral).endLevel();
         Language<JsonNode, String> lang = lb.completeLanguage();
-        ParseResult<JsonNode> parseResult = lang.getParser().tryParse("", "\"hey\"");
+        ParseResult<JsonNode> parseResult = lang.getParser().tryParse(new JsonRootNode(), "\"hey\"");
         assertEquals(parseResult.getRootNode().evaluate(), "hey");
 
     }

@@ -6,11 +6,11 @@ public enum ExpressionType {
     BOOL, FLOAT, INT, LIST;
 
     @NotNull
-    public static ExpressionType union(@NotNull final ExpressionType leftType, @NotNull final ExpressionType rightType) {
-        if (!leftType.equals(rightType)) {
+    public static ExpressionType union(@NotNull final ExpressionType previousType, @NotNull final ExpressionType rightType) {
+        if (!previousType.equals(rightType)) {
             throw new IllegalStateException("Ambiguous type information");
         }
-        return leftType;
+        return previousType;
     }
 
     @NotNull

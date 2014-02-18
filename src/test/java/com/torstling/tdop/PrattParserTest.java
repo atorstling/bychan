@@ -50,7 +50,7 @@ public class PrattParserTest {
     }
 
     @Test
-    public void parenthesis() {
+    public void paranthesis() {
         PrattParser<CalculatorNode, CalculatorSymbolTable> p = new PrattParser<>(Arrays.<Token<CalculatorNode, CalculatorSymbolTable>>asList(
                 new LeftParenthesisToken(nextMatch()),
                 new NumberToken(createTestMatch("2")),
@@ -74,9 +74,9 @@ public class PrattParserTest {
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
         CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
-        SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
+        SubtractionNode previous = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
-        assertEquals(new SubtractionNode(left, right), rootNode);
+        assertEquals(new SubtractionNode(previous, right), rootNode);
     }
 
     @Test
@@ -92,9 +92,9 @@ public class PrattParserTest {
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
         CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
-        NumberNode left = new NumberNode(1);
+        NumberNode previous = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
-        assertEquals(new SubtractionNode(left, right), rootNode);
+        assertEquals(new SubtractionNode(previous, right), rootNode);
     }
 
     @Test
@@ -108,9 +108,9 @@ public class PrattParserTest {
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
         CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
-        NumberNode left = new NumberNode(1);
+        NumberNode previous = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
-        assertEquals(new SubtractionNode(left, right), rootNode);
+        assertEquals(new SubtractionNode(previous, right), rootNode);
     }
 
     @Test
@@ -124,9 +124,9 @@ public class PrattParserTest {
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
         CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
-        MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
+        MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
-        assertEquals(new SubtractionNode(left, right), rootNode);
+        assertEquals(new SubtractionNode(previous, right), rootNode);
     }
 
     @Test
@@ -140,9 +140,9 @@ public class PrattParserTest {
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
         CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
-        MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
+        MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
-        assertEquals(new MultiplicationNode(left, right), rootNode);
+        assertEquals(new MultiplicationNode(previous, right), rootNode);
     }
 
     @Test
@@ -170,7 +170,7 @@ public class PrattParserTest {
             p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
             fail("expected exception");
         } catch (IllegalStateException e) {
-            assertEquals("Cannot use right parenthesis as prefix to expression", e.getMessage());
+            assertEquals("Cannot use right paranthesis as prefix to expression", e.getMessage());
         }
     }
 

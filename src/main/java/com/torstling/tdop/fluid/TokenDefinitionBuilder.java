@@ -45,7 +45,7 @@ public class TokenDefinitionBuilder<N, S> {
             throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
         }
         if (standaloneBuilder != null) {
-            return (parent, match, parser) -> standaloneBuilder.build(parent, match);
+            return (previous, match, parser) -> standaloneBuilder.build(previous, match);
         } else {
             return prefixBuilder;
         }

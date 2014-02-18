@@ -16,12 +16,12 @@ public class RightParenthesisToken<N, S> implements Token<N, S> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull S parent, @NotNull TokenParserCallback<N, S> parser) {
-        throw new IllegalStateException("Cannot use right parenthesis as prefix to expression");
+    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
+        throw new IllegalStateException("Cannot use right paranthesis as prefix to expression");
     }
 
     @NotNull
-    public N infixParse(S parent, @NotNull N left, @NotNull TokenParserCallback<N, S> parser) {
+    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
         throw new UnsupportedOperationException();
     }
 

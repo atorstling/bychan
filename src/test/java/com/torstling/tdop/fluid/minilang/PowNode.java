@@ -6,21 +6,21 @@ import org.jetbrains.annotations.Nullable;
 
 public class PowNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode left;
+    private final LaiLaiNode previous;
     @NotNull
     private final LaiLaiNode right;
 
-    public PowNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
-        this.left = left;
+    public PowNode(@NotNull final LaiLaiNode previous, @NotNull final LaiLaiNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
     private void checkTypes(ScopeNode currentScope) {
-        if (!ExpressionType.FLOAT.equals(left.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("Left must be of float type:" + left);
+        if (!ExpressionType.FLOAT.equals(previous.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("previous must be of float type:" + previous);
         }
         if (!ExpressionType.FLOAT.equals(right.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("Right must be of float type:" + left);
+            throw new IllegalArgumentException("Right must be of float type:" + previous);
         }
     }
 
@@ -28,7 +28,7 @@ public class PowNode implements LaiLaiNode {
     @Override
     public Object evaluate(@Nullable ScopeNode currentScope) {
         checkTypes(currentScope);
-        return (float) Math.pow(((float) left.evaluate(currentScope)), ((float) right.evaluate(currentScope)));
+        return (float) Math.pow(((float) previous.evaluate(currentScope)), ((float) right.evaluate(currentScope)));
     }
 
     @NotNull
@@ -37,8 +37,14 @@ public class PowNode implements LaiLaiNode {
         return ExpressionType.FLOAT;
     }
 
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return null;
+    }
+
     @Override
     public String toString() {
-        return "(pow " + left + " " + right + ")";
+        return "(pow " + previous + " " + right + ")";
     }
 }

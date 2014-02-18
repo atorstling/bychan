@@ -15,19 +15,19 @@ public interface Token<N, S> {
      * @return the resulting AST node.
      */
     @NotNull
-    N prefixParse(@NotNull S symbolTable, @NotNull TokenParserCallback<N, S> parser);
+    N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser);
 
     /**
      * Parse this token as an infix operator. A typical binary operator implementation uses the parser callback
      * to parse the RHS of the expression and returns a binary operator node linking the LHS and RHS together.
      *
-     * @param left the AST node resulting from parsing the expression to the left of this token, up until this
+     * @param previous the AST node resulting from parsing the expression to the previous of this token, up until this
      */
     @NotNull
-    N infixParse(S symbolTable, @NotNull N left, @NotNull TokenParserCallback<N, S> parser);
+    N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser);
 
     /**
-     * @return How strongly this token, when interpreted as an infix operator, binds to the left argument.
+     * @return How strongly this token, when interpreted as an infix operator, binds to the previous argument.
      */
     int infixBindingPower();
 

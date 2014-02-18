@@ -20,7 +20,7 @@ public class DirectEvaluationTest {
         TokenDefinition<Integer, Object> addition = builder.newToken()
                 .named("addition")
                 .matchesString("+")
-                .supportsInfix((symbolTable, match, left, parser) -> left + parser.expression(symbolTable))
+                .supportsInfix((match, previous, parser) -> previous + parser.expression(previous))
                 .build();
         Language<Integer, Object> lang = builder
                 .newLowerPriorityLevel()
@@ -33,7 +33,7 @@ public class DirectEvaluationTest {
         String expr = "1+3";
         List<Token<Integer, Object>> tokens = lang.getLexer().lex(expr);
         assertEquals("[number(1), addition(+), number(3), END]", tokens.toString());
-        assertEquals(4, (int) lang.getParser().tryParse("", expr).getRootNode());
+        assertEquals(4, (int) lang.getParser().tryParse(0, expr).getRootNode());
 
     }
 }

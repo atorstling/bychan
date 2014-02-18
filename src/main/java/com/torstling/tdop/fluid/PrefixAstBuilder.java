@@ -5,5 +5,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface PrefixAstBuilder<N, S> {
     @NotNull
-    N build(@NotNull S parent, @NotNull LexingMatch match, @NotNull ParserCallback2<N, S> parser);
+    N build(@NotNull N previous, @NotNull LexingMatch match, @NotNull ParserCallback2<N, S> parser);
 }

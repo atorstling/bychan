@@ -19,8 +19,8 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
-                .supportsPrefix((parent, match, parser) -> {
-                    CalculatorNode trailingExpression = parser.expression(parent);
+                .supportsPrefix((previous, match, parser) -> {
+                    CalculatorNode trailingExpression = parser.expression(previous);
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).build();
@@ -34,20 +34,20 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .supportsPrefix((parent, match, parser) -> parser.expression(parent))
-                .supportsInfix((parent, match, left, parser) -> new AdditionNode(left, parser.expression(parent)))
+                .supportsPrefix((previous, match, parser) -> parser.expression(previous))
+                .supportsInfix((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
                 .build();
 
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .supportsPrefix((parent, match, parser) -> new NegationNode(parser.expression(parent)))
-                .supportsInfix((parent, match, left, parser) -> new SubtractionNode(left, parser.expression(parent))).build();
+                .supportsPrefix((previous, match, parser) -> new NegationNode(parser.expression(previous)))
+                .supportsInfix((match, previous, parser) -> new SubtractionNode(previous, parser.expression(previous))).build();
 
         TokenDefinition<CalculatorNode, CalculatorSymbolTable> number = lb.newToken()
                 .matchesPattern("[0-9]+")
                 .named("number")
-                .supportsStandalone((parent, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
+                .supportsStandalone((previous, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
         Language<CalculatorNode, CalculatorSymbolTable> l = lb
                 .newLowerPriorityLevel()
                 .addToken(lparen)

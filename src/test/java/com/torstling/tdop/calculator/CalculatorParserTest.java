@@ -1,6 +1,5 @@
 package com.torstling.tdop.calculator;
 
-import com.torstling.tdop.calculator.*;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -16,8 +15,8 @@ public class CalculatorParserTest {
         CalculatorNode rootNode = new CalculatorParser().parse("( (1-  2)* 3) -4");
         NumberNode topRight = new NumberNode(4);
         NumberNode secondRight = new NumberNode(3);
-        SubtractionNode secondLeft = new SubtractionNode(new NumberNode(1), new NumberNode(2));
-        assertEquals(new SubtractionNode(new MultiplicationNode(secondLeft, secondRight), topRight), rootNode);
+        SubtractionNode secondprevious = new SubtractionNode(new NumberNode(1), new NumberNode(2));
+        assertEquals(new SubtractionNode(new MultiplicationNode(secondprevious, secondRight), topRight), rootNode);
         assertEquals(rootNode.evaluate(), -7);
     }
 

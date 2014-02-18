@@ -1,5 +1,12 @@
 package com.torstling.tdop.boolexp;
 
-public class BooleanExpressionRootNode implements BooleanSymbolTable {
+import com.torstling.tdop.fluid.VariableBindings;
+import org.jetbrains.annotations.NotNull;
 
+public class BooleanExpressionRootNode implements BooleanExpressionNode {
+
+    @Override
+    public boolean evaluate(@NotNull VariableBindings bindings) {
+        return false;
+    }
 }

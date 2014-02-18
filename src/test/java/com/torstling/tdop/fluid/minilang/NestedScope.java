@@ -6,17 +6,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NestedScope implements LaiLaiSymbolTable {
+public class NestedScope implements LaiLaiNode {
 
-    @Nullable
+    @NotNull
     private final LaiLaiNode child;
     @NotNull
     private final Map<String, VariableDefNode> variablesByName;
     @NotNull
     private final Variables variables;
 
-    public NestedScope(@NotNull final LaiLaiSymbolTable previousTable) {
-        this.child = null;
+    public NestedScope(@NotNull final LaiLaiNode previousScope) {
+        this.child = previousScope;
         variablesByName = new HashMap<>();
         variables = new Variables() {
             @Nullable
@@ -25,7 +25,7 @@ public class NestedScope implements LaiLaiSymbolTable {
                 if (variablesByName.containsKey(name)) {
                     return variablesByName.get(name);
                 }
-                return previousTable.getVariables().find(name);
+                return previousScope.getVariables().find(name);
             }
 
             @Override
@@ -33,6 +33,18 @@ public class NestedScope implements LaiLaiSymbolTable {
                 variablesByName.put(name, node);
             }
         };
+    }
+
+    @NotNull
+    @Override
+    public Object evaluate(@Nullable ScopeNode currentScope) {
+        return child.evaluate(currentScope);
+    }
+
+    @NotNull
+    @Override
+    public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
+        return child.getExpressionType(currentScope);
     }
 
     @NotNull

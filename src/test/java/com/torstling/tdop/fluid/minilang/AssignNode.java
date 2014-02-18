@@ -5,15 +5,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class AssignNode implements LaiLaiNode {
     @NotNull
-    private final VariableNode left;
+    private final VariableNode previous;
     @NotNull
     private final LaiLaiNode right;
 
-    public AssignNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
-        if (!(left instanceof VariableNode)) {
-            throw new IllegalArgumentException("Cannot assign to non-variable node '" + left + "'");
+    public AssignNode(@NotNull final LaiLaiNode previous, @NotNull final LaiLaiNode right) {
+        if (!(previous instanceof VariableNode)) {
+            throw new IllegalArgumentException("Cannot assign to non-variable node '" + previous + "'");
         }
-        this.left = (VariableNode) left;
+        this.previous = (VariableNode) previous;
         this.right = right;
     }
 
@@ -22,17 +22,23 @@ public class AssignNode implements LaiLaiNode {
     public Object evaluate(@Nullable ScopeNode currentScope) {
         Object rhsValue = right.evaluate(currentScope);
         assert currentScope != null;
-        left.assign(rhsValue, currentScope);
+        previous.assign(rhsValue, currentScope);
         return rhsValue;
     }
 
     @NotNull
     @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
-        return ExpressionType.union(left.getExpressionType(currentScope), right.getExpressionType(currentScope));
+        return ExpressionType.union(previous.getExpressionType(currentScope), right.getExpressionType(currentScope));
+    }
+
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return previous.getVariables();
     }
 
     public String toString() {
-        return "(= " + left + " " + right + ")";
+        return "(= " + previous + " " + right + ")";
     }
 }

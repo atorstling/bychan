@@ -17,12 +17,12 @@ public class EndToken<N, S> implements Token<N, S> {
     }
 
     @NotNull
-    public N prefixParse(@NotNull S parent, @NotNull final TokenParserCallback<N, S> parser) {
+    public N prefixParse(@NotNull N previous, @NotNull final TokenParserCallback<N, S> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
     }
 
     @NotNull
-    public N infixParse(S parent, @NotNull N left, @NotNull TokenParserCallback<N, S> parser) {
+    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
     }
 

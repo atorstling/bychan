@@ -15,13 +15,13 @@ public class WhitespaceToken<N, S> implements Token<N, S> {
 
     @NotNull
     @Override
-    public N prefixParse(@NotNull S parent, @NotNull TokenParserCallback<N, S> parser) {
+    public N prefixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
     }
 
     @NotNull
     @Override
-    public N infixParse(S parent, @NotNull N left, @NotNull TokenParserCallback<N, S> parser) {
+    public N infixParse(@NotNull N previous, @NotNull TokenParserCallback<N, S> parser) {
         throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
     }
 

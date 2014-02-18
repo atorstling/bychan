@@ -5,18 +5,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class XorNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode left;
+    private final LaiLaiNode previous;
     @NotNull
     private final LaiLaiNode right;
 
-    public XorNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
-        this.left = left;
+    public XorNode(@NotNull final LaiLaiNode previous, @NotNull final LaiLaiNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
     private void checkTypes(@NotNull ScopeNode currentScope) {
-        if (!ExpressionType.BOOL.equals(left.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("Left expression needs to be of type bool: " + left);
+        if (!ExpressionType.BOOL.equals(previous.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("previous expression needs to be of type bool: " + previous);
         }
         if (!ExpressionType.BOOL.equals(right.getExpressionType(currentScope))) {
             throw new IllegalArgumentException("Right expression needs to be of type bool: " + right);
@@ -28,7 +28,7 @@ public class XorNode implements LaiLaiNode {
     public Object evaluate(@Nullable ScopeNode currentScope) {
         assert currentScope != null;
         checkTypes(currentScope);
-        return ((Boolean) left.evaluate(currentScope)) ^ ((Boolean) right.evaluate(currentScope));
+        return ((Boolean) previous.evaluate(currentScope)) ^ ((Boolean) right.evaluate(currentScope));
     }
 
     @NotNull
@@ -37,8 +37,14 @@ public class XorNode implements LaiLaiNode {
         return ExpressionType.BOOL;
     }
 
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return null;
+    }
+
     @Override
     public String toString() {
-        return "(xor " + left + " " + right + ")";
+        return "(xor " + previous + " " + right + ")";
     }
 }

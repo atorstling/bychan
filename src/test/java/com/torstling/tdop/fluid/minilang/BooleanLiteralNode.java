@@ -22,6 +22,12 @@ public class BooleanLiteralNode implements LaiLaiNode {
         return ExpressionType.BOOL;
     }
 
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return null;
+    }
+
     @Override
     public String toString() {
         return Boolean.toString(value);

@@ -5,12 +5,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class HatNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode left;
+    private final LaiLaiNode previous;
     @NotNull
     private final LaiLaiNode right;
 
-    public HatNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
-        this.left = left;
+    public HatNode(@NotNull final LaiLaiNode previous, @NotNull final LaiLaiNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
@@ -24,17 +24,17 @@ public class HatNode implements LaiLaiNode {
 
     @NotNull
     private ExpressionType getSubExpressionType(@Nullable ScopeNode currentScope) {
-        return left.getExpressionType(currentScope);
+        return previous.getExpressionType(currentScope);
     }
 
     @NotNull
     private LaiLaiNode chooseActualImplementation(@NotNull ExpressionType actualExpressionType) {
         if (ExpressionType.BOOL.equals(actualExpressionType)) {
-            return new XorNode(left, right);
+            return new XorNode(previous, right);
         } else if (ExpressionType.FLOAT.equals(actualExpressionType)) {
-            return new PowNode(left, right);
+            return new PowNode(previous, right);
         }
-        throw new IllegalStateException("'hat' only applicable to bool and float, got '" + left + "' of type '" + actualExpressionType + "'");
+        throw new IllegalStateException("'hat' only applicable to bool and float, got '" + previous + "' of type '" + actualExpressionType + "'");
     }
 
     @NotNull
@@ -43,8 +43,14 @@ public class HatNode implements LaiLaiNode {
         return getSubExpressionType(currentScope);
     }
 
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return previous.getVariables();
+    }
+
     @Override
     public String toString() {
-        return "(^ " + left + " " + right + ")";
+        return "(^ " + previous + " " + right + ")";
     }
 }

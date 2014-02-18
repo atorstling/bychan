@@ -11,9 +11,12 @@ import java.util.List;
 
 public class ListNode implements LaiLaiNode {
     @NotNull
+    private final LaiLaiNode previous;
+    @NotNull
     private final List<LaiLaiNode> expressions;
 
-    public ListNode(@NotNull final List<LaiLaiNode> expressions) {
+    public ListNode(@NotNull LaiLaiNode previous, @NotNull final List<LaiLaiNode> expressions) {
+        this.previous = previous;
         this.expressions = expressions;
     }
 
@@ -31,6 +34,12 @@ public class ListNode implements LaiLaiNode {
     @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.LIST;
+    }
+
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return previous.getVariables();
     }
 
     @Override

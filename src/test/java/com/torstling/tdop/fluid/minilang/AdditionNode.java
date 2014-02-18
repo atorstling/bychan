@@ -5,18 +5,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class AdditionNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode left;
+    private final LaiLaiNode previous;
     @NotNull
     private final LaiLaiNode right;
 
-    public AdditionNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
-        this.left = left;
+    public AdditionNode(@NotNull final LaiLaiNode previous, @NotNull final LaiLaiNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
     private void checkTypes(ScopeNode currentScope) {
-        if (!ExpressionType.INT.equals(left.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("Left not of type int: " + left);
+        if (!ExpressionType.INT.equals(previous.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("previous not of type int: " + previous);
         }
         if (!ExpressionType.INT.equals(right.getExpressionType(currentScope))) {
             throw new IllegalArgumentException("Right not of type int: " + right);
@@ -27,19 +27,25 @@ public class AdditionNode implements LaiLaiNode {
     @Override
     public Object evaluate(@Nullable ScopeNode currentScope) {
         checkTypes(currentScope);
-        return ((Integer) left.evaluate(currentScope)) + ((Integer) right.evaluate(currentScope));
+        return ((Integer) previous.evaluate(currentScope)) + ((Integer) right.evaluate(currentScope));
     }
 
     @NotNull
     @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
-        ExpressionType leftType = left.getExpressionType(currentScope);
+        ExpressionType previousType = previous.getExpressionType(currentScope);
         ExpressionType rightType = right.getExpressionType(currentScope);
-        return ExpressionType.union(leftType, rightType);
+        return ExpressionType.union(previousType, rightType);
+    }
+
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return previous.getVariables();
     }
 
     @Override
     public String toString() {
-        return "(+ " + left + " " + right + ")";
+        return "(+ " + previous + " " + right + ")";
     }
 }

@@ -1,15 +1,15 @@
 package com.torstling.tdop.calculator;
 
 public class AdditionNode implements CalculatorNode {
-    private final CalculatorNode left;
+    private final CalculatorNode previous;
     private final CalculatorNode right;
 
-    public AdditionNode(CalculatorNode left, CalculatorNode right) {
-        this.left = left;
+    public AdditionNode(CalculatorNode previous, CalculatorNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
     public int evaluate() {
-        return left.evaluate() + right.evaluate();
+        return previous.evaluate() + right.evaluate();
     }
 }

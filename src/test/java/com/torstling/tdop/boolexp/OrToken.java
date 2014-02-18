@@ -12,13 +12,13 @@ public class OrToken<S> implements Token<BooleanExpressionNode, S> {
     }
 
     @NotNull
-    public BooleanExpressionNode prefixParse(@NotNull S parent, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
+    public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
         throw new UnsupportedOperationException();
     }
 
     @NotNull
-    public BooleanExpressionNode infixParse(S parent, @NotNull BooleanExpressionNode left, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
-        return new OrNode(left, parser.tryParse(new ExpressionParserStrategy<>(parent, infixBindingPower())).getRootNode());
+    public BooleanExpressionNode infixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode, S> parser) {
+        return new OrNode(previous, parser.tryParse(new ExpressionParserStrategy<>(previous, infixBindingPower())).getRootNode());
     }
 
     public int infixBindingPower() {

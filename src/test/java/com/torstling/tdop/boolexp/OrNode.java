@@ -4,16 +4,16 @@ import com.torstling.tdop.fluid.VariableBindings;
 import org.jetbrains.annotations.NotNull;
 
 public class OrNode implements BooleanExpressionNode {
-    private final BooleanExpressionNode left;
+    private final BooleanExpressionNode previous;
     private final BooleanExpressionNode right;
 
-    public OrNode(BooleanExpressionNode left, BooleanExpressionNode right) {
-        this.left = left;
+    public OrNode(BooleanExpressionNode previous, BooleanExpressionNode right) {
+        this.previous = previous;
         this.right = right;
     }
 
     public boolean evaluate(@NotNull VariableBindings bindings) {
-        boolean leftResult = left.evaluate(bindings);
-        return leftResult || right.evaluate(bindings);
+        boolean previousResult = previous.evaluate(bindings);
+        return previousResult || right.evaluate(bindings);
     }
 }

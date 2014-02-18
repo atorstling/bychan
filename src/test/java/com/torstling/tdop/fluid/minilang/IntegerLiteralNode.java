@@ -4,9 +4,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class IntegerLiteralNode implements LiteralNode {
+    @NotNull
+    private final LaiLaiNode previous;
     private final int value;
 
-    public IntegerLiteralNode(final int value) {
+    public IntegerLiteralNode(@NotNull LaiLaiNode previous, final int value) {
+        this.previous = previous;
         this.value = value;
     }
 
@@ -20,6 +23,12 @@ public class IntegerLiteralNode implements LiteralNode {
     @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
         return ExpressionType.INT;
+    }
+
+    @NotNull
+    @Override
+    public Variables getVariables() {
+        return previous.getVariables();
     }
 
     @Override
