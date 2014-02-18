@@ -20,7 +20,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch(text)),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         assertEquals(new NumberNode(1), rootNode);
     }
 
@@ -45,7 +45,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("2")),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
     }
 
@@ -57,7 +57,7 @@ public class PrattParserTest {
                 new RightParenthesisToken(nextMatch()),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         assertEquals(new NumberNode(2), rootNode);
     }
 
@@ -73,7 +73,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         SubtractionNode previous = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(previous, right), rootNode);
@@ -91,7 +91,7 @@ public class PrattParserTest {
                 new RightParenthesisToken(nextMatch()),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         NumberNode previous = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(previous, right), rootNode);
@@ -107,7 +107,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         NumberNode previous = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(previous, right), rootNode);
@@ -123,7 +123,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(previous, right), rootNode);
@@ -139,7 +139,7 @@ public class PrattParserTest {
                 new NumberToken(createTestMatch("3")),
                 createTestEndToken()));
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        CalculatorNode rootNode = p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        CalculatorNode rootNode = p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
         MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new MultiplicationNode(previous, right), rootNode);
@@ -153,7 +153,7 @@ public class PrattParserTest {
                 createTestEndToken()));
         try {
             final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-            p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+            p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Expected a token of type 'RightParenthesisTokenType', but got 'END'", e.getMessage());
@@ -167,7 +167,7 @@ public class PrattParserTest {
                 createTestEndToken()));
         try {
             final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-            p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+            p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
             fail("expected exception");
         } catch (IllegalStateException e) {
             assertEquals("Cannot use right paranthesis as prefix to expression", e.getMessage());
@@ -180,7 +180,7 @@ public class PrattParserTest {
                 createTestEndToken()));
         try {
             final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-            p.tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+            p.tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Cannot parse expression, end reached", e.getMessage());

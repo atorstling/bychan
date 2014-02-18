@@ -13,6 +13,6 @@ class CalculatorParser {
     public CalculatorNode parse(@NotNull final String input) {
         List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.<CalculatorSymbolTable>get()).lex(input);
         final RootCalculatorNode rootCalculatorNode = new RootCalculatorNode();
-        return new PrattParser<>(tokens).tryParse(new ExpressionParserStrategy<>(rootCalculatorNode, 0)).getRootNode();
+        return new PrattParser<>(tokens).tryParse(rootCalculatorNode, new ExpressionParserStrategy<>(0)).getRootNode();
     }
 }

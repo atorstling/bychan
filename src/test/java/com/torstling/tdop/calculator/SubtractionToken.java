@@ -24,7 +24,7 @@ public class SubtractionToken<S> implements Token<CalculatorNode> {
 
     @NotNull
     public CalculatorNode infixParse(@NotNull CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        CalculatorNode right = parser.tryParse(new ExpressionParserStrategy<>(previous, infixBindingPower())).getRootNode();
+        CalculatorNode right = parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
         return new SubtractionNode(previous, right);
     }
 

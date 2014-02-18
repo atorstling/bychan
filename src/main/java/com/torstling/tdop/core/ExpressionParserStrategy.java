@@ -5,11 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayDeque;
 
 public class ExpressionParserStrategy<N> implements ParserStrategy<N> {
-    private final N previous;
     private final int powerFloor;
 
-    public ExpressionParserStrategy(N previous, int powerFloor) {
-        this.previous = previous;
+    public ExpressionParserStrategy(int powerFloor) {
         this.powerFloor = powerFloor;
     }
 
@@ -28,7 +26,7 @@ public class ExpressionParserStrategy<N> implements ParserStrategy<N> {
      */
     @Override
     @NotNull
-    public N parse(@NotNull ArrayDeque<Token<N>> tokens, PrattParser<N> parser) {
+    public N parse(@NotNull N previous, @NotNull ArrayDeque<Token<N>> tokens, @NotNull PrattParser<N> parser) {
         // An expression always starts with a symbol which can qualify as a prefix value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -61,14 +59,14 @@ public class ExpressionParserStrategy<N> implements ParserStrategy<N> {
         return parseLoop(first, powerFloor, tokens, parser);
     }
 
-    private N parseLoop(@NotNull final N currentpreviousHandSide, final int powerFloor, @NotNull ArrayDeque<Token<N>> tokens, PrattParser<N> parser) {
+    private N parseLoop(@NotNull final N currentLeftHandSide, final int powerFloor, @NotNull ArrayDeque<Token<N>> tokens, PrattParser<N> parser) {
         Token<N> peekedToken = tokens.peek();
         if (peekedToken.infixBindingPower() > powerFloor) {
             //Parsing happens by passing the current LHS to the operator, which will continue parsing.
             Token<N> takenToken = tokens.pop();
-            N nextExpression = takenToken.infixParse(currentpreviousHandSide, parser);
+            N nextExpression = takenToken.infixParse(currentLeftHandSide, parser);
             return parseLoop(nextExpression, powerFloor, tokens, parser);
         }
-        return currentpreviousHandSide;
+        return currentLeftHandSide;
     }
 }

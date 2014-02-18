@@ -6,5 +6,5 @@ import java.util.ArrayDeque;
 
 interface ParserStrategy<N> {
     @NotNull
-    N parse(ArrayDeque<Token<N>> tokens, PrattParser<N> parser);
+    N parse(@NotNull N previous, @NotNull ArrayDeque<Token<N>> tokens, @NotNull PrattParser<N> parser);
 }

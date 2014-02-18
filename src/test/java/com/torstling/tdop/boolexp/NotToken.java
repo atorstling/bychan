@@ -14,7 +14,7 @@ public class NotToken<S> implements Token<BooleanExpressionNode> {
 
     @NotNull
     public BooleanExpressionNode prefixParse(@NotNull BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new NotNode(parser.tryParse(new ExpressionParserStrategy<>(previous, infixBindingPower())).getRootNode());
+        return new NotNode(parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode());
     }
 
     @NotNull

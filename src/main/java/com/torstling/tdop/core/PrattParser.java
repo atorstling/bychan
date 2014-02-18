@@ -16,17 +16,17 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @Override
     @NotNull
-    public ParseResult<N> tryParse(@NotNull ParserStrategy<N> strategy) {
+    public ParseResult<N> tryParse(@NotNull N previous, @NotNull ParserStrategy<N> strategy) {
         try {
-            N rootNode = parse(strategy);
+            N rootNode = parse(previous, strategy);
             return ParseResult.success(rootNode);
         } catch (ParsingFailedException e) {
             return ParseResult.failure(e.getParsingFailedInformation());
         }
     }
 
-    private N parse(@NotNull ParserStrategy<N> strategy) {
-        return strategy.parse(tokens, this);
+    private N parse(@NotNull N previous, @NotNull ParserStrategy<N> strategy) {
+        return strategy.parse(previous, tokens, this);
     }
 
     @NotNull

@@ -22,6 +22,6 @@ public class GenericParser<N> {
     @NotNull
     public ParseResult<N> tryParse(@NotNull N previous, @NotNull final List<Token<N>> tokens) {
         PrattParser<N> parser = new PrattParser<>(tokens);
-        return parser.tryParse(new ExpressionParserStrategy<>(previous, 0));
+        return parser.tryParse(previous, new ExpressionParserStrategy<>(0));
     }
 }

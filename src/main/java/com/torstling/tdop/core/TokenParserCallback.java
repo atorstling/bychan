@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface TokenParserCallback<N> {
     @NotNull
-    ParseResult<N> tryParse(@NotNull ParserStrategy<N> strategy);
+    ParseResult<N> tryParse(@NotNull N previous, @NotNull ParserStrategy<N> strategy);
 
     /**
      * Swallow a token of the specified type.

@@ -29,7 +29,7 @@ public class GenericToken<N> implements Token<N> {
             @NotNull
             @Override
             public N expression(@NotNull N previous) {
-                return parser.tryParse(new ExpressionParserStrategy<>(previous, infixBindingPower())).getRootNode();
+                return parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
             }
 
             @NotNull
@@ -63,7 +63,7 @@ public class GenericToken<N> implements Token<N> {
             @NotNull
             @Override
             public N expression(@NotNull N previous) {
-                return parser.tryParse(new ExpressionParserStrategy<>(previous, infixBindingPower())).getRootNode();
+                return parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
             }
 
             @NotNull
