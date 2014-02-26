@@ -3,14 +3,14 @@ package com.torstling.tdop.fluid.json;
 /**
  * Created by alext on 2/26/14.
  */
-public class NonNegativeDigitLiteral {
+public class Digit {
     private final short value;
 
-    public NonNegativeDigitLiteral(short value) {
+    public Digit(short value) {
         this.value = value;
     }
 
-    public NonNegativeDigitLiteral(int value) {
+    public Digit(int value) {
         this((short) value);
     }
 
@@ -23,7 +23,7 @@ public class NonNegativeDigitLiteral {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        NonNegativeDigitLiteral that = (NonNegativeDigitLiteral) o;
+        Digit that = (Digit) o;
 
         if (value != that.value) return false;
 

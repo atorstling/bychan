@@ -22,4 +22,8 @@ public class NonTerminal {
     public List<Production> getProductions() {
         return productions;
     }
+
+    public void addTo(@NotNull final BnfGrammarBuilder g) {
+        g.add(this);
+    }
 }

@@ -32,4 +32,12 @@ public class NonTerminalBuilder {
     public NonTerminal build() {
         return new NonTerminal(name, productions);
     }
+
+    public void addTo(@NotNull final BnfGrammarBuilder grammarBuilder) {
+        build().addTo(grammarBuilder);
+    }
+
+    public NonTerminalBuilder as(@NotNull NonTerminal nonTerminal) {
+        return this;
+    }
 }

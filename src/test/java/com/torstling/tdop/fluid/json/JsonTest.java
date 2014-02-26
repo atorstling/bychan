@@ -3,6 +3,7 @@ package com.torstling.tdop.fluid.json;
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.ParsingFailedInformation;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -21,28 +22,67 @@ public class JsonTest {
     @Test
     public void bool() {
         BnfBuilder b = new BnfBuilder();
+        BnfGrammarBuilder g = b.newGrammar();
         b.define("boolean")
                 .as("true", (x, y) -> new BooleanLiteral(true))
                 .or()
-                .as("false", (x, y) -> new BooleanLiteral(false));
-        assertEquals(new BooleanLiteral(true), b.parser().parse("true"));
-        assertEquals(new BooleanLiteral(false), b.parser().parse("false"));
+                .as("false", (x, y) -> new BooleanLiteral(false)).addTo(g);
+        assertEquals(new BooleanLiteral(true), g.parser().parse("true"));
+        assertEquals(new BooleanLiteral(false), g.parser().parse("false"));
     }
 
     @Test
     public void nu11() {
         BnfBuilder b = new BnfBuilder();
+        BnfGrammarBuilder g = b.newGrammar();
         b.define("null")
-                .as("null", (x, y) -> NullLiteral.get());
-        assertEquals(NullLiteral.get(), b.parser().parse("null"));
+                .as("null", (x, y) -> NullLiteral.get()).addTo(g);
+        assertEquals(NullLiteral.get(), g.parser().parse("null"));
     }
 
     @Test
     public void digitNotZero() {
         BnfBuilder b = new BnfBuilder();
-        b.define("digitNotZero")
-                .as("[1-9]", (Object x, LexingMatch y) -> new NonNegativeDigitLiteral(Short.valueOf(y.getText())));
-        assertEquals(new NonNegativeDigitLiteral(1), b.parser().parse("1"));
-        assertEquals(ParseResult.failure(new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '0'", new LexingMatch(0, 0, "0"))), b.parser().tryParse("0"));
+        BnfGrammarBuilder g = b.newGrammar();
+        makeDigitNotZero(b).addTo(g);
+        assertEquals(new Digit(1), g.parser().parse("1"));
+        ParsingFailedInformation failedInformation = new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '0'", new LexingMatch(0, 0, "0"));
+        ParseResult<Object> failure = ParseResult.failure(failedInformation);
+        assertEquals(failure, g.parser().tryParse("0"));
+    }
+
+    private NonTerminal makeDigitNotZero(@NotNull BnfBuilder b) {
+        return b.define("digitNotZero")
+                .as("[1-9]", (x, m) -> new Digit(Short.valueOf(m.getText()))).build();
+    }
+
+    @Test
+    public void digitZero() {
+        BnfBuilder b = new BnfBuilder();
+        BnfGrammarBuilder g = b.newGrammar();
+        makeDigitZero(b).addTo(g);
+        assertEquals(new Digit(0), g.parser().parse("0"));
+        ParsingFailedInformation failedInformation = new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '1'", new LexingMatch(0, 0, "1"));
+        ParseResult<Object> failure = ParseResult.failure(failedInformation);
+        assertEquals(failure, g.parser().tryParse("1"));
+    }
+
+    @NotNull
+    private NonTerminal makeDigitZero(@NotNull final BnfBuilder b) {
+        return b.define("digitZero")
+                .as("0", (x, m) -> new Digit(Short.valueOf(m.getText()))).build();
+    }
+
+    @Test
+    public void digit() {
+
+        BnfBuilder b = new BnfBuilder();
+        BnfGrammarBuilder g = b.newGrammar();
+        NonTerminal digitZero = makeDigitZero(b);
+        digitZero.addTo(g);
+        NonTerminal digitNotZero = makeDigitNotZero(b);
+        digitNotZero.addTo(g);
+        b.define("digit").as(digitZero).or().as(digitNotZero).build();
+
     }
 }
