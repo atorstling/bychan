@@ -1,7 +1,7 @@
 package com.torstling.tdop.fluid;
 
 import com.torstling.tdop.core.Lexer;
-import com.torstling.tdop.utils.CollectionUtils;
+import com.torstling.tdop.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class Language<N> {
 
 
     private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return CollectionUtils.transform(leveledDefinitions, tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder));
+        return Lists.transform(leveledDefinitions, tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder));
     }
 
     private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {

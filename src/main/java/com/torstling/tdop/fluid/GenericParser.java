@@ -25,4 +25,8 @@ public class GenericParser<N> {
         PrattParser<N> parser = new PrattParser<>(tokens);
         return parser.tryParse(previous, new ExpressionParserStrategy<>(0));
     }
+
+    public N parse(@NotNull final String text) {
+        return tryParse(null, text).getRootNode();
+    }
 }

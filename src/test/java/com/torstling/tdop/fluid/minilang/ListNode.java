@@ -1,6 +1,6 @@
 package com.torstling.tdop.fluid.minilang;
 
-import com.torstling.tdop.utils.CollectionUtils;
+import com.torstling.tdop.utils.Lists;
 import com.torstling.tdop.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,7 +44,7 @@ public class ListNode implements LaiLaiNode {
 
     @Override
     public String toString() {
-        Collection<String> strings = CollectionUtils.transform(expressions, CollectionUtils.toStringFunction());
+        Collection<String> strings = Lists.transform(expressions, Lists.toStringFunction());
         return "(l " + StringUtils.join(strings, " ") + " )";
     }
 }

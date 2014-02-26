@@ -1,9 +1,5 @@
 package com.torstling.tdop.fluid.json;
 
-import com.torstling.tdop.core.ParseResult;
-import com.torstling.tdop.fluid.Language;
-import com.torstling.tdop.fluid.LanguageBuilder;
-import com.torstling.tdop.fluid.TokenDefinition;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,17 +7,19 @@ import static org.junit.Assert.assertEquals;
 public class JsonTest {
 
     @Test
-    public void value() {
-        LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        TokenDefinition<JsonNode> stringLiteral = lb.newToken()
-                .named("stringLiteral")
-                .matchesPattern("\".*\"")
-                .supportsStandalone((previous, match) -> new StringLiteralNode(match.getText().substring(1, match.getText().length() - 1)))
-                .build();
-        lb.newLowerPriorityLevel().addToken(stringLiteral).endLevel();
-        Language<JsonNode> lang = lb.completeLanguage();
-        ParseResult<JsonNode> parseResult = lang.getParser().tryParse(null, "\"hey\"");
-        assertEquals(parseResult.getRootNode().evaluate(), "hey");
-
+    public void bool() {
+        BnfBuilder b = new BnfBuilder();
+        b.define("boolean").as("true").or().as("false");
+        Object o = b.parser().parse("true");
+        assertEquals(new BooleanLiteral(true), o);
+        /*
+        b.add("null = 'null'");
+        b.add("zero = '0'");
+        b.add("digit_not_zero = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'");
+        b.add("digit = zero | digit_not_zero");
+        b.add("number = ['-'], zero | (digit_not_zero, {digit}), ['.', {digit})], ['e' | 'E',  ['+' | '-'], {digit}]");
+                "value = string | number | object | array | boolean | null" +
+                "object = '{', { string : value } ,'}'");
+        */
     }
 }
