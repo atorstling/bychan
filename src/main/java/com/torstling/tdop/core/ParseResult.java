@@ -58,4 +58,24 @@ public class ParseResult<N> {
                 ", errorMessage=" + errorMessage +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ParseResult that = (ParseResult) o;
+
+        if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
+        if (rootNode != null ? !rootNode.equals(that.rootNode) : that.rootNode != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = rootNode != null ? rootNode.hashCode() : 0;
+        result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
+        return result;
+    }
 }

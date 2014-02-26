@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by alext on 2/23/14.
- */
 public class BnfBuilder {
     @NotNull
     private final List<NonTerminalBuilder> nonTerminalBuilders;
@@ -33,14 +30,13 @@ public class BnfBuilder {
         Collection<NonTerminal> nonTerminals = Lists.transform(nonTerminalBuilders, NonTerminalBuilder::build);
         LevelLanguageBuilder<Object> levelBuilder = lb.newLowerPriorityLevel();
         for (NonTerminal nonTerminal : nonTerminals) {
-            List<String> productions = nonTerminal.getProductions();
-            for (String production : productions) {
+            List<Production> productions = nonTerminal.getProductions();
+            for (Production production : productions) {
                 TokenDefinition<Object> token = lb
                         .newToken()
-                        .named(production)
-                        .matchesString(production)
-                        .supportsStandalone((previous, match)
-                                -> new BooleanLiteral(Boolean.valueOf(match.getText()))).build();
+                        .named(production.getLexerPattern())
+                        .matchesPattern(production.getLexerPattern())
+                        .supportsStandalone(production.getAstBuilder()).build();
                 levelBuilder.addToken(token);
 
             }

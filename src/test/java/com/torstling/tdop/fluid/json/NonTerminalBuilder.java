@@ -1,5 +1,6 @@
 package com.torstling.tdop.fluid.json;
 
+import com.torstling.tdop.fluid.StandaloneAstBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public class NonTerminalBuilder {
     private final String name;
-    private final List<String> productions;
+    private final List<Production> productions;
 
     public NonTerminalBuilder(String name) {
         this.name = name;
@@ -18,8 +19,8 @@ public class NonTerminalBuilder {
     }
 
     @NotNull
-    public NonTerminalBuilder as(@NotNull final String production) {
-        productions.add(production);
+    public NonTerminalBuilder as(@NotNull final String lexerPattern, @NotNull final StandaloneAstBuilder<Object> astBuilder) {
+        productions.add(new Production(lexerPattern, astBuilder));
         return this;
     }
 

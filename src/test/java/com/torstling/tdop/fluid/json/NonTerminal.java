@@ -8,16 +8,18 @@ import java.util.List;
  * Created by alext on 2/26/14.
  */
 public class NonTerminal {
+    @NotNull
     private final String name;
-    private final List<String> productions;
+    @NotNull
+    private final List<Production> productions;
 
-    public NonTerminal(String name, List<String> productions) {
+    public NonTerminal(@NotNull String name, @NotNull List<Production> productions) {
         this.name = name;
         this.productions = productions;
     }
 
     @NotNull
-    public List<String> getProductions() {
+    public List<Production> getProductions() {
         return productions;
     }
 }

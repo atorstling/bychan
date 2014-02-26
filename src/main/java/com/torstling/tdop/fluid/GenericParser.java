@@ -16,8 +16,12 @@ public class GenericParser<N> {
 
     @NotNull
     public ParseResult<N> tryParse(@Nullable N previous, @NotNull final String text) {
-        List<Token<N>> tokens = lexer.lex(text);
-        return tryParse(previous, tokens);
+        LexingResult<N> lexingResult = lexer.tryLex(text);
+        if (lexingResult.isFailure()) {
+            LexingFailedInformation failureInfo = lexingResult.getFailureValue();
+            return ParseResult.failure(new ParsingFailedInformation("Lexing failed:" + failureInfo.getMessage(), new LexingMatch(failureInfo.getLexingPosition().getStreamPosition(), failureInfo.getLexingPosition().getStreamPosition(), failureInfo.getLexingPosition().getMatchSection())));
+        }
+        return tryParse(previous, lexingResult.getSuccessValue());
     }
 
     @NotNull
@@ -26,7 +30,16 @@ public class GenericParser<N> {
         return parser.tryParse(previous, new ExpressionParserStrategy<>(0));
     }
 
+    @NotNull
+    public ParseResult<N> tryParse(@NotNull final List<Token<N>> tokens) {
+        return tryParse(null, tokens);
+    }
+
+    public ParseResult<N> tryParse(@NotNull final String text) {
+        return tryParse(null, text);
+    }
+
     public N parse(@NotNull final String text) {
-        return tryParse(null, text).getRootNode();
+        return tryParse(text).getRootNode();
     }
 }

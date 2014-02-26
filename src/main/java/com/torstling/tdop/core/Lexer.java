@@ -24,7 +24,7 @@ public class Lexer<N> {
             String substring = input.substring(i);
             Token<N> token = findMatchingToken2(i, substring);
             if (token == null) {
-                throw new LexingFailedException("No matching rule for char-range starting at " + i + ": '" + substring + "'");
+                throw new LexingFailedException(i, substring);
             }
             if (token.getType().include()) {
                 tokens.add(token);
@@ -48,5 +48,15 @@ public class Lexer<N> {
             }
         }
         return null;
+    }
+
+    @NotNull
+    public LexingResult<N> tryLex(@NotNull final String text) {
+        try {
+            final List<Token<N>> tokens = lex(text);
+            return LexingResult.success(tokens);
+        } catch (LexingFailedException e) {
+            return LexingResult.failure(new LexingFailedInformation(e.getMessage(), new LexingPosition(e.getStreamPosition(), e.getMatchSection())));
+        }
     }
 }
