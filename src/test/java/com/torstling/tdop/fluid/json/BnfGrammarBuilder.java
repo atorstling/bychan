@@ -22,13 +22,13 @@ public class BnfGrammarBuilder {
         List<NonTerminal> allNonTerminals = collectAllNonTerminals();
         LevelLanguageBuilder<Object> levelBuilder = lb.newLowerPriorityLevel();
         for (NonTerminal nonTerminal : allNonTerminals) {
-            List<Production> productions = nonTerminal.getProductions();
-            for (Production production : productions) {
+            List<Production> terminalProductions = nonTerminal.getProductions();
+            for (Production terminalProduction : terminalProductions) {
                 TokenDefinition<Object> token = lb
                         .newToken()
-                        .named(production.getLexerPattern())
-                        .matchesPattern(production.getLexerPattern())
-                        .supportsStandalone(production.getAstBuilder()).build();
+                        .named(terminalProduction.getName())
+                        .matchesPattern(terminalProduction.getLexerPattern())
+                        .supportsStandalone(terminalProduction.getAstBuilder()).build();
                 levelBuilder.addToken(token);
 
             }

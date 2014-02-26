@@ -1,21 +1,18 @@
 package com.torstling.tdop.fluid.json;
 
 import com.torstling.tdop.fluid.StandaloneAstBuilder;
+import org.jetbrains.annotations.NotNull;
 
-public class Production {
-    private final String lexerPattern;
-    private final StandaloneAstBuilder<Object> astBuilder;
+/**
+ * Created by alext on 2/26/14.
+ */
+public interface Production {
+    @NotNull
+    String getName();
 
-    public Production(String lexerPattern, StandaloneAstBuilder<Object> astBuilder) {
-        this.lexerPattern = lexerPattern;
-        this.astBuilder = astBuilder;
-    }
+    @NotNull
+    String getLexerPattern();
 
-    public String getLexerPattern() {
-        return lexerPattern;
-    }
-
-    public StandaloneAstBuilder<Object> getAstBuilder() {
-        return astBuilder;
-    }
+    @NotNull
+    StandaloneAstBuilder<Object> getAstBuilder();
 }

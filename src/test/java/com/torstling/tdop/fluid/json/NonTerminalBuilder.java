@@ -20,7 +20,7 @@ public class NonTerminalBuilder {
 
     @NotNull
     public NonTerminalBuilder as(@NotNull final String lexerPattern, @NotNull final StandaloneAstBuilder<Object> astBuilder) {
-        productions.add(new Production(lexerPattern, astBuilder));
+        productions.add(new TerminalProduction(lexerPattern, astBuilder));
         return this;
     }
 
@@ -38,6 +38,7 @@ public class NonTerminalBuilder {
     }
 
     public NonTerminalBuilder as(@NotNull NonTerminal nonTerminal) {
+        productions.add(new NonTerminalProduction(nonTerminal));
         return this;
     }
 }

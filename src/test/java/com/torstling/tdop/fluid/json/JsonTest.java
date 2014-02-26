@@ -75,14 +75,10 @@ public class JsonTest {
 
     @Test
     public void digit() {
-
         BnfBuilder b = new BnfBuilder();
         BnfGrammarBuilder g = b.newGrammar();
-        NonTerminal digitZero = makeDigitZero(b);
-        digitZero.addTo(g);
-        NonTerminal digitNotZero = makeDigitNotZero(b);
-        digitNotZero.addTo(g);
-        b.define("digit").as(digitZero).or().as(digitNotZero).build();
-
+        b.define("digit").as(makeDigitZero(b)).or().as(makeDigitNotZero(b)).addTo(g);
+        //assertEquals(new Digit(1), g.parser().parse("1"));
+        //assertEquals(new Digit(0), g.parser().parse("0"));
     }
 }
