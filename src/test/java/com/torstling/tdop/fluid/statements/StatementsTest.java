@@ -37,7 +37,9 @@ public class StatementsTest {
                 .addToken(whileStatement)
                 .endLevel()
                 .completeLanguage();
-        //language.getParser().parse("a");
+        //assertEquals(new WhileStatement(), language.getParser().parse("while(){}", new ParserStrategy<N>() {
+        //
+        //}));
     }
 
 }

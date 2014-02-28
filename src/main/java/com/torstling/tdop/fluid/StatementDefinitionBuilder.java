@@ -25,6 +25,6 @@ public class StatementDefinitionBuilder<N> {
 
     @NotNull
     public TokenDefinition<N> build() {
-        return new TokenDefinition<N>(Pattern.compile(""), prefixAstBuilder, null, name, true);
+        return new TokenDefinition<N>(Pattern.compile("BLEARGHLETSHOPETHISNEVERMATCHES"), prefixAstBuilder, null, name, true);
     }
 }
