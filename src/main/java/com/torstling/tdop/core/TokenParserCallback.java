@@ -19,4 +19,7 @@ public interface TokenParserCallback<N> {
 
     @NotNull
     Token<N> peek();
+
+    @NotNull
+    Token<N> pop();
 }

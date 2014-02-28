@@ -27,7 +27,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     }
 
     private N parse(@Nullable N previous, @NotNull ParserStrategy<N> strategy) {
-        return strategy.parse(previous, tokens, this);
+        return strategy.parse(previous, this);
     }
 
     @NotNull
@@ -43,5 +43,11 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     @Override
     public Token<N> peek() {
         return tokens.peek();
+    }
+
+    @NotNull
+    @Override
+    public Token<N> pop() {
+        return tokens.pop();
     }
 }
