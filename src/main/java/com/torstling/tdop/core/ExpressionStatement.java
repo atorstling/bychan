@@ -3,10 +3,10 @@ package com.torstling.tdop.core;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ExpressionParserStrategy<N> implements ParserStrategy<N> {
+public class ExpressionStatement<N> implements Statement<N> {
     private final int powerFloor;
 
-    public ExpressionParserStrategy(int powerFloor) {
+    public ExpressionStatement(int powerFloor) {
         this.powerFloor = powerFloor;
     }
 

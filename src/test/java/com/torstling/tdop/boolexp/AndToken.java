@@ -18,7 +18,7 @@ public class AndToken<S> implements Token<BooleanExpressionNode> {
 
     @NotNull
     public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        BooleanExpressionNode right = parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode();
+        BooleanExpressionNode right = parser.tryParse(previous, new ExpressionStatement<>(infixBindingPower())).getRootNode();
         return new AndNode(previous, right);
     }
 

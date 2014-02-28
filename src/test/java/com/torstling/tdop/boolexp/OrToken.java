@@ -19,7 +19,7 @@ public class OrToken<S> implements Token<BooleanExpressionNode> {
 
     @NotNull
     public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new OrNode(previous, parser.tryParse(previous, new ExpressionParserStrategy<>(infixBindingPower())).getRootNode());
+        return new OrNode(previous, parser.tryParse(previous, new ExpressionStatement<>(infixBindingPower())).getRootNode());
     }
 
     public int infixBindingPower() {

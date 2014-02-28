@@ -43,7 +43,7 @@ public class GenericParser<N> {
     @NotNull
     private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
         PrattParser<N> parser = new PrattParser<>(tokens);
-        ExpressionParserStrategy<N> strategy = new ExpressionParserStrategy<>(0);
+        ExpressionStatement<N> strategy = new ExpressionStatement<>(0);
         return parser.tryParse(previous, strategy);
     }
 }
