@@ -3,22 +3,14 @@ package com.torstling.tdop.core;
 import org.jetbrains.annotations.NotNull;
 
 public class LexingFailedException extends RuntimeException {
-    private final int lexingPosition;
-    @NotNull
-    private final String matchSection;
+    private final LexingPosition lexingPosition;
 
-    public LexingFailedException(int lexingPosition, @NotNull String matchSection) {
-        super("No matching rule for char-range starting at " + lexingPosition + ": '" + matchSection + "'");
+    public LexingFailedException(@NotNull final LexingPosition lexingPosition, @NotNull final String message) {
+        super(message);
         this.lexingPosition = lexingPosition;
-        this.matchSection = matchSection;
     }
 
-    public int getStreamPosition() {
+    public LexingPosition getLexingPosition() {
         return lexingPosition;
-    }
-
-    @NotNull
-    public String getMatchSection() {
-        return matchSection;
     }
 }

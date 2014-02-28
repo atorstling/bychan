@@ -5,9 +5,12 @@ import com.torstling.tdop.core.*;
 import com.torstling.tdop.generic.LeftParenthesisToken;
 import com.torstling.tdop.generic.RightParenthesisToken;
 import junit.framework.Assert;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -62,6 +65,41 @@ public class LexerTest {
             fail("expected exception");
         } catch (LexingFailedException e) {
             assertEquals("No matching rule for char-range starting at 0: ';'", e.getMessage());
+        }
+    }
+
+    @Test
+    public void abortOnMatchWithoutProgress() {
+        Lexer<Integer> l = new Lexer<>(Collections.singleton(new MatchAllTokenType()));
+        try {
+            l.lex("a");
+        } catch (LexingFailedException e) {
+            assertEquals(new LexingPosition(0, "a"), e.getLexingPosition());
+            assertTrue(e.getMessage().contains("did not advance lexing"));
+        }
+    }
+
+    private static class MatchAllTokenType implements TokenType<Integer> {
+        @NotNull
+        @Override
+        public Token<Integer> toToken(@NotNull LexingMatch match) {
+            return new LeftParenthesisToken<Integer>(match);
+        }
+
+        @NotNull
+        @Override
+        public Pattern getPattern() {
+            return Pattern.compile("");
+        }
+
+        @Override
+        public boolean include() {
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "matchAll";
         }
     }
 }

@@ -32,7 +32,7 @@ public class GenericParser<N> {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
             LexingFailedInformation failureInfo = lexingResult.getFailureValue();
-            return ParseResult.failure(new ParsingFailedInformation("Lexing failed:" + failureInfo.getMessage(), new LexingMatch(failureInfo.getLexingPosition().getStreamPosition(), failureInfo.getLexingPosition().getStreamPosition(), failureInfo.getLexingPosition().getMatchSection())));
+            return ParseResult.failure(new ParsingFailedInformation("Lexing failed:" + failureInfo.getMessage(), new LexingMatch(failureInfo.getLexingPosition().getStreamPosition(), failureInfo.getLexingPosition().getStreamPosition(), failureInfo.getLexingPosition().getRemainingText())));
         }
         return tryParse(previous, lexingResult.getSuccessValue());
     }

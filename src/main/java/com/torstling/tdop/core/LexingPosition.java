@@ -8,11 +8,11 @@ import org.jetbrains.annotations.NotNull;
 public class LexingPosition {
     private final int streamPosition;
     @NotNull
-    private final String matchSection;
+    private final String remainingText;
 
-    public LexingPosition(final int streamPosition, @NotNull final String matchSection) {
+    public LexingPosition(final int streamPosition, @NotNull final String remainingText) {
         this.streamPosition = streamPosition;
-        this.matchSection = matchSection;
+        this.remainingText = remainingText;
     }
 
     public int getStreamPosition() {
@@ -20,7 +20,35 @@ public class LexingPosition {
     }
 
     @NotNull
-    public String getMatchSection() {
-        return matchSection;
+    public String getRemainingText() {
+        return remainingText;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LexingPosition that = (LexingPosition) o;
+
+        if (streamPosition != that.streamPosition) return false;
+        if (!remainingText.equals(that.remainingText)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = streamPosition;
+        result = 31 * result + remainingText.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "LexingPosition{" +
+                "streamPosition=" + streamPosition +
+                ", remainingText='" + remainingText + '\'' +
+                '}';
     }
 }
