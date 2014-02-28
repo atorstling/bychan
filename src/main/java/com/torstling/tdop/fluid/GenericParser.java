@@ -14,8 +14,21 @@ public class GenericParser<N> {
         this.lexer = lexer;
     }
 
+    public N parse(@NotNull final String text) {
+        return tryParse(text).getRootNode();
+    }
+
+    public ParseResult<N> tryParse(@NotNull final String text) {
+        return tryParseInternal(null, text);
+    }
+
     @NotNull
-    public ParseResult<N> tryParse(@Nullable N previous, @NotNull final String text) {
+    public ParseResult<N> tryParse(@NotNull N previous, @NotNull final String text) {
+        return tryParseInternal(previous, text);
+    }
+
+    @NotNull
+    private ParseResult<N> tryParseInternal(@Nullable N previous, @NotNull final String text) {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
             LexingFailedInformation failureInfo = lexingResult.getFailureValue();
@@ -25,21 +38,9 @@ public class GenericParser<N> {
     }
 
     @NotNull
-    public ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
+    private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
         PrattParser<N> parser = new PrattParser<>(tokens);
-        return parser.tryParse(previous, new ExpressionParserStrategy<>(0));
-    }
-
-    @NotNull
-    public ParseResult<N> tryParse(@NotNull final List<Token<N>> tokens) {
-        return tryParse(null, tokens);
-    }
-
-    public ParseResult<N> tryParse(@NotNull final String text) {
-        return tryParse(null, text);
-    }
-
-    public N parse(@NotNull final String text) {
-        return tryParse(text).getRootNode();
+        ExpressionParserStrategy<N> strategy = new ExpressionParserStrategy<>(0);
+        return parser.tryParse(previous, strategy);
     }
 }
