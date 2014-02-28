@@ -6,16 +6,20 @@ public class ParsingFailedInformation {
     @NotNull
     private final String failureMessage;
     @NotNull
-    private final LexingMatch match;
+    private final ParsingPosition parsingPosition;
 
-    public ParsingFailedInformation(@NotNull String failureMessage, @NotNull LexingMatch match) {
+    public ParsingFailedInformation(@NotNull String failureMessage, @NotNull final ParsingPosition parsingPosition) {
         this.failureMessage = failureMessage;
-        this.match = match;
+        this.parsingPosition = parsingPosition;
+    }
+
+    public ParsingFailedInformation(@NotNull final String failureMessage, @NotNull final LexingMatch lexingMatch) {
+        this(failureMessage, new ParsingPosition(lexingMatch));
     }
 
     @Override
     public String toString() {
-        return "Parsing terminated at lexing match " + match + ": " + failureMessage;
+        return "Parsing terminated at lexing match " + parsingPosition + ": " + failureMessage;
     }
 
     @Override
@@ -25,13 +29,16 @@ public class ParsingFailedInformation {
 
         ParsingFailedInformation that = (ParsingFailedInformation) o;
 
-        return failureMessage.equals(that.failureMessage) && match.equals(that.match);
+        if (!failureMessage.equals(that.failureMessage)) return false;
+        if (!parsingPosition.equals(that.parsingPosition)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
         int result = failureMessage.hashCode();
-        result = 31 * result + match.hashCode();
+        result = 31 * result + parsingPosition.hashCode();
         return result;
     }
 }
