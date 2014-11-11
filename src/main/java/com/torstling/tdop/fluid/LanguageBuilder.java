@@ -31,8 +31,4 @@ public class LanguageBuilder<N> {
     public TokenDefinitionBuilder<N> newToken() {
         return new TokenDefinitionBuilder<>();
     }
-
-    public StatementDefinitionBuilder<N> newStatement(@NotNull final String statementName) {
-        return new StatementDefinitionBuilder<N>().named(statementName);
-    }
 }

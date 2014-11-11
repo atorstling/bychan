@@ -17,7 +17,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @Override
     @NotNull
-    public ParseResult<N> tryParse(@Nullable N previous, @NotNull Statement<N> statement) {
+    public ParseResult<N> tryParse(@Nullable N previous, @NotNull ExpressionStatement<N> statement) {
         try {
             N rootNode = parse(previous, statement);
             return ParseResult.success(rootNode);
@@ -26,7 +26,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         }
     }
 
-    private N parse(@Nullable N previous, @NotNull Statement<N> statement) {
+    private N parse(@Nullable N previous, @NotNull ExpressionStatement<N> statement) {
         return statement.parse(previous, this);
     }
 
