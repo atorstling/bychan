@@ -1,4 +1,4 @@
-package com.torstling.tdop.fluid.json;
+package com.torstling.tdop.fluid.json.bnf;
 
 import com.torstling.tdop.fluid.StandaloneAstBuilder;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package com.torstling.tdop.fluid.json;
+package com.torstling.tdop.fluid.json.bnf;
 
 import com.torstling.tdop.fluid.GenericParser;
 import com.torstling.tdop.fluid.LanguageBuilder;

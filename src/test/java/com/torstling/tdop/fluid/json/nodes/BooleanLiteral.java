@@ -1,21 +1,13 @@
-package com.torstling.tdop.fluid.json;
+package com.torstling.tdop.fluid.json.nodes;
 
 /**
  * Created by alext on 2/26/14.
  */
-public class Digit {
-    private final short value;
+public class BooleanLiteral {
+    private final boolean value;
 
-    public Digit(short value) {
+    public BooleanLiteral(boolean value) {
         this.value = value;
-    }
-
-    public Digit(int value) {
-        this((short) value);
-    }
-
-    public short getValue() {
-        return value;
     }
 
     @Override
@@ -23,7 +15,7 @@ public class Digit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Digit that = (Digit) o;
+        BooleanLiteral that = (BooleanLiteral) o;
 
         if (value != that.value) return false;
 
@@ -32,6 +24,6 @@ public class Digit {
 
     @Override
     public int hashCode() {
-        return (int) value;
+        return (value ? 1 : 0);
     }
 }

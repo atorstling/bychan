@@ -1,4 +1,4 @@
-package com.torstling.tdop.fluid.json;
+package com.torstling.tdop.fluid.json.bnf;
 
 /**
  * Created by alext on 2/26/14.

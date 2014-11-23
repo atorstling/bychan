@@ -1,4 +1,4 @@
-package com.torstling.tdop.fluid.json;
+package com.torstling.tdop.fluid.json.nodes;
 
 import org.jetbrains.annotations.NotNull;
 
