@@ -22,20 +22,20 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode> rparen = lb
                 .newLevel().startToken().matchesString(")").named("rparen").completeTokenAndPause();
         Language<BooleanExpressionNode> l = lb
-                .newLevel().startToken().matchesString("(").named("lparen").supportsPrefix((previous, match, parser) -> {
+                .newLevel().startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
                     BooleanExpressionNode trailingExpression = parser.expression(previous);
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).completeToken()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken().endLevel()
                 .newLevel()
-                .startToken().matchesString("!").named("not").supportsPrefix((previous, match, parser) -> new NotNode(parser.expression(previous))).completeToken()
+                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.expression(previous))).completeToken()
                 .endLevel()
                 .newLevel()
-                .startToken().matchesString("&").named("and").supportsInfix((match, previous, parser) -> new AndNode(previous, parser.expression(previous))).completeToken()
+                .startToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.expression(previous))).completeToken()
                 .endLevel()
                 .newLevel()
-                .startToken().matchesPattern("[a-z]+").named("variable").supportsStandalone((previous, match) -> new VariableNode(match.getText())).completeToken()
+                .startToken().matchesPattern("[a-z]+").named("variable").standaloneParseAs((previous, match) -> new VariableNode(match.getText())).completeToken()
                 .endLevel()
                 .completeLanguage();
         checkparanthesisPrio(l);

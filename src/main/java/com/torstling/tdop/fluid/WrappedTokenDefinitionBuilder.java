@@ -28,17 +28,17 @@ public class WrappedTokenDefinitionBuilder<N> {
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N> supportsPrefix(PrefixAstBuilder<N> prefixBuilder) {
+    public WrappedTokenDefinitionBuilder<N> prefixParseAs(PrefixAstBuilder<N> prefixBuilder) {
         delegate.supportsPrefix(prefixBuilder);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N> supportsInfix(InfixAstBuilder<N> infixBuilder) {
+    public WrappedTokenDefinitionBuilder<N> infixParseAs(InfixAstBuilder<N> infixBuilder) {
         delegate.supportsInfix(infixBuilder);
         return this;
     }
 
-    public WrappedTokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<N> nStandaloneAstBuilder) {
+    public WrappedTokenDefinitionBuilder<N> standaloneParseAs(StandaloneAstBuilder<N> nStandaloneAstBuilder) {
         delegate.supportsStandalone(nStandaloneAstBuilder);
         return this;
     }

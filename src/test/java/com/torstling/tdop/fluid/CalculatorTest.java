@@ -77,13 +77,13 @@ public class CalculatorTest {
                 .newToken().named("lparen").matchesString("(")
                 .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
                 .newLevelToken().named("plus").matchesString("+")
-                .supportsPrefix((previous, match, parser) -> parser.expression(previous))
-                .supportsInfix((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
+                .prefixParseAs((previous, match, parser) -> parser.expression(previous))
+                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
                 .newLevelToken().named("minus").matchesString("-")
-                .supportsPrefix((previous, match, parser) -> new NegationNode(parser.expression(previous)))
-                .supportsInfix((match, previous, parser) -> new SubtractionNode(previous, parser.expression(previous)))
+                .prefixParseAs((previous, match, parser) -> new NegationNode(parser.expression(previous)))
+                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.expression(previous)))
                 .newLevelToken().named("number").matchesPattern("[0-9]+")
-                .supportsStandalone((previous, match) -> new NumberNode(Integer.parseInt(match.getText())))
+                .standaloneParseAs((previous, match) -> new NumberNode(Integer.parseInt(match.getText())))
                 .completeLanguage();
 
         assertEquals(3, l.getParser().tryParse("1+2").getRootNode().evaluate());
