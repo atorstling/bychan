@@ -1,5 +1,6 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.manual;
 
+import com.torstling.tdop.calculator.nodes.CalculatorNode;
 import com.torstling.tdop.core.TokenType;
 import com.torstling.tdop.generic.LeftParenthesisTokenType;
 import com.torstling.tdop.generic.RightParenthesisTokenType;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class CalculatorTokenTypes {
     @NotNull
-    public static <S> List<TokenType<CalculatorNode>> get() {
+    public static List<TokenType<CalculatorNode>> get() {
         return Arrays.<TokenType<CalculatorNode>>asList(
                 new WhitespaceTokenType<>(),
                 NumberTokenType.get(),

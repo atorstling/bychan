@@ -1,5 +1,7 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.manual;
 
+import com.torstling.tdop.calculator.nodes.CalculatorNode;
+import com.torstling.tdop.calculator.nodes.NumberNode;
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.Token;
 import com.torstling.tdop.core.TokenParserCallback;

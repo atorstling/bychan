@@ -70,4 +70,19 @@ public class WrappedTokenDefinitionBuilder<N> {
         languageBuilder.startToken(tokenDefinition).endLevel();
         return tokenDefinition;
     }
+
+    @NotNull
+    public WrappedTokenDefinitionBuilder<N> newToken() {
+        return completeToken().startToken();
+    }
+
+    @NotNull
+    public WrappedTokenDefinitionBuilder<N> newLevelToken() {
+        return completeToken().newLevel().startToken();
+    }
+
+    @NotNull
+    public Language<N> completeLanguage() {
+        return completeToken().endLevel().completeLanguage();
+    }
 }

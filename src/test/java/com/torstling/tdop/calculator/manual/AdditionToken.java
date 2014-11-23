@@ -1,16 +1,17 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.manual;
 
 
+import com.torstling.tdop.calculator.nodes.AdditionNode;
+import com.torstling.tdop.calculator.nodes.CalculatorNode;
 import com.torstling.tdop.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MultiplicationToken<S> implements Token<CalculatorNode> {
-
+public class AdditionToken<S> implements Token<CalculatorNode> {
     @NotNull
     private final LexingMatch match;
 
-    public MultiplicationToken(@NotNull final LexingMatch match) {
+    public AdditionToken(@NotNull final LexingMatch match) {
         this.match = match;
     }
 
@@ -22,25 +23,24 @@ public class MultiplicationToken<S> implements Token<CalculatorNode> {
     @NotNull
     public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         CalculatorNode right = parser.tryParse(previous, new Expression<>(infixBindingPower())).getRootNode();
-        return new MultiplicationNode(previous, right);
+        return new AdditionNode(previous, right);
     }
 
     public int infixBindingPower() {
-        return 20;
+        return 10;
     }
 
     public String toString() {
-        return "*";
+        return "+";
     }
-
 
     @Override
     @NotNull
     public TokenType<CalculatorNode> getType() {
-        return MultiplicationTokenType.get();
+        return AdditionTokenType.get();
     }
 
-    @org.jetbrains.annotations.NotNull
+    @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;

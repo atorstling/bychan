@@ -1,6 +1,12 @@
 package com.torstling.tdop;
 
-import com.torstling.tdop.calculator.*;
+import com.torstling.tdop.calculator.manual.MultiplicationNode;
+import com.torstling.tdop.calculator.manual.MultiplicationToken;
+import com.torstling.tdop.calculator.manual.NumberToken;
+import com.torstling.tdop.calculator.manual.SubtractionToken;
+import com.torstling.tdop.calculator.nodes.CalculatorNode;
+import com.torstling.tdop.calculator.nodes.NumberNode;
+import com.torstling.tdop.calculator.nodes.SubtractionNode;
 import com.torstling.tdop.core.*;
 import com.torstling.tdop.generic.LeftParenthesisToken;
 import com.torstling.tdop.generic.RightParenthesisToken;

@@ -1,4 +1,4 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.nodes;
 
 public class SubtractionNode implements CalculatorNode {
     private final CalculatorNode previous;

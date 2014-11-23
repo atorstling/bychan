@@ -26,4 +26,14 @@ public class LevelLanguageBuilder2<N> {
         this.delegate = delegate;
         this.previous = previous;
     }
+
+    @NotNull
+    public LevelLanguageBuilder2<N> newLevel() {
+        return endLevel().newLevel();
+    }
+
+    @NotNull
+    public WrappedTokenDefinitionBuilder<N> ńewToken() {
+        return startToken();
+    }
 }

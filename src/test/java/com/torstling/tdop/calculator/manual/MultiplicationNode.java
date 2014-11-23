@@ -1,4 +1,6 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.manual;
+
+import com.torstling.tdop.calculator.nodes.CalculatorNode;
 
 public class MultiplicationNode implements CalculatorNode {
     private final CalculatorNode previous;

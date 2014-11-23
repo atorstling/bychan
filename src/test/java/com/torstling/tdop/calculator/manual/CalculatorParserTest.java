@@ -1,5 +1,8 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.manual;
 
+import com.torstling.tdop.calculator.nodes.CalculatorNode;
+import com.torstling.tdop.calculator.nodes.NumberNode;
+import com.torstling.tdop.calculator.nodes.SubtractionNode;
 import org.junit.Test;
 
 import java.io.BufferedReader;

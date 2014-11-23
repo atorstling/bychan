@@ -1,4 +1,4 @@
-package com.torstling.tdop.calculator;
+package com.torstling.tdop.calculator.nodes;
 
 import com.torstling.tdop.core.AstNode;
 
