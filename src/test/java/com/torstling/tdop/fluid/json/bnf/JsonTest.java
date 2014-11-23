@@ -1,11 +1,8 @@
-package com.torstling.tdop.fluid.json;
+package com.torstling.tdop.fluid.json.bnf;
 
 import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.ParsingFailedInformation;
-import com.torstling.tdop.fluid.json.bnf.BnfBuilder;
-import com.torstling.tdop.fluid.json.bnf.BnfGrammarBuilder;
-import com.torstling.tdop.fluid.json.bnf.NonTerminal;
 import com.torstling.tdop.fluid.json.nodes.BooleanLiteral;
 import com.torstling.tdop.fluid.json.nodes.Digit;
 import com.torstling.tdop.fluid.json.nodes.NullLiteral;
