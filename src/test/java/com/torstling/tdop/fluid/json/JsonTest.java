@@ -78,7 +78,7 @@ public class JsonTest {
         BnfBuilder b = new BnfBuilder();
         BnfGrammarBuilder g = b.newGrammar();
         b.define("digit").as(makeDigitZero(b)).or().as(makeDigitNotZero(b)).addTo(g);
-        //assertEquals(new Digit(1), g.parser().parse("1"));
-        //assertEquals(new Digit(0), g.parser().parse("0"));
+        assertEquals(new Digit(1), g.parser().parse("1"));
+        assertEquals(new Digit(0), g.parser().parse("0"));
     }
 }
