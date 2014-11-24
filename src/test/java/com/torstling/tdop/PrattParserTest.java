@@ -30,7 +30,7 @@ public class PrattParserTest {
     }
 
     private EndToken createTestEndToken() {
-        return new EndToken(new LexingMatch(Integer.MAX_VALUE, Integer.MAX_VALUE, "END"));
+        return new EndToken(new LexingMatch(Integer.MAX_VALUE, Integer.MAX_VALUE, ""));
     }
 
     private LexingMatch createTestMatch(String text) {
@@ -153,7 +153,7 @@ public class PrattParserTest {
             p.tryParse(null, new Expression<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Expected a token of type 'RightParenthesisTokenType', but got 'END'", e.getMessage());
+            assertEquals("Parsing terminated at ParsingPosition{position=2147483647, remainingText=''}: Expected a token of type 'RightParenthesisTokenType', but got 'END'", e.getMessage());
         }
     }
 
@@ -178,7 +178,7 @@ public class PrattParserTest {
             p.tryParse(null, new Expression<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing terminated at lexing match LexingMatch{startPosition=2147483647, endPosition=2147483647, text='END'}: Cannot parse expression, end reached", e.getMessage());
+            assertEquals("Parsing terminated at ParsingPosition{position=2147483647, remainingText=''}: Cannot parse expression, end reached", e.getMessage());
         }
     }
 }

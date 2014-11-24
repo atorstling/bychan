@@ -39,7 +39,7 @@ public class Lexer<N> {
             }
             i += progress;
         }
-        tokens.add(new EndToken<>(new LexingMatch(input.length(), input.length(), "END")));
+        tokens.add(new EndToken<>(new LexingMatch(input.length(), input.length(), "")));
         return tokens;
     }
 

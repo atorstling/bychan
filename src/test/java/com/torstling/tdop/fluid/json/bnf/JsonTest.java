@@ -1,8 +1,8 @@
 package com.torstling.tdop.fluid.json.bnf;
 
-import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.ParsingFailedInformation;
+import com.torstling.tdop.core.ParsingPosition;
 import com.torstling.tdop.fluid.json.nodes.BooleanLiteral;
 import com.torstling.tdop.fluid.json.nodes.Digit;
 import com.torstling.tdop.fluid.json.nodes.NullLiteral;
@@ -49,7 +49,7 @@ public class JsonTest {
         BnfGrammarBuilder g = b.newGrammar();
         makeDigitNotZero(b).addTo(g);
         assertEquals(new Digit(1), g.parser().parse("1"));
-        ParsingFailedInformation failedInformation = new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '0'", new LexingMatch(0, 0, "0"));
+        ParsingFailedInformation failedInformation = new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '0'", new ParsingPosition(0, "0"));
         ParseResult<Object> failure = ParseResult.failure(failedInformation);
         assertEquals(failure, g.parser().tryParse("0"));
     }
@@ -65,7 +65,7 @@ public class JsonTest {
         BnfGrammarBuilder g = b.newGrammar();
         makeDigitZero(b).addTo(g);
         assertEquals(new Digit(0), g.parser().parse("0"));
-        ParsingFailedInformation failedInformation = new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '1'", new LexingMatch(0, 0, "1"));
+        ParsingFailedInformation failedInformation = new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '1'", new ParsingPosition(0, "1"));
         ParseResult<Object> failure = ParseResult.failure(failedInformation);
         assertEquals(failure, g.parser().tryParse("1"));
     }

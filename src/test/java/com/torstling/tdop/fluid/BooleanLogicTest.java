@@ -4,9 +4,9 @@ import com.torstling.tdop.boolexp.AndNode;
 import com.torstling.tdop.boolexp.BooleanExpressionNode;
 import com.torstling.tdop.boolexp.NotNode;
 import com.torstling.tdop.boolexp.VariableNode;
-import com.torstling.tdop.core.LexingMatch;
 import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.ParsingFailedInformation;
+import com.torstling.tdop.core.ParsingPosition;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
@@ -83,7 +83,7 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
         ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
-        assertEquals(new ParsingFailedInformation("Expected a token of type 'rparen', but got 'END'", new LexingMatch(2, 2, "END")), errorMessage);
+        assertEquals(new ParsingFailedInformation("Expected a token of type 'rparen', but got 'END'", new ParsingPosition(2, "")), errorMessage);
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {

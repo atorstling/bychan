@@ -57,4 +57,9 @@ public class LexingMatch {
         result = 31 * result + text.hashCode();
         return result;
     }
+
+    @NotNull
+    public ParsingPosition toParsingPosition() {
+        return new ParsingPosition(endPosition, text);
+    }
 }

@@ -13,13 +13,9 @@ public class ParsingFailedInformation {
         this.parsingPosition = parsingPosition;
     }
 
-    public ParsingFailedInformation(@NotNull final String failureMessage, @NotNull final LexingMatch lexingMatch) {
-        this(failureMessage, new ParsingPosition(lexingMatch));
-    }
-
     @Override
     public String toString() {
-        return "Parsing terminated at lexing match " + parsingPosition + ": " + failureMessage;
+        return "Parsing terminated at " + parsingPosition + ": " + failureMessage;
     }
 
     @Override

@@ -19,12 +19,12 @@ public class EndToken<N> implements Token<N> {
 
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
-        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", new ParsingPosition(lexingMatch.getStartPosition(), lexingMatch.getText())));
     }
 
     @NotNull
     public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", lexingMatch));
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse expression, end reached", new ParsingPosition(lexingMatch.getStartPosition(), lexingMatch.getText())));
     }
 
     public int infixBindingPower() {

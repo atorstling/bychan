@@ -17,18 +17,18 @@ public class WhitespaceToken<N> implements Token<N> {
     @NotNull
     @Override
     public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match.toParsingPosition()));
     }
 
     @NotNull
     @Override
     public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match.toParsingPosition()));
     }
 
     @Override
     public int infixBindingPower() {
-        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match));
+        throw new ParsingFailedException(new ParsingFailedInformation("Cannot parse whitespace", match.toParsingPosition()));
     }
 
     @NotNull

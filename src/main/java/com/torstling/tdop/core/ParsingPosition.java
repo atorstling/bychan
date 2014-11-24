@@ -6,16 +6,13 @@ import org.jetbrains.annotations.NotNull;
  * Created by alext on 2/28/14.
  */
 public class ParsingPosition {
+    private final int position;
     @NotNull
-    private final LexingMatch lexingMatch;
+    private final String remainingText;
 
-    public ParsingPosition(@NotNull final LexingMatch lexingMatch) {
-        this.lexingMatch = lexingMatch;
-    }
-
-    @Override
-    public String toString() {
-        return lexingMatch.toString();
+    public ParsingPosition(int position, @NotNull String remainingText) {
+        this.position = position;
+        this.remainingText = remainingText;
     }
 
     @Override
@@ -25,13 +22,24 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        if (!lexingMatch.equals(that.lexingMatch)) return false;
+        if (position != that.position) return false;
+        if (!remainingText.equals(that.remainingText)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return lexingMatch.hashCode();
+        int result = position;
+        result = 31 * result + remainingText.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ParsingPosition{" +
+                "position=" + position +
+                ", remainingText='" + remainingText + '\'' +
+                '}';
     }
 }
