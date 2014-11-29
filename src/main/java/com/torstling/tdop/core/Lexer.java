@@ -23,16 +23,15 @@ public class Lexer<N> {
         final List<Token<N>> tokens = new ArrayList<>();
         for (int i = 0; i < input.length(); ) {
             String substring = input.substring(i);
-            TokenMatchResult<N> matchResult = findMatchingToken(i, substring);
-            if (matchResult == null) {
+            Token<N> token = findMatchingToken(i, substring);
+            if (token == null) {
                 throw new LexingFailedException(new LexingPosition(i, substring), "No matching rule for char-range starting at " + i + ": '" + substring + "'");
             }
-            Token<N> token = matchResult.getToken();
             if (token.getType().include()) {
                 tokens.add(token);
             }
-            LexingMatch match = matchResult.getMatch();
-            TokenType<N> tokenType = matchResult.getTokenType();
+            TokenType<N> tokenType = token.getType();
+            LexingMatch match = token.getMatch();
             int progress = match.getEndPosition() - match.getStartPosition();
             if (progress < 1) {
                 throw new LexingFailedException(new LexingPosition(i, substring), String.format("Match '%s' for token type '%s' produced token '%s' but did not advance lexing. Aborting.", match, tokenType, token));
@@ -44,7 +43,7 @@ public class Lexer<N> {
     }
 
     @Nullable
-    private TokenMatchResult<N> findMatchingToken(final int i, @NotNull final String substring) {
+    private Token<N> findMatchingToken(final int i, @NotNull final String substring) {
         for (TokenType<N> tokenType : tokenTypes) {
             Pattern pattern = tokenType.getPattern();
             Matcher matcher = pattern.matcher(substring);
@@ -53,7 +52,7 @@ public class Lexer<N> {
                 int substringEnd = matcher.end();
                 String stringMatch = substring.substring(0, substringEnd);
                 LexingMatch<N> match = new LexingMatch<>(substringStart + i, substringEnd + i, stringMatch, tokenType);
-                return new TokenMatchResult<>(match, tokenType, match.toToken());
+                return match.toToken();
             }
         }
         return null;
