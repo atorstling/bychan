@@ -13,19 +13,22 @@ import static org.junit.Assert.assertEquals;
  */
 public class JsonTest {
 
-
     @Test
-    public void test() {
+    public void onlyText() {
+        JsonNode ast = parse("\"hello\"");
+        assertEquals(new StringLiteralNode("hello"), ast);
+    }
+
+    private JsonNode parse(String text) {
         LanguageBuilder2<JsonNode> lb = new LanguageBuilder2<>();
-        String stringLiteralPattern = "\"(\\w+)\"";
-        Language<JsonNode> l = lb.newLevelToken().named("string_literal").matchesPattern(stringLiteralPattern)
+        Language<JsonNode> l = lb.newLevel()
+                .startToken().named("string_literal").matchesPattern("\"(\\w*)\"")
                 .standaloneParseAs((previous, match) -> {
                     String withinQuotationMarks = match.group(1);
                     return new StringLiteralNode(withinQuotationMarks);
                 })
                 .completeLanguage();
-        JsonNode ast = l.getParser().parse("\"hello\"");
-        assertEquals(new StringLiteralNode("hello"), ast);
+        return l.getParser().parse(text);
     }
 
 }
