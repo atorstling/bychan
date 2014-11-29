@@ -2,6 +2,7 @@ package com.torstling.tdop;
 
 import com.torstling.tdop.calculator.manual.CalculatorTokenTypes;
 import com.torstling.tdop.calculator.manual.NumberToken;
+import com.torstling.tdop.calculator.manual.NumberTokenType;
 import com.torstling.tdop.calculator.manual.SubtractionToken;
 import com.torstling.tdop.calculator.nodes.CalculatorNode;
 import com.torstling.tdop.core.*;
@@ -25,7 +26,7 @@ public class LexerTest {
         List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.get()).lex("(1 -) ");
         assertEquals(tokens.toString(), 5, tokens.size());
         assertTrue(tokens.get(0) instanceof LeftParenthesisToken);
-        Assert.assertEquals(new NumberToken(new LexingMatch(0, 1, "1")), tokens.get(1));
+        Assert.assertEquals(new NumberToken(new LexingMatch<>(0, 1, "1", NumberTokenType.get())), tokens.get(1));
         assertTrue(tokens.get(2) instanceof SubtractionToken);
         assertTrue(tokens.get(3) instanceof RightParenthesisToken);
         assertTrue(tokens.get(4) instanceof EndToken);

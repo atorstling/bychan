@@ -30,11 +30,11 @@ public class PrattParserTest {
     }
 
     private EndToken createTestEndToken() {
-        return new EndToken(new LexingMatch(Integer.MAX_VALUE, Integer.MAX_VALUE, ""));
+        return new EndToken(new LexingMatch<>(Integer.MAX_VALUE, Integer.MAX_VALUE, "", EndTokenType.get()));
     }
 
     private LexingMatch createTestMatch(String text) {
-        return new LexingMatch(0, 1, text);
+        return new LexingMatch<>(0, 1, text, new MockTokenType());
     }
 
     @NotNull
@@ -181,4 +181,5 @@ public class PrattParserTest {
             assertEquals("Parsing terminated at ParsingPosition{position=2147483647, remainingText=''}: Cannot parse expression, end reached", e.getMessage());
         }
     }
+
 }

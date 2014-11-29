@@ -5,17 +5,20 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A lexing match :)
  */
-public class LexingMatch {
+public class LexingMatch<N> {
 
     private final int startPosition;
     private final int endPosition;
     @NotNull
     private final String text;
+    @NotNull
+    private final TokenType<N> tokenType;
 
-    public LexingMatch(int startPosition, int endPosition, @NotNull final String text) {
+    public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final TokenType<N> tokenType) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.text = text;
+        this.tokenType = tokenType;
     }
 
     @NotNull
