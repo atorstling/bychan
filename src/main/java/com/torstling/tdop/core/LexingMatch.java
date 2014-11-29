@@ -77,4 +77,9 @@ public class LexingMatch<N> {
         }
         return matcher.group(i);
     }
+
+    @NotNull
+    public Token<N> toToken() {
+        return tokenType.toToken(this);
+    }
 }

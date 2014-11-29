@@ -13,7 +13,7 @@ class TokenMatchResult<N> {
     @NotNull
     private final Token<N> token;
 
-    TokenMatchResult(@NotNull LexingMatch match, TokenType<N> tokenType, @NotNull Token<N> token) {
+    TokenMatchResult(@NotNull LexingMatch match, @NotNull TokenType<N> tokenType, @NotNull Token<N> token) {
         this.match = match;
         this.tokenType = tokenType;
         this.token = token;
