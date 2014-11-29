@@ -6,9 +6,6 @@ import com.torstling.tdop.fluid.json.nodes.JsonNode;
 import com.torstling.tdop.fluid.json.nodes.StringLiteralNode;
 import org.junit.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -23,11 +20,7 @@ public class JsonTest {
         String stringLiteralPattern = "\"(\\w+)\"";
         Language<JsonNode> l = lb.newLevelToken().named("string_literal").matchesPattern(stringLiteralPattern)
                 .standaloneParseAs((previous, match) -> {
-                    String text = match.getText();
-                    Matcher matcher = Pattern.compile(stringLiteralPattern).matcher(text);
-                    boolean matches = matcher.matches();
-                    assert matches;
-                    String withinQuotationMarks = matcher.group(1);
+                    String withinQuotationMarks = match.group(1);
                     return new StringLiteralNode(withinQuotationMarks);
                 })
                 .completeLanguage();

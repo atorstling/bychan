@@ -2,6 +2,8 @@ package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Matcher;
+
 /**
  * A lexing match :)
  */
@@ -64,5 +66,15 @@ public class LexingMatch<N> {
     @NotNull
     public ParsingPosition toParsingPosition() {
         return new ParsingPosition(endPosition, text);
+    }
+
+    @NotNull
+    public String group(int i) {
+        Matcher matcher = tokenType.getPattern().matcher(text);
+        boolean matches = matcher.matches();
+        if (!matches) {
+            throw new IllegalStateException();
+        }
+        return matcher.group(i);
     }
 }
