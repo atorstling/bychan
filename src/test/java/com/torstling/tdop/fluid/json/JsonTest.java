@@ -82,14 +82,14 @@ public class JsonTest {
     }
 
     @Test
-    public void twoElementArray() {
+    public void multipleElementArray() {
         TokenDefinition<JsonNode> rbracket = rbracket();
         TokenDefinition<JsonNode> comma = comma();
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
                 .newLevel().addToken(comma).addToken(rbracket).addToken(lbracket(rbracket, comma)).newLevel().addToken(numberLiteral())
                 .completeLanguage();
-        JsonNode ast = l.getParser().parse("[3,2]");
-        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2))), ast);
+        JsonNode ast = l.getParser().parse("[3,2,4]");
+        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2), new NumberLiteralNode(4))), ast);
     }
 
     @NotNull
