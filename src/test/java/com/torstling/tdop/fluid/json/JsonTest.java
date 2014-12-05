@@ -8,6 +8,7 @@ import com.torstling.tdop.fluid.json.nodes.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -61,13 +62,34 @@ public class JsonTest {
     }
 
     @Test
+    public void emptyArray() {
+        TokenDefinition<JsonNode> rbracket = rbracket();
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(rbracket).addToken(lbracket(rbracket, comma())).newLevel().addToken(numberLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("[]");
+        assertEquals(new ArrayNode(Collections.emptyList()), ast);
+    }
+
+    @Test
     public void singleElementArray() {
         TokenDefinition<JsonNode> rbracket = rbracket();
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(rbracket).addToken(lbracket(rbracket)).newLevel().addToken(numberLiteral())
+                .newLevel().addToken(rbracket).addToken(lbracket(rbracket, comma())).newLevel().addToken(numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("[3]");
         assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3))), ast);
+    }
+
+    @Test
+    public void twoElementArray() {
+        TokenDefinition<JsonNode> rbracket = rbracket();
+        TokenDefinition<JsonNode> comma = comma();
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(comma).addToken(rbracket).addToken(lbracket(rbracket, comma)).newLevel().addToken(numberLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("[3,2]");
+        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2))), ast);
     }
 
     @NotNull
@@ -77,17 +99,24 @@ public class JsonTest {
     }
 
     @NotNull
-    private TokenDefinition<JsonNode> lbracket(TokenDefinition<JsonNode> rbracket) {
+    private TokenDefinition<JsonNode> comma() {
+        return new TokenDefinitionBuilder<JsonNode>().named("comma").matchesString(",")
+                .build();
+    }
+
+    @NotNull
+    private TokenDefinition<JsonNode> lbracket(TokenDefinition<JsonNode> rbracket, TokenDefinition<JsonNode> comma) {
         return new TokenDefinitionBuilder<JsonNode>().named("lbracket").matchesString("[")
                 .prefixParseAs((previous, match, parser) -> {
-                    if (parser.nextIs(rbracket)) {
-                        parser.expectSingleToken(rbracket);
-                        return new ArrayNode(Collections.emptyList());
-                    } else {
-                        JsonNode trailing = parser.expression(previous);
-                        parser.expectSingleToken(rbracket);
-                        return new ArrayNode(Arrays.asList(trailing));
+                    ArrayList<JsonNode> expressions = new ArrayList<>();
+                    while (!parser.nextIs(rbracket)) {
+                        expressions.add(parser.expression(previous));
+                        if (!parser.nextIs(rbracket)) {
+                            parser.expectSingleToken(comma);
+                        }
                     }
+                    parser.expectSingleToken(rbracket);
+                    return new ArrayNode(expressions);
                 }).build();
     }
 
