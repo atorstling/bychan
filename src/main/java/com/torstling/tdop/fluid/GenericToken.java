@@ -40,9 +40,9 @@ public class GenericToken<N> implements Token<N> {
             }
 
             @Override
-            public boolean nextIsNot(@NotNull TokenDefinition<N> tokenTypeDefinition) {
+            public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
                 GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
-                return !parser.peek().getType().equals(expectedType);
+                return parser.peek().getType().equals(expectedType);
             }
         });
     }
@@ -74,9 +74,9 @@ public class GenericToken<N> implements Token<N> {
             }
 
             @Override
-            public boolean nextIsNot(@NotNull TokenDefinition<N> tokenTypeDefinition) {
+            public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
                 GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
-                return !parser.peek().getType().equals(expectedType);
+                return parser.peek().getType().equals(expectedType);
             }
         });
     }

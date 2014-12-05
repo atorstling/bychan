@@ -8,8 +8,10 @@ public class LevelLanguageBuilder2<N> {
     @NotNull
     private final LanguageBuilder2<N> previous;
 
-    public LevelLanguageBuilder<N> addToken(@NotNull TokenDefinition<N> token) {
-        return delegate.addToken(token);
+    @NotNull
+    public LevelLanguageBuilder2<N> addToken(@NotNull TokenDefinition<N> token) {
+        delegate.addToken(token);
+        return this;
     }
 
     @NotNull

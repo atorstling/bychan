@@ -141,9 +141,9 @@ public class MiniLangTest {
                 .named("listStart")
                 .prefixParseAs((previous, match, parser) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
-                    while (parser.nextIsNot(listEnd)) {
+                    while (!parser.nextIs(listEnd)) {
                         expressions.add(parser.expression(previous));
-                        if (parser.nextIsNot(listEnd)) {
+                        if (!parser.nextIs(listEnd)) {
                             parser.expectSingleToken(comma);
                         }
                     }

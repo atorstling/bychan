@@ -8,7 +8,9 @@ import com.torstling.tdop.fluid.json.nodes.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
-import static com.torstling.tdop.fluid.json.nodes.NullLiteral.get;
+import java.util.Arrays;
+import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
 
 public class JsonTest {
@@ -25,7 +27,7 @@ public class JsonTest {
     @Test
     public void positiveInteger() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(number())
+                .newLevel().addToken(numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("1");
         assertEquals(new NumberLiteralNode(1), ast);
@@ -34,7 +36,7 @@ public class JsonTest {
     @Test
     public void negativeExponent() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(number())
+                .newLevel().addToken(numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("-0.5e-5");
         assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
@@ -50,7 +52,7 @@ public class JsonTest {
     }
 
     @Test
-    public void zero() {
+    public void nul() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
                 .newLevel().addToken(nullLiteral())
                 .completeLanguage();
@@ -58,9 +60,41 @@ public class JsonTest {
         assertEquals(NullLiteral.get(), ast);
     }
 
+    @Test
+    public void singleElementArray() {
+        TokenDefinition<JsonNode> rbracket = rbracket();
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(rbracket).addToken(lbracket(rbracket)).newLevel().addToken(numberLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("[3]");
+        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3))), ast);
+    }
+
+    @NotNull
+    private TokenDefinition<JsonNode> rbracket() {
+        return new TokenDefinitionBuilder<JsonNode>().named("lbracket").matchesString("]")
+                .build();
+    }
+
+    @NotNull
+    private TokenDefinition<JsonNode> lbracket(TokenDefinition<JsonNode> rbracket) {
+        return new TokenDefinitionBuilder<JsonNode>().named("lbracket").matchesString("[")
+                .prefixParseAs((previous, match, parser) -> {
+                    if (parser.nextIs(rbracket)) {
+                        parser.expectSingleToken(rbracket);
+                        return new ArrayNode(Collections.emptyList());
+                    } else {
+                        JsonNode trailing = parser.expression(previous);
+                        parser.expectSingleToken(rbracket);
+                        return new ArrayNode(Arrays.asList(trailing));
+                    }
+                }).build();
+    }
+
+
     private TokenDefinition<JsonNode> nullLiteral() {
         return new TokenDefinitionBuilder<JsonNode>().named("null_literal").matchesString("null")
-                .standaloneParseAs((previous, match) -> get()).build();
+                .standaloneParseAs((previous, match) -> NullLiteral.get()).build();
     }
 
     @NotNull
@@ -79,7 +113,7 @@ public class JsonTest {
     }
 
     @NotNull
-    private TokenDefinition<JsonNode> number() {
+    private TokenDefinition<JsonNode> numberLiteral() {
         return new TokenDefinitionBuilder<JsonNode>().named("number_literal").matchesPattern("-?[0-9]+(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
                 .standaloneParseAs((previous, match) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
     }
