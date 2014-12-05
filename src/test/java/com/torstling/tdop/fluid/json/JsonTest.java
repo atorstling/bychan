@@ -1,5 +1,8 @@
 package com.torstling.tdop.fluid.json;
 
+import com.torstling.tdop.core.ParsingFailedException;
+import com.torstling.tdop.core.ParsingFailedInformation;
+import com.torstling.tdop.core.ParsingPosition;
 import com.torstling.tdop.fluid.Language;
 import com.torstling.tdop.fluid.LanguageBuilder2;
 import com.torstling.tdop.fluid.TokenDefinition;
@@ -13,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class JsonTest {
 
@@ -48,8 +52,12 @@ public class JsonTest {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
                 .newLevel().addToken(numberLiteral())
                 .completeLanguage();
-        JsonNode ast = l.getParser().parse("01.5");
-        assertEquals(new NumberLiteralNode(0), ast);
+        try {
+            l.getParser().parse("01.5");
+            fail("Expected exception");
+        } catch (ParsingFailedException e) {
+            assertEquals(new ParsingFailedInformation("Expected a token of type 'EndTokenType', but got 'number_literal(1.5)'", new ParsingPosition(4, "1.5")), e.getParsingFailedInformation());
+        }
     }
 
     @Test
