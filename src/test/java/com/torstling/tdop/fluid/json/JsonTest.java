@@ -4,12 +4,11 @@ import com.torstling.tdop.fluid.Language;
 import com.torstling.tdop.fluid.LanguageBuilder2;
 import com.torstling.tdop.fluid.TokenDefinition;
 import com.torstling.tdop.fluid.TokenDefinitionBuilder;
-import com.torstling.tdop.fluid.json.nodes.JsonNode;
-import com.torstling.tdop.fluid.json.nodes.NumberLiteralNode;
-import com.torstling.tdop.fluid.json.nodes.StringLiteralNode;
+import com.torstling.tdop.fluid.json.nodes.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import static com.torstling.tdop.fluid.json.nodes.NullLiteral.get;
 import static org.junit.Assert.assertEquals;
 
 public class JsonTest {
@@ -39,6 +38,35 @@ public class JsonTest {
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("-0.5e-5");
         assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
+    }
+
+    @Test
+    public void bool() {
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(boolLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("true");
+        assertEquals(new BooleanLiteralNode(true), ast);
+    }
+
+    @Test
+    public void zero() {
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(nullLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("null");
+        assertEquals(NullLiteral.get(), ast);
+    }
+
+    private TokenDefinition<JsonNode> nullLiteral() {
+        return new TokenDefinitionBuilder<JsonNode>().named("null_literal").matchesString("null")
+                .standaloneParseAs((previous, match) -> get()).build();
+    }
+
+    @NotNull
+    private TokenDefinition<JsonNode> boolLiteral() {
+        return new TokenDefinitionBuilder<JsonNode>().named("bool_literal").matchesPattern("(true)|(false)")
+                .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
     }
 
     @NotNull
