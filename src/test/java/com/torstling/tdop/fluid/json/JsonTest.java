@@ -44,6 +44,15 @@ public class JsonTest {
     }
 
     @Test
+    public void leadingZeroesForbidden() {
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(numberLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("01.5");
+        assertEquals(new NumberLiteralNode(0), ast);
+    }
+
+    @Test
     public void bool() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
                 .newLevel().addToken(boolLiteral())
@@ -83,6 +92,17 @@ public class JsonTest {
 
     @Test
     public void multipleElementArray() {
+        TokenDefinition<JsonNode> rbracket = rbracket();
+        TokenDefinition<JsonNode> comma = comma();
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(comma).addToken(rbracket).addToken(lbracket(rbracket, comma)).newLevel().addToken(numberLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("[3,2,4]");
+        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2), new NumberLiteralNode(4))), ast);
+    }
+
+    @Test
+    public void emptyObject() {
         TokenDefinition<JsonNode> rbracket = rbracket();
         TokenDefinition<JsonNode> comma = comma();
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
@@ -143,7 +163,7 @@ public class JsonTest {
 
     @NotNull
     private TokenDefinition<JsonNode> numberLiteral() {
-        return new TokenDefinitionBuilder<JsonNode>().named("number_literal").matchesPattern("-?[0-9]+(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
+        return new TokenDefinitionBuilder<JsonNode>().named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
                 .standaloneParseAs((previous, match) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
     }
 

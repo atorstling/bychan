@@ -31,4 +31,11 @@ public class NumberLiteralNode implements JsonNode {
     public int hashCode() {
         return (f != +0.0f ? Float.floatToIntBits(f) : 0);
     }
+
+    @Override
+    public String toString() {
+        return "NumberLiteralNode{" +
+                "f=" + f +
+                '}';
+    }
 }
