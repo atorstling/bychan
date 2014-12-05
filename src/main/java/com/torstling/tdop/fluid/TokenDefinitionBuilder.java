@@ -26,7 +26,7 @@ public class TokenDefinitionBuilder<N> {
         parsed = true;
     }
 
-    public TokenDefinitionBuilder<N> supportsPrefix(PrefixAstBuilder<N> prefixBuilder) {
+    public TokenDefinitionBuilder<N> prefixParseAs(PrefixAstBuilder<N> prefixBuilder) {
         this.prefixBuilder = prefixBuilder;
         return this;
     }
@@ -51,7 +51,7 @@ public class TokenDefinitionBuilder<N> {
         }
     }
 
-    public TokenDefinitionBuilder<N> supportsInfix(InfixAstBuilder<N> infixBuilder) {
+    public TokenDefinitionBuilder<N> infixParseAs(InfixAstBuilder<N> infixBuilder) {
         this.infixBuilder = infixBuilder;
         return this;
     }
@@ -61,7 +61,7 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> supportsStandalone(StandaloneAstBuilder<N> standaloneAstBuilder) {
+    public TokenDefinitionBuilder<N> standaloneParseAs(StandaloneAstBuilder<N> standaloneAstBuilder) {
         this.standaloneBuilder = standaloneAstBuilder;
         return this;
     }

@@ -29,17 +29,17 @@ public class WrappedTokenDefinitionBuilder<N> {
     }
 
     public WrappedTokenDefinitionBuilder<N> prefixParseAs(PrefixAstBuilder<N> prefixBuilder) {
-        delegate.supportsPrefix(prefixBuilder);
+        delegate.prefixParseAs(prefixBuilder);
         return this;
     }
 
     public WrappedTokenDefinitionBuilder<N> infixParseAs(InfixAstBuilder<N> infixBuilder) {
-        delegate.supportsInfix(infixBuilder);
+        delegate.infixParseAs(infixBuilder);
         return this;
     }
 
     public WrappedTokenDefinitionBuilder<N> standaloneParseAs(StandaloneAstBuilder<N> nStandaloneAstBuilder) {
-        delegate.supportsStandalone(nStandaloneAstBuilder);
+        delegate.standaloneParseAs(nStandaloneAstBuilder);
         return this;
     }
 
@@ -67,7 +67,7 @@ public class WrappedTokenDefinitionBuilder<N> {
     @NotNull
     private TokenDefinition<N> buildAndAdd() {
         TokenDefinition<N> tokenDefinition = delegate.build();
-        languageBuilder.startToken(tokenDefinition).endLevel();
+        languageBuilder.addToken(tokenDefinition).endLevel();
         return tokenDefinition;
     }
 
@@ -83,6 +83,6 @@ public class WrappedTokenDefinitionBuilder<N> {
 
     @NotNull
     public Language<N> completeLanguage() {
-        return completeToken().endLevel().completeLanguage();
+        return completeToken().completeLanguage();
     }
 }

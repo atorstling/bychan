@@ -1,5 +1,7 @@
 package com.torstling.tdop.fluid;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,5 +22,10 @@ public class LevelLanguageBuilder<N> {
     public LanguageBuilder<N> endLevel() {
         languageBuilder.addLevel(tokens);
         return languageBuilder;
+    }
+
+    @NotNull
+    public Language<N> completeLanguage() {
+        return endLevel().completeLanguage();
     }
 }

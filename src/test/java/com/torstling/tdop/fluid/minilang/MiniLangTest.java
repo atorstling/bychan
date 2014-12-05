@@ -27,7 +27,7 @@ public class MiniLangTest {
         final TokenDefinition<LaiLaiNode> lcurly = lb.newToken()
                 .matchesString("{")
                 .named("lcurly")
-                .supportsPrefix((previous, match, parser) -> {
+                .prefixParseAs((previous, match, parser) -> {
                     Scope scope = (previous == null) ? new RootScope() : new NestedScope(previous.getScope());
                     ScopeNode scopeNode = new ScopeNode(scope);
                     LaiLaiNode expression = parser.expression(scopeNode);
@@ -45,7 +45,7 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
-                .supportsPrefix((previous, match, parser) -> {
+                .prefixParseAs((previous, match, parser) -> {
                     LaiLaiNode trailingExpression = parser.expression(previous);
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
@@ -60,20 +60,20 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .supportsPrefix((previous, match, parser) -> parser.expression(previous))
-                .supportsInfix((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
+                .prefixParseAs((previous, match, parser) -> parser.expression(previous))
+                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
                 .build();
 
         TokenDefinition<LaiLaiNode> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .supportsInfix((match, previous, parser) -> new HatNode(previous, parser.expression(previous)))
+                .infixParseAs((match, previous, parser) -> new HatNode(previous, parser.expression(previous)))
                 .build();
 
         TokenDefinition<LaiLaiNode> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
-                .supportsInfix((match, previous, parser) -> {
+                .infixParseAs((match, previous, parser) -> {
                     LaiLaiNode right = parser.expression(previous);
                     return new AssignNode(previous, right);
                 })
@@ -82,7 +82,7 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> variableDeclaration = lb.newToken()
                 .matchesPattern("(?:float|int|bool) [a-z]+")
                 .named("variableDef")
-                .supportsStandalone((previous, match) -> {
+                .standaloneParseAs((previous, match) -> {
                     String declaration = match.getText();
                     Pattern variablePattern = Pattern.compile("^(float|int|bool) ([a-z]+)$");
                     Matcher matcher = variablePattern.matcher(declaration);
@@ -98,7 +98,7 @@ public class MiniLangTest {
                 .matchesPattern("[a-z]+")
                 .named("variableRef")
 
-                .supportsStandalone((symbolTable, match) -> {
+                .standaloneParseAs((symbolTable, match) -> {
                     String name = match.getText();
                     return new VariableRefNode(name);
                 }).build();
@@ -106,12 +106,12 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> booleanLiteral = lb.newToken()
                 .matchesPattern("true|false")
                 .named("bool")
-                .supportsStandalone((previous, match) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
+                .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
 
         TokenDefinition<LaiLaiNode> integerLiteral = lb.newToken()
                 .matchesPattern("[0-9]+i")
                 .named("int")
-                .supportsStandalone((previous, match) -> {
+                .standaloneParseAs((previous, match) -> {
                     String text = match.getText();
                     return new IntegerLiteralNode(previous, Integer.parseInt(text.substring(0, text.length() - 1)));
                 }).build();
@@ -119,12 +119,12 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> floatLiteral = lb.newToken()
                 .matchesPattern("[0-9]+f")
                 .named("float")
-                .supportsStandalone((previous, match) -> new FloatLiteralNode(previous, Float.parseFloat(match.getText()))).build();
+                .standaloneParseAs((previous, match) -> new FloatLiteralNode(previous, Float.parseFloat(match.getText()))).build();
 
         TokenDefinition<LaiLaiNode> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
-                .supportsInfix((match, previous, parser) -> new StatementNode(previous, parser.expression(previous))).build();
+                .infixParseAs((match, previous, parser) -> new StatementNode(previous, parser.expression(previous))).build();
 
         final TokenDefinition<LaiLaiNode> listEnd = lb.newToken()
                 .matchesString("]")
@@ -139,7 +139,7 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> listStart = lb.newToken()
                 .matchesString("[")
                 .named("listStart")
-                .supportsPrefix((previous, match, parser) -> {
+                .prefixParseAs((previous, match, parser) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
                     while (parser.nextIsNot(listEnd)) {
                         expressions.add(parser.expression(previous));

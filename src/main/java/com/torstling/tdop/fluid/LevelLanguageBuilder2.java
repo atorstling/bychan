@@ -8,7 +8,7 @@ public class LevelLanguageBuilder2<N> {
     @NotNull
     private final LanguageBuilder2<N> previous;
 
-    public LevelLanguageBuilder<N> startToken(@NotNull TokenDefinition<N> token) {
+    public LevelLanguageBuilder<N> addToken(@NotNull TokenDefinition<N> token) {
         return delegate.addToken(token);
     }
 
@@ -35,5 +35,10 @@ public class LevelLanguageBuilder2<N> {
     @NotNull
     public WrappedTokenDefinitionBuilder<N> ńewToken() {
         return startToken();
+    }
+
+    @NotNull
+    public Language<N> completeLanguage() {
+        return delegate.completeLanguage();
     }
 }

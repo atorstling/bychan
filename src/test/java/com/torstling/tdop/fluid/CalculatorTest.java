@@ -18,7 +18,7 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode> lparen = lb.newToken()
                 .matchesString("(")
                 .named("lparen")
-                .supportsPrefix((previous, match, parser) -> {
+                .prefixParseAs((previous, match, parser) -> {
                     CalculatorNode trailingExpression = parser.expression(previous);
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
@@ -33,20 +33,20 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .supportsPrefix((previous, match, parser) -> parser.expression(previous))
-                .supportsInfix((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
+                .prefixParseAs((previous, match, parser) -> parser.expression(previous))
+                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
                 .build();
 
         TokenDefinition<CalculatorNode> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .supportsPrefix((previous, match, parser) -> new NegationNode(parser.expression(previous)))
-                .supportsInfix((match, previous, parser) -> new SubtractionNode(previous, parser.expression(previous))).build();
+                .prefixParseAs((previous, match, parser) -> new NegationNode(parser.expression(previous)))
+                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.expression(previous))).build();
 
         TokenDefinition<CalculatorNode> number = lb.newToken()
                 .matchesPattern("[0-9]+")
                 .named("number")
-                .supportsStandalone((previous, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
+                .standaloneParseAs((previous, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
         Language<CalculatorNode> l = lb
                 .newLowerPriorityLevel()
                 .addToken(lparen)

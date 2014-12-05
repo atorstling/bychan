@@ -15,12 +15,12 @@ public class DirectEvaluationTest {
         TokenDefinition<Integer> number = builder.newToken()
                 .named("number")
                 .matchesPattern("[0-9]+")
-                .supportsStandalone((symbolTable, match) -> Integer.parseInt(match.getText()))
+                .standaloneParseAs((symbolTable, match) -> Integer.parseInt(match.getText()))
                 .build();
         TokenDefinition<Integer> addition = builder.newToken()
                 .named("addition")
                 .matchesString("+")
-                .supportsInfix((match, previous, parser) -> previous + parser.expression(previous))
+                .infixParseAs((match, previous, parser) -> previous + parser.expression(previous))
                 .build();
         Language<Integer> lang = builder
                 .newLowerPriorityLevel()
