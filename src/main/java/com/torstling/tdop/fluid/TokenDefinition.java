@@ -40,7 +40,7 @@ public class TokenDefinition<N> {
 
     @Override
     public String toString() {
-        return pattern.pattern();
+        return tokenTypeName;
     }
 
     @Nullable

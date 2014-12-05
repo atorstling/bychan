@@ -12,15 +12,17 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class BooleanLogicTest {
 
     @Test
     public void terserSyntax() {
         LanguageBuilder2<BooleanExpressionNode> lb = new LanguageBuilder2<>();
-        final TokenDefinition<BooleanExpressionNode> rparen = lb
-                .newLevel().startToken().matchesString(")").named("rparen").completeTokenAndPause();
+        LevelLanguageBuilder2<BooleanExpressionNode> level = lb
+                .newLevel();
+        final TokenDefinition<BooleanExpressionNode> rparen = level.startToken().matchesString(")").named("rparen").completeTokenAndPause();
+        //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
+        level.endLevel();
         Language<BooleanExpressionNode> l = lb
                 .newLevel().startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
                     BooleanExpressionNode trailingExpression = parser.expression(previous);
@@ -88,7 +90,7 @@ public class BooleanLogicTest {
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
         ParseResult<BooleanExpressionNode> result = l.getParser().tryParse(expression);
-        assertTrue(result.isSuccess());
+        result.checkSuccess();
         VariableBindings bindings = new VariableBindingBuilder().bind("a", aValue).bind("b", bValue).build();
         assertEquals(result.getRootNode().evaluate(bindings), expectedOutcome);
     }

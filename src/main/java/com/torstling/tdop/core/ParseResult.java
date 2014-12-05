@@ -33,9 +33,7 @@ public class ParseResult<N> {
 
     @NotNull
     public N getRootNode() {
-        if (!isSuccess()) {
-            throw new ParsingFailedException(errorMessage);
-        }
+        checkSuccess();
         return rootNode;
     }
 
@@ -77,5 +75,11 @@ public class ParseResult<N> {
         int result = rootNode != null ? rootNode.hashCode() : 0;
         result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
         return result;
+    }
+
+    public void checkSuccess() {
+        if (!isSuccess()) {
+            throw new ParsingFailedException(errorMessage);
+        }
     }
 }

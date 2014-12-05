@@ -38,6 +38,10 @@ public class GenericTokenType<N> implements TokenType<N> {
         return def.getTokenTypeName();
     }
 
+    public String getTokenTypeName() {
+        return def.getTokenTypeName();
+    }
+
     @NotNull
     public TokenDefinition<N> getTokenDefinition() {
         return def.getTokenDefinition();

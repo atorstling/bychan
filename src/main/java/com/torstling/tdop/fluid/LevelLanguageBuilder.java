@@ -20,7 +20,11 @@ public class LevelLanguageBuilder<N> {
     }
 
     public LanguageBuilder<N> endLevel() {
+        if (tokens.isEmpty()) {
+            throw new IllegalStateException("Empty level");
+        }
         languageBuilder.addLevel(tokens);
+        tokens.clear();
         return languageBuilder;
     }
 

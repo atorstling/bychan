@@ -7,25 +7,32 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Language<N> {
     private final Lexer<N> lexer;
     private final GenericParser<N> parser;
 
-    public Language(@NotNull final List<TokenDefinitions<N>> tokenDefinitions) {
-        List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitions);
+    public Language(@NotNull final List<TokenDefinitions<N>> tokenDefinitionss) {
+        List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitionss);
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
         // finder with the resulting DefinitionTokenTypes.
         DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
         final Collection<GenericTokenType<N>> genericTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
-        TokenFinder<N> tokenFinder = tokenDefinition -> {
-            for (GenericTokenType<N> definitionTokenType : genericTokenTypes) {
-                if (definitionTokenType.getTokenDefinition().equals(tokenDefinition)) {
-                    return definitionTokenType;
-                }
+        Map<String, GenericTokenType<N>> tokenTypesByTokenTypeName = genericTokenTypes.stream().collect(Collectors.toMap(GenericTokenType::getTokenTypeName, Function.identity()));
+        TokenFinder<N> tokenFinder = sought -> {
+            String soughtName = sought.getTokenTypeName();
+            GenericTokenType<N> candidate = tokenTypesByTokenTypeName.get(soughtName);
+            if (candidate == null) {
+                throw new IllegalStateException("No registered token definition named ''" + soughtName + "' was found. Did you register your token before referring to it?");
+            } else if (candidate.getTokenDefinition().equals(sought)) {
+                return candidate;
+            } else {
+                throw new IllegalStateException("Found a candidate token definition with the same name ('" + soughtName + "'), but it had a different specification. Do you have multiple copies of this token definition?");
             }
-            throw new IllegalStateException("No token found for definition " + tokenDefinition);
         };
         delegatingFinder.setDelegate(tokenFinder);
         lexer = new Lexer<>(genericTokenTypes);

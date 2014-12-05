@@ -122,7 +122,7 @@ public class JsonTest {
 
     @NotNull
     private TokenDefinition<JsonNode> rbracket() {
-        return new TokenDefinitionBuilder<JsonNode>().named("lbracket").matchesString("]")
+        return new TokenDefinitionBuilder<JsonNode>().named("rbracket").matchesString("]")
                 .build();
     }
 
