@@ -1,6 +1,9 @@
 package com.torstling.tdop.fluid;
 
-import com.torstling.tdop.core.*;
+import com.torstling.tdop.core.LexingMatch;
+import com.torstling.tdop.core.Token;
+import com.torstling.tdop.core.TokenParserCallback;
+import com.torstling.tdop.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,31 +29,7 @@ public class GenericToken<N> implements Token<N> {
         if (builder == null) {
             throw new IllegalStateException("Prefix parsing not registered for token type: '" + toString() + "'");
         }
-        return builder.build(previous, match, new ParserCallback2<N>() {
-            @NotNull
-            @Override
-            public N expression(@Nullable N previous) {
-                return parser.tryParse(previous, new Expression<>(infixBindingPower())).getRootNode();
-            }
-
-            @NotNull
-            @Override
-            public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
-                return swallow(tokenTypeDefinition, parser);
-            }
-
-            @Override
-            public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
-                GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
-                return parser.peek().getType().equals(expectedType);
-            }
-        });
-    }
-
-    @NotNull
-    private Token<N> swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
-        GenericTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
-        return parser.swallow(type);
+        return builder.build(previous, match, new ParserCallback2Impl<>(infixBindingPower(), tokenFinder, parser));
     }
 
     @NotNull
@@ -60,25 +39,7 @@ public class GenericToken<N> implements Token<N> {
         if (infixBuilder == null) {
             throw new IllegalStateException("Definition does not support infix parsing: " + this);
         }
-        return infixBuilder.build(match, previous, new ParserCallback2<N>() {
-            @NotNull
-            @Override
-            public N expression(@Nullable N previous) {
-                return parser.tryParse(previous, new Expression<>(infixBindingPower())).getRootNode();
-            }
-
-            @NotNull
-            @Override
-            public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
-                return swallow(tokenTypeDefinition, parser);
-            }
-
-            @Override
-            public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
-                GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
-                return parser.peek().getType().equals(expectedType);
-            }
-        });
+        return infixBuilder.build(match, previous, new ParserCallback2Impl<>(infixBindingPower(), tokenFinder, parser));
     }
 
     @Override
@@ -101,4 +62,5 @@ public class GenericToken<N> implements Token<N> {
     public LexingMatch getMatch() {
         return match;
     }
+
 }
