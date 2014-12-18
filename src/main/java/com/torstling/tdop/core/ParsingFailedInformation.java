@@ -13,6 +13,16 @@ public class ParsingFailedInformation {
         this.parsingPosition = parsingPosition;
     }
 
+    @NotNull
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
+    @NotNull
+    public ParsingPosition getParsingPosition() {
+        return parsingPosition;
+    }
+
     @Override
     public String toString() {
         return "Parsing terminated at " + parsingPosition + ": " + failureMessage;

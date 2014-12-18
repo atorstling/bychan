@@ -1,5 +1,6 @@
 package com.torstling.tdop.fluid.json;
 
+import com.torstling.tdop.core.ParseResult;
 import com.torstling.tdop.core.ParsingFailedException;
 import com.torstling.tdop.core.ParsingFailedInformation;
 import com.torstling.tdop.core.ParsingPosition;
@@ -28,6 +29,25 @@ public class JsonTest {
         JsonNode ast = l.getParser().parse("\"hello\"");
         assertEquals(new StringLiteralNode("hello"), ast);
     }
+
+    @Test
+    public void stringWithQuoteEscape() {
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(stringLiteral())
+                .completeLanguage();
+        JsonNode ast = l.getParser().parse("\"\\\"hello\"");
+        assertEquals(new StringLiteralNode("\\\"hello"), ast);
+    }
+
+    @Test
+    public void stringWithInvalidEscape() {
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(stringLiteral())
+                .completeLanguage();
+        ParseResult<JsonNode> pr = l.getParser().tryParse("\"\\phello\"");
+        assertEquals(new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '\"\\phello\"'", new ParsingPosition(0, "\"\\phello\"")), pr.getErrorMessage());
+    }
+
 
     @Test
     public void positiveInteger() {
@@ -162,7 +182,10 @@ public class JsonTest {
 
     @NotNull
     private TokenDefinition<JsonNode> stringLiteral() {
-        return new TokenDefinitionBuilder<JsonNode>().named("string_literal").matchesPattern("\"(\\w*)\"")
+        @org.intellij.lang.annotations.Language("RegExp")
+        //String pattern = "\"([^\"\\\\]*)\"";
+                String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"\\/bnrft]|u[0-9A-F]{4}))*)\"";
+        return new TokenDefinitionBuilder<JsonNode>().named("string_literal").matchesPattern(pattern)
                 .standaloneParseAs((previous, match) -> {
                     String withinQuotationMarks = match.group(1);
                     return new StringLiteralNode(withinQuotationMarks);
