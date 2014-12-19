@@ -47,4 +47,9 @@ public class ParsingFailedInformation {
                 ", failedAfterLexingInformation=" + failedAfterLexingInformation +
                 '}';
     }
+
+    @NotNull
+    public static ParsingFailedInformation forFailedLexing(@NotNull final LexingFailedInformation lexingFailedInformation) {
+        return new ParsingFailedInformation(lexingFailedInformation, null);
+    }
 }

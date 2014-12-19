@@ -1,9 +1,6 @@
 package com.torstling.tdop.fluid.json;
 
-import com.torstling.tdop.core.ParseResult;
-import com.torstling.tdop.core.ParsingFailedException;
-import com.torstling.tdop.core.ParsingFailedInformation;
-import com.torstling.tdop.core.ParsingPosition;
+import com.torstling.tdop.core.*;
 import com.torstling.tdop.fluid.Language;
 import com.torstling.tdop.fluid.LanguageBuilder2;
 import com.torstling.tdop.fluid.TokenDefinition;
@@ -46,7 +43,7 @@ public class JsonTest {
                 .newLevel().addToken(stringLiteral())
                 .completeLanguage();
         ParseResult<JsonNode> pr = l.getParser().tryParse("\"\\phello\"");
-        assertEquals(ParsingFailedInformation.forFailedAfterLexing("Lexing failed:No matching rule for char-range starting at 0: '\"\\phello\"'", new ParsingPosition(0, "\"\\phello\"")), pr.getErrorMessage());
+        assertEquals(ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range starting at 0: '\"\\phello\"'", new LexingPosition(0, "\"\\phello\""))), pr.getErrorMessage());
     }
 
 
@@ -142,6 +139,20 @@ public class JsonTest {
         assertEquals(new ObjectNode(Collections.emptyMap()), ast);
     }
 
+    //@Test
+    public void simpleObject() {
+        TokenDefinition<JsonNode> rcurly = rcurly();
+        TokenDefinition<JsonNode> comma = comma();
+        TokenDefinition<JsonNode> string = stringLiteral();
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(comma).addToken(rcurly).addToken(lcurly(rcurly, comma, colon(), string)).newLevel().addToken(numberLiteral())
+                .addToken(string).completeLanguage();
+        JsonNode ast = l.getParser().parse("{\"a\": 3}");
+        LinkedHashMap<StringLiteralNode, JsonNode> expected = new LinkedHashMap<>();
+        expected.put(new StringLiteralNode("a"), new NumberLiteralNode(3));
+        assertEquals(new ObjectNode(expected), ast);
+    }
+
     @NotNull
     private TokenDefinition<JsonNode> rbracket() {
         return new TokenDefinitionBuilder<JsonNode>().named("rbracket").matchesString("]")
@@ -217,7 +228,6 @@ public class JsonTest {
     @NotNull
     private TokenDefinition<JsonNode> stringLiteral() {
         @org.intellij.lang.annotations.Language("RegExp")
-        //String pattern = "\"([^\"\\\\]*)\"";
                 String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"\\/bnrft]|u[0-9A-F]{4}))*)\"";
         return new TokenDefinitionBuilder<JsonNode>().named("string_literal").matchesPattern(pattern)
                 .standaloneParseAs((previous, match) -> {
