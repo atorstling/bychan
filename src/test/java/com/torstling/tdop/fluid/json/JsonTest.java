@@ -154,6 +154,24 @@ public class JsonTest {
         assertEquals(new ObjectNode(expected), ast);
     }
 
+    @Test
+    public void nestedObject() {
+        TokenDefinition<JsonNode> rcurly = rcurly();
+        TokenDefinition<JsonNode> comma = comma();
+        TokenDefinition<JsonNode> string = stringLiteral();
+        TokenDefinition<JsonNode> colon = colon();
+        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly(rcurly, comma, colon, string)).newLevel().addToken(numberLiteral())
+                .addToken(string).completeLanguage();
+        JsonNode ast = l.getParser().parse("{\"a\":{\"b\":3}}");
+        LinkedHashMap<StringLiteralNode, JsonNode> inner = new LinkedHashMap<>();
+        inner.put(new StringLiteralNode("b"), new NumberLiteralNode(3));
+        LinkedHashMap<StringLiteralNode, JsonNode> outer = new LinkedHashMap<>();
+        outer.put(new StringLiteralNode("a"), new ObjectNode(inner));
+        assertEquals(new ObjectNode(outer), ast);
+    }
+
+
     @NotNull
     private TokenDefinition<JsonNode> rbracket() {
         return new TokenDefinitionBuilder<JsonNode>().named("rbracket").matchesString("]")
@@ -229,7 +247,7 @@ public class JsonTest {
     @NotNull
     private TokenDefinition<JsonNode> stringLiteral() {
         @org.intellij.lang.annotations.Language("RegExp")
-                String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"\\/bnrft]|u[0-9A-F]{4}))*)\"";
+        String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"\\/bnrft]|u[0-9A-F]{4}))*)\"";
         return new TokenDefinitionBuilder<JsonNode>().named("string_literal").matchesPattern(pattern)
                 .standaloneParseAs((previous, match) -> {
                     String withinQuotationMarks = match.group(1);
