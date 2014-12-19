@@ -1,31 +1,21 @@
 package com.torstling.tdop.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ParsingFailedInformation {
-    @NotNull
-    private final String failureMessage;
-    @NotNull
-    private final ParsingPosition parsingPosition;
-
-    public ParsingFailedInformation(@NotNull String failureMessage, @NotNull final ParsingPosition parsingPosition) {
-        this.failureMessage = failureMessage;
-        this.parsingPosition = parsingPosition;
+    public static ParsingFailedInformation forFailedAfterLexing(@NotNull String failureMessage, @NotNull final ParsingPosition parsingPosition) {
+        return new ParsingFailedInformation(null, new FailedAfterLexingInformation(failureMessage, parsingPosition));
     }
 
-    @NotNull
-    public String getFailureMessage() {
-        return failureMessage;
-    }
+    @Nullable
+    private final LexingFailedInformation lexingFailedInformation;
+    @Nullable
+    private final FailedAfterLexingInformation failedAfterLexingInformation;
 
-    @NotNull
-    public ParsingPosition getParsingPosition() {
-        return parsingPosition;
-    }
-
-    @Override
-    public String toString() {
-        return "Parsing terminated at " + parsingPosition + ": " + failureMessage;
+    private ParsingFailedInformation(@Nullable LexingFailedInformation lexingFailedInformation, @Nullable FailedAfterLexingInformation failedAfterLexingInformation) {
+        this.lexingFailedInformation = lexingFailedInformation;
+        this.failedAfterLexingInformation = failedAfterLexingInformation;
     }
 
     @Override
@@ -35,16 +25,26 @@ public class ParsingFailedInformation {
 
         ParsingFailedInformation that = (ParsingFailedInformation) o;
 
-        if (!failureMessage.equals(that.failureMessage)) return false;
-        if (!parsingPosition.equals(that.parsingPosition)) return false;
+        if (failedAfterLexingInformation != null ? !failedAfterLexingInformation.equals(that.failedAfterLexingInformation) : that.failedAfterLexingInformation != null)
+            return false;
+        if (lexingFailedInformation != null ? !lexingFailedInformation.equals(that.lexingFailedInformation) : that.lexingFailedInformation != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = failureMessage.hashCode();
-        result = 31 * result + parsingPosition.hashCode();
+        int result = lexingFailedInformation != null ? lexingFailedInformation.hashCode() : 0;
+        result = 31 * result + (failedAfterLexingInformation != null ? failedAfterLexingInformation.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ParsingFailedInformation{" +
+                "lexingFailedInformation=" + lexingFailedInformation +
+                ", failedAfterLexingInformation=" + failedAfterLexingInformation +
+                '}';
     }
 }

@@ -153,7 +153,7 @@ public class PrattParserTest {
             p.tryParse(null, new Expression<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing terminated at ParsingPosition{position=2147483647, remainingText=''}: Expected a token of type 'RightParenthesisTokenType', but got 'END'", e.getMessage());
+            assertEquals(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'RightParenthesisTokenType', but got 'END'", new ParsingPosition(2147483647, "")), e.getParsingFailedInformation());
         }
     }
 
@@ -178,7 +178,7 @@ public class PrattParserTest {
             p.tryParse(null, new Expression<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing terminated at ParsingPosition{position=2147483647, remainingText=''}: Cannot parse expression, end reached", e.getMessage());
+            assertEquals(ParsingFailedInformation.forFailedAfterLexing("Cannot parse expression, end reached", new ParsingPosition(2147483647, "")), e.getParsingFailedInformation());
         }
     }
 

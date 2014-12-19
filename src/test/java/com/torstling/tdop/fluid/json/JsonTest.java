@@ -45,7 +45,7 @@ public class JsonTest {
                 .newLevel().addToken(stringLiteral())
                 .completeLanguage();
         ParseResult<JsonNode> pr = l.getParser().tryParse("\"\\phello\"");
-        assertEquals(new ParsingFailedInformation("Lexing failed:No matching rule for char-range starting at 0: '\"\\phello\"'", new ParsingPosition(0, "\"\\phello\"")), pr.getErrorMessage());
+        assertEquals(ParsingFailedInformation.forFailedAfterLexing("Lexing failed:No matching rule for char-range starting at 0: '\"\\phello\"'", new ParsingPosition(0, "\"\\phello\"")), pr.getErrorMessage());
     }
 
 
@@ -76,7 +76,7 @@ public class JsonTest {
             l.getParser().parse("01.5");
             fail("Expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals(new ParsingFailedInformation("Expected a token of type 'EndTokenType', but got 'number_literal(1.5)'", new ParsingPosition(4, "1.5")), e.getParsingFailedInformation());
+            assertEquals(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'EndTokenType', but got 'number_literal(1.5)'", new ParsingPosition(4, "1.5")), e.getParsingFailedInformation());
         }
     }
 
