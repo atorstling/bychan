@@ -15,6 +15,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -131,13 +132,14 @@ public class JsonTest {
 
     @Test
     public void emptyObject() {
-        TokenDefinition<JsonNode> rbracket = rbracket();
+        TokenDefinition<JsonNode> rcurly = rcurly();
         TokenDefinition<JsonNode> comma = comma();
+        TokenDefinition<JsonNode> string = stringLiteral();
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(comma).addToken(rbracket).addToken(lbracket(rbracket, comma)).newLevel().addToken(numberLiteral())
-                .completeLanguage();
-        JsonNode ast = l.getParser().parse("[3,2,4]");
-        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2), new NumberLiteralNode(4))), ast);
+                .newLevel().addToken(comma).addToken(rcurly).addToken(lcurly(rcurly, comma, colon(), string)).newLevel().addToken(numberLiteral())
+                .addToken(string).completeLanguage();
+        JsonNode ast = l.getParser().parse("{}");
+        assertEquals(new ObjectNode(Collections.emptyMap()), ast);
     }
 
     @NotNull
@@ -147,8 +149,21 @@ public class JsonTest {
     }
 
     @NotNull
+    private TokenDefinition<JsonNode> rcurly() {
+        return new TokenDefinitionBuilder<JsonNode>().named("rculry").matchesString("}")
+                .build();
+    }
+
+    @NotNull
     private TokenDefinition<JsonNode> comma() {
         return new TokenDefinitionBuilder<JsonNode>().named("comma").matchesString(",")
+                .build();
+    }
+
+
+    @NotNull
+    private TokenDefinition<JsonNode> colon() {
+        return new TokenDefinitionBuilder<JsonNode>().named("colon").matchesString(":")
                 .build();
     }
 
@@ -165,6 +180,25 @@ public class JsonTest {
                     }
                     parser.expectSingleToken(rbracket);
                     return new ArrayNode(expressions);
+                }).build();
+    }
+
+    @NotNull
+    private TokenDefinition<JsonNode> lcurly(TokenDefinition<JsonNode> rbracket, TokenDefinition<JsonNode> comma, TokenDefinition<JsonNode> colon, TokenDefinition<JsonNode> string) {
+        return new TokenDefinitionBuilder<JsonNode>().named("lcurly").matchesString("{")
+                .prefixParseAs((previous, match, parser) -> {
+                    LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
+                    while (!parser.nextIs(rbracket)) {
+                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
+                        parser.expectSingleToken(colon);
+                        JsonNode value = parser.expression(previous);
+                        pairs.put(key, value);
+                        if (!parser.nextIs(rbracket)) {
+                            parser.expectSingleToken(comma);
+                        }
+                    }
+                    parser.expectSingleToken(rbracket);
+                    return new ObjectNode(pairs);
                 }).build();
     }
 

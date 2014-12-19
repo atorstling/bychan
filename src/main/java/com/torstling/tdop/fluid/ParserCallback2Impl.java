@@ -45,4 +45,11 @@ class ParserCallback2Impl<N> implements ParserCallback2<N> {
         GenericTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
         return parser.peek().getType().equals(expectedType);
     }
+
+    @NotNull
+    @Override
+    public N parseSingleToken(N previous, TokenDefinition<N> tokenDefinition) {
+        Token<N> token = swallow(tokenDefinition, parser);
+        return token.prefixParse(previous, parser);
+    }
 }

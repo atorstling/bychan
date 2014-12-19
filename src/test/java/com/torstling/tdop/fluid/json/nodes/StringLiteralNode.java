@@ -22,6 +22,11 @@ public class StringLiteralNode implements JsonNode {
                 '}';
     }
 
+    @NotNull
+    public String getText() {
+        return text;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
