@@ -139,15 +139,16 @@ public class JsonTest {
         assertEquals(new ObjectNode(Collections.emptyMap()), ast);
     }
 
-    //@Test
+    @Test
     public void simpleObject() {
         TokenDefinition<JsonNode> rcurly = rcurly();
         TokenDefinition<JsonNode> comma = comma();
         TokenDefinition<JsonNode> string = stringLiteral();
+        TokenDefinition<JsonNode> colon = colon();
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(comma).addToken(rcurly).addToken(lcurly(rcurly, comma, colon(), string)).newLevel().addToken(numberLiteral())
+                .newLevel().addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly(rcurly, comma, colon, string)).newLevel().addToken(numberLiteral())
                 .addToken(string).completeLanguage();
-        JsonNode ast = l.getParser().parse("{\"a\": 3}");
+        JsonNode ast = l.getParser().parse("{\"a\":3}");
         LinkedHashMap<StringLiteralNode, JsonNode> expected = new LinkedHashMap<>();
         expected.put(new StringLiteralNode("a"), new NumberLiteralNode(3));
         assertEquals(new ObjectNode(expected), ast);
@@ -195,20 +196,20 @@ public class JsonTest {
     }
 
     @NotNull
-    private TokenDefinition<JsonNode> lcurly(TokenDefinition<JsonNode> rbracket, TokenDefinition<JsonNode> comma, TokenDefinition<JsonNode> colon, TokenDefinition<JsonNode> string) {
+    private TokenDefinition<JsonNode> lcurly(TokenDefinition<JsonNode> rcurly, TokenDefinition<JsonNode> comma, TokenDefinition<JsonNode> colon, TokenDefinition<JsonNode> string) {
         return new TokenDefinitionBuilder<JsonNode>().named("lcurly").matchesString("{")
                 .prefixParseAs((previous, match, parser) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.nextIs(rbracket)) {
+                    while (!parser.nextIs(rcurly)) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
                         parser.expectSingleToken(colon);
                         JsonNode value = parser.expression(previous);
                         pairs.put(key, value);
-                        if (!parser.nextIs(rbracket)) {
+                        if (!parser.nextIs(rcurly)) {
                             parser.expectSingleToken(comma);
                         }
                     }
-                    parser.expectSingleToken(rbracket);
+                    parser.expectSingleToken(rcurly);
                     return new ObjectNode(pairs);
                 }).build();
     }
