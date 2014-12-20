@@ -98,56 +98,35 @@ public class JsonTest {
 
     @Test
     public void emptyArray() {
-        TokenDefinition<JsonNode> rbracket = rbracket();
-        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(rbracket).addToken(lbracket(rbracket, comma())).newLevel().addToken(numberLiteral())
-                .completeLanguage();
+        Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse("[]");
         assertEquals(new ArrayNode(Collections.emptyList()), ast);
     }
 
     @Test
     public void singleElementArray() {
-        TokenDefinition<JsonNode> rbracket = rbracket();
-        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(rbracket).addToken(lbracket(rbracket, comma())).newLevel().addToken(numberLiteral())
-                .completeLanguage();
+        Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse("[3]");
         assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3))), ast);
     }
 
     @Test
     public void multipleElementArray() {
-        TokenDefinition<JsonNode> rbracket = rbracket();
-        TokenDefinition<JsonNode> comma = comma();
-        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(comma).addToken(rbracket).addToken(lbracket(rbracket, comma)).newLevel().addToken(numberLiteral())
-                .completeLanguage();
+        Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse("[3,2,4]");
         assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2), new NumberLiteralNode(4))), ast);
     }
 
     @Test
     public void emptyObject() {
-        TokenDefinition<JsonNode> rcurly = rcurly();
-        TokenDefinition<JsonNode> comma = comma();
-        TokenDefinition<JsonNode> string = stringLiteral();
-        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(comma).addToken(rcurly).addToken(lcurly(rcurly, comma, colon(), string)).newLevel().addToken(numberLiteral())
-                .addToken(string).completeLanguage();
+        Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse("{}");
         assertEquals(new ObjectNode(Collections.emptyMap()), ast);
     }
 
     @Test
     public void simpleObject() {
-        TokenDefinition<JsonNode> rcurly = rcurly();
-        TokenDefinition<JsonNode> comma = comma();
-        TokenDefinition<JsonNode> string = stringLiteral();
-        TokenDefinition<JsonNode> colon = colon();
-        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly(rcurly, comma, colon, string)).newLevel().addToken(numberLiteral())
-                .addToken(string).completeLanguage();
+        Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse("{\"a\":3}");
         LinkedHashMap<StringLiteralNode, JsonNode> expected = new LinkedHashMap<>();
         expected.put(new StringLiteralNode("a"), new NumberLiteralNode(3));
@@ -156,19 +135,24 @@ public class JsonTest {
 
     @Test
     public void nestedObject() {
-        TokenDefinition<JsonNode> rcurly = rcurly();
-        TokenDefinition<JsonNode> comma = comma();
-        TokenDefinition<JsonNode> string = stringLiteral();
-        TokenDefinition<JsonNode> colon = colon();
-        Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly(rcurly, comma, colon, string)).newLevel().addToken(numberLiteral())
-                .addToken(string).completeLanguage();
+        Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse("{\"a\":{\"b\":3}}");
         LinkedHashMap<StringLiteralNode, JsonNode> inner = new LinkedHashMap<>();
         inner.put(new StringLiteralNode("b"), new NumberLiteralNode(3));
         LinkedHashMap<StringLiteralNode, JsonNode> outer = new LinkedHashMap<>();
         outer.put(new StringLiteralNode("a"), new ObjectNode(inner));
         assertEquals(new ObjectNode(outer), ast);
+    }
+
+    private Language<JsonNode> makeJson() {
+        TokenDefinition<JsonNode> rcurly = rcurly();
+        TokenDefinition<JsonNode> comma = comma();
+        TokenDefinition<JsonNode> string = stringLiteral();
+        TokenDefinition<JsonNode> colon = colon();
+        TokenDefinition<JsonNode> rbracket = rbracket();
+        return new LanguageBuilder2<JsonNode>()
+                .newLevel().addToken(rbracket).addToken(lbracket(rbracket, comma)).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly(rcurly, comma, colon, string)).newLevel().addToken(numberLiteral())
+                .addToken(string).completeLanguage();
     }
 
 
