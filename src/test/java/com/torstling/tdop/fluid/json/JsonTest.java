@@ -247,7 +247,7 @@ public class JsonTest {
     @NotNull
     private TokenDefinition<JsonNode> stringLiteral() {
         @org.intellij.lang.annotations.Language("RegExp")
-        String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"\\/bnrft]|u[0-9A-F]{4}))*)\"";
+        String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
         return new TokenDefinitionBuilder<JsonNode>().named("string_literal").matchesPattern(pattern)
                 .standaloneParseAs((previous, match) -> {
                     String withinQuotationMarks = match.group(1);
