@@ -22,7 +22,7 @@ public class JsonTest {
     @Test
     public void simpleStringLiteral() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(stringLiteral())
+                .newLevel().addToken(JsonLangBuilder.stringLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("\"hello\"");
         assertEquals(new StringLiteralNode("hello"), ast);
@@ -31,7 +31,7 @@ public class JsonTest {
     @Test
     public void stringWithQuoteEscape() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(stringLiteral())
+                .newLevel().addToken(JsonLangBuilder.stringLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("\"\\\"hello\"");
         assertEquals(new StringLiteralNode("\\\"hello"), ast);
@@ -40,7 +40,7 @@ public class JsonTest {
     @Test
     public void stringWithInvalidEscape() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(stringLiteral())
+                .newLevel().addToken(JsonLangBuilder.stringLiteral())
                 .completeLanguage();
         ParseResult<JsonNode> pr = l.getParser().tryParse("\"\\phello\"");
         assertEquals(ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range starting at 0: '\"\\phello\"'", new LexingPosition(0, "\"\\phello\""))), pr.getErrorMessage());
@@ -50,7 +50,7 @@ public class JsonTest {
     @Test
     public void positiveInteger() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(numberLiteral())
+                .newLevel().addToken(JsonLangBuilder.numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("1");
         assertEquals(new NumberLiteralNode(1), ast);
@@ -59,7 +59,7 @@ public class JsonTest {
     @Test
     public void negativeExponent() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(numberLiteral())
+                .newLevel().addToken(JsonLangBuilder.numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("-0.5e-5");
         assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
@@ -68,7 +68,7 @@ public class JsonTest {
     @Test
     public void leadingZeroesForbidden() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(numberLiteral())
+                .newLevel().addToken(JsonLangBuilder.numberLiteral())
                 .completeLanguage();
         try {
             l.getParser().parse("01.5");
@@ -81,7 +81,7 @@ public class JsonTest {
     @Test
     public void bool() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(boolLiteral())
+                .newLevel().addToken(JsonLangBuilder.boolLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("true");
         assertEquals(new BooleanLiteralNode(true), ast);
@@ -90,7 +90,7 @@ public class JsonTest {
     @Test
     public void nul() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(nullLiteral())
+                .newLevel().addToken(JsonLangBuilder.nullLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("null");
         assertEquals(NullLiteral.get(), ast);
@@ -145,104 +145,8 @@ public class JsonTest {
     }
 
     private Language<JsonNode> makeJson() {
-        TokenDefinition<JsonNode> rcurly = rcurly();
-        TokenDefinition<JsonNode> comma = comma();
-        TokenDefinition<JsonNode> string = stringLiteral();
-        TokenDefinition<JsonNode> colon = colon();
-        TokenDefinition<JsonNode> rbracket = rbracket();
-        return new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(rbracket).addToken(lbracket(rbracket, comma)).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly(rcurly, comma, colon, string)).newLevel().addToken(numberLiteral())
-                .addToken(string).completeLanguage();
-    }
+        return new JsonLangBuilder().build();
 
-
-    @NotNull
-    private TokenDefinition<JsonNode> rbracket() {
-        return new TokenDefinitionBuilder<JsonNode>().named("rbracket").matchesString("]")
-                .build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> rcurly() {
-        return new TokenDefinitionBuilder<JsonNode>().named("rculry").matchesString("}")
-                .build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> comma() {
-        return new TokenDefinitionBuilder<JsonNode>().named("comma").matchesString(",")
-                .build();
-    }
-
-
-    @NotNull
-    private TokenDefinition<JsonNode> colon() {
-        return new TokenDefinitionBuilder<JsonNode>().named("colon").matchesString(":")
-                .build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> lbracket(TokenDefinition<JsonNode> rbracket, TokenDefinition<JsonNode> comma) {
-        return new TokenDefinitionBuilder<JsonNode>().named("lbracket").matchesString("[")
-                .prefixParseAs((previous, match, parser) -> {
-                    ArrayList<JsonNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs(rbracket)) {
-                        expressions.add(parser.expression(previous));
-                        if (!parser.nextIs(rbracket)) {
-                            parser.expectSingleToken(comma);
-                        }
-                    }
-                    parser.expectSingleToken(rbracket);
-                    return new ArrayNode(expressions);
-                }).build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> lcurly(TokenDefinition<JsonNode> rcurly, TokenDefinition<JsonNode> comma, TokenDefinition<JsonNode> colon, TokenDefinition<JsonNode> string) {
-        return new TokenDefinitionBuilder<JsonNode>().named("lcurly").matchesString("{")
-                .prefixParseAs((previous, match, parser) -> {
-                    LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.nextIs(rcurly)) {
-                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
-                        parser.expectSingleToken(colon);
-                        JsonNode value = parser.expression(previous);
-                        pairs.put(key, value);
-                        if (!parser.nextIs(rcurly)) {
-                            parser.expectSingleToken(comma);
-                        }
-                    }
-                    parser.expectSingleToken(rcurly);
-                    return new ObjectNode(pairs);
-                }).build();
-    }
-
-
-    private TokenDefinition<JsonNode> nullLiteral() {
-        return new TokenDefinitionBuilder<JsonNode>().named("null_literal").matchesString("null")
-                .standaloneParseAs((previous, match) -> NullLiteral.get()).build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> boolLiteral() {
-        return new TokenDefinitionBuilder<JsonNode>().named("bool_literal").matchesPattern("(true)|(false)")
-                .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> stringLiteral() {
-        @org.intellij.lang.annotations.Language("RegExp")
-        String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
-        return new TokenDefinitionBuilder<JsonNode>().named("string_literal").matchesPattern(pattern)
-                .standaloneParseAs((previous, match) -> {
-                    String withinQuotationMarks = match.group(1);
-                    return new StringLiteralNode(withinQuotationMarks);
-                }).build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> numberLiteral() {
-        return new TokenDefinitionBuilder<JsonNode>().named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
-                .standaloneParseAs((previous, match) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
     }
 
 
