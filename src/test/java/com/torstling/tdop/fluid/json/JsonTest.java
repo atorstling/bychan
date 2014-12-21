@@ -146,7 +146,6 @@ public class JsonTest {
 
     private Language<JsonNode> makeJson() {
         return new JsonLangBuilder().build();
-
     }
 
 

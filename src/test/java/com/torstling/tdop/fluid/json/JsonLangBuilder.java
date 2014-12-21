@@ -26,7 +26,8 @@ public class JsonLangBuilder {
                 .newLevel()
                 .addToken(rbracket).addToken(lbracket).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly)
                 .newLevel()
-                .addToken(numberLiteral).addToken(string).addToken(nullLiteral()).addToken(boolLiteral()).completeLanguage();
+                .addToken(numberLiteral).addToken(string).addToken(nullLiteral()).addToken(boolLiteral())
+                .completeLanguage();
     }
 
     @NotNull
