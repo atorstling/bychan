@@ -14,16 +14,43 @@ public class JsonLangBuilder {
 
     @NotNull
     public Language<JsonNode> build() {
+        LanguageBuilder2<JsonNode> lb = new LanguageBuilder2<>();
         TokenDefinition<JsonNode> rcurly = rcurly();
         TokenDefinition<JsonNode> comma = comma();
         TokenDefinition<JsonNode> string = stringLiteral();
         TokenDefinition<JsonNode> colon = colon();
         TokenDefinition<JsonNode> rbracket = rbracket();
-        TokenDefinition<JsonNode> lbracket = lbracket(rbracket, comma);
-        TokenDefinition<JsonNode> lcurly = lcurly(rcurly, comma, colon, string);
         TokenDefinition<JsonNode> numberLiteral = numberLiteral();
-        return new LanguageBuilder2<JsonNode>()
-                .newLevel()
+        TokenDefinition<JsonNode> lbracket = lb.newToken().named("lbracket").matchesString("[")
+                .prefixParseAs((previous, match, parser) -> {
+                    ArrayList<JsonNode> expressions = new ArrayList<>();
+                    while (!parser.nextIs(rbracket)) {
+                        expressions.add(parser.expression(previous));
+                        if (!parser.nextIs(rbracket)) {
+                            parser.expectSingleToken(comma);
+                        }
+                    }
+                    parser.expectSingleToken(rbracket);
+                    return new ArrayNode(expressions);
+                }).build();
+        TokenDefinition<JsonNode> lcurly = new TokenDefinitionBuilder<JsonNode>().named("lcurly").matchesString("{")
+                .prefixParseAs((previous, match, parser) -> {
+                    LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
+                    while (!parser.nextIs(rcurly)) {
+                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
+                        parser.expectSingleToken(colon);
+                        JsonNode value = parser.expression(previous);
+                        pairs.put(key, value);
+                        if (!parser.nextIs(rcurly)) {
+                            parser.expectSingleToken(comma);
+                        }
+                    }
+                    parser.expectSingleToken(rcurly);
+                    return new ObjectNode(pairs);
+                }).build();
+
+        return lb
+                .newLowerPriorityLevel()
                 .addToken(rbracket).addToken(lbracket).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly)
                 .newLevel()
                 .addToken(numberLiteral).addToken(string).addToken(nullLiteral()).addToken(boolLiteral())
@@ -53,41 +80,6 @@ public class JsonLangBuilder {
     private TokenDefinition<JsonNode> colon() {
         return new TokenDefinitionBuilder<JsonNode>().named("colon").matchesString(":")
                 .build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> lbracket(TokenDefinition<JsonNode> rbracket, TokenDefinition<JsonNode> comma) {
-        return new TokenDefinitionBuilder<JsonNode>().named("lbracket").matchesString("[")
-                .prefixParseAs((previous, match, parser) -> {
-                    ArrayList<JsonNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs(rbracket)) {
-                        expressions.add(parser.expression(previous));
-                        if (!parser.nextIs(rbracket)) {
-                            parser.expectSingleToken(comma);
-                        }
-                    }
-                    parser.expectSingleToken(rbracket);
-                    return new ArrayNode(expressions);
-                }).build();
-    }
-
-    @NotNull
-    private TokenDefinition<JsonNode> lcurly(TokenDefinition<JsonNode> rcurly, TokenDefinition<JsonNode> comma, TokenDefinition<JsonNode> colon, TokenDefinition<JsonNode> string) {
-        return new TokenDefinitionBuilder<JsonNode>().named("lcurly").matchesString("{")
-                .prefixParseAs((previous, match, parser) -> {
-                    LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.nextIs(rcurly)) {
-                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
-                        parser.expectSingleToken(colon);
-                        JsonNode value = parser.expression(previous);
-                        pairs.put(key, value);
-                        if (!parser.nextIs(rcurly)) {
-                            parser.expectSingleToken(comma);
-                        }
-                    }
-                    parser.expectSingleToken(rcurly);
-                    return new ObjectNode(pairs);
-                }).build();
     }
 
 

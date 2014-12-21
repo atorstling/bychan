@@ -3,13 +3,9 @@ package com.torstling.tdop.fluid.json;
 import com.torstling.tdop.core.*;
 import com.torstling.tdop.fluid.Language;
 import com.torstling.tdop.fluid.LanguageBuilder2;
-import com.torstling.tdop.fluid.TokenDefinition;
-import com.torstling.tdop.fluid.TokenDefinitionBuilder;
 import com.torstling.tdop.fluid.json.nodes.*;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -22,7 +18,7 @@ public class JsonTest {
     @Test
     public void simpleStringLiteral() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.stringLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.stringLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("\"hello\"");
         assertEquals(new StringLiteralNode("hello"), ast);
@@ -31,7 +27,7 @@ public class JsonTest {
     @Test
     public void stringWithQuoteEscape() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.stringLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.stringLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("\"\\\"hello\"");
         assertEquals(new StringLiteralNode("\\\"hello"), ast);
@@ -40,7 +36,7 @@ public class JsonTest {
     @Test
     public void stringWithInvalidEscape() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.stringLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.stringLiteral())
                 .completeLanguage();
         ParseResult<JsonNode> pr = l.getParser().tryParse("\"\\phello\"");
         assertEquals(ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range starting at 0: '\"\\phello\"'", new LexingPosition(0, "\"\\phello\""))), pr.getErrorMessage());
@@ -50,7 +46,7 @@ public class JsonTest {
     @Test
     public void positiveInteger() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.numberLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("1");
         assertEquals(new NumberLiteralNode(1), ast);
@@ -59,7 +55,7 @@ public class JsonTest {
     @Test
     public void negativeExponent() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.numberLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.numberLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("-0.5e-5");
         assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
@@ -68,7 +64,7 @@ public class JsonTest {
     @Test
     public void leadingZeroesForbidden() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.numberLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.numberLiteral())
                 .completeLanguage();
         try {
             l.getParser().parse("01.5");
@@ -81,7 +77,7 @@ public class JsonTest {
     @Test
     public void bool() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.boolLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.boolLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("true");
         assertEquals(new BooleanLiteralNode(true), ast);
@@ -90,7 +86,7 @@ public class JsonTest {
     @Test
     public void nul() {
         Language<JsonNode> l = new LanguageBuilder2<JsonNode>()
-                .newLevel().addToken(JsonLangBuilder.nullLiteral())
+                .newLowerPriorityLevel().addToken(JsonLangBuilder.nullLiteral())
                 .completeLanguage();
         JsonNode ast = l.getParser().parse("null");
         assertEquals(NullLiteral.get(), ast);
@@ -141,6 +137,15 @@ public class JsonTest {
         inner.put(new StringLiteralNode("b"), new NumberLiteralNode(3));
         LinkedHashMap<StringLiteralNode, JsonNode> outer = new LinkedHashMap<>();
         outer.put(new StringLiteralNode("a"), new ObjectNode(inner));
+        assertEquals(new ObjectNode(outer), ast);
+    }
+
+    //@Test
+    public void whitespace() {
+        Language<JsonNode> l = makeJson();
+        JsonNode ast = l.getParser().parse(" { \"a\" :  3 }");
+        LinkedHashMap<StringLiteralNode, JsonNode> outer = new LinkedHashMap<>();
+        outer.put(new StringLiteralNode("a"), new NumberLiteralNode(3));
         assertEquals(new ObjectNode(outer), ast);
     }
 

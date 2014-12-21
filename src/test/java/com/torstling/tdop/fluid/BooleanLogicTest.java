@@ -19,24 +19,24 @@ public class BooleanLogicTest {
     public void terserSyntax() {
         LanguageBuilder2<BooleanExpressionNode> lb = new LanguageBuilder2<>();
         LevelLanguageBuilder2<BooleanExpressionNode> level = lb
-                .newLevel();
+                .newLowerPriorityLevel();
         final TokenDefinition<BooleanExpressionNode> rparen = level.startToken().matchesString(")").named("rparen").completeTokenAndPause();
         //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
         level.endLevel();
         Language<BooleanExpressionNode> l = lb
-                .newLevel().startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
+                .newLowerPriorityLevel().startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
                     BooleanExpressionNode trailingExpression = parser.expression(previous);
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).completeToken()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken().endLevel()
-                .newLevel()
+                .newLowerPriorityLevel()
                 .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.expression(previous))).completeToken()
                 .endLevel()
-                .newLevel()
+                .newLowerPriorityLevel()
                 .startToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.expression(previous))).completeToken()
                 .endLevel()
-                .newLevel()
+                .newLowerPriorityLevel()
                 .startToken().matchesPattern("[a-z]+").named("variable").standaloneParseAs((previous, match) -> new VariableNode(match.getText())).completeToken()
                 .endLevel()
                 .completeLanguage();

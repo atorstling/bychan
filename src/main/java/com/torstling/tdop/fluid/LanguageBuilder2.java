@@ -11,7 +11,7 @@ public class LanguageBuilder2<N> {
     }
 
     @NotNull
-    public LevelLanguageBuilder2<N> newLevel() {
+    public LevelLanguageBuilder2<N> newLowerPriorityLevel() {
         return new LevelLanguageBuilder2<>(delegate.newLowerPriorityLevel(), this);
     }
 
@@ -22,6 +22,10 @@ public class LanguageBuilder2<N> {
 
     @NotNull
     public WrappedTokenDefinitionBuilder<N> newLevelToken() {
-        return newLevel().startToken();
+        return newLowerPriorityLevel().startToken();
+    }
+
+    public TokenDefinitionBuilder<N> newToken() {
+        return delegate.newToken();
     }
 }

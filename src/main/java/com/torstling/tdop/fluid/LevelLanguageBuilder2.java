@@ -31,7 +31,7 @@ public class LevelLanguageBuilder2<N> {
 
     @NotNull
     public LevelLanguageBuilder2<N> newLevel() {
-        return endLevel().newLevel();
+        return endLevel().newLowerPriorityLevel();
     }
 
     @NotNull
