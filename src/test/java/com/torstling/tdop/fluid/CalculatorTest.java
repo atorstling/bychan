@@ -96,7 +96,6 @@ public class CalculatorTest {
         Language<Integer> l = b
                 .newLevelToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
                 .newLevelToken().named("plus").matchesString("+")
-                .prefixParseAs((previous, match, parser) -> parser.subExpression())
                 .infixParseAs((match, previous, parser) -> previous + parser.subExpression())
                 .newLevelToken().named("multiplication").matchesString("*")
                 .infixParseAs((match, previous, parser) -> previous * parser.subExpression())
@@ -104,7 +103,6 @@ public class CalculatorTest {
                 .standaloneParseAs((previous, match) -> Integer.parseInt(match.getText()))
                 .completeLanguage();
         assertEquals(Integer.valueOf(7), l.getParser().tryParse("1 + 2 * 3").getRootNode());
-
     }
 
 }
