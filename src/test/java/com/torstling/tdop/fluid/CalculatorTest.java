@@ -91,4 +91,21 @@ public class CalculatorTest {
         assertEquals(3, l.getParser().tryParse("1--2").getRootNode().evaluate());
     }
 
+    @Test
+    public void testDirectCalculation() {
+        LanguageBuilder2<Integer> b = new LanguageBuilder2<>();
+        Language<Integer> l = b
+                .newLevelToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
+                .newLevelToken().named("plus").matchesString("+")
+                .prefixParseAs((previous, match, parser) -> parser.expression(previous))
+                .infixParseAs((match, previous, parser) -> previous + parser.expression(previous))
+                .newLevelToken().named("multiplication").matchesString("*")
+                .infixParseAs((match, previous, parser) -> previous * parser.expression(previous))
+                .newLevelToken().named("integer").matchesPattern("[0-9]+")
+                .standaloneParseAs((previous, match) -> Integer.parseInt(match.getText()))
+                .completeLanguage();
+        assertEquals(Integer.valueOf(7), l.getParser().tryParse("1 + 2 * 3").getRootNode());
+
+    }
+
 }
