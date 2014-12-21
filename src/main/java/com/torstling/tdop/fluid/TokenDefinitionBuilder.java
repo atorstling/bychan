@@ -79,4 +79,9 @@ public class TokenDefinitionBuilder<N> {
         this.tokenTypeName = name;
         return this;
     }
+
+    @NotNull
+    public TokenDefinitionBuilder<N> matchesWhitespace() {
+        return matchesPattern("\\s+");
+    }
 }

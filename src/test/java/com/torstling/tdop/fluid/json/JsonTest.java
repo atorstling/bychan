@@ -140,7 +140,7 @@ public class JsonTest {
         assertEquals(new ObjectNode(outer), ast);
     }
 
-    //@Test
+    @Test
     public void whitespace() {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.getParser().parse(" { \"a\" :  3 }");

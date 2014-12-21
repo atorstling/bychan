@@ -21,6 +21,7 @@ public class JsonLangBuilder {
         TokenDefinition<JsonNode> colon = colon();
         TokenDefinition<JsonNode> rbracket = rbracket();
         TokenDefinition<JsonNode> numberLiteral = numberLiteral();
+        TokenDefinition<JsonNode> whitespace = lb.newToken().named("whitespace").ignoredWhenParsing().matchesWhitespace().build();
         TokenDefinition<JsonNode> lbracket = lb.newToken().named("lbracket").matchesString("[")
                 .prefixParseAs((previous, match, parser) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
@@ -51,7 +52,7 @@ public class JsonLangBuilder {
 
         return lb
                 .newLowerPriorityLevel()
-                .addToken(rbracket).addToken(lbracket).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly)
+                .addToken(whitespace).addToken(rbracket).addToken(lbracket).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly)
                 .newLevel()
                 .addToken(numberLiteral).addToken(string).addToken(nullLiteral()).addToken(boolLiteral())
                 .completeLanguage();
