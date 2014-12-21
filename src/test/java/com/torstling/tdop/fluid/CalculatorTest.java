@@ -105,4 +105,18 @@ public class CalculatorTest {
         assertEquals(Integer.valueOf(7), l.getParser().tryParse("1 + 2 * 3").getRootNode());
     }
 
+    public static void main(String[] args) {
+        LanguageBuilder2<Integer> b = new LanguageBuilder2<>();
+        Language<Integer> l = b
+                .newLevelToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
+                .newLevelToken().named("plus").matchesString("+")
+                .infixParseAs((match, previous, parser) -> previous + parser.subExpression())
+                .newLevelToken().named("multiplication").matchesString("*")
+                .infixParseAs((match, previous, parser) -> previous * parser.subExpression())
+                .newLevelToken().named("integer").matchesPattern("[0-9]+")
+                .standaloneParseAs((previous, match) -> Integer.parseInt(match.getText()))
+                .completeLanguage();
+        l.repl().run();
+    }
+
 }
