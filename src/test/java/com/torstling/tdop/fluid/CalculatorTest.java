@@ -19,7 +19,7 @@ public class CalculatorTest {
                 .matchesString("(")
                 .named("lparen")
                 .prefixParseAs((previous, match, parser) -> {
-                    CalculatorNode trailingExpression = parser.expression();
+                    CalculatorNode trailingExpression = parser.subExpression();
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).build();
@@ -33,15 +33,15 @@ public class CalculatorTest {
         TokenDefinition<CalculatorNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .prefixParseAs((previous, match, parser) -> parser.expression())
-                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression()))
+                .prefixParseAs((previous, match, parser) -> parser.subExpression())
+                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.subExpression()))
                 .build();
 
         TokenDefinition<CalculatorNode> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .prefixParseAs((previous, match, parser) -> new NegationNode(parser.expression()))
-                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.expression())).build();
+                .prefixParseAs((previous, match, parser) -> new NegationNode(parser.subExpression()))
+                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.subExpression())).build();
 
         TokenDefinition<CalculatorNode> number = lb.newToken()
                 .matchesPattern("[0-9]+")
@@ -77,10 +77,10 @@ public class CalculatorTest {
                 .newToken().named("lparen").matchesString("(")
                 .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
                 .newLevelToken().named("plus").matchesString("+")
-                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression()))
+                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.subExpression()))
                 .newLevelToken().named("minus").matchesString("-")
-                .prefixParseAs((previous, match, parser) -> new NegationNode(parser.expression()))
-                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.expression()))
+                .prefixParseAs((previous, match, parser) -> new NegationNode(parser.subExpression()))
+                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.subExpression()))
                 .newLevelToken().named("number").matchesPattern("[0-9]+")
                 .standaloneParseAs((previous, match) -> new NumberNode(Integer.parseInt(match.getText())))
                 .completeLanguage();
@@ -96,10 +96,10 @@ public class CalculatorTest {
         Language<Integer> l = b
                 .newLevelToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
                 .newLevelToken().named("plus").matchesString("+")
-                .prefixParseAs((previous, match, parser) -> parser.expression())
-                .infixParseAs((match, previous, parser) -> previous + parser.expression())
+                .prefixParseAs((previous, match, parser) -> parser.subExpression())
+                .infixParseAs((match, previous, parser) -> previous + parser.subExpression())
                 .newLevelToken().named("multiplication").matchesString("*")
-                .infixParseAs((match, previous, parser) -> previous * parser.expression())
+                .infixParseAs((match, previous, parser) -> previous * parser.subExpression())
                 .newLevelToken().named("integer").matchesPattern("[0-9]+")
                 .standaloneParseAs((previous, match) -> Integer.parseInt(match.getText()))
                 .completeLanguage();

@@ -18,7 +18,7 @@ public class RightParenthesisToken<N> implements Token<N> {
 
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new IllegalStateException("Cannot use right paranthesis as prefix to expression");
+        throw new IllegalStateException("Cannot use right paranthesis as prefix to subExpression");
     }
 
     @NotNull

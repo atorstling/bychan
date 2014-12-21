@@ -166,7 +166,7 @@ public class PrattParserTest {
             p.tryParse(null, new Expression<>(0)).getRootNode();
             fail("expected exception");
         } catch (IllegalStateException e) {
-            assertEquals("Cannot use right paranthesis as prefix to expression", e.getMessage());
+            assertEquals("Cannot use right paranthesis as prefix to subExpression", e.getMessage());
         }
     }
 
@@ -178,7 +178,7 @@ public class PrattParserTest {
             p.tryParse(null, new Expression<>(0)).getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals(ParsingFailedInformation.forFailedAfterLexing("Cannot parse expression, end reached", new ParsingPosition(2147483647, "")), e.getParsingFailedInformation());
+            assertEquals(ParsingFailedInformation.forFailedAfterLexing("Cannot parse subExpression, end reached", new ParsingPosition(2147483647, "")), e.getParsingFailedInformation());
         }
     }
 

@@ -20,7 +20,7 @@ public class DirectEvaluationTest {
         TokenDefinition<Integer> addition = builder.newToken()
                 .named("addition")
                 .matchesString("+")
-                .infixParseAs((match, previous, parser) -> previous + parser.expression())
+                .infixParseAs((match, previous, parser) -> previous + parser.subExpression())
                 .build();
         Language<Integer> lang = builder
                 .newLowerPriorityLevel()

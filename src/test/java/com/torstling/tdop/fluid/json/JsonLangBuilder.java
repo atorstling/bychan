@@ -26,7 +26,7 @@ public class JsonLangBuilder {
                 .prefixParseAs((previous, match, parser) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(rbracket)) {
-                        expressions.add(parser.expression());
+                        expressions.add(parser.subExpression());
                         if (!parser.nextIs(rbracket)) {
                             parser.expectSingleToken(comma);
                         }
@@ -40,7 +40,7 @@ public class JsonLangBuilder {
                     while (!parser.nextIs(rcurly)) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
                         parser.expectSingleToken(colon);
-                        JsonNode value = parser.expression();
+                        JsonNode value = parser.subExpression();
                         pairs.put(key, value);
                         if (!parser.nextIs(rcurly)) {
                             parser.expectSingleToken(comma);

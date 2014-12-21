@@ -16,10 +16,10 @@ public class XorNode implements LaiLaiNode {
 
     private void checkTypes(@NotNull ScopeNode currentScope) {
         if (!ExpressionType.BOOL.equals(previous.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("previous expression needs to be of type bool: " + previous);
+            throw new IllegalArgumentException("previous subExpression needs to be of type bool: " + previous);
         }
         if (!ExpressionType.BOOL.equals(right.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("Right expression needs to be of type bool: " + right);
+            throw new IllegalArgumentException("Right subExpression needs to be of type bool: " + right);
         }
     }
 

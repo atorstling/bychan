@@ -27,7 +27,7 @@ class ParserCallback2Impl<N> implements ParserCallback2<N> {
 
     @NotNull
     @Override
-    public N expression(@Nullable N previous) {
+    public N subExpression(@Nullable N previous) {
         return parser.tryParse(previous, new Expression<>(infixBindingPower)).getRootNode();
     }
 
@@ -58,7 +58,7 @@ class ParserCallback2Impl<N> implements ParserCallback2<N> {
 
     @NotNull
     @Override
-    public N expression() {
-        return expression(previous);
+    public N subExpression() {
+        return subExpression(previous);
     }
 }

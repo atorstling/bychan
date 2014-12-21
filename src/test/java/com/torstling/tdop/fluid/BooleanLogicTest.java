@@ -25,16 +25,16 @@ public class BooleanLogicTest {
         level.endLevel();
         Language<BooleanExpressionNode> l = lb
                 .newLowerPriorityLevel().startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
-                    BooleanExpressionNode trailingExpression = parser.expression();
+                    BooleanExpressionNode trailingExpression = parser.subExpression();
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).completeToken()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken().endLevel()
                 .newLowerPriorityLevel()
-                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.expression())).completeToken()
+                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.subExpression())).completeToken()
                 .endLevel()
                 .newLowerPriorityLevel()
-                .startToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.expression())).completeToken()
+                .startToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.subExpression())).completeToken()
                 .endLevel()
                 .newLowerPriorityLevel()
                 .startToken().matchesPattern("[a-z]+").named("variable").standaloneParseAs((previous, match) -> new VariableNode(match.getText())).completeToken()
@@ -49,13 +49,13 @@ public class BooleanLogicTest {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         TokenDefinition<BooleanExpressionNode> lparen = lb.newToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
-            BooleanExpressionNode trailingExpression = parser.expression();
+            BooleanExpressionNode trailingExpression = parser.subExpression();
             parser.expectSingleToken(rparen);
             return trailingExpression;
         }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
-        TokenDefinition<BooleanExpressionNode> not = lb.newToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.expression())).build();
-        TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.expression())).build();
+        TokenDefinition<BooleanExpressionNode> not = lb.newToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.subExpression())).build();
+        TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.subExpression())).build();
         TokenDefinition<BooleanExpressionNode> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").standaloneParseAs((previous, match) -> new VariableNode(match.getText())).build();
         Language<BooleanExpressionNode> l = lb
                 .newLowerPriorityLevel()
