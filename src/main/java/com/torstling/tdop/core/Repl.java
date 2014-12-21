@@ -13,13 +13,16 @@ public class Repl<N> {
     private final BufferedReader in;
     @NotNull
     private final BufferedWriter out;
+    @NotNull
+    private String languageName;
 
-    public Repl(@NotNull GenericParser<N> parser) {
-        this(parser, new BufferedReader(new InputStreamReader(System.in)), new BufferedWriter(new OutputStreamWriter(System.out)));
+    public Repl(@NotNull Language<N> language) {
+        this(language, new BufferedReader(new InputStreamReader(System.in)), new BufferedWriter(new OutputStreamWriter(System.out)));
     }
 
-    public Repl(@NotNull GenericParser<N> parser, @NotNull BufferedReader in, @NotNull BufferedWriter out) {
-        this.parser = parser;
+    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out) {
+        languageName = language.getName();
+        this.parser = language.getParser();
         this.in = in;
         this.out = out;
     }
@@ -34,11 +37,18 @@ public class Repl<N> {
     }
 
     private void runInternal() throws IOException {
-        out.write("Repl running");
+        out.write("welcome to the REPL for '" + languageName + "'");
         out.newLine();
-        out.flush();
         String line;
-        while ((line = in.readLine()) != null) {
+        while (true) {
+            out.write(">");
+            out.flush();
+            line = in.readLine();
+            if (line == null || line.matches("^(quit|end|q)$")) {
+                out.write("leaving");
+                out.flush();
+                break;
+            }
             ParseResult<N> result = parser.tryParse(line);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());

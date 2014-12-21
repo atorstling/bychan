@@ -13,10 +13,15 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Language<N> {
+    @NotNull
     private final Lexer<N> lexer;
+    @NotNull
     private final GenericParser<N> parser;
+    @NotNull
+    private final String name;
 
     public Language(@NotNull final List<TokenDefinitions<N>> tokenDefinitionss) {
+        this.name = "unnamed";
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitionss);
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
@@ -68,6 +73,11 @@ public class Language<N> {
 
     @NotNull
     public Repl repl() {
-        return new Repl(getParser());
+        return new Repl<>(this);
+    }
+
+    @NotNull
+    public String getName() {
+        return name;
     }
 }
