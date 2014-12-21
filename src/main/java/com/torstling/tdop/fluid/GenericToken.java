@@ -29,7 +29,7 @@ public class GenericToken<N> implements Token<N> {
         if (builder == null) {
             throw new IllegalStateException("Prefix parsing not registered for token type: '" + toString() + "'");
         }
-        return builder.build(previous, match, new ParserCallback2Impl<>(infixBindingPower(), tokenFinder, parser));
+        return builder.build(previous, match, new ParserCallback2Impl<>(infixBindingPower(), tokenFinder, parser, previous));
     }
 
     @NotNull
@@ -39,7 +39,7 @@ public class GenericToken<N> implements Token<N> {
         if (infixBuilder == null) {
             throw new IllegalStateException("Definition does not support infix parsing: " + this);
         }
-        return infixBuilder.build(match, previous, new ParserCallback2Impl<>(infixBindingPower(), tokenFinder, parser));
+        return infixBuilder.build(match, previous, new ParserCallback2Impl<>(infixBindingPower(), tokenFinder, parser, previous));
     }
 
     @Override

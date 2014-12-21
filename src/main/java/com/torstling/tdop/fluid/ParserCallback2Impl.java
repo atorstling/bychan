@@ -15,11 +15,14 @@ class ParserCallback2Impl<N> implements ParserCallback2<N> {
     private final TokenFinder<N> tokenFinder;
     @NotNull
     private final TokenParserCallback<N> parser;
+    @Nullable
+    private N previous;
 
-    public ParserCallback2Impl(int infixBindingPower, TokenFinder<N> tokenFinder, TokenParserCallback<N> parser) {
+    public ParserCallback2Impl(int infixBindingPower, TokenFinder<N> tokenFinder, TokenParserCallback<N> parser, @Nullable final N previous) {
         this.infixBindingPower = infixBindingPower;
         this.tokenFinder = tokenFinder;
         this.parser = parser;
+        this.previous = previous;
     }
 
     @NotNull
@@ -51,5 +54,11 @@ class ParserCallback2Impl<N> implements ParserCallback2<N> {
     public N parseSingleToken(N previous, TokenDefinition<N> tokenDefinition) {
         Token<N> token = swallow(tokenDefinition, parser);
         return token.prefixParse(previous, parser);
+    }
+
+    @NotNull
+    @Override
+    public N expression() {
+        return expression(previous);
     }
 }

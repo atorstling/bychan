@@ -11,6 +11,8 @@ public interface ParserCallback2<N> {
      */
     @NotNull
     N expression(@Nullable final N previous);
+    @NotNull
+    N expression();
 
     /**
      * Parse a single token of the type indicated by the token definition passed in.

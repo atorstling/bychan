@@ -46,7 +46,7 @@ public class MiniLangTest {
                 .matchesString("(")
                 .named("lparen")
                 .prefixParseAs((previous, match, parser) -> {
-                    LaiLaiNode trailingExpression = parser.expression(previous);
+                    LaiLaiNode trailingExpression = parser.expression();
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).build();
@@ -60,21 +60,21 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .prefixParseAs((previous, match, parser) -> parser.expression(previous))
-                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression(previous)))
+                .prefixParseAs((previous, match, parser) -> parser.expression())
+                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.expression()))
                 .build();
 
         TokenDefinition<LaiLaiNode> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .infixParseAs((match, previous, parser) -> new HatNode(previous, parser.expression(previous)))
+                .infixParseAs((match, previous, parser) -> new HatNode(previous, parser.expression()))
                 .build();
 
         TokenDefinition<LaiLaiNode> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
                 .infixParseAs((match, previous, parser) -> {
-                    LaiLaiNode right = parser.expression(previous);
+                    LaiLaiNode right = parser.expression();
                     return new AssignNode(previous, right);
                 })
                 .build();
@@ -124,7 +124,7 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
-                .infixParseAs((match, previous, parser) -> new StatementNode(previous, parser.expression(previous))).build();
+                .infixParseAs((match, previous, parser) -> new StatementNode(previous, parser.expression())).build();
 
         final TokenDefinition<LaiLaiNode> listEnd = lb.newToken()
                 .matchesString("]")
@@ -142,7 +142,7 @@ public class MiniLangTest {
                 .prefixParseAs((previous, match, parser) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(listEnd)) {
-                        expressions.add(parser.expression(previous));
+                        expressions.add(parser.expression());
                         if (!parser.nextIs(listEnd)) {
                             parser.expectSingleToken(comma);
                         }
