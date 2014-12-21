@@ -11,11 +11,6 @@ public class StringLiteralNode implements JsonNode {
     }
 
     @Override
-    public Object evaluate() {
-        return text;
-    }
-
-    @Override
     public String toString() {
         return "StringLiteralNode{" +
                 "text='" + text + '\'' +
@@ -42,5 +37,11 @@ public class StringLiteralNode implements JsonNode {
     @Override
     public int hashCode() {
         return text.hashCode();
+    }
+
+    @NotNull
+    @Override
+    public String prettyPrint(int depth) {
+        return "\"" + text + "\"";
     }
 }

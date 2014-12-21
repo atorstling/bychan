@@ -1,7 +1,9 @@
 package com.torstling.tdop.fluid.json.nodes;
 
+import com.torstling.tdop.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,11 +13,6 @@ public class ObjectNode implements JsonNode {
 
     public ObjectNode(@NotNull Map<StringLiteralNode, JsonNode> pairs) {
         this.pairs = new LinkedHashMap<>(pairs);
-    }
-
-    @Override
-    public Object evaluate() {
-        return null;
     }
 
     @Override
@@ -33,5 +30,16 @@ public class ObjectNode implements JsonNode {
     @Override
     public int hashCode() {
         return pairs.hashCode();
+    }
+
+    @NotNull
+    @Override
+    public String prettyPrint(int depth) {
+        String indentation = StringUtils.repeat("  ", depth);
+        ArrayList<String> pairStrings = new ArrayList<>();
+        for (Map.Entry<StringLiteralNode, JsonNode> entry : pairs.entrySet()) {
+            pairStrings.add(indentation + entry.getKey().prettyPrint(depth+1) + ": " + entry.getValue().prettyPrint(depth+1));
+        }
+        return "{\n" + String.join(",\n", pairStrings) + "\n"+ indentation +"}";
     }
 }

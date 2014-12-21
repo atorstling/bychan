@@ -1,5 +1,7 @@
 package com.torstling.tdop.fluid.json.nodes;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by alext on 2014-12-05.
  */
@@ -27,8 +29,9 @@ public class BooleanLiteralNode implements JsonNode {
         return (value ? 1 : 0);
     }
 
+    @NotNull
     @Override
-    public Object evaluate() {
-        return value;
+    public String prettyPrint(int depth) {
+        return Boolean.toString(value);
     }
 }

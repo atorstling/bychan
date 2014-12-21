@@ -1,5 +1,7 @@
 package com.torstling.tdop.fluid.json.nodes;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by alext on 2/26/14.
  */
@@ -13,8 +15,9 @@ public class NullLiteral implements JsonNode {
         return INSTANCE;
     }
 
+    @NotNull
     @Override
-    public Object evaluate() {
-        return null;
+    public String prettyPrint(int depth) {
+        return "null";
     }
 }

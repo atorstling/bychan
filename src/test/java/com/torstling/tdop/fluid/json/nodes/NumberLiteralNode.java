@@ -1,5 +1,7 @@
 package com.torstling.tdop.fluid.json.nodes;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Created by alext on 2014-12-05.
  */
@@ -8,11 +10,6 @@ public class NumberLiteralNode implements JsonNode {
 
     public NumberLiteralNode(float f) {
         this.f = f;
-    }
-
-    @Override
-    public Object evaluate() {
-        return f;
     }
 
     @Override
@@ -37,5 +34,11 @@ public class NumberLiteralNode implements JsonNode {
         return "NumberLiteralNode{" +
                 "f=" + f +
                 '}';
+    }
+
+    @NotNull
+    @Override
+    public String prettyPrint(int depth) {
+        return Float.toString(f);
     }
 }
