@@ -4,7 +4,7 @@ import com.torstling.bychan.core.Token;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface ParserCallback2<N> {
+public interface FluidParserCallback<N> {
     /**
      * Parse the directly following tokens an an expression. Proceed while tokens
      * with higher priority than the current token are found.

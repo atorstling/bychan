@@ -1,7 +1,7 @@
 package com.torstling.bychan.fluid.json;
 
 import com.torstling.bychan.fluid.Language;
-import com.torstling.bychan.fluid.LanguageBuilder2;
+import com.torstling.bychan.fluid.FluidLanguageBuilder;
 import com.torstling.bychan.fluid.TokenDefinition;
 import com.torstling.bychan.fluid.TokenDefinitionBuilder;
 import com.torstling.bychan.fluid.json.nodes.*;
@@ -14,7 +14,7 @@ class JsonLangBuilder {
 
     @NotNull
     public Language<JsonNode> build() {
-        LanguageBuilder2<JsonNode> lb = new LanguageBuilder2<>();
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
         TokenDefinition<JsonNode> rcurly = rcurly();
         TokenDefinition<JsonNode> comma = comma();
         TokenDefinition<JsonNode> string = stringLiteral();

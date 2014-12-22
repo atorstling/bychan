@@ -17,8 +17,8 @@ public class BooleanLogicTest {
 
     @Test
     public void terserSyntax() {
-        LanguageBuilder2<BooleanExpressionNode> lb = new LanguageBuilder2<>();
-        LevelLanguageBuilder2<BooleanExpressionNode> level = lb
+        FluidLanguageBuilder<BooleanExpressionNode> lb = new FluidLanguageBuilder<>();
+        FluidLevelLanguageBuilder<BooleanExpressionNode> level = lb
                 .newLowerPriorityLevel();
         final TokenDefinition<BooleanExpressionNode> rparen = level.startToken().matchesString(")").named("rparen").completeTokenAndPause();
         //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.

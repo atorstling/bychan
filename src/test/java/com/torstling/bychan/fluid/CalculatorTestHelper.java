@@ -2,7 +2,7 @@ package com.torstling.bychan.fluid;
 
 public class CalculatorTestHelper {
     public static Language<Integer> getSimpleCalculatorLanguage() {
-        LanguageBuilder2<Integer> b = new LanguageBuilder2<>();
+        FluidLanguageBuilder<Integer> b = new FluidLanguageBuilder<>();
         return b
                 .named("simpleCalc")
                 .newLevelToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()

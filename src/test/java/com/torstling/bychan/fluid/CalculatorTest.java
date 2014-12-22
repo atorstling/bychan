@@ -71,7 +71,7 @@ public class CalculatorTest {
 
     @Test
     public void testClearerSyntax() {
-        LanguageBuilder2<CalculatorNode> b = new LanguageBuilder2<>();
+        FluidLanguageBuilder<CalculatorNode> b = new FluidLanguageBuilder<>();
         Language<CalculatorNode> l = b
                 .newLevelToken().named("rparen").matchesString(")")
                 .newToken().named("lparen").matchesString("(")

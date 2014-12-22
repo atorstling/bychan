@@ -2,17 +2,17 @@ package com.torstling.bychan.fluid;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LanguageBuilder2<N> {
+public class FluidLanguageBuilder<N> {
     @NotNull
     private final LanguageBuilder<N> delegate;
 
-    public LanguageBuilder2() {
+    public FluidLanguageBuilder() {
         this.delegate = new LanguageBuilder<>();
     }
 
     @NotNull
-    public LevelLanguageBuilder2<N> newLowerPriorityLevel() {
-        return new LevelLanguageBuilder2<>(delegate.newLowerPriorityLevel(), this);
+    public FluidLevelLanguageBuilder<N> newLowerPriorityLevel() {
+        return new FluidLevelLanguageBuilder<>(delegate.newLowerPriorityLevel(), this);
     }
 
     @NotNull
@@ -30,7 +30,7 @@ public class LanguageBuilder2<N> {
     }
 
     @NotNull
-    public LanguageBuilder2<N> named(@NotNull final String name) {
+    public FluidLanguageBuilder<N> named(@NotNull final String name) {
         delegate.named(name);
         return this;
     }

@@ -2,14 +2,14 @@ package com.torstling.bychan.fluid;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LevelLanguageBuilder2<N> {
+public class FluidLevelLanguageBuilder<N> {
     @NotNull
     private final LevelLanguageBuilder<N> delegate;
     @NotNull
-    private final LanguageBuilder2<N> previous;
+    private final FluidLanguageBuilder<N> previous;
 
     @NotNull
-    public LevelLanguageBuilder2<N> addToken(@NotNull TokenDefinition<N> token) {
+    public FluidLevelLanguageBuilder<N> addToken(@NotNull TokenDefinition<N> token) {
         delegate.addToken(token);
         return this;
     }
@@ -19,18 +19,18 @@ public class LevelLanguageBuilder2<N> {
         return new WrappedTokenDefinitionBuilder<>(this, new TokenDefinitionBuilder<>());
     }
 
-    public LanguageBuilder2<N> endLevel() {
+    public FluidLanguageBuilder<N> endLevel() {
         delegate.endLevel();
         return previous;
     }
 
-    public LevelLanguageBuilder2(@NotNull LevelLanguageBuilder<N> delegate, @NotNull LanguageBuilder2<N> previous) {
+    public FluidLevelLanguageBuilder(@NotNull LevelLanguageBuilder<N> delegate, @NotNull FluidLanguageBuilder<N> previous) {
         this.delegate = delegate;
         this.previous = previous;
     }
 
     @NotNull
-    public LevelLanguageBuilder2<N> newLevel() {
+    public FluidLevelLanguageBuilder<N> newLevel() {
         return endLevel().newLowerPriorityLevel();
     }
 

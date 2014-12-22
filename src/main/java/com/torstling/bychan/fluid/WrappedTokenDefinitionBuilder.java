@@ -11,9 +11,9 @@ public class WrappedTokenDefinitionBuilder<N> {
     @NotNull
     private final TokenDefinitionBuilder<N> delegate;
     @NotNull
-    private final LevelLanguageBuilder2<N> languageBuilder;
+    private final FluidLevelLanguageBuilder<N> languageBuilder;
 
-    public WrappedTokenDefinitionBuilder(@NotNull LevelLanguageBuilder2<N> languageBuilder, @NotNull final TokenDefinitionBuilder<N> delegate) {
+    public WrappedTokenDefinitionBuilder(@NotNull FluidLevelLanguageBuilder<N> languageBuilder, @NotNull final TokenDefinitionBuilder<N> delegate) {
         this.languageBuilder = languageBuilder;
         this.delegate = delegate;
     }
@@ -54,7 +54,7 @@ public class WrappedTokenDefinitionBuilder<N> {
     }
 
     @NotNull
-    public LevelLanguageBuilder2<N> completeToken() {
+    public FluidLevelLanguageBuilder<N> completeToken() {
         buildAndAdd();
         return languageBuilder;
     }
