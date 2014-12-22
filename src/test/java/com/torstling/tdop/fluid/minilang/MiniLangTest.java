@@ -28,7 +28,7 @@ public class MiniLangTest {
                 .matchesString("{")
                 .named("lcurly")
                 .prefixParseAs((previous, match, parser) -> {
-                    Scope scope = (previous == null) ? new RootScope() : new NestedScope(previous.getScope());
+                    Scope scope = (previous == null) ? new RootScope() : previous.getScope() == null ? new RootScope() : new NestedScope(previous.getScope());
                     ScopeNode scopeNode = new ScopeNode(scope);
                     LaiLaiNode expression = parser.subExpression(scopeNode);
                     scopeNode.setChild(expression);

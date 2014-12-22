@@ -2,7 +2,6 @@ package com.torstling.tdop.utils;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 

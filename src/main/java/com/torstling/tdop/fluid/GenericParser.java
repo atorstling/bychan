@@ -31,7 +31,6 @@ public class GenericParser<N> {
     private ParseResult<N> tryParseInternal(@Nullable N previous, @NotNull final String text) {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
-            LexingFailedInformation failureInfo = lexingResult.getFailureValue();
             ParsingFailedInformation parsingFailedInformation = ParsingFailedInformation.forFailedLexing(lexingResult.getFailureValue());
             return ParseResult.failure(parsingFailedInformation);
         }

@@ -55,6 +55,7 @@ public class VariableDefNode implements VariableNode {
     public void assign(@NotNull Object value, @NotNull ScopeNode currentScope) {
         Scope scope = currentScope.getScope();
         this.value = value;
+        assert scope != null;
         scope.put(name, this);
     }
 }
