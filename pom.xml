@@ -12,6 +12,10 @@
     <description>A Pratt (TDOP) Expression Parser Library for Java</description>
     <url>http://bychan.org</url>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <licenses>
         <license>
             <name>MIT License</name>
@@ -41,7 +45,7 @@
             <groupId>com.intellij</groupId>
             <artifactId>annotations</artifactId>
             <version>12.0</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

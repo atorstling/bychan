@@ -1,7 +1,7 @@
 package com.torstling.bychan.core;
 
-import com.sun.istack.internal.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The result of a possibly unsuccessful parse
