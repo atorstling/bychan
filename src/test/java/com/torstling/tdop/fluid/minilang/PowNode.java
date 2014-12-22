@@ -37,7 +37,7 @@ public class PowNode implements LaiLaiNode {
         return ExpressionType.FLOAT;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return null;

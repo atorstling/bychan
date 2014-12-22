@@ -38,7 +38,7 @@ public class AdditionNode implements LaiLaiNode {
         return ExpressionType.union(previousType, rightType);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

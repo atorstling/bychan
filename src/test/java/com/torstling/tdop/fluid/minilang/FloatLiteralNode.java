@@ -25,7 +25,7 @@ public class FloatLiteralNode implements LiteralNode {
         return ExpressionType.FLOAT;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

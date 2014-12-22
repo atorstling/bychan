@@ -25,7 +25,7 @@ public class IntegerLiteralNode implements LiteralNode {
         return ExpressionType.INT;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

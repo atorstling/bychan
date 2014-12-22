@@ -35,7 +35,7 @@ public class ListNode implements LaiLaiNode {
         return ExpressionType.LIST;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

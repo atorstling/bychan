@@ -37,7 +37,7 @@ public class XorNode implements LaiLaiNode {
         return ExpressionType.BOOL;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return null;

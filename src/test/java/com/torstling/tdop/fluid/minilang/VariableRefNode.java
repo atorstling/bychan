@@ -37,7 +37,7 @@ public class VariableRefNode implements VariableNode {
         return variable.getExpressionType(currentScope);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return null;

@@ -43,7 +43,7 @@ public class HatNode implements LaiLaiNode {
         return getSubExpressionType(currentScope);
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

@@ -43,7 +43,7 @@ public class ScopeNode implements LaiLaiNode {
         this.child = child;
     }
 
-    @NotNull
+    @Nullable
     public Scope getScope() {
         return scope;
     }

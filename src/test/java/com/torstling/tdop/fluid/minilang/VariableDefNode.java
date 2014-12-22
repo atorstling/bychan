@@ -35,7 +35,7 @@ public class VariableDefNode implements VariableNode {
         return type;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

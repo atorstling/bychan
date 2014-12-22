@@ -27,7 +27,7 @@ public class StatementNode implements LaiLaiNode {
         return ExpressionType.union(previous.getExpressionType(currentScope), right.getExpressionType(currentScope));
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return previous.getScope();

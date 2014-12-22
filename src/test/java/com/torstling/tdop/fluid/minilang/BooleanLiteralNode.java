@@ -22,7 +22,7 @@ public class BooleanLiteralNode implements LaiLaiNode {
         return ExpressionType.BOOL;
     }
 
-    @NotNull
+    @Nullable
     @Override
     public Scope getScope() {
         return null;
