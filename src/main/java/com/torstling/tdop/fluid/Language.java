@@ -4,6 +4,7 @@ import com.torstling.tdop.core.Lexer;
 import com.torstling.tdop.core.Repl;
 import com.torstling.tdop.utils.Lists;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,8 +21,8 @@ public class Language<N> {
     @NotNull
     private final String name;
 
-    public Language(@NotNull final List<TokenDefinitions<N>> tokenDefinitionss) {
-        this.name = "unnamed";
+    public Language(@NotNull final String name, @NotNull final List<TokenDefinitions<N>> tokenDefinitionss) {
+        this.name = name;
         List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitionss);
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
@@ -45,11 +46,12 @@ public class Language<N> {
         parser = new GenericParser<>(lexer);
     }
 
-
+    @NotNull
     public Lexer<N> getLexer() {
         return lexer;
     }
 
+    @NotNull
     public GenericParser<N> getParser() {
         return parser;
     }

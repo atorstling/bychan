@@ -28,4 +28,10 @@ public class LanguageBuilder2<N> {
     public TokenDefinitionBuilder<N> newToken() {
         return delegate.newToken();
     }
+
+    @NotNull
+    public LanguageBuilder2<N> named(@NotNull final String name) {
+        delegate.named(name);
+        return this;
+    }
 }
