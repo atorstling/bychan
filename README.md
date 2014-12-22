@@ -1,4 +1,4 @@
 bychan
 ====
 
-A Pratt (TDOP) Parser Library for Java
+A Pratt (TDOP) Expression Parser Library for Java
