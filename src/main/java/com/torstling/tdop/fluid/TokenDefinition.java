@@ -57,9 +57,4 @@ public class TokenDefinition<N> {
     public String getTokenTypeName() {
         return tokenTypeName;
     }
-
-    @NotNull
-    public TokenDefinitionBuilder<N> toBuilder() {
-        return new TokenDefinitionBuilder<N>(pattern.pattern(), prefixBuilder, infixBuilder, null, parse, tokenTypeName);
-    }
 }

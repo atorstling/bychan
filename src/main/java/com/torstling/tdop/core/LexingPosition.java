@@ -15,15 +15,6 @@ public class LexingPosition {
         this.remainingText = remainingText;
     }
 
-    public int getStreamPosition() {
-        return streamPosition;
-    }
-
-    @NotNull
-    public String getRemainingText() {
-        return remainingText;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,17 +22,12 @@ public class LexingPosition {
 
         LexingPosition that = (LexingPosition) o;
 
-        if (streamPosition != that.streamPosition) return false;
-        if (!remainingText.equals(that.remainingText)) return false;
-
-        return true;
+        return streamPosition == that.streamPosition && remainingText.equals(that.remainingText);
     }
 
     @Override
     public int hashCode() {
-        int result = streamPosition;
-        result = 31 * result + remainingText.hashCode();
-        return result;
+        return 31 * streamPosition + remainingText.hashCode();
     }
 
     @Override

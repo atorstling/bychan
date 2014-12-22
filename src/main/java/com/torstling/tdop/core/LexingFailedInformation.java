@@ -17,11 +17,6 @@ public class LexingFailedInformation {
     }
 
     @NotNull
-    public String getMessage() {
-        return message;
-    }
-
-    @NotNull
     public LexingPosition getLexingPosition() {
         return lexingPosition;
     }

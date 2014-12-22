@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 
 public class StringUtils {
+
+    private StringUtils() {}
+
     @NotNull
     public static String join(@NotNull final Iterable<String> parts, @NotNull final String separator) {
         StringBuilder sb = new StringBuilder();
