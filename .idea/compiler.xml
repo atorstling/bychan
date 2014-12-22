@@ -27,6 +27,8 @@
         <module name="tdop" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="tdop" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
-
