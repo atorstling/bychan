@@ -25,12 +25,8 @@ public class ParsingFailedInformation {
 
         ParsingFailedInformation that = (ParsingFailedInformation) o;
 
-        if (failedAfterLexingInformation != null ? !failedAfterLexingInformation.equals(that.failedAfterLexingInformation) : that.failedAfterLexingInformation != null)
-            return false;
-        if (lexingFailedInformation != null ? !lexingFailedInformation.equals(that.lexingFailedInformation) : that.lexingFailedInformation != null)
-            return false;
+        return !(failedAfterLexingInformation != null ? !failedAfterLexingInformation.equals(that.failedAfterLexingInformation) : that.failedAfterLexingInformation != null) && !(lexingFailedInformation != null ? !lexingFailedInformation.equals(that.lexingFailedInformation) : that.lexingFailedInformation != null);
 
-        return true;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.torstling.tdop.fluid.minilang;
 
-import com.torstling.tdop.utils.Function;
 import com.torstling.tdop.utils.Lists;
 import com.torstling.tdop.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -9,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListNode implements LaiLaiNode {
     @NotNull
@@ -25,9 +25,7 @@ public class ListNode implements LaiLaiNode {
     @Override
     public Object evaluate(@Nullable ScopeNode currentScope) {
         ArrayList<Object> results = new ArrayList<>(expressions.size());
-        for (LaiLaiNode expression : expressions) {
-            results.add(expression.evaluate(currentScope));
-        }
+        results.addAll(expressions.stream().map(expression -> expression.evaluate(currentScope)).collect(Collectors.toList()));
         return results;
     }
 

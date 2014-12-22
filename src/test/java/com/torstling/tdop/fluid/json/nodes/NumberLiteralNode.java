@@ -19,9 +19,8 @@ public class NumberLiteralNode implements JsonNode {
 
         NumberLiteralNode that = (NumberLiteralNode) o;
 
-        if (Float.compare(that.f, f) != 0) return false;
+        return Float.compare(that.f, f) == 0;
 
-        return true;
     }
 
     @Override

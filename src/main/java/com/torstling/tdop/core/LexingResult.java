@@ -14,7 +14,7 @@ public class LexingResult<N> {
     @Nullable
     private final LexingFailedInformation failedInformation;
 
-    public LexingResult(@Nullable List<Token<N>> tokens, @Nullable LexingFailedInformation failedInformation) {
+    private LexingResult(@Nullable List<Token<N>> tokens, @Nullable LexingFailedInformation failedInformation) {
         if (tokens == null && failedInformation == null) {
             throw new IllegalArgumentException("Either argument must be present");
         }
@@ -25,7 +25,7 @@ public class LexingResult<N> {
         this.failedInformation = failedInformation;
     }
 
-    public boolean isSuccess() {
+    boolean isSuccess() {
         return tokens != null;
     }
 
@@ -52,10 +52,10 @@ public class LexingResult<N> {
     }
 
     public static <N> LexingResult<N> failure(LexingFailedInformation failedInformation) {
-        return new LexingResult<N>(null, failedInformation);
+        return new LexingResult<>(null, failedInformation);
     }
 
     public static <N> LexingResult<N> success(List<Token<N>> tokens) {
-        return new LexingResult<N>(tokens, null);
+        return new LexingResult<>(tokens, null);
     }
 }

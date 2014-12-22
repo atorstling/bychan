@@ -4,7 +4,6 @@ import com.torstling.tdop.core.Lexer;
 import com.torstling.tdop.core.Repl;
 import com.torstling.tdop.utils.Lists;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;

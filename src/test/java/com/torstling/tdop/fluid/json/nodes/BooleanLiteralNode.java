@@ -19,9 +19,8 @@ public class BooleanLiteralNode implements JsonNode {
 
         BooleanLiteralNode that = (BooleanLiteralNode) o;
 
-        if (value != that.value) return false;
+        return value == that.value;
 
-        return true;
     }
 
     @Override

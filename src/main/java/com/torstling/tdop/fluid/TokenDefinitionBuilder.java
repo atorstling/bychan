@@ -22,15 +22,6 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder(String pattern, PrefixAstBuilder<N> prefixBuilder, InfixAstBuilder<N> infixBuilder, StandaloneAstBuilder<N> standaloneBuilder, boolean parsed, String tokenTypeName) {
-        this.pattern = pattern;
-        this.prefixBuilder = prefixBuilder;
-        this.infixBuilder = infixBuilder;
-        this.standaloneBuilder = standaloneBuilder;
-        this.parsed = parsed;
-        this.tokenTypeName = tokenTypeName;
-    }
-
     public TokenDefinitionBuilder() {
         parsed = true;
     }

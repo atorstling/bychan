@@ -23,10 +23,8 @@ class FailedAfterLexingInformation {
 
         FailedAfterLexingInformation that = (FailedAfterLexingInformation) o;
 
-        if (!failureMessage.equals(that.failureMessage)) return false;
-        if (!parsingPosition.equals(that.parsingPosition)) return false;
+        return failureMessage.equals(that.failureMessage) && parsingPosition.equals(that.parsingPosition);
 
-        return true;
     }
 
     @Override

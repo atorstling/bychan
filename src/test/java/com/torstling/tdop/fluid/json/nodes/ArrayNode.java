@@ -22,9 +22,8 @@ public class ArrayNode implements JsonNode {
 
         ArrayNode arrayNode = (ArrayNode) o;
 
-        if (!subNodes.equals(arrayNode.subNodes)) return false;
+        return subNodes.equals(arrayNode.subNodes);
 
-        return true;
     }
 
     @Override

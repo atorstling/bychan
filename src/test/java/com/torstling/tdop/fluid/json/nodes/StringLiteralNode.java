@@ -17,11 +17,6 @@ public class StringLiteralNode implements JsonNode {
                 '}';
     }
 
-    @NotNull
-    public String getText() {
-        return text;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,9 +24,8 @@ public class StringLiteralNode implements JsonNode {
 
         StringLiteralNode that = (StringLiteralNode) o;
 
-        if (!text.equals(that.text)) return false;
+        return text.equals(that.text);
 
-        return true;
     }
 
     @Override

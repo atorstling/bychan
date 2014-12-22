@@ -35,11 +35,6 @@ public class LevelLanguageBuilder2<N> {
     }
 
     @NotNull
-    public WrappedTokenDefinitionBuilder<N> ńewToken() {
-        return startToken();
-    }
-
-    @NotNull
     public Language<N> completeLanguage() {
         return delegate.completeLanguage();
     }

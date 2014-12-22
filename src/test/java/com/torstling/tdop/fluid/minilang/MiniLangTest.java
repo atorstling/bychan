@@ -194,7 +194,7 @@ public class MiniLangTest {
         ParseResult<LaiLaiNode> r = l.getParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
         LaiLaiNode root = r.getRootNode();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
-        assertEquals(Arrays.<Object>asList(Boolean.TRUE, 16f), root.evaluate(null));
+        assertEquals(Arrays.asList(Boolean.TRUE, 16f), root.evaluate(null));
     }
 
     private void testOne(Language<LaiLaiNode> l) {

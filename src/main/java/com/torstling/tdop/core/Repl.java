@@ -8,13 +8,13 @@ import java.io.*;
 
 public class Repl<N> implements Runnable {
 
-    private GenericParser<N> parser;
+    private final GenericParser<N> parser;
     @NotNull
     private final BufferedReader in;
     @NotNull
     private final BufferedWriter out;
     @NotNull
-    private String languageName;
+    private final String languageName;
 
     public Repl(@NotNull Language<N> language) {
         this(language, new BufferedReader(new InputStreamReader(System.in)), new BufferedWriter(new OutputStreamWriter(System.out)));

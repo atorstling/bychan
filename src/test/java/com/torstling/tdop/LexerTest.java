@@ -87,7 +87,7 @@ public class LexerTest {
         @NotNull
         @Override
         public Token<Integer> toToken(@NotNull LexingMatch match) {
-            return new LeftParenthesisToken<Integer>(match);
+            return new LeftParenthesisToken<>(match);
         }
 
         @NotNull

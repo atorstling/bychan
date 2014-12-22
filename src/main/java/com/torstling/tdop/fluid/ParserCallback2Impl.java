@@ -16,7 +16,7 @@ class ParserCallback2Impl<N> implements ParserCallback2<N> {
     @NotNull
     private final TokenParserCallback<N> parser;
     @Nullable
-    private N previous;
+    private final N previous;
 
     public ParserCallback2Impl(int infixBindingPower, TokenFinder<N> tokenFinder, TokenParserCallback<N> parser, @Nullable final N previous) {
         this.infixBindingPower = infixBindingPower;

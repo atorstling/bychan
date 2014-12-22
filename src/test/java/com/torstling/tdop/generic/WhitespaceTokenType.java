@@ -11,11 +11,7 @@ public class WhitespaceTokenType<N> implements TokenType<N> {
     private final String pattern;
 
     public WhitespaceTokenType() {
-        this("\\s+");
-    }
-
-    public WhitespaceTokenType(String pattern) {
-        this.pattern = pattern;
+        this.pattern = "\\s+";
     }
 
     @NotNull

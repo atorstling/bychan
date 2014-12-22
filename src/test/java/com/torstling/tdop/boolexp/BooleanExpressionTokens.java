@@ -11,7 +11,7 @@ import java.util.List;
 class BooleanExpressionTokens {
     public static <S> List<TokenType<BooleanExpressionNode>> get() {
         return Arrays.<TokenType<BooleanExpressionNode>>asList(
-                new WhitespaceTokenType<>("\\s+"),
+                new WhitespaceTokenType<>(),
                 NotTokenType.<S>get(),
                 VariableTokenType.<S>get(),
                 AndTokenType.<S>get(),

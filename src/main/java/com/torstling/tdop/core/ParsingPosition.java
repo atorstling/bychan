@@ -22,10 +22,8 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        if (position != that.position) return false;
-        if (!remainingText.equals(that.remainingText)) return false;
+        return position == that.position && remainingText.equals(that.remainingText);
 
-        return true;
     }
 
     @Override

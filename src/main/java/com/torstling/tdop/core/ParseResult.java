@@ -64,10 +64,8 @@ public class ParseResult<N> {
 
         ParseResult that = (ParseResult) o;
 
-        if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
-        if (rootNode != null ? !rootNode.equals(that.rootNode) : that.rootNode != null) return false;
+        return !(errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) && !(rootNode != null ? !rootNode.equals(that.rootNode) : that.rootNode != null);
 
-        return true;
     }
 
     @Override

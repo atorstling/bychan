@@ -16,11 +16,6 @@ public class LexingFailedInformation {
         this.lexingPosition = lexingPosition;
     }
 
-    @NotNull
-    public LexingPosition getLexingPosition() {
-        return lexingPosition;
-    }
-
     @Override
     public String toString() {
         return "LexingFailedInformation{" +
@@ -36,10 +31,8 @@ public class LexingFailedInformation {
 
         LexingFailedInformation that = (LexingFailedInformation) o;
 
-        if (!lexingPosition.equals(that.lexingPosition)) return false;
-        if (!message.equals(that.message)) return false;
+        return lexingPosition.equals(that.lexingPosition) && message.equals(that.message);
 
-        return true;
     }
 
     @Override

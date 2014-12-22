@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class JsonLangBuilder {
+class JsonLangBuilder {
 
     @NotNull
     public Language<JsonNode> build() {
