@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 
-public class Repl<N> {
+public class Repl<N> implements Runnable {
 
     private GenericParser<N> parser;
     @NotNull
