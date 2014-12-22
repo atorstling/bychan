@@ -1,4 +1,4 @@
-tdop
+bychan
 ====
 
-A Top Down Operator Precedence Parser Runtime Parser Library for Java
+A Pratt (TDOP) Parser Library for Java
