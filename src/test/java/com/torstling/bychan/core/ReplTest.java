@@ -43,6 +43,7 @@ public class ReplTest {
         Repl<Integer> r = new Repl<>(l, in, new BufferedWriter(new OutputStreamWriter(out)));
         ExecutorService e = Executors.newSingleThreadExecutor();
         e.submit(r);
+        e.shutdown();
         e.awaitTermination(1, TimeUnit.SECONDS);
         assertEquals(expected, out.toString());
     }

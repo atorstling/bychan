@@ -4,7 +4,7 @@ import com.torstling.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class OrToken<S> implements Token<BooleanExpressionNode> {
+public class OrToken implements Token<BooleanExpressionNode> {
     @NotNull
     private final LexingMatch match;
 
@@ -19,7 +19,7 @@ public class OrToken<S> implements Token<BooleanExpressionNode> {
 
     @NotNull
     public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new OrNode(previous, parser.tryParse(previous, new Expression<>(infixBindingPower())).getRootNode());
+        return new OrNode(previous, parser.tryParseExpression(previous, infixBindingPower()).getRootNode());
     }
 
     public int infixBindingPower() {

@@ -12,7 +12,7 @@ public class OrTokenType<S> implements TokenType<BooleanExpressionNode> {
 
     @NotNull
     public Token<BooleanExpressionNode> toToken(@NotNull LexingMatch match) {
-        return new OrToken<>(match);
+        return new OrToken(match);
     }
 
     @NotNull

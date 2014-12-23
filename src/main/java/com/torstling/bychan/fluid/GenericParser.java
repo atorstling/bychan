@@ -40,8 +40,7 @@ public class GenericParser<N> {
     @NotNull
     private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
         PrattParser<N> parser = new PrattParser<>(tokens);
-        Expression<N> strategy = new Expression<>(0);
-        ParseResult<N> parsed = parser.tryParse(previous, strategy);
+        ParseResult<N> parsed = parser.tryParseExpression(previous, 0);
         if (parsed.isSuccess()) {
             parser.swallow(EndTokenType.get());
         }

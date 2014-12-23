@@ -28,7 +28,7 @@ class FluidParserCallbackImpl<N> implements FluidParserCallback<N> {
     @NotNull
     @Override
     public N subExpression(@Nullable N previous) {
-        return parser.tryParse(previous, new Expression<>(infixBindingPower)).getRootNode();
+        return parser.tryParseExpression(previous, infixBindingPower).getRootNode();
     }
 
     @NotNull
