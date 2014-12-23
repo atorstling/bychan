@@ -5,6 +5,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
 
@@ -18,8 +21,14 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     @Override
     @NotNull
     public ParseResult<N> tryParseExpression(@Nullable N previous, final int powerFloor) {
+        Supplier<N> parseFunction = () -> parseExpression(previous, powerFloor);
+        return tryParse(parseFunction);
+    }
+
+    @NotNull
+    private ParseResult<N> tryParse(@NotNull Supplier<N> parseFunction) {
         try {
-            N rootNode = parseExpression(previous, powerFloor);
+            N rootNode = parseFunction.get();
             return ParseResult.success(rootNode);
         } catch (ParsingFailedException e) {
             return ParseResult.failure(e.getParsingFailedInformation());
