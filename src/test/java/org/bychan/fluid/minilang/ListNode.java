@@ -1,7 +1,5 @@
 package org.bychan.fluid.minilang;
 
-import org.bychan.utils.Lists;
-import org.bychan.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +41,6 @@ public class ListNode implements LaiLaiNode {
 
     @Override
     public String toString() {
-        Collection<String> strings = Lists.transform(expressions, Object::toString);
-        return "(l " + StringUtils.join(strings, " ") + " )";
+        return "(l " + expressions.stream().map(LaiLaiNode::toString).collect(Collectors.joining(" ")) + " )";
     }
 }

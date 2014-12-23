@@ -2,7 +2,6 @@ package org.bychan.fluid;
 
 import org.bychan.core.Lexer;
 import org.bychan.core.Repl;
-import org.bychan.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class Language<N> {
 
 
     private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return Lists.transform(leveledDefinitions, tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder));
+        return leveledDefinitions.stream().map(tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder)).collect(Collectors.toList());
     }
 
     private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {
