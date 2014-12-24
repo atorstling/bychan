@@ -2,17 +2,24 @@ package org.bychan.core;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by alext on 2/28/14.
  */
 public class ParsingPosition {
     private final int position;
     @NotNull
-    private final String remainingText;
+    private final List<? extends Token> remainingTokens;
 
-    public ParsingPosition(int position, @NotNull String remainingText) {
+    public ParsingPosition(int position, @NotNull List<? extends Token> remainingTokens) {
         this.position = position;
-        this.remainingText = remainingText;
+        this.remainingTokens = remainingTokens;
+    }
+
+    public ParsingPosition(int position, Token... tokens) {
+        this(position, Arrays.asList(tokens));
     }
 
     @Override
@@ -22,14 +29,14 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        return position == that.position && remainingText.equals(that.remainingText);
+        return position == that.position && remainingTokens.equals(that.remainingTokens);
 
     }
 
     @Override
     public int hashCode() {
         int result = position;
-        result = 31 * result + remainingText.hashCode();
+        result = 31 * result + remainingTokens.hashCode();
         return result;
     }
 
@@ -37,7 +44,7 @@ public class ParsingPosition {
     public String toString() {
         return "ParsingPosition{" +
                 "position=" + position +
-                ", remainingText='" + remainingText + '\'' +
+                ", remainingTokens='" + remainingTokens + '\'' +
                 '}';
     }
 }

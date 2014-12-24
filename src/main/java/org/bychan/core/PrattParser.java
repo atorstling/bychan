@@ -3,17 +3,16 @@ package org.bychan.core;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayDeque;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
-    private final ArrayDeque<Token<N>> tokens;
+    private final TokenStack<N> tokens;
 
-    public PrattParser(List<? extends Token<N>> tokens) {
-        this.tokens = new ArrayDeque<>(tokens);
+    public PrattParser(@NotNull List<Token<N>> tokens) {
+        this.tokens = new TokenStack<>(tokens);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     }
 
     /**
-     * Parse upcoming tokens from the stream into an subExpression, and keep going
+     * Parse upcoming tokens from the stream into an expression, and keep going
      * until token binding powers drop down to or below the supplied floor. If this
      * feels backwards, remember that weak operands end up higher in the parse tree, consider for instance
      * <code>1*2 + 3 </code> which becomes
@@ -83,7 +82,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     private N parseLoop(@NotNull final N currentLeftHandSide, final int powerFloor) {
         Token<N> peekedToken = peek();
         if (peekedToken.infixBindingPower() > powerFloor) {
-            //Parsing happens by passing the current LHS to the operator, which will continue parsing.
+            //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
             Token<N> takenToken = pop();
             N nextExpression = takenToken.infixParse(currentLeftHandSide, this);
             return parseLoop(nextExpression, powerFloor);
@@ -95,9 +94,17 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     public Token<N> swallow(@NotNull TokenType<N> type) {
         Token<N> next = tokens.pop();
         if (!next.getType().equals(type)) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type + "', but got '" + next + "'", next.getMatch().toParsingPosition()));
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
+    }
+
+    @NotNull
+    public ParsingPosition getParsingPosition() {
+        Token<N> previous = tokens.previous();
+        int startPosition = previous == null ? 0 : previous.getMatch().getStartPosition();
+        List<? extends Token> remaining = tokens.remaining();
+        return new ParsingPosition(startPosition, remaining);
     }
 
     @NotNull

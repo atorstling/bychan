@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 public interface FluidParserCallback<N> {
     /**
      * Parse the directly following tokens an an expression. Proceed while tokens
-     * with higher priority than the current token are found.
+     * with higher priority than the previous token are found.
      * @param previous passed to the sub-expression parser as the node found directly before. If you
      *                 have performed any custom parsing in your handler you should pass in the directly leading
      *                 node before the sub-expression which you are trying to parse.

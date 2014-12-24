@@ -19,12 +19,12 @@ public class EndToken<N> implements Token<N> {
 
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
-        throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Cannot parse subExpression, end reached", new ParsingPosition(lexingMatch.getStartPosition(), lexingMatch.getText())));
+        throw new ParsingFailedException("Cannot parse subExpression, end reached", parser);
     }
 
     @NotNull
     public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Cannot parse subExpression, end reached", new ParsingPosition(lexingMatch.getStartPosition(), lexingMatch.getText())));
+        throw new ParsingFailedException("Cannot parse subExpression, end reached", parser);
     }
 
     public int infixBindingPower() {
@@ -46,5 +46,23 @@ public class EndToken<N> implements Token<N> {
 
     public String toString() {
         return "END";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EndToken endToken = (EndToken) o;
+
+        if (lexingMatch != null ? !lexingMatch.equals(endToken.lexingMatch) : endToken.lexingMatch != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return lexingMatch != null ? lexingMatch.hashCode() : 0;
     }
 }

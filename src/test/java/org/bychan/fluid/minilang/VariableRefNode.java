@@ -27,7 +27,7 @@ public class VariableRefNode implements VariableNode {
         assert scope != null;
         VariableDefNode variable = scope.find(name);
         if (variable == null) {
-            throw new IllegalStateException("No variable named '" + name + "' found in the current scope: " + currentScope);
+            throw new IllegalStateException("No variable named '" + name + "' found in the previous scope: " + currentScope);
         }
         return variable;
     }

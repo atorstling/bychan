@@ -70,7 +70,9 @@ public class JsonTest {
             l.getParser().parse("01.5");
             fail("Expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'EndTokenType', but got 'number_literal(1.5)'", new ParsingPosition(4, "1.5")), e.getParsingFailedInformation());
+            ParsingFailedInformation expected = ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'EndTokenType', but got 'number_literal(1.5)'", new ParsingPosition(1, new EndToken(new LexingMatch<Integer>(4, 4, "", EndTokenType.get()))));
+            ParsingFailedInformation actual = e.getParsingFailedInformation();
+            assertEquals(expected, actual);
         }
     }
 

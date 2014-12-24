@@ -4,9 +4,7 @@ import org.bychan.boolexp.AndNode;
 import org.bychan.boolexp.BooleanExpressionNode;
 import org.bychan.boolexp.NotNode;
 import org.bychan.boolexp.VariableNode;
-import org.bychan.core.ParseResult;
-import org.bychan.core.ParsingFailedInformation;
-import org.bychan.core.ParsingPosition;
+import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
@@ -85,7 +83,7 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> parseResult = l.getParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
         ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
-        assertEquals(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'rparen', but got 'END'", new ParsingPosition(2, "")), errorMessage);
+        assertEquals(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'rparen', but got 'END'", new ParsingPosition(2)), errorMessage);
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {

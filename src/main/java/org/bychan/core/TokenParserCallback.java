@@ -22,4 +22,7 @@ public interface TokenParserCallback<N> {
 
     @NotNull
     Token<N> pop();
+
+    @NotNull
+    ParsingPosition getParsingPosition();
 }

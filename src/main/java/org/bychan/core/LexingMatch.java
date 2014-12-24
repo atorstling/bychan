@@ -64,11 +64,6 @@ public class LexingMatch<N> {
     }
 
     @NotNull
-    public ParsingPosition toParsingPosition() {
-        return new ParsingPosition(endPosition, text);
-    }
-
-    @NotNull
     public String group(int i) {
         Matcher matcher = tokenType.getPattern().matcher(text);
         boolean matches = matcher.matches();
