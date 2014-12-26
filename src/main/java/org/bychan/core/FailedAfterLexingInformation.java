@@ -36,9 +36,6 @@ class FailedAfterLexingInformation {
 
     @Override
     public String toString() {
-        return "FailedAfterLexingInformation{" +
-                "failureMessage='" + failureMessage + '\'' +
-                ", parsingPosition=" + parsingPosition +
-                '}';
+        return "Lexing failed: '" + failureMessage + '\'' + " @ " + parsingPosition ;
     }
 }

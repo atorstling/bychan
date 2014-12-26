@@ -1,6 +1,7 @@
 package org.bychan.fluid.json;
 
 import org.bychan.core.*;
+import org.bychan.fluid.GenericToken;
 import org.bychan.fluid.Language;
 import org.bychan.fluid.FluidLanguageBuilder;
 import org.bychan.fluid.json.nodes.*;
@@ -70,9 +71,8 @@ public class JsonTest {
             l.getLexParser().parse("01.5");
             fail("Expected exception");
         } catch (ParsingFailedException e) {
-            ParsingFailedInformation expected = ParsingFailedInformation.forFailedAfterLexing("Expected a token of type 'EndTokenType', but got 'number_literal(1.5)'", new ParsingPosition(1, new EndToken(new LexingMatch<Integer>(4, 4, "", EndTokenType.get()))));
             ParsingFailedInformation actual = e.getParsingFailedInformation();
-            assertEquals(expected, actual);
+            assertEquals("Lexing failed: 'The input stream was not completely parsed' @  index 0, remaining tokens are [number_literal(1.5), END]", actual.toString());
         }
     }
 

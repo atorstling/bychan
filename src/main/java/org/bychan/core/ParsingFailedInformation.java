@@ -7,7 +7,6 @@ public class ParsingFailedInformation {
     public static ParsingFailedInformation forFailedAfterLexing(@NotNull String failureMessage, @NotNull final ParsingPosition parsingPosition) {
         return new ParsingFailedInformation(null, new FailedAfterLexingInformation(failureMessage, parsingPosition));
     }
-
     @Nullable
     private final LexingFailedInformation lexingFailedInformation;
     @Nullable
@@ -38,10 +37,8 @@ public class ParsingFailedInformation {
 
     @Override
     public String toString() {
-        return "ParsingFailedInformation{" +
-                "lexingFailedInformation=" + lexingFailedInformation +
-                ", failedAfterLexingInformation=" + failedAfterLexingInformation +
-                '}';
+        //noinspection ConstantConditions
+        return lexingFailedInformation != null ? lexingFailedInformation.toString() : failedAfterLexingInformation.toString();
     }
 
     @NotNull

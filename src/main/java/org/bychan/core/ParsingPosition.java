@@ -42,9 +42,7 @@ public class ParsingPosition {
 
     @Override
     public String toString() {
-        return "ParsingPosition{" +
-                "position=" + position +
-                ", remainingTokens='" + remainingTokens + '\'' +
-                '}';
+        return " index " + position +
+                ", remaining tokens are " + remainingTokens;
     }
 }

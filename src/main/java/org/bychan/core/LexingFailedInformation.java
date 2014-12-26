@@ -18,10 +18,7 @@ public class LexingFailedInformation {
 
     @Override
     public String toString() {
-        return "LexingFailedInformation{" +
-                "message='" + message + '\'' +
-                ", lexingPosition=" + lexingPosition +
-                '}';
+        return "Lexing failed: '" + message + '\'' + " @ " + lexingPosition;
     }
 
     @Override

@@ -48,6 +48,9 @@ public class LexParser<N> {
         PrattParser<N> parser = new PrattParser<>(tokens);
         ParseResult<N> parsed = tryParse(() -> parser.parseExpression(previous, 0));
         if (parsed.isSuccess()) {
+            if (!parser.peek().getType().equals(EndTokenType.get())) {
+                return ParseResult.failure(ParsingFailedInformation.forFailedAfterLexing("The input stream was not completely parsed", parser.getParsingPosition()));
+            }
             parser.swallow(EndTokenType.get());
         }
         return parsed;

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * A language with a defined syntax.
+ *
  * @param <N> The type of nodes which the AST consists of.
  */
 public class Language<N> {

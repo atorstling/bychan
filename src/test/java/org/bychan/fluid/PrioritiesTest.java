@@ -1,6 +1,7 @@
 package org.bychan.fluid;
 
 import org.bychan.core.Bychan;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
