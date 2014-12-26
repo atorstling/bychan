@@ -1,7 +1,7 @@
 package org.bychan.fluid;
 
-import org.bychan.core.basic.Lexer;
-import org.bychan.core.basic.Repl;
+import org.bychan.core.Lexer;
+import org.bychan.core.Repl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
