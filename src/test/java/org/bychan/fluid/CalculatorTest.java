@@ -63,9 +63,9 @@ public class CalculatorTest {
                 .addToken(number)
                 .endLevel()
                 .completeLanguage();
-        assertEquals(3, l.getParser().tryParse("1+2").getRootNode().evaluate());
-        assertEquals(-1, l.getParser().tryParse("1+-2").getRootNode().evaluate());
-        assertEquals(3, l.getParser().tryParse("1--2").getRootNode().evaluate());
+        assertEquals(3, l.getLexParser().tryParse("1+2").getRootNode().evaluate());
+        assertEquals(-1, l.getLexParser().tryParse("1+-2").getRootNode().evaluate());
+        assertEquals(3, l.getLexParser().tryParse("1--2").getRootNode().evaluate());
     }
 
 
@@ -85,15 +85,15 @@ public class CalculatorTest {
                 .standaloneParseAs((previous, match) -> new NumberNode(Integer.parseInt(match.getText())))
                 .completeLanguage();
 
-        assertEquals(3, l.getParser().tryParse("1+2").getRootNode().evaluate());
-        assertEquals(-1, l.getParser().tryParse("1+-2").getRootNode().evaluate());
-        assertEquals(3, l.getParser().tryParse("1--2").getRootNode().evaluate());
+        assertEquals(3, l.getLexParser().tryParse("1+2").getRootNode().evaluate());
+        assertEquals(-1, l.getLexParser().tryParse("1+-2").getRootNode().evaluate());
+        assertEquals(3, l.getLexParser().tryParse("1--2").getRootNode().evaluate());
     }
 
     @Test
     public void testDirectCalculation() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        assertEquals(Integer.valueOf(7), l.getParser().tryParse("1 + 2 * 3").getRootNode());
+        assertEquals(Integer.valueOf(7), l.getLexParser().tryParse("1 + 2 * 3").getRootNode());
     }
 
     public static void main(String[] args) {

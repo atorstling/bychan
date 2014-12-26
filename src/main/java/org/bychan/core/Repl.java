@@ -1,6 +1,6 @@
 package org.bychan.core;
 
-import org.bychan.fluid.GenericParser;
+import org.bychan.fluid.LexParser;
 import org.bychan.fluid.Language;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,7 +8,7 @@ import java.io.*;
 
 public class Repl<N> implements Runnable {
 
-    private final GenericParser<N> parser;
+    private final LexParser<N> lexParser;
     @NotNull
     private final BufferedReader in;
     @NotNull
@@ -22,7 +22,7 @@ public class Repl<N> implements Runnable {
 
     public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out) {
         languageName = language.getName();
-        this.parser = language.getParser();
+        this.lexParser = language.getLexParser();
         this.in = in;
         this.out = out;
     }
@@ -49,7 +49,7 @@ public class Repl<N> implements Runnable {
                 out.flush();
                 break;
             }
-            ParseResult<N> result = parser.tryParse(line);
+            ParseResult<N> result = lexParser.tryParse(line);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());
                 out.newLine();

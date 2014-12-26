@@ -15,7 +15,7 @@ public class Language<N> {
     @NotNull
     private final Lexer<N> lexer;
     @NotNull
-    private final GenericParser<N> parser;
+    private final LexParser<N> lexParser;
     @NotNull
     private final String name;
 
@@ -41,7 +41,7 @@ public class Language<N> {
         };
         delegatingFinder.setDelegate(tokenFinder);
         lexer = new Lexer<>(genericTokenTypes);
-        parser = new GenericParser<>(lexer);
+        lexParser = new LexParser<>(lexer);
     }
 
     @NotNull
@@ -50,8 +50,8 @@ public class Language<N> {
     }
 
     @NotNull
-    public GenericParser<N> getParser() {
-        return parser;
+    public LexParser<N> getLexParser() {
+        return lexParser;
     }
 
 

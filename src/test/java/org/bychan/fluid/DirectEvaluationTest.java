@@ -33,7 +33,7 @@ public class DirectEvaluationTest {
         String expr = "1+3";
         List<Token<Integer>> tokens = lang.getLexer().lex(expr);
         assertEquals("[number(1), addition(+), number(3), END]", tokens.toString());
-        assertEquals(4, (int) lang.getParser().tryParse(0, expr).getRootNode());
+        assertEquals(4, (int) lang.getLexParser().tryParse(0, expr).getRootNode());
 
     }
 }

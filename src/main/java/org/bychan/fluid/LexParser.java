@@ -7,11 +7,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class GenericParser<N> {
+/**
+ * Facade for a {@link org.bychan.core.PrattParser} and a {@link org.bychan.core.Lexer} which lexes and parses
+ * an input text completely, making sure all input text has been properly processed before returning a result.
+ * @param <N>
+ */
+public class LexParser<N> {
     @NotNull
     private final Lexer<N> lexer;
 
-    public GenericParser(@NotNull final Lexer<N> lexer) {
+    public LexParser(@NotNull final Lexer<N> lexer) {
         this.lexer = lexer;
     }
 
@@ -41,17 +46,11 @@ public class GenericParser<N> {
     @NotNull
     private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
         PrattParser<N> parser = new PrattParser<>(tokens);
-        ParseResult<N> parsed = tryParseExpression(previous, 0, parser);
+        ParseResult<N> parsed = tryParse(() -> parser.parseExpression(previous, 0));
         if (parsed.isSuccess()) {
             parser.swallow(EndTokenType.get());
         }
         return parsed;
-    }
-
-    @NotNull
-    public ParseResult<N> tryParseExpression(@Nullable N previous, final int powerFloor, @NotNull PrattParser<N> parser) {
-        Supplier<N> parseFunction = () -> parser.parseExpression(previous, powerFloor);
-        return tryParse(parseFunction);
     }
 
     @NotNull

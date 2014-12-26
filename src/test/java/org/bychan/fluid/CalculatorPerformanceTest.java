@@ -19,7 +19,7 @@ public class CalculatorPerformanceTest {
                 return integer.toString();
             }
         }).collect(Collectors.joining("+"));
-        Integer result = l.getParser().parse(calculation);
+        Integer result = l.getLexParser().parse(calculation);
         assertEquals((Integer) 4498500, result);
     }
 }
