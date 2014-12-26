@@ -15,23 +15,6 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         this.tokens = new TokenStack<>(tokens);
     }
 
-    @Override
-    @NotNull
-    public ParseResult<N> tryParseExpression(@Nullable N previous, final int powerFloor) {
-        Supplier<N> parseFunction = () -> parseExpression(previous, powerFloor);
-        return tryParse(parseFunction);
-    }
-
-    @NotNull
-    private ParseResult<N> tryParse(@NotNull Supplier<N> parseFunction) {
-        try {
-            N rootNode = parseFunction.get();
-            return ParseResult.success(rootNode);
-        } catch (ParsingFailedException e) {
-            return ParseResult.failure(e.getParsingFailedInformation());
-        }
-    }
-
     /**
      * Parse upcoming tokens from the stream into an expression, and keep going
      * until token binding powers drop down to or below the supplied floor. If this

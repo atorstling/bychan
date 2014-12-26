@@ -22,7 +22,7 @@ public class MultiplicationToken<S> implements Token<CalculatorNode> {
 
     @NotNull
     public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        CalculatorNode right = parser.tryParseExpression(previous, infixBindingPower()).getRootNode();
+        CalculatorNode right = parser.parseExpression(previous, infixBindingPower());
         return new MultiplicationNode(previous, right);
     }
 

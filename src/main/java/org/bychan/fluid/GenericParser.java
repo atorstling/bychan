@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class GenericParser<N> {
     @NotNull
@@ -40,10 +41,26 @@ public class GenericParser<N> {
     @NotNull
     private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
         PrattParser<N> parser = new PrattParser<>(tokens);
-        ParseResult<N> parsed = parser.tryParseExpression(previous, 0);
+        ParseResult<N> parsed = tryParseExpression(previous, 0, parser);
         if (parsed.isSuccess()) {
             parser.swallow(EndTokenType.get());
         }
         return parsed;
+    }
+
+    @NotNull
+    public ParseResult<N> tryParseExpression(@Nullable N previous, final int powerFloor, @NotNull PrattParser<N> parser) {
+        Supplier<N> parseFunction = () -> parser.parseExpression(previous, powerFloor);
+        return tryParse(parseFunction);
+    }
+
+    @NotNull
+    private ParseResult<N> tryParse(@NotNull Supplier<N> parseFunction) {
+        try {
+            N rootNode = parseFunction.get();
+            return ParseResult.success(rootNode);
+        } catch (ParsingFailedException e) {
+            return ParseResult.failure(e.getParsingFailedInformation());
+        }
     }
 }

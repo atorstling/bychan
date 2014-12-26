@@ -15,7 +15,7 @@ public class LeftParenthesisToken<N> implements Token<N> {
 
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        N expression = parser.tryParseExpression(previous, 0).getRootNode();
+        N expression = parser.parseExpression(previous, 0);
         parser.swallow(RightParenthesisTokenType.<N>get());
         return expression;
     }
