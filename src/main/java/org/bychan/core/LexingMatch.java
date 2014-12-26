@@ -5,7 +5,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Matcher;
 
 /**
- * A lexing match :)
+ * The result of a lexing match.
+ * <p>
+ * When the lexer finds a piece of the input text which matches a particular {@link org.bychan.core.TokenType} it
+ * makes a {@link org.bychan.core.LexingMatch} to describe the match: The matching text fragment, it's location and the
+ * the originating {@link TokenType}.
+ * </p>
  */
 public class LexingMatch<N> {
 

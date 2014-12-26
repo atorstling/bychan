@@ -4,19 +4,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
-    private final TokenStack<N> tokens;
+    private final TokenStack<N> tokenStack;
 
     public PrattParser(@NotNull List<Token<N>> tokens) {
-        this.tokens = new TokenStack<>(tokens);
+        this.tokenStack = new TokenStack<>(tokens);
     }
 
     /**
-     * Parse upcoming tokens from the stream into an expression, and keep going
+     * Parse upcoming tokenStack from the stream into an expression, and keep going
      * until token binding powers drop down to or below the supplied floor. If this
      * feels backwards, remember that weak operands end up higher in the parse tree, consider for instance
      * <code>1*2 + 3 </code> which becomes
@@ -43,8 +42,8 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         // returns almost immediately for instance. If the prefix parse swallowed all the subExpression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
         //
-        // If there is more to parse, however, we should keep parsing as long as we encounter stronger tokens
-        // than the caller is currently parsing. When a weaker token is encountered, the tokens so far should namely
+        // If there is more to parse, however, we should keep parsing as long as we encounter stronger tokenStack
+        // than the caller is currently parsing. When a weaker token is encountered, the tokenStack so far should namely
         // be wrapped up into a part-subExpression. This part-subExpression will then usually form the LHS or RHS of
         // the weaker operand. Remember that weak operands end up higher in the tree, consider for instance
         // 1*2 + 3 which becomes
@@ -75,7 +74,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     public Token<N> swallow(@NotNull TokenType<N> type) {
-        Token<N> next = tokens.pop();
+        Token<N> next = tokenStack.pop();
         if (!next.getType().equals(type)) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type + "', but got '" + next + "'", getParsingPosition()));
         }
@@ -84,21 +83,21 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     public ParsingPosition getParsingPosition() {
-        Token<N> previous = tokens.previous();
+        Token<N> previous = tokenStack.previous();
         int startPosition = previous == null ? 0 : previous.getMatch().getStartPosition();
-        List<? extends Token> remaining = tokens.remaining();
+        List<? extends Token> remaining = tokenStack.remaining();
         return new ParsingPosition(startPosition, remaining);
     }
 
     @NotNull
     @Override
     public Token<N> peek() {
-        return tokens.peek();
+        return tokenStack.peek();
     }
 
     @NotNull
     @Override
     public Token<N> pop() {
-        return tokens.pop();
+        return tokenStack.pop();
     }
 }
