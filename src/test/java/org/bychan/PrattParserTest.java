@@ -153,7 +153,7 @@ public class PrattParserTest {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Lexing failed: 'Expected a token of type 'RightParenthesisTokenType', but got 'END'' @  index 2147483647, current token is END and remaining tokens are []", e.getParsingFailedInformation().toString());
+            assertEquals("Parsing failed: 'Expected a token of type 'RightParenthesisTokenType', but got 'END'' @  index 2147483647, current token is END and remaining tokens are []", e.getParsingFailedInformation().toString());
         }
     }
 
@@ -178,7 +178,7 @@ public class PrattParserTest {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Lexing failed: 'Cannot parse subExpression, end reached' @  index 2147483647, current token is END and remaining tokens are []", e.getParsingFailedInformation().toString());
+            assertEquals("Parsing failed: 'Cannot parse subExpression, end reached' @  index 2147483647, current token is END and remaining tokens are []", e.getParsingFailedInformation().toString());
         }
     }
 
