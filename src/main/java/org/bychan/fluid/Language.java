@@ -1,7 +1,7 @@
 package org.bychan.fluid;
 
-import org.bychan.core.Lexer;
-import org.bychan.core.Repl;
+import org.bychan.core.basic.Lexer;
+import org.bychan.core.basic.Repl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * A language with a defined syntax.
+ * @param <N> The type of nodes which the AST consists of.
+ */
 public class Language<N> {
     @NotNull
     private final Lexer<N> lexer;
@@ -19,9 +23,9 @@ public class Language<N> {
     @NotNull
     private final String name;
 
-    public Language(@NotNull final String name, @NotNull final List<TokenDefinitions<N>> tokenDefinitionss) {
+    public Language(@NotNull final String name, @NotNull final List<TokenDefinitions<N>> tokenDefinitionsList) {
         this.name = name;
-        List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitionss);
+        List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitionsList);
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
         // finder with the resulting DefinitionTokenTypes.
