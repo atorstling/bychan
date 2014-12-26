@@ -1,5 +1,6 @@
 package org.bychan.core;
 
+import com.sun.org.apache.xerces.internal.xni.XMLString;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
@@ -24,4 +25,9 @@ public interface TokenType<N> {
      * might still be useful to ignore certain patterns (such as whitespace and comments).
      */
     boolean include();
+
+    @NotNull
+    default String getName() {
+        return getClass().getSimpleName();
+    }
 }

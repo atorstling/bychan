@@ -1,9 +1,6 @@
 package org.bychan.fluid;
 
-import org.bychan.core.LexingMatch;
-import org.bychan.core.Token;
-import org.bychan.core.TokenParserCallback;
-import org.bychan.core.TokenType;
+import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,14 +34,14 @@ public class GenericToken<N> implements Token<N> {
     public N infixParse(@Nullable final N previous, @NotNull final TokenParserCallback<N> parser) {
         InfixAstBuilder<N> infixBuilder = def.getInfixBuilder();
         if (infixBuilder == null) {
-            throw new IllegalStateException("Definition does not support infix parsing: " + this);
+            throw new ParsingFailedException("Definition does not support infix parsing", parser);
         }
         return infixBuilder.build(match, previous, new FluidParserCallbackImpl<>(infixBindingPower(), tokenFinder, parser, previous));
     }
 
     @Override
     public int infixBindingPower() {
-        return def.getLevel();
+        return def.getLevel() + 1;
     }
 
     @Override

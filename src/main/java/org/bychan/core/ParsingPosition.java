@@ -11,15 +11,11 @@ import java.util.List;
 public class ParsingPosition {
     private final int position;
     @NotNull
-    private final List<? extends Token> remainingTokens;
+    private TokenStack<?> tokenStack;
 
-    public ParsingPosition(int position, @NotNull List<? extends Token> remainingTokens) {
+    public ParsingPosition(int position, @NotNull TokenStack<?> tokenStack) {
         this.position = position;
-        this.remainingTokens = remainingTokens;
-    }
-
-    public ParsingPosition(int position, Token... tokens) {
-        this(position, Arrays.asList(tokens));
+        this.tokenStack = tokenStack;
     }
 
     @Override
@@ -29,20 +25,19 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        return position == that.position && remainingTokens.equals(that.remainingTokens);
-
+        return position == that.position && tokenStack.equals(that.tokenStack);
     }
 
     @Override
     public int hashCode() {
         int result = position;
-        result = 31 * result + remainingTokens.hashCode();
+        result = 31 * result + tokenStack.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         return " index " + position +
-                ", remaining tokens are " + remainingTokens;
+                ", current token is " + tokenStack.previous() + " and remaining tokens are " + tokenStack.remaining();
     }
 }

@@ -72,7 +72,7 @@ public class JsonTest {
             fail("Expected exception");
         } catch (ParsingFailedException e) {
             ParsingFailedInformation actual = e.getParsingFailedInformation();
-            assertEquals("Lexing failed: 'The input stream was not completely parsed' @  index 0, remaining tokens are [number_literal(1.5), END]", actual.toString());
+            assertEquals("Lexing failed: 'Definition does not support infix parsing' @  index 1, current token is number_literal(1.5) and remaining tokens are [END]", actual.toString());
         }
     }
 

@@ -85,8 +85,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     public ParsingPosition getParsingPosition() {
         Token<N> previous = tokenStack.previous();
         int startPosition = previous == null ? 0 : previous.getMatch().getStartPosition();
-        List<? extends Token> remaining = tokenStack.remaining();
-        return new ParsingPosition(startPosition, remaining);
+        return new ParsingPosition(startPosition, tokenStack);
     }
 
     @NotNull

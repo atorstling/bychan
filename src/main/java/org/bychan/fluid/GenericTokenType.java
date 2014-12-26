@@ -34,8 +34,14 @@ public class GenericTokenType<N> implements TokenType<N> {
         return def.getTokenDefinition().parse();
     }
 
-    public String toString() {
+    @NotNull
+    @Override
+    public String getName() {
         return def.getTokenTypeName();
+    }
+
+    public String toString() {
+        return getName();
     }
 
     public String getTokenTypeName() {
@@ -45,5 +51,9 @@ public class GenericTokenType<N> implements TokenType<N> {
     @NotNull
     public TokenDefinition<N> getTokenDefinition() {
         return def.getTokenDefinition();
+    }
+
+    public int getLevel() {
+        return def.getLevel();
     }
 }
