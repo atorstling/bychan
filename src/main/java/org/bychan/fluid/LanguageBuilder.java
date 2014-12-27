@@ -48,12 +48,4 @@ public class LanguageBuilder<N> {
     private TokenDefinitionBuilder<N> newTokenInternal() {
         return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLevel++);
     }
-
-    public LanguageBuilder<N> newLowerPriorityLevel() {
-        return this;
-    }
-
-    public LanguageBuilder<N> endLevel() {
-        return this;
-    }
 }

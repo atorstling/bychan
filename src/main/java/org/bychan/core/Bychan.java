@@ -1,11 +1,11 @@
 package org.bychan.core;
 
-import org.bychan.fluid.FluidLanguageBuilder;
+import org.bychan.fluid.LanguageBuilder;
 import org.jetbrains.annotations.NotNull;
 
 public class Bychan {
     @NotNull
-    public <N> FluidLanguageBuilder<N> newFluidLanguage() {
-        return new FluidLanguageBuilder<>();
+    public <N> LanguageBuilder<N> newFluidLanguage() {
+        return new LanguageBuilder<>();
     }
 }

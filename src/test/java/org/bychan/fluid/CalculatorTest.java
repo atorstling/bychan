@@ -51,13 +51,9 @@ public class CalculatorTest {
                 .addToken(lparen)
                 .addToken(rparen)
                 .addToken(whitespace)
-                .newLowerPriorityLevel()
                 .addToken(plus)
-                .endLevel()
                 .addToken(minus)
-                .endLevel()
                 .addToken(number)
-                .endLevel()
                 .completeLanguage();
         assertEquals(3, l.getLexParser().tryParse("1+2").getRootNode().evaluate());
         assertEquals(-1, l.getLexParser().tryParse("1+-2").getRootNode().evaluate());
@@ -67,7 +63,7 @@ public class CalculatorTest {
 
     @Test
     public void testClearerSyntax() {
-        FluidLanguageBuilder<CalculatorNode> b = new FluidLanguageBuilder<>();
+        LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>();
         Language<CalculatorNode> l = b.newToken().named("rparen").matchesString(")")
                 .newToken().named("lparen").matchesString("(")
                 .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()

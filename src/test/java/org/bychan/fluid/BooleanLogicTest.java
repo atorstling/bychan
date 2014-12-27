@@ -15,25 +15,18 @@ public class BooleanLogicTest {
 
     @Test
     public void terserSyntax() {
-        FluidLanguageBuilder<BooleanExpressionNode> lb = new FluidLanguageBuilder<>();
+        LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").completeTokenAndPause();
         //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
-        lb.endLevel();
         Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
-                    BooleanExpressionNode trailingExpression = parser.subExpression();
-                    parser.expectSingleToken(rparen);
-                    return trailingExpression;
-                }).completeToken()
-                .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().completeToken().endLevel()
-                .newLowerPriorityLevel()
+            BooleanExpressionNode trailingExpression = parser.subExpression();
+            parser.expectSingleToken(rparen);
+            return trailingExpression;
+        }).completeToken()
+                .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().completeToken()
                 .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.subExpression())).completeToken()
-                .endLevel()
-                .newLowerPriorityLevel()
                 .startToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.subExpression())).completeToken()
-                .endLevel()
-                .newLowerPriorityLevel()
                 .startToken().matchesPattern("[a-z]+").named("variable").standaloneParseAs((previous, match) -> new VariableNode(match.getText())).completeToken()
-                .endLevel()
                 .completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);
@@ -55,11 +48,8 @@ public class BooleanLogicTest {
         Language<BooleanExpressionNode> l = lb
                 .addToken(lparen).addToken(rparen).addToken(whitespace)
                 .addToken(not)
-                .endLevel()
                 .addToken(and)
-                .endLevel()
                 .addToken(variable)
-                .endLevel()
                 .completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);

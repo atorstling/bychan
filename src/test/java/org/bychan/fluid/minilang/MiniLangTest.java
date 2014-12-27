@@ -187,16 +187,11 @@ public class MiniLangTest {
                 .addToken(integerLiteral)
                 .addToken(floatLiteral)
                 .addToken(variableDeclaration)
-                .endLevel()
                 .addToken(variableReference)
-                .endLevel()
                 .addToken(semicolon)
-                .endLevel()
                 .addToken(assign)
-                .endLevel()
                 .addToken(plus)
                 .addToken(hat)
-                .endLevel()
                 .completeLanguage();
         testOne(l);
 

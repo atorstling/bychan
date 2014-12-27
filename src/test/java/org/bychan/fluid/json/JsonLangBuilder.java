@@ -1,7 +1,7 @@
 package org.bychan.fluid.json;
 
 import org.bychan.fluid.Language;
-import org.bychan.fluid.FluidLanguageBuilder;
+import org.bychan.fluid.LanguageBuilder;
 import org.bychan.fluid.TokenDefinition;
 import org.bychan.fluid.TokenDefinitionBuilder;
 import org.bychan.fluid.json.nodes.*;
@@ -14,7 +14,7 @@ class JsonLangBuilder {
 
     @NotNull
     public Language<JsonNode> build() {
-        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
         TokenDefinition<JsonNode> rcurly = rcurly(lb);
         TokenDefinition<JsonNode> comma = comma(lb);
         TokenDefinition<JsonNode> string = stringLiteral(lb);
@@ -34,7 +34,7 @@ class JsonLangBuilder {
                     parser.expectSingleToken(rbracket);
                     return new ArrayNode(expressions);
                 }).build();
-        TokenDefinition<JsonNode> lcurly = new TokenDefinitionBuilder<>(lb.getDelegate()).named("lcurly").matchesString("{")
+        TokenDefinition<JsonNode> lcurly = new TokenDefinitionBuilder<>(lb).named("lcurly").matchesString("{")
                 .prefixParseAs((previous, match, parser) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
                     while (!parser.nextIs(rcurly)) {
@@ -52,53 +52,52 @@ class JsonLangBuilder {
 
         return lb
                 .addToken(whitespace).addToken(rbracket).addToken(lbracket).addToken(comma).addToken(colon).addToken(rcurly).addToken(lcurly)
-                .newLevel()
                 .addToken(numberLiteral).addToken(string).addToken(nullLiteral(lb)).addToken(boolLiteral(lb))
                 .completeLanguage();
     }
 
     @NotNull
-    private TokenDefinition<JsonNode> rbracket(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("rbracket").matchesString("]")
+    private TokenDefinition<JsonNode> rbracket(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("rbracket").matchesString("]")
                 .build();
     }
 
     @NotNull
-    private TokenDefinition<JsonNode> rcurly(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("rculry").matchesString("}")
+    private TokenDefinition<JsonNode> rcurly(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("rculry").matchesString("}")
                 .build();
     }
 
     @NotNull
-    private TokenDefinition<JsonNode> comma(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("comma").matchesString(",")
+    private TokenDefinition<JsonNode> comma(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("comma").matchesString(",")
                 .build();
     }
 
 
     @NotNull
-    private TokenDefinition<JsonNode> colon(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("colon").matchesString(":")
+    private TokenDefinition<JsonNode> colon(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("colon").matchesString(":")
                 .build();
     }
 
 
-    static TokenDefinition<JsonNode> nullLiteral(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("null_literal").matchesString("null")
+    static TokenDefinition<JsonNode> nullLiteral(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("null_literal").matchesString("null")
                 .standaloneParseAs((previous, match) -> NullLiteral.get()).build();
     }
 
     @NotNull
-    static TokenDefinition<JsonNode> boolLiteral(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("bool_literal").matchesPattern("(true)|(false)")
+    static TokenDefinition<JsonNode> boolLiteral(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("bool_literal").matchesPattern("(true)|(false)")
                 .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
     }
 
     @NotNull
-    static TokenDefinition<JsonNode> stringLiteral(FluidLanguageBuilder<JsonNode> lb) {
+    static TokenDefinition<JsonNode> stringLiteral(LanguageBuilder<JsonNode> lb) {
         @org.intellij.lang.annotations.Language("RegExp")
         String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("string_literal").matchesPattern(pattern)
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("string_literal").matchesPattern(pattern)
                 .standaloneParseAs((previous, match) -> {
                     String withinQuotationMarks = match.group(1);
                     return new StringLiteralNode(withinQuotationMarks);
@@ -106,8 +105,8 @@ class JsonLangBuilder {
     }
 
     @NotNull
-    static TokenDefinition<JsonNode> numberLiteral(FluidLanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb.getDelegate()).named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
+    static TokenDefinition<JsonNode> numberLiteral(LanguageBuilder<JsonNode> lb) {
+        return new TokenDefinitionBuilder<JsonNode>(lb).named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
                 .standaloneParseAs((previous, match) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
     }
 }

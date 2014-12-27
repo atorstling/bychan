@@ -2,7 +2,7 @@ package org.bychan.fluid;
 
 public class CalculatorTestHelper {
     public static Language<Integer> getSimpleCalculatorLanguage() {
-        FluidLanguageBuilder<Integer> b = new FluidLanguageBuilder<>();
+        LanguageBuilder<Integer> b = new LanguageBuilder<>();
         return b
                 .named("simpleCalc").newToken().named("whitespace").matchesPattern("\\s+").ignoredWhenParsing()
                 .newLevelToken().named("plus").matchesString("+")

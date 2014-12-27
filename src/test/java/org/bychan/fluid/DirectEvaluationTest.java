@@ -24,9 +24,7 @@ public class DirectEvaluationTest {
                 .build();
         Language<Integer> lang = builder
                 .addToken(number)
-                .newLowerPriorityLevel()
                 .addToken(addition)
-                .endLevel()
                 .completeLanguage();
         String expr = "1+3";
         List<Token<Integer>> tokens = lang.getLexer().lex(expr);
