@@ -1,6 +1,6 @@
 package org.bychan.core;
 
-import org.bychan.fluid.LanguageBuilder;
+import org.bychan.generic.LanguageBuilder;
 import org.jetbrains.annotations.NotNull;
 
 public class Bychan {

@@ -1,6 +1,6 @@
 package org.bychan.core;
 
-import org.bychan.fluid.Language;
+import org.bychan.generic.Language;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;

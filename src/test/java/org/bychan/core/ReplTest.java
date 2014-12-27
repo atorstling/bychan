@@ -1,7 +1,7 @@
 package org.bychan.core;
 
-import org.bychan.fluid.CalculatorTestHelper;
-import org.bychan.fluid.Language;
+import org.bychan.generic.CalculatorTestHelper;
+import org.bychan.generic.Language;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
