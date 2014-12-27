@@ -84,10 +84,6 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> newLevelToken() {
-        return newToken();
-    }
-
     public Language<N> completeLanguage() {
         completeToken();
         return languageBuilder.completeLanguage();

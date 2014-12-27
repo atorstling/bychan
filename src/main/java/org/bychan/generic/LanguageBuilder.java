@@ -7,7 +7,12 @@ public class LanguageBuilder<N> {
     private final TokenDefinitions<N> tokens;
     @NotNull
     private String name;
-    private int currentLevel;
+    /**
+     * If you don't specify binding powers of your tokens,
+     * they will be automatically be set in increasing order. This is
+     * tracked by this counter.
+     */
+    private int currentLeftBindingPower;
 
     public LanguageBuilder() {
         this.tokens = new TokenDefinitions<>();
@@ -36,16 +41,12 @@ public class LanguageBuilder<N> {
         return this;
     }
 
-    public LanguageBuilder<N> newLevel() {
-        return this;
-    }
-
 
     public TokenDefinitionBuilder<N> startToken() {
         return newTokenInternal();
     }
 
     private TokenDefinitionBuilder<N> newTokenInternal() {
-        return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLevel++);
+        return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLeftBindingPower++);
     }
 }
