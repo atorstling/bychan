@@ -73,21 +73,21 @@ public class MiniLangTest {
                 .matchesString("+")
                 .named("plus")
                 .prefixParseAs((previous, match, parser) -> parser.subExpression())
-                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.subExpression()))
+                .infixParseAs((previous, match, parser) -> new AdditionNode(previous, parser.subExpression()))
                 .build();
 
         TokenDefinition<LaiLaiNode> hat = lb.newToken()
                 .leftBindingPower(fifth)
                 .matchesString("^")
                 .named("hat")
-                .infixParseAs((match, previous, parser) -> new HatNode(previous, parser.subExpression()))
+                .infixParseAs((previous, match, parser) -> new HatNode(previous, parser.subExpression()))
                 .build();
 
         TokenDefinition<LaiLaiNode> assign = lb.newToken()
                 .leftBindingPower(fourth)
                 .matchesString("=")
                 .named("assign")
-                .infixParseAs((match, previous, parser) -> {
+                .infixParseAs((previous, match, parser) -> {
                     LaiLaiNode right = parser.subExpression();
                     return new AssignNode(previous, right);
                 })
@@ -144,7 +144,7 @@ public class MiniLangTest {
                 .leftBindingPower(third)
                 .matchesString(";")
                 .named("statement")
-                .infixParseAs((match, previous, parser) -> new StatementNode(previous, parser.subExpression())).build();
+                .infixParseAs((previous, match, parser) -> new StatementNode(previous, parser.subExpression())).build();
 
         final TokenDefinition<LaiLaiNode> listEnd = lb.newToken()
                 .leftBindingPower(first)

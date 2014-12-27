@@ -39,7 +39,7 @@ public class GenericToken<N> implements Token<N> {
     public InfixParseAction<N> getInfixParser() {
         return infixBuilder == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return infixBuilder.build(match, previous, callback);
+            return infixBuilder.build(previous, match, callback);
         };
     }
 

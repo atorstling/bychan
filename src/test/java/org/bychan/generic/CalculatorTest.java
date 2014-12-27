@@ -34,14 +34,14 @@ public class CalculatorTest {
                 .matchesString("+")
                 .named("plus")
                 .prefixParseAs((previous, match, parser) -> parser.subExpression())
-                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.subExpression()))
+                .infixParseAs((previous, match, parser) -> new AdditionNode(previous, parser.subExpression()))
                 .build();
 
         TokenDefinition<CalculatorNode> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
                 .prefixParseAs((previous, match, parser) -> new NegationNode(parser.subExpression()))
-                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.subExpression())).build();
+                .infixParseAs((previous, match, parser) -> new SubtractionNode(previous, parser.subExpression())).build();
 
         TokenDefinition<CalculatorNode> number = lb.newToken()
                 .matchesPattern("[0-9]+")
@@ -67,9 +67,9 @@ public class CalculatorTest {
         Language<CalculatorNode> l = lb.newToken().named("rparen").matchesString(")")
                 .newToken().named("lparen").matchesString("(")
                 .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().newToken().named("plus").matchesString("+")
-                .infixParseAs((match, previous, parser) -> new AdditionNode(previous, parser.subExpression())).newToken().named("minus").matchesString("-")
+                .infixParseAs((previous, match, parser) -> new AdditionNode(previous, parser.subExpression())).newToken().named("minus").matchesString("-")
                 .prefixParseAs((previous, match, parser) -> new NegationNode(parser.subExpression()))
-                .infixParseAs((match, previous, parser) -> new SubtractionNode(previous, parser.subExpression())).newToken().named("number").matchesPattern("[0-9]+")
+                .infixParseAs((previous, match, parser) -> new SubtractionNode(previous, parser.subExpression())).newToken().named("number").matchesPattern("[0-9]+")
                 .standaloneParseAs((previous, match) -> new NumberNode(Integer.parseInt(match.getText())))
                 .completeLanguage();
 
