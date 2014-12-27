@@ -5,8 +5,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface PrefixParser<N> {
     /**
-     * Parse this token as a prefix operator or standalone subExpression.
-     * Feel free to continue the parsing using the provided parser callback,
+     * Parse this token as a prefix operator or standalone expression.
+     * Feel free to continue the parsing using the provided parser callback.
      *
      * @return the resulting AST node.
      */
