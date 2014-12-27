@@ -2,10 +2,8 @@ package org.bychan.fluid;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class TokenDefinitions<N> implements Iterable<TokenDefinition<N>> {
     @NotNull
@@ -15,6 +13,10 @@ class TokenDefinitions<N> implements Iterable<TokenDefinition<N>> {
         this.tokenDefinitions = new ArrayList<>(tokens);
     }
 
+    public TokenDefinitions() {
+        this(Collections.emptyList());
+    }
+
     @Override
     public Iterator<TokenDefinition<N>> iterator() {
         return tokenDefinitions.iterator();
@@ -22,5 +24,14 @@ class TokenDefinitions<N> implements Iterable<TokenDefinition<N>> {
 
     public String toString() {
         return tokenDefinitions.toString();
+    }
+
+    public void add(@NotNull TokenDefinition<N> tokenDefinition) {
+        this.tokenDefinitions.add(tokenDefinition);
+    }
+
+    @NotNull
+    public List<TokenDefinition<N>> getTokens() {
+        return tokenDefinitions;
     }
 }

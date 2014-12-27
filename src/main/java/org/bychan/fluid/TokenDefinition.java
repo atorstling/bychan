@@ -20,13 +20,15 @@ public class TokenDefinition<N> {
     @NotNull
     private final String tokenTypeName;
     private final boolean parse;
+    private final int leftBindingPower;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, @NotNull final String tokenTypeName, boolean parse) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, @NotNull final String tokenTypeName, boolean parse, int leftBindingPower) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
         this.tokenTypeName = tokenTypeName;
         this.parse = parse;
+        this.leftBindingPower = leftBindingPower;
     }
 
     @NotNull
@@ -56,5 +58,9 @@ public class TokenDefinition<N> {
     @NotNull
     public String getTokenTypeName() {
         return tokenTypeName;
+    }
+
+    public int getLeftBindingPower() {
+        return leftBindingPower;
     }
 }

@@ -11,18 +11,8 @@ public class FluidLanguageBuilder<N> {
     }
 
     @NotNull
-    public FluidLevelLanguageBuilder<N> newLowerPriorityLevel() {
-        return new FluidLevelLanguageBuilder<>(delegate.newLowerPriorityLevel(), this);
-    }
-
-    @NotNull
     public Language<N> completeLanguage() {
         return delegate.completeLanguage();
-    }
-
-    @NotNull
-    public WrappedTokenDefinitionBuilder<N> newLevelToken() {
-        return newLowerPriorityLevel().startToken();
     }
 
     public TokenDefinitionBuilder<N> newToken() {
@@ -32,6 +22,30 @@ public class FluidLanguageBuilder<N> {
     @NotNull
     public FluidLanguageBuilder<N> named(@NotNull final String name) {
         delegate.named(name);
+        return this;
+    }
+
+    public TokenDefinitionBuilder<N> startToken() {
+        return delegate.startToken();
+    }
+
+    @NotNull
+    public FluidLanguageBuilder<N> endLevel() {
+        return this;
+    }
+
+    @NotNull
+    public LanguageBuilder<N> getDelegate() {
+        return delegate;
+    }
+
+    @NotNull
+    public FluidLanguageBuilder<N> addToken(TokenDefinition<N> tokenDefinition) {
+        delegate.addToken(tokenDefinition);
+        return this;
+    }
+
+    public FluidLanguageBuilder<N> newLevel() {
         return this;
     }
 }

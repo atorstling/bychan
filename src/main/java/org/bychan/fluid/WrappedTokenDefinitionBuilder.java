@@ -11,9 +11,10 @@ public class WrappedTokenDefinitionBuilder<N> {
     @NotNull
     private final TokenDefinitionBuilder<N> delegate;
     @NotNull
-    private final FluidLevelLanguageBuilder<N> languageBuilder;
+    private final LanguageBuilder<N> languageBuilder;
+    private int leftBindingPower;
 
-    public WrappedTokenDefinitionBuilder(@NotNull FluidLevelLanguageBuilder<N> languageBuilder, @NotNull final TokenDefinitionBuilder<N> delegate) {
+    public WrappedTokenDefinitionBuilder(@NotNull LanguageBuilder<N> languageBuilder, @NotNull final TokenDefinitionBuilder<N> delegate) {
         this.languageBuilder = languageBuilder;
         this.delegate = delegate;
     }
@@ -54,7 +55,7 @@ public class WrappedTokenDefinitionBuilder<N> {
     }
 
     @NotNull
-    public FluidLevelLanguageBuilder<N> completeToken() {
+    public LanguageBuilder<N> completeToken() {
         buildAndAdd();
         return languageBuilder;
     }
@@ -72,17 +73,23 @@ public class WrappedTokenDefinitionBuilder<N> {
     }
 
     @NotNull
-    public WrappedTokenDefinitionBuilder<N> newToken() {
-        return completeToken().startToken();
+    public LanguageBuilder<N> newToken() {
+        return completeToken();
     }
 
     @NotNull
-    public WrappedTokenDefinitionBuilder<N> newLevelToken() {
+    public TokenDefinitionBuilder<N> newLevelToken() {
         return completeToken().newLevel().startToken();
     }
 
     @NotNull
     public Language<N> completeLanguage() {
         return completeToken().completeLanguage();
+    }
+
+    @NotNull
+    public WrappedTokenDefinitionBuilder<N> bindingPower(int leftBindingPower) {
+        this.leftBindingPower = leftBindingPower;
+        return this;
     }
 }

@@ -1,7 +1,6 @@
 package org.bychan.fluid.json;
 
 import org.bychan.core.*;
-import org.bychan.fluid.GenericToken;
 import org.bychan.fluid.Language;
 import org.bychan.fluid.FluidLanguageBuilder;
 import org.bychan.fluid.json.nodes.*;
@@ -18,8 +17,8 @@ public class JsonTest {
 
     @Test
     public void simpleStringLiteral() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.stringLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
                 .completeLanguage();
         JsonNode ast = l.getLexParser().parse("\"hello\"");
         assertEquals(new StringLiteralNode("hello"), ast);
@@ -27,8 +26,8 @@ public class JsonTest {
 
     @Test
     public void stringWithQuoteEscape() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.stringLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
                 .completeLanguage();
         JsonNode ast = l.getLexParser().parse("\"\\\"hello\"");
         assertEquals(new StringLiteralNode("\\\"hello"), ast);
@@ -36,8 +35,8 @@ public class JsonTest {
 
     @Test
     public void stringWithInvalidEscape() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.stringLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
                 .completeLanguage();
         ParseResult<JsonNode> pr = l.getLexParser().tryParse("\"\\phello\"");
         assertEquals(ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range starting at 0: '\"\\phello\"'", new LexingPosition(0, "\"\\phello\""))), pr.getErrorMessage());
@@ -46,8 +45,8 @@ public class JsonTest {
 
     @Test
     public void positiveInteger() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.numberLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.numberLiteral(lb))
                 .completeLanguage();
         JsonNode ast = l.getLexParser().parse("1");
         assertEquals(new NumberLiteralNode(1), ast);
@@ -55,8 +54,8 @@ public class JsonTest {
 
     @Test
     public void negativeExponent() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.numberLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.numberLiteral(lb))
                 .completeLanguage();
         JsonNode ast = l.getLexParser().parse("-0.5e-5");
         assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
@@ -64,8 +63,8 @@ public class JsonTest {
 
     @Test
     public void leadingZeroesForbidden() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.numberLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.numberLiteral(lb))
                 .completeLanguage();
         try {
             l.getLexParser().parse("01.5");
@@ -78,8 +77,8 @@ public class JsonTest {
 
     @Test
     public void bool() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.boolLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.boolLiteral(lb))
                 .completeLanguage();
         JsonNode ast = l.getLexParser().parse("true");
         assertEquals(new BooleanLiteralNode(true), ast);
@@ -87,8 +86,8 @@ public class JsonTest {
 
     @Test
     public void nul() {
-        Language<JsonNode> l = new FluidLanguageBuilder<JsonNode>()
-                .newLowerPriorityLevel().addToken(JsonLangBuilder.nullLiteral())
+        FluidLanguageBuilder<JsonNode> lb = new FluidLanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.nullLiteral(lb))
                 .completeLanguage();
         JsonNode ast = l.getLexParser().parse("null");
         assertEquals(NullLiteral.get(), ast);

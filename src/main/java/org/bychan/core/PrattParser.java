@@ -84,7 +84,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     public Token<N> swallow(@NotNull TokenType<N> type) {
         Token<N> next = tokenStack.pop();
         if (!next.getType().equals(type)) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type + "', but got '" + next + "'", getParsingPosition()));
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type.getName() + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
     }

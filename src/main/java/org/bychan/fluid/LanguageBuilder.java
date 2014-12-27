@@ -2,42 +2,58 @@ package org.bychan.fluid;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LanguageBuilder<N> {
     @NotNull
-    private final List<TokenDefinitions<N>> levels;
+    private final TokenDefinitions<N> tokens;
     @NotNull
     private String name;
+    private int currentLevel;
 
     public LanguageBuilder() {
-        this.levels = new ArrayList<>();
+        this.tokens = new TokenDefinitions<>();
         this.name = "unnamed";
     }
 
     @NotNull
-    public LevelLanguageBuilder<N> newLowerPriorityLevel() {
-        return new LevelLanguageBuilder<>(this);
-    }
-
-    void addLevel(List<TokenDefinition<N>> tokens) {
-        this.levels.add(new TokenDefinitions<>(tokens));
-    }
-
-    @NotNull
     public Language<N> completeLanguage() {
-        return new Language<>(name, levels);
+        return new Language<>(name, tokens);
     }
 
     @NotNull
     public TokenDefinitionBuilder<N> newToken() {
-        return new TokenDefinitionBuilder<>();
+        return newTokenInternal();
     }
 
     @NotNull
     public LanguageBuilder<N> named(@NotNull final String name) {
         this.name = name;
+        return this;
+    }
+
+    @NotNull
+    public LanguageBuilder<N> addToken(@NotNull TokenDefinition<N> tokenDefinition) {
+        tokens.add(tokenDefinition);
+        return this;
+    }
+
+    public LanguageBuilder<N> newLevel() {
+        return this;
+    }
+
+
+    public TokenDefinitionBuilder<N> startToken() {
+        return newTokenInternal();
+    }
+
+    private TokenDefinitionBuilder<N> newTokenInternal() {
+        return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLevel++);
+    }
+
+    public LanguageBuilder<N> newLowerPriorityLevel() {
+        return this;
+    }
+
+    public LanguageBuilder<N> endLevel() {
         return this;
     }
 }

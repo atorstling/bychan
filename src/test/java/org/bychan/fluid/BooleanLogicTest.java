@@ -16,18 +16,15 @@ public class BooleanLogicTest {
     @Test
     public void terserSyntax() {
         FluidLanguageBuilder<BooleanExpressionNode> lb = new FluidLanguageBuilder<>();
-        FluidLevelLanguageBuilder<BooleanExpressionNode> level = lb
-                .newLowerPriorityLevel();
-        final TokenDefinition<BooleanExpressionNode> rparen = level.startToken().matchesString(")").named("rparen").completeTokenAndPause();
+        final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").completeTokenAndPause();
         //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
-        level.endLevel();
-        Language<BooleanExpressionNode> l = lb
-                .newLowerPriorityLevel().startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
+        lb.endLevel();
+        Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
                     BooleanExpressionNode trailingExpression = parser.subExpression();
                     parser.expectSingleToken(rparen);
                     return trailingExpression;
                 }).completeToken()
-                .startToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().completeToken().endLevel()
+                .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().completeToken().endLevel()
                 .newLowerPriorityLevel()
                 .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.subExpression())).completeToken()
                 .endLevel()
@@ -56,16 +53,11 @@ public class BooleanLogicTest {
         TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").infixParseAs((match, previous, parser) -> new AndNode(previous, parser.subExpression())).build();
         TokenDefinition<BooleanExpressionNode> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").standaloneParseAs((previous, match) -> new VariableNode(match.getText())).build();
         Language<BooleanExpressionNode> l = lb
-                .newLowerPriorityLevel()
                 .addToken(lparen).addToken(rparen).addToken(whitespace)
-                .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(not)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(and)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(variable)
                 .endLevel()
                 .completeLanguage();

@@ -48,18 +48,14 @@ public class CalculatorTest {
                 .named("number")
                 .standaloneParseAs((previous, match) -> new NumberNode(Integer.parseInt(match.getText()))).build();
         Language<CalculatorNode> l = lb
-                .newLowerPriorityLevel()
                 .addToken(lparen)
                 .addToken(rparen)
                 .addToken(whitespace)
-                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(plus)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(minus)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(number)
                 .endLevel()
                 .completeLanguage();
@@ -72,8 +68,7 @@ public class CalculatorTest {
     @Test
     public void testClearerSyntax() {
         FluidLanguageBuilder<CalculatorNode> b = new FluidLanguageBuilder<>();
-        Language<CalculatorNode> l = b
-                .newLevelToken().named("rparen").matchesString(")")
+        Language<CalculatorNode> l = b.newToken().named("rparen").matchesString(")")
                 .newToken().named("lparen").matchesString("(")
                 .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
                 .newLevelToken().named("plus").matchesString("+")

@@ -23,9 +23,7 @@ public class DirectEvaluationTest {
                 .infixParseAs((match, previous, parser) -> previous + parser.subExpression())
                 .build();
         Language<Integer> lang = builder
-                .newLowerPriorityLevel()
                 .addToken(number)
-                .endLevel()
                 .newLowerPriorityLevel()
                 .addToken(addition)
                 .endLevel()

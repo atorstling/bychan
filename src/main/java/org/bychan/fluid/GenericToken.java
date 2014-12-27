@@ -9,14 +9,14 @@ public class GenericToken<N> implements Token<N> {
     @NotNull
     private final LexingMatch match;
     @NotNull
-    private final LeveledTokenDefinition<N> def;
+    private final TokenDefinition<N> def;
     private final TokenFinder<N> tokenFinder;
     @Nullable
     private final InfixAstBuilder<N> infixBuilder;
     @Nullable
     private final PrefixAstBuilder<N> prefixBuilder;
 
-    public GenericToken(@NotNull final GenericTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public GenericToken(@NotNull final GenericTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.tokenType = tokenType;
         this.match = match;
         this.def = def;
@@ -45,7 +45,7 @@ public class GenericToken<N> implements Token<N> {
 
     @Override
     public int leftBindingPower() {
-        return def.getLevel() + 1;
+        return def.getLeftBindingPower();
     }
 
     @Override

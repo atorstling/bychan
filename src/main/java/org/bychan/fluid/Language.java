@@ -25,14 +25,13 @@ public class Language<N> {
     @NotNull
     private final String name;
 
-    public Language(@NotNull final String name, @NotNull final List<TokenDefinitions<N>> tokenDefinitionsList) {
+    public Language(@NotNull final String name, @NotNull final TokenDefinitions<N> tokenDefinitions) {
         this.name = name;
-        List<LeveledTokenDefinition<N>> leveledDefinitions = flatten(tokenDefinitionsList);
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
         // finder with the resulting DefinitionTokenTypes.
         DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
-        final Collection<GenericTokenType<N>> genericTokenTypes = toTokenTypes(leveledDefinitions, delegatingFinder);
+        final Collection<GenericTokenType<N>> genericTokenTypes = toTokenTypes(tokenDefinitions, delegatingFinder);
         Map<String, GenericTokenType<N>> tokenTypesByTokenTypeName = genericTokenTypes.stream().collect(Collectors.toMap(GenericTokenType::getTokenTypeName, Function.identity()));
         TokenFinder<N> tokenFinder = sought -> {
             String soughtName = sought.getTokenTypeName();
@@ -61,20 +60,8 @@ public class Language<N> {
     }
 
 
-    private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<LeveledTokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return leveledDefinitions.stream().map(tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder)).collect(Collectors.toList());
-    }
-
-    private List<LeveledTokenDefinition<N>> flatten(List<TokenDefinitions<N>> levels) {
-        List<LeveledTokenDefinition<N>> flatList = new ArrayList<>();
-        int levelCount = 0;
-        for (TokenDefinitions<N> level : levels) {
-            for (TokenDefinition<N> definition : level) {
-                flatList.add(new LeveledTokenDefinition<>(definition, levelCount));
-            }
-            ++levelCount;
-        }
-        return flatList;
+    private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final TokenDefinitions<N> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
+        return leveledDefinitions.getTokens().stream().map(tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder)).collect(Collectors.toList());
     }
 
     @NotNull

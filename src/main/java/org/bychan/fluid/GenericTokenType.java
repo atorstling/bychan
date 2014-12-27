@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 
 public class GenericTokenType<N> implements TokenType<N> {
     @NotNull
-    private final LeveledTokenDefinition<N> def;
+    private final TokenDefinition<N> def;
     private final TokenFinder<N> tokenFinder;
 
-    public GenericTokenType(@NotNull final LeveledTokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public GenericTokenType(@NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
     }
@@ -31,7 +31,7 @@ public class GenericTokenType<N> implements TokenType<N> {
 
     @Override
     public boolean include() {
-        return def.getTokenDefinition().parse();
+        return def.parse();
     }
 
     @NotNull
@@ -41,7 +41,7 @@ public class GenericTokenType<N> implements TokenType<N> {
     }
 
     public String toString() {
-        return getName();
+        return def.getLeftBindingPower() + ":" + getName();
     }
 
     public String getTokenTypeName() {
@@ -50,10 +50,7 @@ public class GenericTokenType<N> implements TokenType<N> {
 
     @NotNull
     public TokenDefinition<N> getTokenDefinition() {
-        return def.getTokenDefinition();
+        return def;
     }
 
-    public int getLevel() {
-        return def.getLevel();
-    }
 }

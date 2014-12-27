@@ -12,6 +12,8 @@ public class TokenDefinitionBuilder<N> {
     private StandaloneAstBuilder<N> standaloneBuilder;
     private boolean parsed;
     private String tokenTypeName;
+    private int leftBindingPower = 1;
+    private LanguageBuilder<N> languageBuilder;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
         return matchesPattern(Pattern.quote(text));
@@ -22,7 +24,8 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder() {
+    public TokenDefinitionBuilder(@NotNull LanguageBuilder<N> languageBuilder) {
+        this.languageBuilder = languageBuilder;
         parsed = true;
     }
 
@@ -36,7 +39,7 @@ public class TokenDefinitionBuilder<N> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, parsed);
+        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, parsed, leftBindingPower);
     }
 
     @Nullable
@@ -74,5 +77,41 @@ public class TokenDefinitionBuilder<N> {
     @NotNull
     public TokenDefinitionBuilder<N> matchesWhitespace() {
         return matchesPattern("\\s+");
+    }
+
+    public TokenDefinitionBuilder<N> leftBindingPower(int leftBindingPower) {
+        this.leftBindingPower = leftBindingPower;
+        return this;
+    }
+
+    public TokenDefinitionBuilder<N> newLevelToken() {
+        return newToken();
+    }
+
+    public Language<N> completeLanguage() {
+        completeToken();
+        return languageBuilder.completeLanguage();
+    }
+
+    @NotNull
+    public TokenDefinition<N> completeTokenAndPause() {
+        TokenDefinition<N> result = build();
+        languageBuilder.addToken(result);
+        return result;
+    }
+
+    @NotNull
+    public LanguageBuilder<N> completeToken() {
+        return languageBuilder.addToken(build());
+    }
+
+    public TokenDefinitionBuilder<N> newToken() {
+        completeToken();
+        return languageBuilder.newToken();
+    }
+
+    @NotNull
+    public TokenDefinitionBuilder<N> ignoreWhenParsing() {
+        return ignoredWhenParsing();
     }
 }

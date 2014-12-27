@@ -17,15 +17,23 @@ import static org.junit.Assert.assertEquals;
 public class MiniLangTest {
     @Test
     public void test() {
+        int first=1;
+        int second=2;
+        int third=3;
+        int fourth=4;
+        int fifth=5;
+
         LanguageBuilder<LaiLaiNode> lb = new LanguageBuilder<>();
 
         final TokenDefinition<LaiLaiNode> rcurly = lb.newToken()
                 .matchesString("}")
+                .leftBindingPower(first)
                 .named("rcurly")
                 .build();
 
         final TokenDefinition<LaiLaiNode> lcurly = lb.newToken()
                 .matchesString("{")
+                .leftBindingPower(first)
                 .named("lcurly")
                 .prefixParseAs((previous, match, parser) -> {
                     Scope scope = (previous == null) ? new RootScope() : previous.getScope() == null ? new RootScope() : new NestedScope(previous.getScope());
@@ -38,11 +46,13 @@ public class MiniLangTest {
                 .build();
 
         final TokenDefinition<LaiLaiNode> rparen = lb.newToken()
+                .leftBindingPower(first)
                 .matchesString(")")
                 .named("rparen")
                 .build();
 
         TokenDefinition<LaiLaiNode> lparen = lb.newToken()
+                .leftBindingPower(first)
                 .matchesString("(")
                 .named("lparen")
                 .prefixParseAs((previous, match, parser) -> {
@@ -52,12 +62,14 @@ public class MiniLangTest {
                 }).build();
 
         TokenDefinition<LaiLaiNode> whitespace = lb.newToken()
+                .leftBindingPower(first)
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing()
                 .build();
 
         TokenDefinition<LaiLaiNode> plus = lb.newToken()
+                .leftBindingPower(fifth)
                 .matchesString("+")
                 .named("plus")
                 .prefixParseAs((previous, match, parser) -> parser.subExpression())
@@ -65,12 +77,14 @@ public class MiniLangTest {
                 .build();
 
         TokenDefinition<LaiLaiNode> hat = lb.newToken()
+                .leftBindingPower(fifth)
                 .matchesString("^")
                 .named("hat")
                 .infixParseAs((match, previous, parser) -> new HatNode(previous, parser.subExpression()))
                 .build();
 
         TokenDefinition<LaiLaiNode> assign = lb.newToken()
+                .leftBindingPower(fourth)
                 .matchesString("=")
                 .named("assign")
                 .infixParseAs((match, previous, parser) -> {
@@ -80,6 +94,7 @@ public class MiniLangTest {
                 .build();
 
         TokenDefinition<LaiLaiNode> variableDeclaration = lb.newToken()
+                .leftBindingPower(first)
                 .matchesPattern("(?:float|int|bool) [a-z]+")
                 .named("variableDef")
                 .standaloneParseAs((previous, match) -> {
@@ -95,6 +110,7 @@ public class MiniLangTest {
                 }).build();
 
         TokenDefinition<LaiLaiNode> variableReference = lb.newToken()
+                .leftBindingPower(second)
                 .matchesPattern("[a-z]+")
                 .named("variableRef")
 
@@ -104,11 +120,13 @@ public class MiniLangTest {
                 }).build();
 
         TokenDefinition<LaiLaiNode> booleanLiteral = lb.newToken()
+                .leftBindingPower(first)
                 .matchesPattern("true|false")
                 .named("bool")
                 .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
 
         TokenDefinition<LaiLaiNode> integerLiteral = lb.newToken()
+                .leftBindingPower(first)
                 .matchesPattern("[0-9]+i")
                 .named("int")
                 .standaloneParseAs((previous, match) -> {
@@ -117,26 +135,31 @@ public class MiniLangTest {
                 }).build();
 
         TokenDefinition<LaiLaiNode> floatLiteral = lb.newToken()
+                .leftBindingPower(first)
                 .matchesPattern("[0-9]+f")
                 .named("float")
                 .standaloneParseAs((previous, match) -> new FloatLiteralNode(previous, Float.parseFloat(match.getText()))).build();
 
         TokenDefinition<LaiLaiNode> semicolon = lb.newToken()
+                .leftBindingPower(third)
                 .matchesString(";")
                 .named("statement")
                 .infixParseAs((match, previous, parser) -> new StatementNode(previous, parser.subExpression())).build();
 
         final TokenDefinition<LaiLaiNode> listEnd = lb.newToken()
+                .leftBindingPower(first)
                 .matchesString("]")
                 .named("listEnd")
                 .build();
 
         final TokenDefinition<LaiLaiNode> comma = lb.newToken()
+                .leftBindingPower(first)
                 .matchesString(",")
                 .named("comma")
                 .build();
 
         TokenDefinition<LaiLaiNode> listStart = lb.newToken()
+                .leftBindingPower(first)
                 .matchesString("[")
                 .named("listStart")
                 .prefixParseAs((previous, match, parser) -> {
@@ -152,10 +175,7 @@ public class MiniLangTest {
                 }).build();
 
         Language<LaiLaiNode> l = lb
-                .newLowerPriorityLevel()
                 .addToken(booleanLiteral)
-                .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(lcurly)
                 .addToken(rcurly)
                 .addToken(listEnd)
@@ -168,16 +188,12 @@ public class MiniLangTest {
                 .addToken(floatLiteral)
                 .addToken(variableDeclaration)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(variableReference)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(semicolon)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(assign)
                 .endLevel()
-                .newLowerPriorityLevel()
                 .addToken(plus)
                 .addToken(hat)
                 .endLevel()
