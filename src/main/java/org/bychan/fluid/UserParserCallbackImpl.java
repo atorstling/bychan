@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by alext on 2014-12-06.
  */
-class FluidParserCallbackImpl<N> implements FluidParserCallback<N> {
+class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull
     private final TokenFinder<N> tokenFinder;
@@ -17,7 +17,7 @@ class FluidParserCallbackImpl<N> implements FluidParserCallback<N> {
     @Nullable
     private final N previous;
 
-    public FluidParserCallbackImpl(int leftBindingPower, @NotNull TokenFinder<N> tokenFinder, @NotNull TokenParserCallback<N> parser, @Nullable final N previous) {
+    public UserParserCallbackImpl(int leftBindingPower, @NotNull TokenFinder<N> tokenFinder, @NotNull TokenParserCallback<N> parser, @Nullable final N previous) {
         this.leftBindingPower = leftBindingPower;
         this.tokenFinder = tokenFinder;
         this.parser = parser;

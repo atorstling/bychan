@@ -1,6 +1,5 @@
 package org.bychan.generic;
 
-import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,13 +16,13 @@ public class WhitespaceToken<N> implements Token<N> {
 
     @Nullable
     @Override
-    public PrefixParser<N> getPrefixParser() {
+    public PrefixParseAction<N> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParser<N> getInfixParser() {
+    public InfixParseAction<N> getInfixParser() {
         return null;
     }
 

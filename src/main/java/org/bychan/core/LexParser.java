@@ -1,4 +1,4 @@
-package org.bychan.fluid;
+package org.bychan.core;
 
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;

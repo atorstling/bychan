@@ -13,13 +13,13 @@ public class AndToken<S> implements Token<BooleanExpressionNode> {
 
     @Nullable
     @Override
-    public PrefixParser<BooleanExpressionNode> getPrefixParser() {
+    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParser<BooleanExpressionNode> getInfixParser() {
+    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
         return (previous, parser) -> {
             BooleanExpressionNode right = parser.parseExpression(previous, leftBindingPower());
             return new AndNode(previous, right);

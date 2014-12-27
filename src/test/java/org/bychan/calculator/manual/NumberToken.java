@@ -1,6 +1,5 @@
 package org.bychan.calculator.manual;
 
-import org.bychan.boolexp.BooleanExpressionNode;
 import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.calculator.nodes.NumberNode;
 import org.bychan.core.*;
@@ -53,13 +52,13 @@ public class NumberToken<S> implements Token<CalculatorNode> {
 
     @Nullable
     @Override
-    public PrefixParser<CalculatorNode> getPrefixParser() {
+    public PrefixParseAction<CalculatorNode> getPrefixParser() {
         return (previous, parser) -> new NumberNode(value);
     }
 
     @Nullable
     @Override
-    public InfixParser<CalculatorNode> getInfixParser() {
+    public InfixParseAction<CalculatorNode> getInfixParser() {
         return null;
     }
 

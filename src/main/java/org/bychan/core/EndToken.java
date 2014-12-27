@@ -19,13 +19,13 @@ public class EndToken<N> implements Token<N> {
 
     @Nullable
     @Override
-    public PrefixParser<N> getPrefixParser() {
+    public PrefixParseAction<N> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParser<N> getInfixParser() {
+    public InfixParseAction<N> getInfixParser() {
         return null;
     }
 

@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * An interface to the parser, which the nodes can use to
+ * An interface to the parser, which the tokens can use to
  * continue the parsing
  */
 public interface TokenParserCallback<N> {

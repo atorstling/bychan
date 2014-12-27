@@ -1,6 +1,5 @@
 package org.bychan.boolexp;
 
-import org.bychan.fluid.VariableBindings;
 import org.jetbrains.annotations.NotNull;
 
 public class NotNode implements BooleanExpressionNode {

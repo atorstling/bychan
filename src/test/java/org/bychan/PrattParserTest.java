@@ -12,14 +12,12 @@ import org.bychan.generic.LeftParenthesisToken;
 import org.bychan.generic.RightParenthesisToken;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -191,10 +189,10 @@ public class PrattParserTest {
     public void failsWhenInfixNotSupported() {
         Token first = mock(Token.class);
         when(first.toString()).thenReturn("firstToken");
-        PrefixParser prefixParser = mock(PrefixParser.class);
+        PrefixParseAction prefixParseAction = mock(PrefixParseAction.class);
         //noinspection unchecked
-        when(prefixParser.prefixParse(any(), any())).thenReturn("prefixParsingResult");
-        when(first.getPrefixParser()).thenReturn(prefixParser);
+        when(prefixParseAction.prefixParse(any(), any())).thenReturn("prefixParsingResult");
+        when(first.getPrefixParser()).thenReturn(prefixParseAction);
 
         Token second = mock(Token.class);
         when(second.toString()).thenReturn("secondToken");

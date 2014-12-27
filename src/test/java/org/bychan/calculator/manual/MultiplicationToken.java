@@ -17,13 +17,13 @@ public class MultiplicationToken implements Token<CalculatorNode> {
 
     @Nullable
     @Override
-    public PrefixParser<CalculatorNode> getPrefixParser() {
+    public PrefixParseAction<CalculatorNode> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParser<CalculatorNode> getInfixParser() {
+    public InfixParseAction<CalculatorNode> getInfixParser() {
         return (previous, parser) -> {
             CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
             return new MultiplicationNode(previous, right);

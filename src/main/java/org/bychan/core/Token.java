@@ -10,10 +10,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Token<N> {
     @Nullable
-    PrefixParser<N> getPrefixParser();
+    PrefixParseAction<N> getPrefixParser();
 
     @Nullable
-    InfixParser<N> getInfixParser();
+    InfixParseAction<N> getInfixParser();
 
 
     /**

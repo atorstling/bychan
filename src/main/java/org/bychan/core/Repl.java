@@ -1,6 +1,5 @@
 package org.bychan.core;
 
-import org.bychan.fluid.LexParser;
 import org.bychan.fluid.Language;
 import org.jetbrains.annotations.NotNull;
 

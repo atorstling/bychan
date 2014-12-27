@@ -27,18 +27,18 @@ public class GenericToken<N> implements Token<N> {
 
     @Nullable
     @Override
-    public PrefixParser<N> getPrefixParser() {
+    public PrefixParseAction<N> getPrefixParser() {
         return prefixBuilder == null ? null : (previous, parser) -> {
-            FluidParserCallbackImpl<N> callback = new FluidParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
+            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
             return prefixBuilder.build(previous, match, callback);
         };
     }
 
     @Nullable
     @Override
-    public InfixParser<N> getInfixParser() {
+    public InfixParseAction<N> getInfixParser() {
         return infixBuilder == null ? null : (previous, parser) -> {
-            FluidParserCallbackImpl<N> callback = new FluidParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
+            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
             return infixBuilder.build(match, previous, callback);
         };
     }

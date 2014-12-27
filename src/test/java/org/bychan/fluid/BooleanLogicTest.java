@@ -1,9 +1,6 @@
 package org.bychan.fluid;
 
-import org.bychan.boolexp.AndNode;
-import org.bychan.boolexp.BooleanExpressionNode;
-import org.bychan.boolexp.NotNode;
-import org.bychan.boolexp.VariableNode;
+import org.bychan.boolexp.*;
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;

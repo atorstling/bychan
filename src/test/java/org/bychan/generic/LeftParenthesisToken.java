@@ -1,6 +1,5 @@
 package org.bychan.generic;
 
-import org.bychan.boolexp.BooleanExpressionNode;
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,7 +15,7 @@ public class LeftParenthesisToken<N> implements Token<N> {
 
     @Nullable
     @Override
-    public PrefixParser<N> getPrefixParser() {
+    public PrefixParseAction<N> getPrefixParser() {
         return (previous, parser) -> {
             N expression = parser.parseExpression(previous, 0);
             parser.swallow(RightParenthesisTokenType.<N>get());
@@ -26,7 +25,7 @@ public class LeftParenthesisToken<N> implements Token<N> {
 
     @Nullable
     @Override
-    public InfixParser<N> getInfixParser() {
+    public InfixParseAction<N> getInfixParser() {
         return null;
     }
 

@@ -4,7 +4,11 @@ import org.bychan.core.Token;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface FluidParserCallback<N> {
+/**
+ * The parser interface used in the API
+ * @param <N>
+ */
+public interface UserParserCallback<N> {
     /**
      * Parse the directly following tokens an an expression. Proceed while tokens
      * with higher priority than the previous token are found.

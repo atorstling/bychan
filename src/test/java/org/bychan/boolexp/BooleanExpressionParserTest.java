@@ -3,7 +3,6 @@ package org.bychan.boolexp;
 import org.bychan.core.EndToken;
 import org.bychan.core.Lexer;
 import org.bychan.core.Token;
-import org.bychan.fluid.VariableBindingBuilder;
 import org.junit.Test;
 
 import java.util.List;

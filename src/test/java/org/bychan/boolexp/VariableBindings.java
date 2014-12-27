@@ -1,4 +1,4 @@
-package org.bychan.fluid;
+package org.bychan.boolexp;
 
 import org.jetbrains.annotations.NotNull;
 

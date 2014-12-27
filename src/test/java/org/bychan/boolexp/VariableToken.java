@@ -25,13 +25,13 @@ public class VariableToken implements Token<BooleanExpressionNode> {
 
     @Nullable
     @Override
-    public PrefixParser<BooleanExpressionNode> getPrefixParser() {
+    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
         return (previous, parser) -> new VariableNode(name);
     }
 
     @Nullable
     @Override
-    public InfixParser<BooleanExpressionNode> getInfixParser() {
+    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
         return null;
     }
 
