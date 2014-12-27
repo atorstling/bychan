@@ -2,9 +2,7 @@ package org.bychan.dynamic.minilang;
 
 
 import org.bychan.core.ParseResult;
-import org.bychan.dynamic.Language;
-import org.bychan.dynamic.LanguageBuilder;
-import org.bychan.dynamic.TokenDefinition;
+import org.bychan.dynamic.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -93,28 +91,26 @@ public class MiniLangTest {
                 })
                 .build();
 
+        DynamicPrefixParseAction<LaiLaiNode> parseAction4 = (previous, match, parser) -> {
+            String declaration = match.getText();
+            Pattern variablePattern = Pattern.compile("^(float|int|bool) ([a-z]+)$");
+            Matcher matcher = variablePattern.matcher(declaration);
+            boolean matches = matcher.matches();
+            if (!matches) {
+                throw new IllegalStateException("No match for variable declaration'" + declaration + "'");
+
+            }
+            return new VariableDefNode(previous, ExpressionType.forTypeDeclaration(matcher.group(1)), matcher.group(2));
+        };
         TokenDefinition<LaiLaiNode> variableDeclaration = lb.newToken()
                 .leftBindingPower(first)
                 .matchesPattern("(?:float|int|bool) [a-z]+")
-                .named("variableDef")
-                .standaloneParseAs((previous, match) -> {
-                    String declaration = match.getText();
-                    Pattern variablePattern = Pattern.compile("^(float|int|bool) ([a-z]+)$");
-                    Matcher matcher = variablePattern.matcher(declaration);
-                    boolean matches = matcher.matches();
-                    if (!matches) {
-                        throw new IllegalStateException("No match for variable declaration'" + declaration + "'");
-
-                    }
-                    return new VariableDefNode(previous, ExpressionType.forTypeDeclaration(matcher.group(1)), matcher.group(2));
-                }).build();
+                .named("variableDef").prefixParseAs(parseAction4).build();
 
         TokenDefinition<LaiLaiNode> variableReference = lb.newToken()
                 .leftBindingPower(second)
                 .matchesPattern("[a-z]+")
-                .named("variableRef")
-
-                .standaloneParseAs((symbolTable, match) -> {
+                .named("variableRef").prefixParseAs((previous, match, parser) -> {
                     String name = match.getText();
                     return new VariableRefNode(name);
                 }).build();
@@ -122,14 +118,12 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> booleanLiteral = lb.newToken()
                 .leftBindingPower(first)
                 .matchesPattern("true|false")
-                .named("bool")
-                .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
+                .named("bool").prefixParseAs((previous, match, parser) -> new BooleanLiteralNode(Boolean.parseBoolean(match.getText()))).build();
 
         TokenDefinition<LaiLaiNode> integerLiteral = lb.newToken()
                 .leftBindingPower(first)
                 .matchesPattern("[0-9]+i")
-                .named("int")
-                .standaloneParseAs((previous, match) -> {
+                .named("int").prefixParseAs((previous, match, parser) -> {
                     String text = match.getText();
                     return new IntegerLiteralNode(previous, Integer.parseInt(text.substring(0, text.length() - 1)));
                 }).build();
@@ -137,8 +131,7 @@ public class MiniLangTest {
         TokenDefinition<LaiLaiNode> floatLiteral = lb.newToken()
                 .leftBindingPower(first)
                 .matchesPattern("[0-9]+f")
-                .named("float")
-                .standaloneParseAs((previous, match) -> new FloatLiteralNode(previous, Float.parseFloat(match.getText()))).build();
+                .named("float").prefixParseAs((previous, match, parser) -> new FloatLiteralNode(previous, Float.parseFloat(match.getText()))).build();
 
         TokenDefinition<LaiLaiNode> semicolon = lb.newToken()
                 .leftBindingPower(third)

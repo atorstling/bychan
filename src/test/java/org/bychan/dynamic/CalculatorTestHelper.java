@@ -8,8 +8,7 @@ public class CalculatorTestHelper {
                 .infixParseAs((previous, match, parser) -> previous + parser.subExpression())
                 .newToken().named("multiplication").matchesString("*")
                 .infixParseAs((previous, match, parser) -> previous * parser.subExpression())
-                .newToken().named("integer").matchesPattern("[0-9]+")
-                .standaloneParseAs((previous, match) -> Integer.parseInt(match.getText()))
+                .newToken().named("integer").matchesPattern("[0-9]+").prefixParseAs((previous, match, parser) -> Integer.parseInt(match.getText()))
                 .completeLanguage();
     }
 }

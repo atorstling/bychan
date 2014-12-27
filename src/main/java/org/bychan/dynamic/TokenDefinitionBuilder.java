@@ -9,7 +9,6 @@ public class TokenDefinitionBuilder<N> {
     private String pattern;
     private DynamicPrefixParseAction<N> prefixBuilder;
     private DynamicInfixParseAction<N> infixBuilder;
-    private DynamicStandaloneParseAction<N> standaloneBuilder;
     private boolean parsed;
     private String tokenTypeName;
     private int leftBindingPower = 1;
@@ -39,19 +38,7 @@ public class TokenDefinitionBuilder<N> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        return new TokenDefinition<>(Pattern.compile(pattern), selectPrefix(), infixBuilder, tokenTypeName, parsed, leftBindingPower);
-    }
-
-    @Nullable
-    private DynamicPrefixParseAction<N> selectPrefix() {
-        if (standaloneBuilder != null && prefixBuilder != null) {
-            throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
-        }
-        if (standaloneBuilder != null) {
-            return (previous, match, parser) -> standaloneBuilder.parse(previous, match);
-        } else {
-            return prefixBuilder;
-        }
+        return new TokenDefinition<>(Pattern.compile(pattern), prefixBuilder, infixBuilder, tokenTypeName, parsed, leftBindingPower);
     }
 
     public TokenDefinitionBuilder<N> infixParseAs(DynamicInfixParseAction<N> infixBuilder) {
@@ -61,11 +48,6 @@ public class TokenDefinitionBuilder<N> {
 
     public TokenDefinitionBuilder<N> ignoredWhenParsing() {
         this.parsed = false;
-        return this;
-    }
-
-    public TokenDefinitionBuilder<N> standaloneParseAs(DynamicStandaloneParseAction<N> dynamicStandaloneParseAction) {
-        this.standaloneBuilder = dynamicStandaloneParseAction;
         return this;
     }
 

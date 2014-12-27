@@ -1,9 +1,6 @@
 package org.bychan.dynamic.json;
 
-import org.bychan.dynamic.Language;
-import org.bychan.dynamic.LanguageBuilder;
-import org.bychan.dynamic.TokenDefinition;
-import org.bychan.dynamic.TokenDefinitionBuilder;
+import org.bychan.dynamic.*;
 import org.bychan.dynamic.json.nodes.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,55 +55,51 @@ class JsonLangBuilder {
 
     @NotNull
     private TokenDefinition<JsonNode> rbracket(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("rbracket").matchesString("]")
+        return new TokenDefinitionBuilder<>(lb).named("rbracket").matchesString("]")
                 .build();
     }
 
     @NotNull
     private TokenDefinition<JsonNode> rcurly(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("rculry").matchesString("}")
+        return new TokenDefinitionBuilder<>(lb).named("rculry").matchesString("}")
                 .build();
     }
 
     @NotNull
     private TokenDefinition<JsonNode> comma(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("comma").matchesString(",")
+        return new TokenDefinitionBuilder<>(lb).named("comma").matchesString(",")
                 .build();
     }
 
 
     @NotNull
     private TokenDefinition<JsonNode> colon(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("colon").matchesString(":")
+        return new TokenDefinitionBuilder<>(lb).named("colon").matchesString(":")
                 .build();
     }
 
 
     static TokenDefinition<JsonNode> nullLiteral(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("null_literal").matchesString("null")
-                .standaloneParseAs((previous, match) -> NullLiteral.get()).build();
+        return new TokenDefinitionBuilder<>(lb).named("null_literal").matchesString("null").prefixParseAs((previous, match, parser) -> NullLiteral.get()).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> boolLiteral(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("bool_literal").matchesPattern("(true)|(false)")
-                .standaloneParseAs((previous, match) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
+        return new TokenDefinitionBuilder<>(lb).named("bool_literal").matchesPattern("(true)|(false)").prefixParseAs((previous, match, parser) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> stringLiteral(LanguageBuilder<JsonNode> lb) {
         @org.intellij.lang.annotations.Language("RegExp")
         String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("string_literal").matchesPattern(pattern)
-                .standaloneParseAs((previous, match) -> {
-                    String withinQuotationMarks = match.group(1);
-                    return new StringLiteralNode(withinQuotationMarks);
-                }).build();
+        return new TokenDefinitionBuilder<>(lb).named("string_literal").matchesPattern(pattern).prefixParseAs((previous, match, parser) -> {
+            String withinQuotationMarks = match.group(1);
+            return new StringLiteralNode(withinQuotationMarks);
+        }).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> numberLiteral(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<JsonNode>(lb).named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
-                .standaloneParseAs((previous, match) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
+        return new TokenDefinitionBuilder<>(lb).named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?").prefixParseAs((previous, match, parser) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
     }
 }
