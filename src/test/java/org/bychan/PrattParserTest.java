@@ -191,7 +191,7 @@ public class PrattParserTest {
         when(first.toString()).thenReturn("firstToken");
         PrefixParseAction prefixParseAction = mock(PrefixParseAction.class);
         //noinspection unchecked
-        when(prefixParseAction.prefixParse(any(), any())).thenReturn("prefixParsingResult");
+        when(prefixParseAction.parse(any(), any())).thenReturn("prefixParsingResult");
         when(first.getPrefixParser()).thenReturn(prefixParseAction);
 
         Token second = mock(Token.class);

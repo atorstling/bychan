@@ -18,7 +18,7 @@ public class LanguageBuilder<N> {
     private int currentLeftBindingPower;
 
     public LanguageBuilder() {
-        this.tokens = new ArrayList<TokenDefinition<N>>();
+        this.tokens = new ArrayList<>();
         this.name = "unnamed";
     }
 

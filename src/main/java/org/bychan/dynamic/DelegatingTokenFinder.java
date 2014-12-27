@@ -3,6 +3,10 @@ package org.bychan.dynamic;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Used to look up token types in the list of {@link org.bychan.dynamic.TokenDefinition}s.
+ * @param <N>
+ */
 public class DelegatingTokenFinder<N> implements TokenFinder<N> {
     @Nullable
     private TokenFinder<N> delegate;

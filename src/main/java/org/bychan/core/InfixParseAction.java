@@ -15,5 +15,5 @@ public interface InfixParseAction<N> {
      * @param previous the AST node resulting from parsing the expression to the previous of this token, up until this
      */
     @NotNull
-    N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
+    N parse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
 }

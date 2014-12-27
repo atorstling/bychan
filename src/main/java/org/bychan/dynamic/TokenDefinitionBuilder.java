@@ -7,9 +7,9 @@ import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
     private String pattern;
-    private PrefixAstBuilder<N> prefixBuilder;
-    private InfixAstBuilder<N> infixBuilder;
-    private StandaloneAstBuilder<N> standaloneBuilder;
+    private DynamicPrefixParseAction<N> prefixBuilder;
+    private DynamicInfixParseAction<N> infixBuilder;
+    private DynamicStandaloneParseAction<N> standaloneBuilder;
     private boolean parsed;
     private String tokenTypeName;
     private int leftBindingPower = 1;
@@ -29,7 +29,7 @@ public class TokenDefinitionBuilder<N> {
         parsed = true;
     }
 
-    public TokenDefinitionBuilder<N> prefixParseAs(PrefixAstBuilder<N> prefixBuilder) {
+    public TokenDefinitionBuilder<N> prefixParseAs(DynamicPrefixParseAction<N> prefixBuilder) {
         this.prefixBuilder = prefixBuilder;
         return this;
     }
@@ -43,18 +43,18 @@ public class TokenDefinitionBuilder<N> {
     }
 
     @Nullable
-    private PrefixAstBuilder<N> selectPrefix() {
+    private DynamicPrefixParseAction<N> selectPrefix() {
         if (standaloneBuilder != null && prefixBuilder != null) {
             throw new IllegalStateException("Prefix and standalone matchers cannot be simultaneously defined.");
         }
         if (standaloneBuilder != null) {
-            return (previous, match, parser) -> standaloneBuilder.build(previous, match);
+            return (previous, match, parser) -> standaloneBuilder.parse(previous, match);
         } else {
             return prefixBuilder;
         }
     }
 
-    public TokenDefinitionBuilder<N> infixParseAs(InfixAstBuilder<N> infixBuilder) {
+    public TokenDefinitionBuilder<N> infixParseAs(DynamicInfixParseAction<N> infixBuilder) {
         this.infixBuilder = infixBuilder;
         return this;
     }
@@ -64,8 +64,8 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> standaloneParseAs(StandaloneAstBuilder<N> standaloneAstBuilder) {
-        this.standaloneBuilder = standaloneAstBuilder;
+    public TokenDefinitionBuilder<N> standaloneParseAs(DynamicStandaloneParseAction<N> dynamicStandaloneParseAction) {
+        this.standaloneBuilder = dynamicStandaloneParseAction;
         return this;
     }
 

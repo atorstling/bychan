@@ -15,5 +15,5 @@ public interface PrefixParseAction<N> {
      * @return the resulting AST node.
      */
     @NotNull
-    N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
+    N parse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
 }

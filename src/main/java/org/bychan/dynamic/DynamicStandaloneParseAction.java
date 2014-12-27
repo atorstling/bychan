@@ -4,7 +4,11 @@ import org.bychan.core.LexingMatch;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface PrefixAstBuilder<N> {
+/**
+ * A convenience class
+ * @param <N>
+ */
+public interface DynamicStandaloneParseAction<N> {
     @NotNull
-    N build(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser);
+    N parse(@Nullable N previous, @NotNull LexingMatch match);
 }

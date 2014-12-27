@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * The parser interface used in the API
+ * The parser interface used in the dynamic API
  * @param <N>
  */
 public interface UserParserCallback<N> {

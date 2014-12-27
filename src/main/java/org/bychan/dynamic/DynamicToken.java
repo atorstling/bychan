@@ -12,9 +12,9 @@ public class DynamicToken<N> implements Token<N> {
     private final TokenDefinition<N> def;
     private final TokenFinder<N> tokenFinder;
     @Nullable
-    private final InfixAstBuilder<N> infixBuilder;
+    private final DynamicInfixParseAction<N> infixBuilder;
     @Nullable
-    private final PrefixAstBuilder<N> prefixBuilder;
+    private final DynamicPrefixParseAction<N> prefixBuilder;
 
     public DynamicToken(@NotNull final DynamicTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.tokenType = tokenType;
@@ -30,7 +30,7 @@ public class DynamicToken<N> implements Token<N> {
     public PrefixParseAction<N> getPrefixParser() {
         return prefixBuilder == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return prefixBuilder.build(previous, match, callback);
+            return prefixBuilder.parse(previous, match, callback);
         };
     }
 
@@ -39,7 +39,7 @@ public class DynamicToken<N> implements Token<N> {
     public InfixParseAction<N> getInfixParser() {
         return infixBuilder == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return infixBuilder.build(previous, match, callback);
+            return infixBuilder.parse(previous, match, callback);
         };
     }
 

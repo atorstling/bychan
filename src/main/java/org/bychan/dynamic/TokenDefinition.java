@@ -15,15 +15,15 @@ public class TokenDefinition<N> {
     @NotNull
     private final Pattern pattern;
     @Nullable
-    private final PrefixAstBuilder<N> prefixBuilder;
+    private final DynamicPrefixParseAction<N> prefixBuilder;
     @Nullable
-    private final InfixAstBuilder<N> infixBuilder;
+    private final DynamicInfixParseAction<N> infixBuilder;
     @NotNull
     private final String tokenTypeName;
     private final boolean parse;
     private final int leftBindingPower;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final PrefixAstBuilder<N> prefixBuilder, @Nullable final InfixAstBuilder<N> infixBuilder, @NotNull final String tokenTypeName, boolean parse, int leftBindingPower) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicPrefixParseAction<N> prefixBuilder, @Nullable final DynamicInfixParseAction<N> infixBuilder, @NotNull final String tokenTypeName, boolean parse, int leftBindingPower) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
@@ -47,12 +47,12 @@ public class TokenDefinition<N> {
     }
 
     @Nullable
-    public PrefixAstBuilder<N> getPrefixBuilder() {
+    public DynamicPrefixParseAction<N> getPrefixBuilder() {
         return prefixBuilder;
     }
 
     @Nullable
-    public InfixAstBuilder<N> getInfixBuilder() {
+    public DynamicInfixParseAction<N> getInfixBuilder() {
         return infixBuilder;
     }
 

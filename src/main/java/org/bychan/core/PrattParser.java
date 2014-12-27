@@ -77,7 +77,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         if (infixParseAction == null) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
         }
-        return infixParseAction.infixParse(currentLeftHandSide, this);
+        return infixParseAction.parse(currentLeftHandSide, this);
     }
 
     @NotNull
@@ -109,7 +109,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         if (prefixParseAction == null) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support prefix parsing", getParsingPosition()));
         }
-        return prefixParseAction.prefixParse(previous, this);
+        return prefixParseAction.parse(previous, this);
     }
 
     @NotNull
