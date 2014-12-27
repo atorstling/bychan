@@ -1,9 +1,9 @@
 package org.bychan.boolexp;
 
 import org.bychan.core.TokenType;
-import org.bychan.generic.LeftParenthesisTokenType;
-import org.bychan.generic.RightParenthesisTokenType;
-import org.bychan.generic.WhitespaceTokenType;
+import org.bychan.shared.LeftParenthesisTokenType;
+import org.bychan.shared.RightParenthesisTokenType;
+import org.bychan.shared.WhitespaceTokenType;
 
 import java.util.Arrays;
 import java.util.List;

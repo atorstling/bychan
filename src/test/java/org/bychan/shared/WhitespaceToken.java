@@ -1,15 +1,16 @@
-package org.bychan.generic;
+package org.bychan.shared;
 
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class RightParenthesisToken<N> implements Token<N> {
-
+public class WhitespaceToken<N> implements Token<N> {
+    private final WhitespaceTokenType<N> type;
     @NotNull
     private final LexingMatch match;
 
-    public RightParenthesisToken(@NotNull final LexingMatch match) {
+    public WhitespaceToken(WhitespaceTokenType<N> type, @NotNull final LexingMatch match) {
+        this.type = type;
         this.match = match;
     }
 
@@ -25,21 +26,16 @@ public class RightParenthesisToken<N> implements Token<N> {
         return null;
     }
 
+    @Override
     public int leftBindingPower() {
         return 0;
     }
 
-    public String toString() {
-        return ")";
-    }
-
-
-    @Override
     @NotNull
+    @Override
     public TokenType<N> getType() {
-        return RightParenthesisTokenType.get();
+        return type;
     }
-
 
     @NotNull
     @Override

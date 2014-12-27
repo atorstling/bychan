@@ -1,26 +1,22 @@
-package org.bychan.generic;
+package org.bychan.shared;
 
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LeftParenthesisToken<N> implements Token<N> {
+public class RightParenthesisToken<N> implements Token<N> {
 
     @NotNull
     private final LexingMatch match;
 
-    public LeftParenthesisToken(@NotNull final LexingMatch match) {
+    public RightParenthesisToken(@NotNull final LexingMatch match) {
         this.match = match;
     }
 
     @Nullable
     @Override
     public PrefixParseAction<N> getPrefixParser() {
-        return (previous, parser) -> {
-            N expression = parser.parseExpression(previous, 0);
-            parser.swallow(RightParenthesisTokenType.<N>get());
-            return expression;
-        };
+        return null;
     }
 
     @Nullable
@@ -30,17 +26,18 @@ public class LeftParenthesisToken<N> implements Token<N> {
     }
 
     public int leftBindingPower() {
-        throw new UnsupportedOperationException();
+        return 0;
     }
 
     public String toString() {
-        return "(";
+        return ")";
     }
+
 
     @Override
     @NotNull
     public TokenType<N> getType() {
-        return LeftParenthesisTokenType.get();
+        return RightParenthesisTokenType.get();
     }
 
 

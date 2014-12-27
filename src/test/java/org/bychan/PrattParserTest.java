@@ -8,8 +8,8 @@ import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.calculator.nodes.NumberNode;
 import org.bychan.calculator.nodes.SubtractionNode;
 import org.bychan.core.*;
-import org.bychan.generic.LeftParenthesisToken;
-import org.bychan.generic.RightParenthesisToken;
+import org.bychan.shared.LeftParenthesisToken;
+import org.bychan.shared.RightParenthesisToken;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 

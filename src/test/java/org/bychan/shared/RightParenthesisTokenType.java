@@ -1,4 +1,4 @@
-package org.bychan.generic;
+package org.bychan.shared;
 
 import org.bychan.core.LexingMatch;
 import org.bychan.core.Token;

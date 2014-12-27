@@ -1,4 +1,4 @@
-package org.bychan.generic;
+package org.bychan.shared;
 
 import org.bychan.core.LexingMatch;
 import org.bychan.core.Token;
@@ -7,27 +7,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class WhitespaceTokenType<N> implements TokenType<N> {
-    private final String pattern;
-
-    public WhitespaceTokenType() {
-        this.pattern = "\\s+";
-    }
+public class LeftParenthesisTokenType<N> implements TokenType<N> {
 
     @NotNull
-    @Override
     public Token<N> toToken(@NotNull LexingMatch match) {
-        return new WhitespaceToken<>(this, match);
+        return new LeftParenthesisToken<>(match);
     }
 
     @NotNull
-    @Override
     public Pattern getPattern() {
-        return Pattern.compile(pattern);
+        return Pattern.compile("\\(");
     }
 
     @Override
     public boolean include() {
-        return false;
+        return true;
+    }
+
+    public static <N> LeftParenthesisTokenType<N> get() {
+        return new LeftParenthesisTokenType<>();
     }
 }

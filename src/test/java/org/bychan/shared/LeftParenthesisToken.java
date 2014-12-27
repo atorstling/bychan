@@ -1,23 +1,26 @@
-package org.bychan.generic;
+package org.bychan.shared;
 
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class WhitespaceToken<N> implements Token<N> {
-    private final WhitespaceTokenType<N> type;
+public class LeftParenthesisToken<N> implements Token<N> {
+
     @NotNull
     private final LexingMatch match;
 
-    public WhitespaceToken(WhitespaceTokenType<N> type, @NotNull final LexingMatch match) {
-        this.type = type;
+    public LeftParenthesisToken(@NotNull final LexingMatch match) {
         this.match = match;
     }
 
     @Nullable
     @Override
     public PrefixParseAction<N> getPrefixParser() {
-        return null;
+        return (previous, parser) -> {
+            N expression = parser.parseExpression(previous, 0);
+            parser.swallow(RightParenthesisTokenType.<N>get());
+            return expression;
+        };
     }
 
     @Nullable
@@ -26,16 +29,20 @@ public class WhitespaceToken<N> implements Token<N> {
         return null;
     }
 
-    @Override
     public int leftBindingPower() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
-    @NotNull
-    @Override
-    public TokenType<N> getType() {
-        return type;
+    public String toString() {
+        return "(";
     }
+
+    @Override
+    @NotNull
+    public TokenType<N> getType() {
+        return LeftParenthesisTokenType.get();
+    }
+
 
     @NotNull
     @Override
