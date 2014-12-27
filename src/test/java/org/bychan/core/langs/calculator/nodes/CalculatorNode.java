@@ -1,7 +1,5 @@
 package org.bychan.core.langs.calculator.nodes;
 
-import org.bychan.core.basic.AstNode;
-
-public interface CalculatorNode extends AstNode {
+public interface CalculatorNode {
     int evaluate();
 }

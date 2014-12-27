@@ -5,6 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Builds dynamic languages
+ * @param <N>
+ */
 public class LanguageBuilder<N> {
     @NotNull
     private final List<TokenDefinition<N>> tokens;

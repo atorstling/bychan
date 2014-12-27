@@ -1,10 +1,9 @@
 package org.bychan.core.dynamic.minilang;
 
-import org.bychan.core.basic.AstNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-interface LaiLaiNode extends AstNode {
+interface LaiLaiNode {
     @NotNull
     Object evaluate(@Nullable ScopeNode currentScope);
 

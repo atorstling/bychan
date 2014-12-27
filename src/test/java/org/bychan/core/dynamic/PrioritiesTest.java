@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class PrioritiesTest {
     @Test
     public void doit() {
-        Language<Integer> l = new Bychan().<Integer>newLanguage().named("parantheses")
+        Language<Integer> l = new LanguageBuilder<Integer>().named("parantheses")
                 .newToken().named("mult").leftBindingPower(1).matchesString("*").infixParseAs((previous, match, parser) -> previous * parser.subExpression())
                 .newToken().named("plus").leftBindingPower(2).matchesString("+").infixParseAs((previous, match, parser) -> previous + parser.subExpression())
                 .newToken().named("num").leftBindingPower(3).matchesPattern("[0-9]+").prefixParseAs((previous, match, parser) -> Integer.parseInt(match.getText()))
