@@ -37,6 +37,9 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         Token<N> firstToken = pop();
+        if (!firstToken.supportsPrefixParsing()) {
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support prefix parsing", getParsingPosition()));
+        }
         final N first = firstToken.prefixParse(previous, this);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the subExpression, only the end
@@ -63,9 +66,12 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     private N parseLoop(@NotNull final N currentLeftHandSide, final int powerFloor) {
         Token<N> peekedToken = peek();
-        if (peekedToken.infixBindingPower() > powerFloor) {
+        if (peekedToken.leftBindingPower() > powerFloor) {
             //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
             Token<N> takenToken = pop();
+            if (!takenToken.supportsInfixParsing()) {
+                throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
+            }
             N nextExpression = takenToken.infixParse(currentLeftHandSide, this);
             return parseLoop(nextExpression, powerFloor);
         }
@@ -84,7 +90,13 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     @NotNull
     public ParsingPosition getParsingPosition() {
         Token<N> previous = tokenStack.previous();
-        int startPosition = previous == null ? 0 : previous.getMatch().getStartPosition();
+        final int startPosition;
+        if (previous == null) {
+            startPosition = 0;
+        } else {
+            LexingMatch match = previous.getMatch();
+            startPosition = match.getStartPosition();
+        }
         return new ParsingPosition(startPosition, tokenStack);
     }
 

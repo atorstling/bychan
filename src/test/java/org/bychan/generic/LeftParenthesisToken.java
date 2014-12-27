@@ -13,6 +13,11 @@ public class LeftParenthesisToken<N> implements Token<N> {
         this.match = match;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return true;
+    }
+
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         N expression = parser.parseExpression(previous, 0);
@@ -20,12 +25,17 @@ public class LeftParenthesisToken<N> implements Token<N> {
         return expression;
     }
 
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
+    }
+
     @NotNull
     public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new UnsupportedOperationException();
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         throw new UnsupportedOperationException();
     }
 

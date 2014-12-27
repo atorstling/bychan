@@ -16,9 +16,19 @@ public class RightParenthesisToken<N> implements Token<N> {
         this.match = match;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return false;
+    }
+
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new IllegalStateException("Cannot use right paranthesis as prefix to subExpression");
+    }
+
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
     }
 
     @NotNull
@@ -26,7 +36,7 @@ public class RightParenthesisToken<N> implements Token<N> {
         throw new UnsupportedOperationException();
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         return 0;
     }
 

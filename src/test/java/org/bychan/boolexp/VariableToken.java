@@ -26,9 +26,19 @@ public class VariableToken<S> implements Token<BooleanExpressionNode> {
         return new VariableToken<>(match);
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return true;
+    }
+
     @NotNull
     public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
         return new VariableNode(name);
+    }
+
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
     }
 
     @NotNull
@@ -36,7 +46,7 @@ public class VariableToken<S> implements Token<BooleanExpressionNode> {
         throw new UnsupportedOperationException();
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         throw new UnsupportedOperationException();
     }
 

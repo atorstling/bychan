@@ -14,10 +14,20 @@ public class WhitespaceToken<N> implements Token<N> {
         this.match = match;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return false;
+    }
+
     @NotNull
     @Override
     public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
         throw new ParsingFailedException("Cannot parse whitespace", parser);
+    }
+
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
     }
 
     @NotNull
@@ -27,7 +37,7 @@ public class WhitespaceToken<N> implements Token<N> {
     }
 
     @Override
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         return 0;
     }
 

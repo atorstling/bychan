@@ -15,18 +15,28 @@ public class MultiplicationToken<S> implements Token<CalculatorNode> {
         this.match = match;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return false;
+    }
+
     @NotNull
     public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean supportsInfixParsing() {
+        return true;
+    }
+
     @NotNull
     public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        CalculatorNode right = parser.parseExpression(previous, infixBindingPower());
+        CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
         return new MultiplicationNode(previous, right);
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         return 20;
     }
 

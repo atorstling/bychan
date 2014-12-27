@@ -12,11 +12,16 @@ import org.bychan.generic.LeftParenthesisToken;
 import org.bychan.generic.RightParenthesisToken;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PrattParserTest {
     @Test
@@ -165,8 +170,8 @@ public class PrattParserTest {
         try {
             p.parseExpression(null, 0);
             fail("expected exception");
-        } catch (IllegalStateException e) {
-            assertEquals("Cannot use right paranthesis as prefix to subExpression", e.getMessage());
+        } catch (ParsingFailedException e) {
+            assertEquals("Parsing failed: 'Current token does not support prefix parsing' @  index 0, current token is ) and remaining tokens are [END]", e.getMessage());
         }
     }
 
@@ -178,7 +183,51 @@ public class PrattParserTest {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Cannot parse subExpression, end reached' @  index 2147483647, current token is END and remaining tokens are []", e.getParsingFailedInformation().toString());
+            assertEquals("Parsing failed: 'Current token does not support prefix parsing' @  index 2147483647, current token is END and remaining tokens are []", e.getParsingFailedInformation().toString());
+        }
+    }
+
+    @Test
+    public void failsWhenInfixNotSupported() {
+        Token first = mock(Token.class);
+        when(first.toString()).thenReturn("firstToken");
+        when(first.supportsPrefixParsing()).thenReturn(true);
+        //noinspection unchecked
+        when(first.prefixParse(any(), any())).thenReturn("prefixParsingResult");
+
+        Token second = mock(Token.class);
+        when(second.toString()).thenReturn("secondToken");
+        when(second.supportsInfixParsing()).thenReturn(false);
+        when(second.leftBindingPower()).thenReturn(1);
+        //noinspection unchecked
+        LexingMatch<Object> match = mock(LexingMatch.class);
+        when(match.getStartPosition()).thenReturn(1);
+        when(second.getMatch()).thenReturn(match);
+
+        PrattParser<Object> p = new PrattParser<>(Arrays.asList(first, second));
+        try {
+            p.parseExpression(5, 0);
+            fail("Expected exception");
+        } catch(ParsingFailedException e) {
+            assertEquals("Parsing failed: 'Current token does not support infix parsing' @  index 1, current token is secondToken and remaining tokens are []", e.getMessage());
+        }
+    }
+
+    @Test
+    public void failsWhenPrefixNotSupported() {
+        Token token = mock(Token.class);
+        when(token.supportsPrefixParsing()).thenReturn(false);
+        when(token.toString()).thenReturn("bleargh");
+        //noinspection unchecked
+        LexingMatch<Object> match = mock(LexingMatch.class);
+        when(match.getStartPosition()).thenReturn(1);
+        when(token.getMatch()).thenReturn(match);
+        PrattParser<Object> p = new PrattParser<>(Arrays.asList(token));
+        try {
+            p.parseExpression(null, 0);
+            fail("Expected exception");
+        } catch(ParsingFailedException e) {
+            assertEquals("Parsing failed: 'Current token does not support prefix parsing' @  index 1, current token is bleargh and remaining tokens are []", e.getMessage());
         }
     }
 

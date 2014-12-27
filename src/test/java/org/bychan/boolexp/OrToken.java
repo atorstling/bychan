@@ -12,17 +12,27 @@ public class OrToken implements Token<BooleanExpressionNode> {
         this.match = match;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return false;
+    }
+
     @NotNull
     public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
         throw new UnsupportedOperationException();
     }
 
-    @NotNull
-    public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new OrNode(previous, parser.parseExpression(previous, infixBindingPower()));
+    @Override
+    public boolean supportsInfixParsing() {
+        return true;
     }
 
-    public int infixBindingPower() {
+    @NotNull
+    public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
+        return new OrNode(previous, parser.parseExpression(previous, leftBindingPower()));
+    }
+
+    public int leftBindingPower() {
         return 20;
     }
 

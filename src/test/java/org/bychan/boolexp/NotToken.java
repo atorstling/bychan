@@ -13,9 +13,19 @@ public class NotToken<S> implements Token<BooleanExpressionNode> {
         this.match = match;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return true;
+    }
+
     @NotNull
     public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new NotNode(parser.parseExpression(previous, infixBindingPower()));
+        return new NotNode(parser.parseExpression(previous, leftBindingPower()));
+    }
+
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
     }
 
     @NotNull
@@ -23,7 +33,7 @@ public class NotToken<S> implements Token<BooleanExpressionNode> {
         throw new UnsupportedOperationException();
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         return 1;
     }
 

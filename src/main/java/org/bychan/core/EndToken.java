@@ -17,9 +17,19 @@ public class EndToken<N> implements Token<N> {
         this.lexingMatch = lexingMatch;
     }
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return false;
+    }
+
     @NotNull
     public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
         throw new ParsingFailedException("Cannot parse subExpression, end reached", parser);
+    }
+
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
     }
 
     @NotNull
@@ -27,7 +37,7 @@ public class EndToken<N> implements Token<N> {
         throw new ParsingFailedException("Cannot parse subExpression, end reached", parser);
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         return 0;
     }
 

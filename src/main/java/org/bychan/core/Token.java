@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
  * @param <N>
  */
 public interface Token<N> {
+    boolean supportsPrefixParsing();
     /**
      * Parse this token as a prefix operator or standalone subExpression.
      * Feel free to continue the parsing using the provided parser callback,
@@ -18,6 +19,7 @@ public interface Token<N> {
     @NotNull
     N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
 
+    boolean supportsInfixParsing();
     /**
      * Parse this token as an infix operator. A typical binary operator implementation uses the parser callback
      * to parse the RHS of the subExpression and returns a binary operator node linking the LHS and RHS together.
@@ -30,7 +32,7 @@ public interface Token<N> {
     /**
      * @return How strongly this token, when interpreted as an infix operator, binds to the previous argument.
      */
-    int infixBindingPower();
+    int leftBindingPower();
 
     /**
      * Check the type of this token.

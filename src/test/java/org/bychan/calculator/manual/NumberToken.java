@@ -54,9 +54,19 @@ public class NumberToken<S> implements Token<CalculatorNode> {
     }
 
 
+    @Override
+    public boolean supportsPrefixParsing() {
+        return true;
+    }
+
     @NotNull
     public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
         return new NumberNode(value);
+    }
+
+    @Override
+    public boolean supportsInfixParsing() {
+        return false;
     }
 
     @NotNull
@@ -64,7 +74,7 @@ public class NumberToken<S> implements Token<CalculatorNode> {
         throw new UnsupportedOperationException();
     }
 
-    public int infixBindingPower() {
+    public int leftBindingPower() {
         throw new UnsupportedOperationException();
     }
 
