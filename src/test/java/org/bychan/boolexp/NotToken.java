@@ -1,5 +1,6 @@
 package org.bychan.boolexp;
 
+import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,24 +14,16 @@ public class NotToken<S> implements Token<BooleanExpressionNode> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return true;
+    public PrefixParser<BooleanExpressionNode> getPrefixParser() {
+        return (previous, parser) -> new NotNode(parser.parseExpression(previous, leftBindingPower()));
     }
 
-    @NotNull
-    public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new NotNode(parser.parseExpression(previous, leftBindingPower()));
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return false;
-    }
-
-    @NotNull
-    public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        throw new UnsupportedOperationException();
+    public InfixParser<BooleanExpressionNode> getInfixParser() {
+        return null;
     }
 
     public int leftBindingPower() {

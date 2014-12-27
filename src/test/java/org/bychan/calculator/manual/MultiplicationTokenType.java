@@ -13,7 +13,7 @@ public class MultiplicationTokenType<S> implements TokenType<CalculatorNode> {
 
     @NotNull
     public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
-        return new MultiplicationToken<>(match);
+        return new MultiplicationToken(match);
     }
 
     @NotNull

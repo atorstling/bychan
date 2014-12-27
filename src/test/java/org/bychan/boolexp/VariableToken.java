@@ -1,13 +1,10 @@
 package org.bychan.boolexp;
 
-import org.bychan.core.LexingMatch;
-import org.bychan.core.Token;
-import org.bychan.core.TokenParserCallback;
-import org.bychan.core.TokenType;
+import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class VariableToken<S> implements Token<BooleanExpressionNode> {
+public class VariableToken implements Token<BooleanExpressionNode> {
     @NotNull
     private final String name;
     @NotNull
@@ -22,28 +19,20 @@ public class VariableToken<S> implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public static <S> VariableToken<S> valueOf(@NotNull final LexingMatch match) {
-        return new VariableToken<>(match);
+    public static <S> VariableToken valueOf(@NotNull final LexingMatch match) {
+        return new VariableToken(match);
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return true;
+    public PrefixParser<BooleanExpressionNode> getPrefixParser() {
+        return (previous, parser) -> new VariableNode(name);
     }
 
-    @NotNull
-    public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new VariableNode(name);
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return false;
-    }
-
-    @NotNull
-    public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        throw new UnsupportedOperationException();
+    public InfixParser<BooleanExpressionNode> getInfixParser() {
+        return null;
     }
 
     public int leftBindingPower() {

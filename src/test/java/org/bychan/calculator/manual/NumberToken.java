@@ -1,11 +1,9 @@
 package org.bychan.calculator.manual;
 
+import org.bychan.boolexp.BooleanExpressionNode;
 import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.calculator.nodes.NumberNode;
-import org.bychan.core.LexingMatch;
-import org.bychan.core.Token;
-import org.bychan.core.TokenParserCallback;
-import org.bychan.core.TokenType;
+import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,25 +51,16 @@ public class NumberToken<S> implements Token<CalculatorNode> {
         return value;
     }
 
-
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return true;
+    public PrefixParser<CalculatorNode> getPrefixParser() {
+        return (previous, parser) -> new NumberNode(value);
     }
 
-    @NotNull
-    public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        return new NumberNode(value);
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return false;
-    }
-
-    @NotNull
-    public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        throw new UnsupportedOperationException();
+    public InfixParser<CalculatorNode> getInfixParser() {
+        return null;
     }
 
     public int leftBindingPower() {

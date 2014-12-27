@@ -11,25 +11,19 @@ public class AndToken<S> implements Token<BooleanExpressionNode> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<BooleanExpressionNode> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
-    public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        throw new UnsupportedOperationException("'And' operator cannot be used as a prefix");
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return true;
-    }
-
-    @NotNull
-    public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        BooleanExpressionNode right = parser.parseExpression(previous, leftBindingPower());
-        return new AndNode(previous, right);
+    public InfixParser<BooleanExpressionNode> getInfixParser() {
+        return (previous, parser) -> {
+            BooleanExpressionNode right = parser.parseExpression(previous, leftBindingPower());
+            return new AndNode(previous, right);
+        };
     }
 
     public int leftBindingPower() {

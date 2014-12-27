@@ -14,31 +14,25 @@ public class SubtractionToken<S> implements Token<CalculatorNode> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<CalculatorNode> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
-    public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        throw new UnsupportedOperationException();
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return true;
+    public InfixParser<CalculatorNode> getInfixParser() {
+        return (previous, parser) -> {
+            CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
+            return new SubtractionNode(previous, right);
+        };
     }
 
     @NotNull
     @Override
     public LexingMatch getMatch() {
         return match;
-    }
-
-    @NotNull
-    public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
-        return new SubtractionNode(previous, right);
     }
 
     public int leftBindingPower() {

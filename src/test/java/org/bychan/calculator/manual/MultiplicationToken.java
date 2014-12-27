@@ -6,7 +6,7 @@ import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MultiplicationToken<S> implements Token<CalculatorNode> {
+public class MultiplicationToken implements Token<CalculatorNode> {
 
     @NotNull
     private final LexingMatch match;
@@ -15,25 +15,19 @@ public class MultiplicationToken<S> implements Token<CalculatorNode> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<CalculatorNode> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
-    public CalculatorNode prefixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        throw new UnsupportedOperationException();
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return true;
-    }
-
-    @NotNull
-    public CalculatorNode infixParse(@Nullable CalculatorNode previous, @NotNull TokenParserCallback<CalculatorNode> parser) {
-        CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
-        return new MultiplicationNode(previous, right);
+    public InfixParser<CalculatorNode> getInfixParser() {
+        return (previous, parser) -> {
+            CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
+            return new MultiplicationNode(previous, right);
+        };
     }
 
     public int leftBindingPower() {

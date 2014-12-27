@@ -25,4 +25,7 @@ public interface TokenParserCallback<N> {
 
     @NotNull
     ParsingPosition getParsingPosition();
+
+    @NotNull
+    N prefixParse(@Nullable N previous, @NotNull Token<N> token);
 }

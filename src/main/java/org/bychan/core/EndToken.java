@@ -9,32 +9,24 @@ import org.jetbrains.annotations.Nullable;
  * @param <N>
  */
 public class EndToken<N> implements Token<N> {
-
-
+    @NotNull
     private final LexingMatch lexingMatch;
 
     public EndToken(@NotNull final LexingMatch lexingMatch) {
         this.lexingMatch = lexingMatch;
     }
 
+
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<N> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
-    public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
-        throw new ParsingFailedException("Cannot parse subExpression, end reached", parser);
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return false;
-    }
-
-    @NotNull
-    public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException("Cannot parse subExpression, end reached", parser);
+    public InfixParser<N> getInfixParser() {
+        return null;
     }
 
     public int leftBindingPower() {
@@ -65,14 +57,12 @@ public class EndToken<N> implements Token<N> {
 
         EndToken endToken = (EndToken) o;
 
-        if (lexingMatch != null ? !lexingMatch.equals(endToken.lexingMatch) : endToken.lexingMatch != null)
-            return false;
+        return lexingMatch.equals(endToken.lexingMatch);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        return lexingMatch != null ? lexingMatch.hashCode() : 0;
+        return lexingMatch.hashCode();
     }
 }

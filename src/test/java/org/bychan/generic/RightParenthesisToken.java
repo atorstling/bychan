@@ -1,9 +1,7 @@
 package org.bychan.generic;
 
-import org.bychan.core.LexingMatch;
-import org.bychan.core.Token;
-import org.bychan.core.TokenParserCallback;
-import org.bychan.core.TokenType;
+import org.bychan.calculator.nodes.CalculatorNode;
+import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,24 +14,16 @@ public class RightParenthesisToken<N> implements Token<N> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<N> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
-    public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new IllegalStateException("Cannot use right paranthesis as prefix to subExpression");
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return false;
-    }
-
-    @NotNull
-    public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new UnsupportedOperationException();
+    public InfixParser<N> getInfixParser() {
+        return null;
     }
 
     public int leftBindingPower() {

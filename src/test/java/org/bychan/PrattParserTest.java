@@ -191,13 +191,14 @@ public class PrattParserTest {
     public void failsWhenInfixNotSupported() {
         Token first = mock(Token.class);
         when(first.toString()).thenReturn("firstToken");
-        when(first.supportsPrefixParsing()).thenReturn(true);
+        PrefixParser prefixParser = mock(PrefixParser.class);
         //noinspection unchecked
-        when(first.prefixParse(any(), any())).thenReturn("prefixParsingResult");
+        when(prefixParser.prefixParse(any(), any())).thenReturn("prefixParsingResult");
+        when(first.getPrefixParser()).thenReturn(prefixParser);
 
         Token second = mock(Token.class);
         when(second.toString()).thenReturn("secondToken");
-        when(second.supportsInfixParsing()).thenReturn(false);
+        when(second.getInfixParser()).thenReturn(null);
         when(second.leftBindingPower()).thenReturn(1);
         //noinspection unchecked
         LexingMatch<Object> match = mock(LexingMatch.class);
@@ -216,7 +217,7 @@ public class PrattParserTest {
     @Test
     public void failsWhenPrefixNotSupported() {
         Token token = mock(Token.class);
-        when(token.supportsPrefixParsing()).thenReturn(false);
+        when(token.getPrefixParser()).thenReturn(null);
         when(token.toString()).thenReturn("bleargh");
         //noinspection unchecked
         LexingMatch<Object> match = mock(LexingMatch.class);

@@ -52,7 +52,7 @@ class FluidParserCallbackImpl<N> implements FluidParserCallback<N> {
     @Override
     public N parseSingleToken(N previous, TokenDefinition<N> tokenDefinition) {
         Token<N> token = swallow(tokenDefinition, parser);
-        return token.prefixParse(previous, parser);
+        return parser.prefixParse(previous, token);
     }
 
     @NotNull

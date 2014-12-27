@@ -1,5 +1,6 @@
 package org.bychan.generic;
 
+import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,26 +15,16 @@ public class WhitespaceToken<N> implements Token<N> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<N> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
+    @Nullable
     @Override
-    public N prefixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException("Cannot parse whitespace", parser);
-    }
-
-    @Override
-    public boolean supportsInfixParsing() {
-        return false;
-    }
-
-    @NotNull
-    @Override
-    public N infixParse(@Nullable N previous, @NotNull TokenParserCallback<N> parser) {
-        throw new ParsingFailedException("Cannot parse whitespace", parser);
+    public InfixParser<N> getInfixParser() {
+        return null;
     }
 
     @Override

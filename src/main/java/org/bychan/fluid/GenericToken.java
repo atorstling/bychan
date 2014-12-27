@@ -25,28 +25,22 @@ public class GenericToken<N> implements Token<N> {
         prefixBuilder = def.getPrefixBuilder();
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return prefixBuilder != null;
+    public PrefixParser<N> getPrefixParser() {
+        return prefixBuilder == null ? null : (previous, parser) -> {
+            FluidParserCallbackImpl<N> callback = new FluidParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
+            return prefixBuilder.build(previous, match, callback);
+        };
     }
 
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return infixBuilder != null;
-    }
-
-    @NotNull
-    @Override
-    public N prefixParse(@Nullable N previous, @NotNull final TokenParserCallback<N> parser) {
-        assert prefixBuilder != null;
-        return prefixBuilder.build(previous, match, new FluidParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous));
-    }
-
-    @NotNull
-    @Override
-    public N infixParse(@Nullable final N previous, @NotNull final TokenParserCallback<N> parser) {
-        assert infixBuilder != null;
-        return infixBuilder.build(match, previous, new FluidParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous));
+    public InfixParser<N> getInfixParser() {
+        return infixBuilder == null ? null : (previous, parser) -> {
+            FluidParserCallbackImpl<N> callback = new FluidParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
+            return infixBuilder.build(match, previous, callback);
+        };
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.bychan.boolexp;
 
+import org.bychan.calculator.nodes.CalculatorNode;
 import org.bychan.core.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,24 +13,16 @@ public class OrToken implements Token<BooleanExpressionNode> {
         this.match = match;
     }
 
+    @Nullable
     @Override
-    public boolean supportsPrefixParsing() {
-        return false;
+    public PrefixParser<BooleanExpressionNode> getPrefixParser() {
+        return null;
     }
 
-    @NotNull
-    public BooleanExpressionNode prefixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        throw new UnsupportedOperationException();
-    }
-
+    @Nullable
     @Override
-    public boolean supportsInfixParsing() {
-        return true;
-    }
-
-    @NotNull
-    public BooleanExpressionNode infixParse(@Nullable BooleanExpressionNode previous, @NotNull TokenParserCallback<BooleanExpressionNode> parser) {
-        return new OrNode(previous, parser.parseExpression(previous, leftBindingPower()));
+    public InfixParser<BooleanExpressionNode> getInfixParser() {
+        return (previous, parser) -> new OrNode(previous, parser.parseExpression(previous, leftBindingPower()));
     }
 
     public int leftBindingPower() {

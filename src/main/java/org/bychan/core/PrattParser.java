@@ -37,10 +37,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         Token<N> firstToken = pop();
-        if (!firstToken.supportsPrefixParsing()) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support prefix parsing", getParsingPosition()));
-        }
-        final N first = firstToken.prefixParse(previous, this);
+        final N first = prefixParse(previous, firstToken);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the subExpression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -69,13 +66,18 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         if (peekedToken.leftBindingPower() > powerFloor) {
             //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
             Token<N> takenToken = pop();
-            if (!takenToken.supportsInfixParsing()) {
-                throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
-            }
-            N nextExpression = takenToken.infixParse(currentLeftHandSide, this);
+            N nextExpression = infixParse(currentLeftHandSide, takenToken);
             return parseLoop(nextExpression, powerFloor);
         }
         return currentLeftHandSide;
+    }
+
+    private N infixParse(@NotNull N currentLeftHandSide, @NotNull Token<N> takenToken) {
+        InfixParser<N> infixParser = takenToken.getInfixParser();
+        if (infixParser == null) {
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
+        }
+        return infixParser.infixParse(currentLeftHandSide, this);
     }
 
     @NotNull
@@ -98,6 +100,16 @@ public class PrattParser<N> implements TokenParserCallback<N> {
             startPosition = match.getStartPosition();
         }
         return new ParsingPosition(startPosition, tokenStack);
+    }
+
+    @NotNull
+    @Override
+    public N prefixParse(@Nullable N previous, @NotNull Token<N> token) {
+        PrefixParser<N> prefixParser = token.getPrefixParser();
+        if (prefixParser == null) {
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support prefix parsing", getParsingPosition()));
+        }
+        return prefixParser.prefixParse(previous, this);
     }
 
     @NotNull
