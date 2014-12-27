@@ -5,9 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by alext on 2/28/14.
- */
 public class ParsingPosition {
     private final int position;
     @NotNull

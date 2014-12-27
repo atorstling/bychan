@@ -5,9 +5,6 @@ import org.bychan.core.TokenParserCallback;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Created by alext on 2014-12-06.
- */
 class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull

@@ -2,9 +2,6 @@ package org.bychan.generic.json.nodes;
 
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Created by alext on 2014-12-05.
- */
 public class BooleanLiteralNode implements JsonNode {
     private final boolean value;
 

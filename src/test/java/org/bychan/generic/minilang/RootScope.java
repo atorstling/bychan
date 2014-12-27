@@ -6,9 +6,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by alext on 2/18/14.
- */
 public class RootScope implements Scope {
     @NotNull
     private final Map<String, VariableDefNode> variablesByName;

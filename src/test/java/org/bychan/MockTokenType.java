@@ -7,9 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-/**
- * Created by alext on 2014-11-29.
- */
 class MockTokenType implements TokenType<Object> {
     @NotNull
     @Override

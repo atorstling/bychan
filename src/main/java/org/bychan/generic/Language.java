@@ -7,6 +7,7 @@ import org.bychan.core.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class Language<N> {
     @NotNull
     private final String name;
 
-    public Language(@NotNull final String name, @NotNull final TokenDefinitions<N> tokenDefinitions) {
+    public Language(@NotNull final String name, @NotNull final List<TokenDefinition<N>> tokenDefinitions) {
         this.name = name;
         // Use a delegating finder to break the circular dependency between GenericTokenType
         // and TokenFinder. First build all token types with an empty finder, then build the
@@ -59,8 +60,8 @@ public class Language<N> {
     }
 
 
-    private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final TokenDefinitions<N> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return leveledDefinitions.getTokens().stream().map(tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder)).collect(Collectors.toList());
+    private Collection<GenericTokenType<N>> toTokenTypes(@NotNull final List<TokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
+        return leveledDefinitions.stream().map(tokenDef -> new GenericTokenType<>(tokenDef, tokenFinder)).collect(Collectors.toList());
     }
 
     @NotNull

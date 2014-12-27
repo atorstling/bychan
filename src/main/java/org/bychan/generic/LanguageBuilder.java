@@ -2,9 +2,12 @@ package org.bychan.generic;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LanguageBuilder<N> {
     @NotNull
-    private final TokenDefinitions<N> tokens;
+    private final List<TokenDefinition<N>> tokens;
     @NotNull
     private String name;
     /**
@@ -15,7 +18,7 @@ public class LanguageBuilder<N> {
     private int currentLeftBindingPower;
 
     public LanguageBuilder() {
-        this.tokens = new TokenDefinitions<>();
+        this.tokens = new ArrayList<TokenDefinition<N>>();
         this.name = "unnamed";
     }
 

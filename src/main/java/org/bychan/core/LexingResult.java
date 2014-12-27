@@ -5,9 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * Created by alext on 2/26/14.
- */
 public class LexingResult<N> {
     @Nullable
     private final List<Token<N>> tokens;

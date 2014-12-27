@@ -2,9 +2,6 @@ package org.bychan.core;
 
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Created by alext on 2014-12-19.
- */
 class FailedAfterLexingInformation {
     @NotNull
     private final String failureMessage;

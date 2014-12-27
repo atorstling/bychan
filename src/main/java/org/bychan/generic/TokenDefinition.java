@@ -6,7 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.regex.Pattern;
 
 /**
- * A combined definition of a token type and token
+ * The recorded definition of a dynamic token. Utilized to form both {@link org.bychan.generic.GenericTokenType}s and
+ * {@link org.bychan.generic.GenericToken}s
  *
  * @param <N>
  */
