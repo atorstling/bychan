@@ -34,14 +34,13 @@ public class Language<N> {
         final Collection<DynamicTokenType<N>> dynamicTokenTypes = toTokenTypes(tokenDefinitions, delegatingFinder);
         Map<String, DynamicTokenType<N>> tokenTypesByTokenTypeName = dynamicTokenTypes.stream().collect(Collectors.toMap(DynamicTokenType::getTokenTypeName, Function.identity()));
         TokenFinder<N> tokenFinder = sought -> {
-            String soughtName = sought.getTokenTypeName();
-            DynamicTokenType<N> candidate = tokenTypesByTokenTypeName.get(soughtName);
+            DynamicTokenType<N> candidate = tokenTypesByTokenTypeName.get(sought);
             if (candidate == null) {
-                throw new IllegalStateException("No registered token definition named ''" + soughtName + "' was found. Did you register your token before referring to it?");
-            } else if (candidate.getTokenDefinition().equals(sought)) {
+                throw new IllegalStateException("No registered token definition named '" + sought + "' was found. Did you register your token before referring to it?");
+            } else if (candidate.getName().equals(sought)) {
                 return candidate;
             } else {
-                throw new IllegalStateException("Found a candidate token definition with the same name ('" + soughtName + "'), but it had a different specification. Do you have multiple copies of this token definition?");
+                throw new IllegalStateException("Found a candidate token definition with the same name ('" + sought + "'), but it had a different specification. Do you have multiple copies of this token definition?");
             }
         };
         delegatingFinder.setDelegate(tokenFinder);

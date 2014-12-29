@@ -91,4 +91,9 @@ public class TokenDefinitionBuilder<N> {
     public TokenDefinitionBuilder<N> ignoreWhenParsing() {
         return ignoredWhenParsing();
     }
+
+    @NotNull
+    public String name() {
+        return tokenTypeName;
+    }
 }

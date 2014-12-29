@@ -22,28 +22,28 @@ class JsonLangBuilder {
         TokenDefinition<JsonNode> lbracket = lb.newToken().named("lbracket").matchesString("[")
                 .prefixParseAs((previous, match, parser) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs(rbracket)) {
+                    while (!parser.nextIs("rbracket")) {
                         expressions.add(parser.subExpression());
-                        if (!parser.nextIs(rbracket)) {
-                            parser.expectSingleToken(comma);
+                        if (!parser.nextIs("rbracket")) {
+                            parser.expectSingleToken("comma");
                         }
                     }
-                    parser.expectSingleToken(rbracket);
+                    parser.expectSingleToken("rbracket");
                     return new ArrayNode(expressions);
                 }).build();
         TokenDefinition<JsonNode> lcurly = new TokenDefinitionBuilder<>(lb).named("lcurly").matchesString("{")
                 .prefixParseAs((previous, match, parser) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.nextIs(rcurly)) {
-                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string);
-                        parser.expectSingleToken(colon);
+                    while (!parser.nextIs("rcurly")) {
+                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, "string");
+                        parser.expectSingleToken("colon");
                         JsonNode value = parser.subExpression();
                         pairs.put(key, value);
-                        if (!parser.nextIs(rcurly)) {
-                            parser.expectSingleToken(comma);
+                        if (!parser.nextIs("rcurly")) {
+                            parser.expectSingleToken("comma");
                         }
                     }
-                    parser.expectSingleToken(rcurly);
+                    parser.expectSingleToken("rcurly");
                     return new ObjectNode(pairs);
                 }).build();
 
@@ -61,7 +61,7 @@ class JsonLangBuilder {
 
     @NotNull
     private TokenDefinition<JsonNode> rcurly(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<>(lb).named("rculry").matchesString("}")
+        return new TokenDefinitionBuilder<>(lb).named("rcurly").matchesString("}")
                 .build();
     }
 
@@ -92,7 +92,7 @@ class JsonLangBuilder {
     static TokenDefinition<JsonNode> stringLiteral(LanguageBuilder<JsonNode> lb) {
         @org.intellij.lang.annotations.Language("RegExp")
         String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
-        return new TokenDefinitionBuilder<>(lb).named("string_literal").matchesPattern(pattern).prefixParseAs((previous, match, parser) -> {
+        return new TokenDefinitionBuilder<>(lb).named("string").matchesPattern(pattern).prefixParseAs((previous, match, parser) -> {
             String withinQuotationMarks = match.group(1);
             return new StringLiteralNode(withinQuotationMarks);
         }).build();

@@ -13,9 +13,9 @@ public class DelegatingTokenFinder<N> implements TokenFinder<N> {
 
     @NotNull
     @Override
-    public DynamicTokenType<N> getTokenTypeFor(@NotNull TokenDefinition<N> tokenDefinition) {
+    public DynamicTokenType<N> getTokenTypeFor(@NotNull String tokenTypeName) {
         assert delegate != null;
-        return delegate.getTokenTypeFor(tokenDefinition);
+        return delegate.getTokenTypeFor(tokenTypeName);
     }
 
     public void setDelegate(@SuppressWarnings("NullableProblems") @NotNull final TokenFinder<N> delegate) {

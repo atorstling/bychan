@@ -29,26 +29,26 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition) {
-        return swallow(tokenTypeDefinition, parser);
+    public Token<N> expectSingleToken(@NotNull String tokenTypeName) {
+        return swallow(tokenTypeName, parser);
     }
 
     @NotNull
-    private Token<N> swallow(TokenDefinition<N> tokenD, TokenParserCallback<N> parser) {
-        DynamicTokenType<N> type = tokenFinder.getTokenTypeFor(tokenD);
+    private Token<N> swallow(@NotNull String tokenTypeName, TokenParserCallback<N> parser) {
+        DynamicTokenType<N> type = tokenFinder.getTokenTypeFor(tokenTypeName);
         return parser.swallow(type);
     }
 
     @Override
-    public boolean nextIs(@NotNull TokenDefinition<N> tokenTypeDefinition) {
-        DynamicTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeDefinition);
+    public boolean nextIs(@NotNull String tokenTypeName) {
+        DynamicTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenTypeName);
         return parser.peek().getType().equals(expectedType);
     }
 
     @NotNull
     @Override
-    public N parseSingleToken(N previous, TokenDefinition<N> tokenDefinition) {
-        Token<N> token = swallow(tokenDefinition, parser);
+    public N parseSingleToken(N previous, @NotNull String tokenTypeName) {
+        Token<N> token = swallow(tokenTypeName, parser);
         return parser.prefixParse(previous, token);
     }
 

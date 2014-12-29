@@ -30,10 +30,10 @@ public interface UserParserCallback<N> {
      * Parse a single token of the type indicated by the token definition passed in.
      */
     @NotNull
-    Token<N> expectSingleToken(TokenDefinition<N> tokenTypeDefinition);
+    Token<N> expectSingleToken(@NotNull String tokenTypeName);
 
-    boolean nextIs(@NotNull final TokenDefinition<N> tokenTypeDefinition);
+    boolean nextIs(@NotNull String tokenTypeName);
 
     @NotNull
-    N parseSingleToken(N previous, TokenDefinition<N> tokenDefinition);
+    N parseSingleToken(N previous, @NotNull String tokenTypeName);
 }
