@@ -1,5 +1,6 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,8 +10,11 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     private final TokenStack<N> tokenStack;
+    @NotNull
+    private String originalInputString;
 
-    public PrattParser(@NotNull List<Token<N>> tokens) {
+    public PrattParser(@NotNull List<Token<N>> tokens, @NotNull String originalInputString) {
+        this.originalInputString = originalInputString;
         this.tokenStack = new TokenStack<>(tokens);
     }
 
@@ -95,11 +99,16 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         final int startPosition;
         if (previous == null) {
             startPosition = 0;
+        } else if (previous.getType().equals(EndTokenType.get())) {
+            //Since the end token is past the end of the input text we have to use the position directly before
+            //the end token.
+            LexingMatch match = previous.getMatch();
+            startPosition = match.getStartPosition() - 1;
         } else {
             LexingMatch match = previous.getMatch();
             startPosition = match.getStartPosition();
         }
-        return new ParsingPosition(startPosition, tokenStack);
+        return new ParsingPosition(StringUtils.getTextPosition(originalInputString, startPosition), tokenStack);
     }
 
     @NotNull

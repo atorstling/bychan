@@ -39,12 +39,12 @@ public class LexParser<N> {
             ParsingFailedInformation parsingFailedInformation = ParsingFailedInformation.forFailedLexing(lexingResult.getFailureValue());
             return ParseResult.failure(parsingFailedInformation);
         }
-        return tryParse(previous, lexingResult.getSuccessValue());
+        return tryParse(previous, lexingResult.getSuccessValue(), text);
     }
 
     @NotNull
-    private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens) {
-        PrattParser<N> parser = new PrattParser<>(tokens);
+    private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens, @NotNull final String text) {
+        PrattParser<N> parser = new PrattParser<>(tokens, text);
         ParseResult<N> parsed = tryParse(() -> parser.parseExpression(previous, 0));
         if (parsed.isSuccess()) {
             if (!parser.peek().getType().equals(EndTokenType.get())) {

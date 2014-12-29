@@ -1,13 +1,15 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.TextPosition;
 import org.jetbrains.annotations.NotNull;
 
 public class ParsingPosition {
-    private final int position;
+    @NotNull
+    private final TextPosition position;
     @NotNull
     private TokenStack<?> tokenStack;
 
-    public ParsingPosition(int position, @NotNull TokenStack<?> tokenStack) {
+    public ParsingPosition(@NotNull TextPosition position, @NotNull TokenStack<?> tokenStack) {
         this.position = position;
         this.tokenStack = tokenStack;
     }
@@ -19,19 +21,22 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        return position == that.position && tokenStack.equals(that.tokenStack);
+        if (!position.equals(that.position)) return false;
+        if (!tokenStack.equals(that.tokenStack)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = position;
+        int result = position.hashCode();
         result = 31 * result + tokenStack.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return " index " + position +
+        return " position " + position +
                 ", current token is " + tokenStack.previous() + " and remaining tokens are " + tokenStack.remaining();
     }
 }

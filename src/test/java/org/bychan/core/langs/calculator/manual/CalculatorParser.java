@@ -12,6 +12,6 @@ class CalculatorParser {
     @NotNull
     public CalculatorNode parse(@NotNull final String input) {
         List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.get()).lex(input);
-        return new PrattParser<>(tokens).parseExpression(null, 0);
+        return new PrattParser<>(tokens, input).parseExpression(null, 0);
     }
 }

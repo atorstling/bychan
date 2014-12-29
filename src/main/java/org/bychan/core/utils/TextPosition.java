@@ -41,6 +41,6 @@ public class TextPosition {
 
     @Override
     public String toString() {
-        return row + ":" + col;
+        return row + ":" + col + " (index " + index + ")";
     }
 }
