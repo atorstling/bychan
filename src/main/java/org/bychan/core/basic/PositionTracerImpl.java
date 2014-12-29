@@ -15,29 +15,32 @@ public class PositionTracerImpl<N> implements PositionTracer<N> {
     @NotNull
     @Override
     public ParsingPosition getParsingPosition(@NotNull TokenStack<N> tokenStack) {
-        Token<N> previous = tokenStack.previous();
-        final TextPosition textPosition = getTextPosition(previous);
+        Token<N> current = tokenStack.previous();
+        final TextPosition textPosition = getTextPosition(current);
         return new ParsingPosition(textPosition, tokenStack);
     }
 
     @NotNull
-    private TextPosition getTextPosition(@Nullable Token<N> previous) {
-        //Null previous means that we haven't started parsing yet.
-        final int currentPosition = previous == null ? -1 : getStartPosition(previous);
-        if (currentPosition == -1) {
-            //If we are before the beginning (haven't started parsing), return first position.
-            return new TextPosition(0, 1, 1);
+    private TextPosition getTextPosition(@Nullable Token<N> current) {
+        if (originalInputString.isEmpty()) {
+            return new TextPosition(0,1,1);
         }
-        return StringUtils.getTextPosition(originalInputString, currentPosition);
+        final int positionToUse = getPositionToUse(current);
+        return StringUtils.getTextPosition(originalInputString, positionToUse);
     }
 
-    private int getStartPosition(@NotNull Token<N> previous) {
-        LexingMatch match = previous.getMatch();
-        if (previous.getType().equals(EndTokenType.get())) {
-            //Since the end token is past the end of the input text we use the position directly before
-            //the end token.
-            return match.getStartPosition() - 1;
+    private int getPositionToUse(@Nullable Token<N> current) {
+        //Null means that we haven't started parsing yet. In this case we use the first string position.
+        if (current == null) {
+            return 0;
         }
-        return match.getStartPosition();
+        final int currentPosition = current.getMatch().getStartPosition();
+        if (currentPosition == originalInputString.length()) {
+            assert current.getType().equals(EndTokenType.get());
+            //If we are at the END token (past the input length), use the last position.
+            return originalInputString.length() -1;
+        }
+        return currentPosition;
     }
+
 }
