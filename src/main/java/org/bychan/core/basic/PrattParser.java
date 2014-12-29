@@ -1,21 +1,23 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
-
     @NotNull
     private final TokenStack<N> tokenStack;
     @NotNull
-    private String originalInputString;
+    private PositionTracer<N> positionTracer;
 
-    public PrattParser(@NotNull List<Token<N>> tokens, @NotNull String originalInputString) {
-        this.originalInputString = originalInputString;
+    PrattParser(@NotNull List<Token<N>> tokens, @NotNull final PositionTracer<N> positionTracer) {
         this.tokenStack = new TokenStack<>(tokens);
+        this.positionTracer = positionTracer;
+    }
+
+    public PrattParser(@NotNull List<Token<N>> tokens, @NotNull final String originalInputString) {
+        this(tokens, new PositionTracerImpl<>(originalInputString));
     }
 
     /**
@@ -85,30 +87,17 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     }
 
     @NotNull
+    public ParsingPosition getParsingPosition() {
+        return positionTracer.getParsingPosition(tokenStack);
+    }
+
+    @NotNull
     public Token<N> swallow(@NotNull TokenType<N> type) {
         Token<N> next = tokenStack.pop();
         if (!next.getType().equals(type)) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type.getName() + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
-    }
-
-    @NotNull
-    public ParsingPosition getParsingPosition() {
-        Token<N> previous = tokenStack.previous();
-        final int startPosition;
-        if (previous == null) {
-            startPosition = 0;
-        } else if (previous.getType().equals(EndTokenType.get())) {
-            //Since the end token is past the end of the input text we have to use the position directly before
-            //the end token.
-            LexingMatch match = previous.getMatch();
-            startPosition = match.getStartPosition() - 1;
-        } else {
-            LexingMatch match = previous.getMatch();
-            startPosition = match.getStartPosition();
-        }
-        return new ParsingPosition(StringUtils.getTextPosition(originalInputString, startPosition), tokenStack);
     }
 
     @NotNull

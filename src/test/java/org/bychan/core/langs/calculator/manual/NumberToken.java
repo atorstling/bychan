@@ -6,7 +6,7 @@ import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class NumberToken<S> implements Token<CalculatorNode> {
+public class NumberToken implements Token<CalculatorNode> {
     @NotNull
     private final LexingMatch match;
 
@@ -31,7 +31,7 @@ public class NumberToken<S> implements Token<CalculatorNode> {
     }
 
     public static <S> Token<CalculatorNode> valueOf(@NotNull final LexingMatch match) {
-        return new NumberToken<>(match);
+        return new NumberToken(match);
     }
 
     @Override
