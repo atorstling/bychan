@@ -63,4 +63,10 @@ public class StringUtilsTest {
         int index = test.indexOf("d");
         assertEquals(new TextPosition(index,3,2), StringUtils.getTextPosition(test, index));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void notNullViolationGeneratesException() {
+        //noinspection ConstantConditions
+        StringUtils.notNullTest(null);
+    }
 }

@@ -8,13 +8,13 @@ import org.jetbrains.annotations.Nullable;
 class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull
-    private final TokenFinder<N> tokenFinder;
+    private final DynamicTokenFinder<N> tokenFinder;
     @NotNull
     private final TokenParserCallback<N> parser;
     @Nullable
     private final N previous;
 
-    public UserParserCallbackImpl(int leftBindingPower, @NotNull TokenFinder<N> tokenFinder, @NotNull TokenParserCallback<N> parser, @Nullable final N previous) {
+    public UserParserCallbackImpl(int leftBindingPower, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull TokenParserCallback<N> parser, @Nullable final N previous) {
         this.leftBindingPower = leftBindingPower;
         this.tokenFinder = tokenFinder;
         this.parser = parser;

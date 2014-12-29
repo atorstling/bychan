@@ -10,13 +10,13 @@ public class DynamicToken<N> implements Token<N> {
     private final LexingMatch match;
     @NotNull
     private final TokenDefinition<N> def;
-    private final TokenFinder<N> tokenFinder;
+    private final DynamicTokenFinder<N> tokenFinder;
     @Nullable
     private final DynamicInfixParseAction<N> infixBuilder;
     @Nullable
     private final DynamicPrefixParseAction<N> prefixBuilder;
 
-    public DynamicToken(@NotNull final DynamicTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public DynamicToken(@NotNull final DynamicTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.tokenType = tokenType;
         this.match = match;
         this.def = def;

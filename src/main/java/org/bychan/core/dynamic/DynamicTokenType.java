@@ -10,9 +10,9 @@ import java.util.regex.Pattern;
 public class DynamicTokenType<N> implements TokenType<N> {
     @NotNull
     private final TokenDefinition<N> def;
-    private final TokenFinder<N> tokenFinder;
+    private final DynamicTokenFinder<N> tokenFinder;
 
-    public DynamicTokenType(@NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
+    public DynamicTokenType(@NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
     }

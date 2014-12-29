@@ -7,18 +7,18 @@ import org.jetbrains.annotations.Nullable;
  * Used to look up token types in the list of {@link org.bychan.core.dynamic.TokenDefinition}s.
  * @param <N>
  */
-public class DelegatingTokenFinder<N> implements TokenFinder<N> {
+public class DelegatingTokenFinder<N> implements DynamicTokenFinder<N> {
     @Nullable
-    private TokenFinder<N> delegate;
+    private DynamicTokenFinder<N> delegate;
 
     @NotNull
     @Override
-    public DynamicTokenType<N> getTokenTypeFor(@NotNull TokenKey tokenTypeName) {
+    public DynamicTokenType<N> getTokenTypeFor(@NotNull TokenKey soughtKey) {
         assert delegate != null;
-        return delegate.getTokenTypeFor(tokenTypeName);
+        return delegate.getTokenTypeFor(soughtKey);
     }
 
-    public void setDelegate(@SuppressWarnings("NullableProblems") @NotNull final TokenFinder<N> delegate) {
+    public void setDelegate(@SuppressWarnings("NullableProblems") @NotNull final DynamicTokenFinder<N> delegate) {
         this.delegate = delegate;
     }
 }

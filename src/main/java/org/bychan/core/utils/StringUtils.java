@@ -26,6 +26,11 @@ public class StringUtils {
     }
 
     @NotNull
+    public static String notNullTest(@NotNull String data) {
+        return data;
+    }
+
+    @NotNull
     private static TextPosition getTextPosition(@NotNull BufferedReader reader, int index) {
         try {
             //Bother with previous token since we don't want to increase row until _after_ a newline char.
