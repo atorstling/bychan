@@ -16,24 +16,22 @@ public class PositionTracerImpl<N> implements PositionTracer<N> {
     @Override
     public ParsingPosition getParsingPosition(@NotNull TokenStack<N> tokenStack) {
         Token<N> previous = tokenStack.previous();
-        final int startPosition = getStartPosition(previous);
-        final TextPosition textPosition = getTextPosition(startPosition);
+        final TextPosition textPosition = getTextPosition(previous);
         return new ParsingPosition(textPosition, tokenStack);
     }
 
     @NotNull
-    private TextPosition getTextPosition(int startPosition) {
-        if (startPosition == -1) {
+    private TextPosition getTextPosition(@Nullable Token<N> previous) {
+        //Null previous means that we haven't started parsing yet.
+        final int currentPosition = previous == null ? -1 : getStartPosition(previous);
+        if (currentPosition == -1) {
+            //If we are before the beginning (haven't started parsing), return first position.
             return new TextPosition(0, 1, 1);
         }
-        return StringUtils.getTextPosition(originalInputString, startPosition);
+        return StringUtils.getTextPosition(originalInputString, currentPosition);
     }
 
-    private int getStartPosition(@Nullable Token<N> previous) {
-        if (previous == null) {
-            //Not started yet.
-            return -1;
-        }
+    private int getStartPosition(@NotNull Token<N> previous) {
         LexingMatch match = previous.getMatch();
         if (previous.getType().equals(EndTokenType.get())) {
             //Since the end token is past the end of the input text we use the position directly before
