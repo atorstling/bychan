@@ -23,6 +23,11 @@ public class StringUtilsTest {
     }
 
     @Test
+    public void getTextPositionAtFirst() {
+        assertEquals(new TextPosition(1, 1), StringUtils.getTextPosition(" ", 0));
+    }
+
+    @Test
     public void getTextPositionAtNewline() {
         assertEquals(new TextPosition(1, 1), StringUtils.getTextPosition("\n", 0));
     }
