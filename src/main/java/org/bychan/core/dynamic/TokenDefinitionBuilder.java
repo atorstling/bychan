@@ -12,6 +12,7 @@ public class TokenDefinitionBuilder<N> {
     private String tokenTypeName;
     private int leftBindingPower = 1;
     private LanguageBuilder<N> languageBuilder;
+    private TokenKey tokenKey;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
         return matchesPattern(Pattern.quote(text));
@@ -52,6 +53,7 @@ public class TokenDefinitionBuilder<N> {
 
     public TokenDefinitionBuilder<N> named(String name) {
         this.tokenTypeName = name;
+        tokenKey = new TokenKey(tokenTypeName);
         return this;
     }
 
@@ -98,6 +100,6 @@ public class TokenDefinitionBuilder<N> {
     }
 
     public TokenKey getKey() {
-        return new TokenKey(tokenTypeName);
+        return tokenKey;
     }
 }
