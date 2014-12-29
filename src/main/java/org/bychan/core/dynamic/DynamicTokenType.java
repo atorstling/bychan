@@ -53,4 +53,8 @@ public class DynamicTokenType<N> implements TokenType<N> {
         return def;
     }
 
+    @NotNull
+    public TokenKey getKey() {
+        return def.getKey();
+    }
 }

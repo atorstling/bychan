@@ -18,7 +18,7 @@ public class BooleanLogicTest {
         DynamicPrefixParseAction<BooleanExpressionNode> parseAction = (previous, match, parser) -> new VariableNode(match.getText());
         Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
-            parser.expectSingleToken("rparen");
+            parser.expectSingleToken(rparen.getKey());
             return trailingExpression;
         }).completeToken()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().completeToken()
@@ -36,7 +36,7 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         TokenDefinition<BooleanExpressionNode> lparen = lb.newToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
-            parser.expectSingleToken("rparen");
+            parser.expectSingleToken(rparen.getKey());
             return trailingExpression;
         }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();

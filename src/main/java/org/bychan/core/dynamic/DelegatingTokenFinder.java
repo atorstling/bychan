@@ -13,7 +13,7 @@ public class DelegatingTokenFinder<N> implements TokenFinder<N> {
 
     @NotNull
     @Override
-    public DynamicTokenType<N> getTokenTypeFor(@NotNull String tokenTypeName) {
+    public DynamicTokenType<N> getTokenTypeFor(@NotNull TokenKey tokenTypeName) {
         assert delegate != null;
         return delegate.getTokenTypeFor(tokenTypeName);
     }

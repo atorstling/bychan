@@ -38,7 +38,7 @@ public class MiniLangTest {
                     ScopeNode scopeNode = new ScopeNode(scope);
                     LaiLaiNode expression = parser.subExpression(scopeNode);
                     scopeNode.setChild(expression);
-                    parser.expectSingleToken("rcurly");
+                    parser.expectSingleToken(rcurly.getKey());
                     return scopeNode;
                 })
                 ;
@@ -55,7 +55,7 @@ public class MiniLangTest {
                 .named("lparen")
                 .prefixParseAs((previous, match, parser) -> {
                     LaiLaiNode trailingExpression = parser.subExpression();
-                    parser.expectSingleToken("rparen");
+                    parser.expectSingleToken(rparen.getKey());
                     return trailingExpression;
                 });
 
@@ -157,13 +157,13 @@ public class MiniLangTest {
                 .named("listStart")
                 .prefixParseAs((previous, match, parser) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs("listEnd")) {
+                    while (!parser.nextIs(listEnd.getKey())) {
                         expressions.add(parser.subExpression());
-                        if (!parser.nextIs("listEnd")) {
-                            parser.expectSingleToken("comma");
+                        if (!parser.nextIs(listEnd.getKey())) {
+                            parser.expectSingleToken(comma.getKey());
                         }
                     }
-                    parser.expectSingleToken("listEnd");
+                    parser.expectSingleToken(listEnd.getKey());
                     return new ListNode(previous, expressions);
                 });
 

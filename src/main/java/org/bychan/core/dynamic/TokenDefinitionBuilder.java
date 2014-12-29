@@ -96,4 +96,8 @@ public class TokenDefinitionBuilder<N> {
     public String name() {
         return tokenTypeName;
     }
+
+    public TokenKey getKey() {
+        return new TokenKey(tokenTypeName);
+    }
 }

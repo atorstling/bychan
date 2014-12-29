@@ -4,5 +4,5 @@ import org.jetbrains.annotations.NotNull;
 
 interface TokenFinder<N> {
     @NotNull
-    DynamicTokenType<N> getTokenTypeFor(@NotNull final String tokenTypeName);
+    DynamicTokenType<N> getTokenTypeFor(@NotNull final TokenKey tokenTypeName);
 }
