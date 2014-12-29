@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class SubtractionTokenType<S> implements TokenType<CalculatorNode> {
+public class SubtractionTokenType implements TokenType<CalculatorNode> {
     private static final SubtractionTokenType INSTANCE = new SubtractionTokenType();
 
     @NotNull
     public Token<CalculatorNode> toToken(@NotNull LexingMatch match) {
-        return new SubtractionToken<>(match);
+        return new SubtractionToken(match);
     }
 
     @NotNull
@@ -26,7 +26,7 @@ public class SubtractionTokenType<S> implements TokenType<CalculatorNode> {
         return true;
     }
 
-    public static <S> SubtractionTokenType<S> get() {
+    public static  SubtractionTokenType get() {
         //noinspection unchecked
         return INSTANCE;
     }

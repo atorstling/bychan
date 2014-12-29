@@ -4,7 +4,7 @@ import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class NotToken<S> implements Token<BooleanExpressionNode> {
+public class NotToken implements Token<BooleanExpressionNode> {
 
     @NotNull
     private final LexingMatch match;

@@ -9,13 +9,13 @@ import java.util.Arrays;
 import java.util.List;
 
 class BooleanExpressionTokens {
-    public static <S> List<TokenType<BooleanExpressionNode>> get() {
+    public static  List<TokenType<BooleanExpressionNode>> get() {
         return Arrays.<TokenType<BooleanExpressionNode>>asList(
                 new WhitespaceTokenType<>(),
-                NotTokenType.<S>get(),
-                VariableTokenType.<S>get(),
-                AndTokenType.<S>get(),
-                OrTokenType.<S>get(),
+                NotTokenType.get(),
+                VariableTokenType.get(),
+                AndTokenType.get(),
+                OrTokenType.get(),
                 LeftParenthesisTokenType.<BooleanExpressionNode>get(),
                 RightParenthesisTokenType.<BooleanExpressionNode>get());
     }

@@ -4,7 +4,7 @@ import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AndToken<S> implements Token<BooleanExpressionNode> {
+public class AndToken implements Token<BooleanExpressionNode> {
     private final LexingMatch match;
 
     public AndToken(@NotNull final LexingMatch match) {

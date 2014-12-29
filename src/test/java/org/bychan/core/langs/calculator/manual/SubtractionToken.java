@@ -6,7 +6,7 @@ import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class SubtractionToken<S> implements Token<CalculatorNode> {
+public class SubtractionToken implements Token<CalculatorNode> {
     @NotNull
     private final LexingMatch match;
 

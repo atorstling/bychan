@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-public class NumberTokenType<S> implements TokenType<CalculatorNode> {
+public class NumberTokenType implements TokenType<CalculatorNode> {
     private static final NumberTokenType INSTANCE = new NumberTokenType();
 
     @NotNull
@@ -26,7 +26,7 @@ public class NumberTokenType<S> implements TokenType<CalculatorNode> {
         return true;
     }
 
-    public static <S> NumberTokenType<S> get() {
+    public static  NumberTokenType get() {
         //noinspection unchecked
         return INSTANCE;
     }

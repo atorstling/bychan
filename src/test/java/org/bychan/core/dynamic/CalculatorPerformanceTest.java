@@ -13,12 +13,7 @@ public class CalculatorPerformanceTest {
     @Test
     public void longAddition() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        String calculation = IntStream.range(0, 3000).boxed().map(new Function<Integer, String>() {
-            @Override
-            public String apply(Integer integer) {
-                return integer.toString();
-            }
-        }).collect(Collectors.joining("+"));
+        String calculation = IntStream.range(0, 3000).boxed().map(Object::toString).collect(Collectors.joining("+"));
         Integer result = l.getLexParser().parse(calculation);
         assertEquals((Integer) 4498500, result);
     }
