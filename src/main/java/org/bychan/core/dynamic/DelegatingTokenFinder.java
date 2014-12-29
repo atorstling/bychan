@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * Used to look up token types in the list of {@link org.bychan.core.dynamic.TokenDefinition}s.
- * @param <N>
+ *
  */
 public class DelegatingTokenFinder<N> implements DynamicTokenFinder<N> {
     @Nullable

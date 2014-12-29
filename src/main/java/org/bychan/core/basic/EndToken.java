@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A token signaling the end of the lexing stream
  *
- * @param <N>
+ *
  */
 public class EndToken<N> implements Token<N> {
     @NotNull

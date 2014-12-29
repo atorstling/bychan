@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * An infix parse action. a.k.a LED (Left Denotation) in the original paper
- * @param <N>
+ *
  */
 public interface InfixParseAction<N> {
     /**

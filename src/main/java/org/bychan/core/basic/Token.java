@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * A token in the lexing stream.
  *
- * @param <N>
+ *
  */
 public interface Token<N> {
     @Nullable

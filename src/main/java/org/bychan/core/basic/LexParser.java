@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 /**
  * Facade for a {@link org.bychan.core.basic.PrattParser} and a {@link org.bychan.core.basic.Lexer} which lexes and parses
  * an input text completely, making sure all input text has been properly processed before returning a result.
- * @param <N>
+ *
  */
 public class LexParser<N> {
     @NotNull

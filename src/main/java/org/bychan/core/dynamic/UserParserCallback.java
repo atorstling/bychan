@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * The parser interface used in the dynamic API
- * @param <N>
+ *
  */
 public interface UserParserCallback<N> {
     /**
@@ -19,7 +19,7 @@ public interface UserParserCallback<N> {
     @NotNull
     N subExpression(@Nullable final N previous);
     /**
-     * Same as {@link #subExpression(Object)}, but with {@link #subExpression(Object)::previous} set to be the
+     * Same as {@link #subExpression(Object)}, but with <code>previous</code> set to be the
      * same {@code previous} as the passed into the handler which performs this call.
      * This makes sense if you haven't done any custom parsing in your handler.
      */

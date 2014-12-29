@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * A prefix parse action. A.k.a NUD (Null Denotion) in the original paper.
- * @param <N>
+ *
  */
 public interface PrefixParseAction<N> {
     /**

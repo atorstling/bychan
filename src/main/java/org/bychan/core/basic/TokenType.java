@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * A pattern defines which string segments to match during lexing,
  * and a factory method makes tokens out of the resulting matches.
  *
- * @param <N>
+ *
  */
 public interface TokenType<N> {
     @NotNull

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Builds dynamic languages
- * @param <N>
+ *
  */
 public class LanguageBuilder<N> {
     @NotNull
