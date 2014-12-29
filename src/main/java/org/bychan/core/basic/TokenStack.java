@@ -2,9 +2,11 @@ package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.TestOnly;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TokenStack<N> {
@@ -12,6 +14,12 @@ public class TokenStack<N> {
     private final ArrayDeque<Token<N>> tokens;
     @Nullable
     private Token<N> previous;
+
+    @SafeVarargs
+    @TestOnly
+    TokenStack(Token<N>... tokens) {
+        this(Arrays.asList(tokens));
+    }
 
     public TokenStack(List<Token<N>> tokens) {
         this.tokens = new ArrayDeque<>(tokens);

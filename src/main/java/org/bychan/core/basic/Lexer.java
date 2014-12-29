@@ -38,8 +38,13 @@ public class Lexer<N> {
             }
             i += progress;
         }
-        tokens.add(new EndToken<>(new LexingMatch<>(input.length(), input.length(), "", EndTokenType.get())));
+        tokens.add(makeEndToken(input));
         return tokens;
+    }
+
+    @NotNull
+    static <N> EndToken<N> makeEndToken(@NotNull String input) {
+        return new EndToken<>(new LexingMatch<>(input.length(), input.length(), "", EndTokenType.get()));
     }
 
     @Nullable
