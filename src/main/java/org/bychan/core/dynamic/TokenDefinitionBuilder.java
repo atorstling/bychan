@@ -11,7 +11,7 @@ public class TokenDefinitionBuilder<N> {
     private boolean parsed;
     private String tokenTypeName;
     private int leftBindingPower = 1;
-    private LanguageBuilder<N> languageBuilder;
+    private final LanguageBuilder<N> languageBuilder;
     private TokenKey tokenKey;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
@@ -92,11 +92,6 @@ public class TokenDefinitionBuilder<N> {
     @NotNull
     public TokenDefinitionBuilder<N> ignoreWhenParsing() {
         return ignoredWhenParsing();
-    }
-
-    @NotNull
-    public String name() {
-        return tokenTypeName;
     }
 
     public TokenKey getKey() {

@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class PositionTracerImpl<N> implements PositionTracer<N> {
-    private String originalInputString;
+    private final String originalInputString;
 
     public PositionTracerImpl(@NotNull String originalInputString) {
         this.originalInputString = originalInputString;

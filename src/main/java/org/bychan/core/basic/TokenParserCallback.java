@@ -21,11 +21,5 @@ public interface TokenParserCallback<N> {
     Token<N> peek();
 
     @NotNull
-    Token<N> pop();
-
-    @NotNull
-    ParsingPosition getParsingPosition();
-
-    @NotNull
     N prefixParse(@Nullable N previous, @NotNull Token<N> token);
 }

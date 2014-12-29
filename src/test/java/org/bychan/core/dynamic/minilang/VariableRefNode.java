@@ -24,7 +24,6 @@ public class VariableRefNode implements VariableNode {
             throw new IllegalStateException();
         }
         Scope scope = currentScope.getScope();
-        assert scope != null;
         VariableDefNode variable = scope.find(name);
         if (variable == null) {
             throw new IllegalStateException("No variable named '" + name + "' found in the previous scope: " + currentScope);
@@ -53,7 +52,6 @@ public class VariableRefNode implements VariableNode {
     @Override
     public void assign(@NotNull Object value, @NotNull ScopeNode currentScope) {
         Scope scope = currentScope.getScope();
-        assert scope != null;
         VariableDefNode variable = scope.find(name);
         if (variable == null) {
             throw new IllegalStateException("Reference to variable '" + name + " which is not yet defined or out of scope");

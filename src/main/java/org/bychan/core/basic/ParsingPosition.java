@@ -7,7 +7,7 @@ public class ParsingPosition {
     @NotNull
     private final TextPosition position;
     @NotNull
-    private TokenStack<?> tokenStack;
+    private final TokenStack<?> tokenStack;
 
     public ParsingPosition(@NotNull TextPosition position, @NotNull TokenStack<?> tokenStack) {
         this.position = position;
@@ -21,10 +21,8 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        if (!position.equals(that.position)) return false;
-        if (!tokenStack.equals(that.tokenStack)) return false;
+        return position.equals(that.position) && tokenStack.equals(that.tokenStack);
 
-        return true;
     }
 
     @Override

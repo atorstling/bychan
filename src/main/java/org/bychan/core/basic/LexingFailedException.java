@@ -2,7 +2,7 @@ package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
 
-public class LexingFailedException extends RuntimeException {
+class LexingFailedException extends RuntimeException {
     private final LexingPosition lexingPosition;
 
     public LexingFailedException(@NotNull final LexingPosition lexingPosition, @NotNull final String message) {

@@ -32,6 +32,7 @@ public interface UserParserCallback<N> {
     @NotNull
     Token<N> expectSingleToken(@NotNull TokenKey tokenKey);
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean nextIs(@NotNull TokenKey tokenKey);
 
     @NotNull

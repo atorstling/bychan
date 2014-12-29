@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TokenStack<N> {
+class TokenStack<N> {
     @NotNull
     private final ArrayDeque<Token<N>> tokens;
     @Nullable

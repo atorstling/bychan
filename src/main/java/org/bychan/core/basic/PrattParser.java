@@ -9,7 +9,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     @NotNull
     private final TokenStack<N> tokenStack;
     @NotNull
-    private PositionTracer<N> positionTracer;
+    private final PositionTracer<N> positionTracer;
 
     PrattParser(@NotNull List<Token<N>> tokens, @NotNull final PositionTracer<N> positionTracer) {
         this.tokenStack = new TokenStack<>(tokens);
@@ -117,8 +117,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     }
 
     @NotNull
-    @Override
-    public Token<N> pop() {
+    private Token<N> pop() {
         return tokenStack.pop();
     }
 }

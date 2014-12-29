@@ -34,6 +34,7 @@ public class ParseResult<N> {
     @NotNull
     public N getRootNode() {
         checkSuccess();
+        assert rootNode != null;
         return rootNode;
     }
 
@@ -42,6 +43,7 @@ public class ParseResult<N> {
         if (!isFailure()) {
             throw new IllegalStateException("Cannot fetch error message when parsing was successful.");
         }
+        assert errorMessage != null;
         return errorMessage;
     }
 
@@ -77,6 +79,7 @@ public class ParseResult<N> {
 
     public void checkSuccess() {
         if (!isSuccess()) {
+            assert errorMessage != null;
             throw new ParsingFailedException(errorMessage);
         }
     }

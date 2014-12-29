@@ -44,10 +44,6 @@ public class DynamicTokenType<N> implements TokenType<N> {
         return def.getLeftBindingPower() + ":" + getName();
     }
 
-    public String getTokenTypeName() {
-        return def.getTokenTypeName();
-    }
-
     @NotNull
     public TokenDefinition<N> getTokenDefinition() {
         return def;

@@ -2,7 +2,6 @@ package org.bychan.core.dynamic;
 
 import org.junit.Test;
 
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
