@@ -3,14 +3,19 @@ package org.bychan.core.utils;
 public class TextPosition {
     private final int row;
     private final int col;
+    private final int index;
 
-    public TextPosition(int row, int col) {
+    public TextPosition(int index, int row, int col) {
         if (row < 1) {
             throw new IllegalArgumentException("Row must be >0, was " + row);
         }
         if (row < 1) {
             throw new IllegalArgumentException("Col must be >0, was " + col);
         }
+        if (index < 0) {
+            throw new IllegalArgumentException("Index must be >=0, was" + index);
+        }
+        this.index = index;
         this.row = row;
         this.col = col;
     }
@@ -23,13 +28,14 @@ public class TextPosition {
 
         TextPosition that = (TextPosition) o;
 
-        return col == that.col && row == that.row;
+        return col == that.col && index == that.index && row == that.row;
     }
 
     @Override
     public int hashCode() {
         int result = row;
         result = 31 * result + col;
+        result = 31 * result + index;
         return result;
     }
 

@@ -20,11 +20,12 @@ public class StringUtils {
     }
 
     @NotNull
-    public static TextPosition getTextPosition(String string, int index) {
+    public static TextPosition getTextPosition(@NotNull String string, int index) {
         BufferedReader reader = new BufferedReader(new StringReader(string));
         return getTextPosition(reader, index);
     }
 
+    @NotNull
     private static TextPosition getTextPosition(@NotNull BufferedReader reader, int index) {
         try {
             //Bother with previous token since we don't want to increase row until _after_ a newline char.
@@ -34,7 +35,7 @@ public class StringUtils {
                 previous = current;
                 current = reader.read();
                 if (current == -1) {
-                    throw new StringIndexOutOfBoundsException(index);
+                    throw new IndexOutOfBoundsException("At index " + index);
                 }
                 if (previous=='\n') {
                     row++;
@@ -43,7 +44,7 @@ public class StringUtils {
                     col++;
                 }
             }
-            return new TextPosition(row, col);
+            return new TextPosition(index, row, col);
         } catch(IOException e) {
             throw new RuntimeException(e);
         }
