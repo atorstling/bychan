@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/bychan.iml" filepath="$PROJECT_DIR$/bychan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bychan-core.iml" filepath="$PROJECT_DIR$/bychan-core.iml" />
     </modules>
   </component>
 </project>

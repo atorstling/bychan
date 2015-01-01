@@ -24,12 +24,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="bychan" />
-        <module name="tdop" />
+        <module name="bychan-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bychan" target="1.8" />
+      <module name="bychan-core" target="1.8" />
       <module name="tdop" target="1.8" />
     </bytecodeTargetLevel>
   </component>
