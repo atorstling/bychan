@@ -192,7 +192,7 @@ public class PrattParserTest {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Current token does not support prefix parsing' @ mock position", e.getParsingFailedInformation().toString());
+            assertEquals("Parsing failed: 'Premature end reached' @ mock position", e.getParsingFailedInformation().toString());
         }
     }
 

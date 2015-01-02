@@ -9,6 +9,15 @@ public class ParsingFailedInformation {
     }
     @Nullable
     private final LexingFailedInformation lexingFailedInformation;
+
+    @NotNull
+    public FailedAfterLexingInformation getFailedAfterLexingInformation() {
+        if (failedAfterLexingInformation == null) {
+            throw new RuntimeException("Did not fail after lexing:" + lexingFailedInformation);
+        }
+        return failedAfterLexingInformation;
+    }
+
     @Nullable
     private final FailedAfterLexingInformation failedAfterLexingInformation;
 

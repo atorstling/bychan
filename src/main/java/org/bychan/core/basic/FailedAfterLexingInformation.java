@@ -2,7 +2,7 @@ package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
 
-class FailedAfterLexingInformation {
+public class FailedAfterLexingInformation {
     @NotNull
     private final String failureMessage;
     @NotNull
@@ -34,5 +34,15 @@ class FailedAfterLexingInformation {
     @Override
     public String toString() {
         return "Parsing failed: '" + failureMessage + '\'' + " @ " + parsingPosition ;
+    }
+
+    @NotNull
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
+    @NotNull
+    public ParsingPosition getParsingPosition() {
+        return parsingPosition;
     }
 }

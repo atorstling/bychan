@@ -20,7 +20,9 @@ public class EndToken<N> implements Token<N> {
     @Nullable
     @Override
     public PrefixParseAction<N> getPrefixParser() {
-        return null;
+        return (previous, parser) -> {
+            throw ParsingFailedException.forFailedAfterLexing("Premature end reached", parser);
+        };
     }
 
     @Nullable

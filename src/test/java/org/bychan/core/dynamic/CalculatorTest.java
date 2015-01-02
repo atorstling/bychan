@@ -1,9 +1,12 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.basic.ParsingFailedException;
 import org.bychan.core.langs.calculator.nodes.*;
+import org.bychan.core.utils.TextPosition;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class CalculatorTest {
     @Test
@@ -80,6 +83,18 @@ public class CalculatorTest {
     public void testDirectCalculation() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         assertEquals(Integer.valueOf(7), l.getLexParser().tryParse("1 + 2 * 3").getRootNode());
+    }
+
+    @Test
+    public void emptyInput() {
+        Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
+        try {
+            l.getLexParser().parse("");
+            fail("expected exception");
+        } catch (ParsingFailedException e) {
+            assertEquals("Premature end reached", e.getParsingFailedInformation().getFailedAfterLexingInformation().getFailureMessage());
+            assertEquals(new TextPosition(0, 1, 1), e.getParsingFailedInformation().getFailedAfterLexingInformation().getParsingPosition().getTextPosition());
+        }
     }
 
     public static void main(String[] args) {

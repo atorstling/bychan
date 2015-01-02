@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class TokenStack<N> {
+public class TokenStack<N> {
+    public static final TokenStack<Object> EMPTY = new TokenStack<>();
     @NotNull
     private final ArrayDeque<Token<N>> tokens;
     @Nullable
@@ -17,7 +18,7 @@ class TokenStack<N> {
 
     @SafeVarargs
     @TestOnly
-    TokenStack(Token<N>... tokens) {
+    public TokenStack(Token<N>... tokens) {
         this(Arrays.asList(tokens));
     }
 
@@ -44,5 +45,11 @@ class TokenStack<N> {
     @NotNull
     public List<Token<N>> remaining() {
         return new ArrayList<>(tokens);
+    }
+
+    @NotNull
+    public static <N> TokenStack<N> empty() {
+        //noinspection unchecked
+        return (TokenStack<N>) EMPTY;
     }
 }

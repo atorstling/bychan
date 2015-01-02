@@ -11,6 +11,10 @@ public class ParsingFailedException extends RuntimeException {
         this.parsingFailedInformation = parsingFailedInformation;
     }
 
+    public static ParsingFailedException forFailedAfterLexing(@NotNull String failureMessage, @NotNull TokenParserCallback<?> parser) {
+        return new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing(failureMessage, parser.getParsingPosition()));
+    }
+
     @NotNull
     public ParsingFailedInformation getParsingFailedInformation() {
         return parsingFailedInformation;
