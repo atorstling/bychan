@@ -15,13 +15,13 @@ public class RightParenthesisLexeme<N> implements Lexeme<N> {
 
     @Nullable
     @Override
-    public PrefixParseAction<N> getPrefixParser() {
+    public NudParseAction<N> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParseAction<N> getInfixParser() {
+    public LedParseAction<N> getInfixParser() {
         return null;
     }
 

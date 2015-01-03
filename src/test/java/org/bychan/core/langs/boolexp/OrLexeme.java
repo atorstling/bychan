@@ -14,13 +14,13 @@ public class OrLexeme implements Lexeme<BooleanExpressionNode> {
 
     @Nullable
     @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
+    public NudParseAction<BooleanExpressionNode> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
+    public LedParseAction<BooleanExpressionNode> getInfixParser() {
         return (previous, parser) -> new OrNode(previous, parser.parseExpression(previous, leftBindingPower()));
     }
 

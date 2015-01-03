@@ -8,10 +8,10 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Lexeme<N> {
     @Nullable
-    PrefixParseAction<N> getPrefixParser();
+    NudParseAction<N> getPrefixParser();
 
     @Nullable
-    InfixParseAction<N> getInfixParser();
+    LedParseAction<N> getInfixParser();
 
 
     /**

@@ -200,10 +200,10 @@ public class PrattParserTest {
     public void failsWhenInfixNotSupported() {
         Lexeme first = mock(Lexeme.class);
         when(first.toString()).thenReturn("firstToken");
-        PrefixParseAction prefixParseAction = mock(PrefixParseAction.class);
+        NudParseAction nudParseAction = mock(NudParseAction.class);
         //noinspection unchecked
-        when(prefixParseAction.parse(any(), any())).thenReturn("prefixParsingResult");
-        when(first.getPrefixParser()).thenReturn(prefixParseAction);
+        when(nudParseAction.parse(any(), any())).thenReturn("prefixParsingResult");
+        when(first.getPrefixParser()).thenReturn(nudParseAction);
 
         Lexeme second = mock(Lexeme.class);
         when(second.toString()).thenReturn("secondToken");

@@ -27,7 +27,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
 
     @Nullable
     @Override
-    public PrefixParseAction<N> getPrefixParser() {
+    public NudParseAction<N> getPrefixParser() {
         return prefixBuilder == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
             return prefixBuilder.parse(previous, match, callback, leftBindingPower());
@@ -36,7 +36,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
 
     @Nullable
     @Override
-    public InfixParseAction<N> getInfixParser() {
+    public LedParseAction<N> getInfixParser() {
         return infixBuilder == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
             return infixBuilder.parse(previous, match, callback, leftBindingPower());

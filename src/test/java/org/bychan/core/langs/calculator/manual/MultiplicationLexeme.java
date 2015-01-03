@@ -17,13 +17,13 @@ public class MultiplicationLexeme implements Lexeme<CalculatorNode> {
 
     @Nullable
     @Override
-    public PrefixParseAction<CalculatorNode> getPrefixParser() {
+    public NudParseAction<CalculatorNode> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParseAction<CalculatorNode> getInfixParser() {
+    public LedParseAction<CalculatorNode> getInfixParser() {
         return (previous, parser) -> {
             CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
             return new MultiplicationNode(previous, right);

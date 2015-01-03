@@ -79,11 +79,11 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     }
 
     private N infixParse(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
-        InfixParseAction<N> infixParseAction = takenLexeme.getInfixParser();
-        if (infixParseAction == null) {
+        LedParseAction<N> ledParseAction = takenLexeme.getInfixParser();
+        if (ledParseAction == null) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
         }
-        return infixParseAction.parse(currentLeftHandSide, this);
+        return ledParseAction.parse(currentLeftHandSide, this);
     }
 
     @NotNull
@@ -103,11 +103,11 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     @NotNull
     @Override
     public N prefixParse(@Nullable N previous, @NotNull Lexeme<N> lexeme) {
-        PrefixParseAction<N> prefixParseAction = lexeme.getPrefixParser();
-        if (prefixParseAction == null) {
+        NudParseAction<N> nudParseAction = lexeme.getPrefixParser();
+        if (nudParseAction == null) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current lexeme does not support prefix parsing", getParsingPosition()));
         }
-        return prefixParseAction.parse(previous, this);
+        return nudParseAction.parse(previous, this);
     }
 
     @NotNull

@@ -16,13 +16,13 @@ public class SubtractionLexeme implements Lexeme<CalculatorNode> {
 
     @Nullable
     @Override
-    public PrefixParseAction<CalculatorNode> getPrefixParser() {
+    public NudParseAction<CalculatorNode> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParseAction<CalculatorNode> getInfixParser() {
+    public LedParseAction<CalculatorNode> getInfixParser() {
         return (previous, parser) -> {
             CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
             return new SubtractionNode(previous, right);

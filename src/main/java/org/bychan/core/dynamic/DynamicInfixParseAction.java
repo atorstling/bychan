@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Similar to {@link org.bychan.core.basic.InfixParseAction}, but receives more runtime information
+ * Similar to {@link org.bychan.core.basic.LedParseAction}, but receives more runtime information
  * which is needed in the dynamic environment.
  *
  */

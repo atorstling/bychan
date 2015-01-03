@@ -13,13 +13,13 @@ public class AndLexeme implements Lexeme<BooleanExpressionNode> {
 
     @Nullable
     @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
+    public NudParseAction<BooleanExpressionNode> getPrefixParser() {
         return null;
     }
 
     @Nullable
     @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
+    public LedParseAction<BooleanExpressionNode> getInfixParser() {
         return (previous, parser) -> {
             BooleanExpressionNode right = parser.parseExpression(previous, leftBindingPower());
             return new AndNode(previous, right);

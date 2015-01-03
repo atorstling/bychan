@@ -25,13 +25,13 @@ public class VariableLexeme implements Lexeme<BooleanExpressionNode> {
 
     @Nullable
     @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
+    public NudParseAction<BooleanExpressionNode> getPrefixParser() {
         return (previous, parser) -> new VariableNode(name);
     }
 
     @Nullable
     @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
+    public LedParseAction<BooleanExpressionNode> getInfixParser() {
         return null;
     }
 
