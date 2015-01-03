@@ -15,17 +15,16 @@ public class BooleanLogicTest {
     public void terserSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").buildAndAdd();
-        //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
         DynamicPrefixParseAction<BooleanExpressionNode> parseAction = (previous, match, parser, lbp) -> new VariableNode(match.getText());
         Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser, lbp) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
             parser.expectSingleToken(rparen.getKey());
             return trailingExpression;
-        }).completeToken()
-                .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().completeToken()
-                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser, lbp) -> new NotNode(parser.subExpression())).completeToken()
-                .startToken().matchesString("&").named("and").infixParseAs((previous, match, parser, lbp) -> new AndNode(previous, parser.subExpression())).completeToken()
-                .startToken().matchesPattern("[a-z]+").named("variable").prefixParseAs(parseAction).completeToken()
+        }).end()
+                .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().end()
+                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser, lbp) -> new NotNode(parser.subExpression())).end()
+                .startToken().matchesString("&").named("and").infixParseAs((previous, match, parser, lbp) -> new AndNode(previous, parser.subExpression())).end()
+                .startToken().matchesPattern("[a-z]+").named("variable").prefixParseAs(parseAction).end()
                 .completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);

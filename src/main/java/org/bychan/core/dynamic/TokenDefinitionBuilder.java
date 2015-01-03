@@ -70,11 +70,6 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public Language<N> completeLanguage() {
-        completeToken();
-        return languageBuilder.completeLanguage();
-    }
-
     @NotNull
     public TokenDefinition<N> buildAndAdd() {
         TokenDefinition<N> result = build();
@@ -83,13 +78,8 @@ public class TokenDefinitionBuilder<N> {
     }
 
     @NotNull
-    public LanguageBuilder<N> completeToken() {
+    public LanguageBuilder<N> end() {
         return languageBuilder.addToken(build());
-    }
-
-    public TokenDefinitionBuilder<N> newToken() {
-        completeToken();
-        return languageBuilder.newToken();
     }
 
     @NotNull

@@ -66,12 +66,15 @@ public class CalculatorTest {
     @Test
     public void testClearerSyntax() {
         LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
-        Language<CalculatorNode> l = lb.newToken().named("rparen").matchesString(")")
-                .newToken().named("lparen").matchesString("(")
-                .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().newToken().named("plus").matchesString("+")
-                .infixParseAs((previous, match, parser, lbp) -> new AdditionNode(previous, parser.subExpression())).newToken().named("minus").matchesString("-")
+        Language<CalculatorNode> l = lb.newToken().named("rparen").matchesString(")").end()
+                .newToken().named("lparen").matchesString("(").end()
+                .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().end()
+                .newToken().named("plus").matchesString("+")
+                .infixParseAs((previous, match, parser, lbp) -> new AdditionNode(previous, parser.subExpression())).end()
+                .newToken().named("minus").matchesString("-")
                 .prefixParseAs((previous, match, parser, lbp) -> new NegationNode(parser.subExpression()))
-                .infixParseAs((previous, match, parser, lbp) -> new SubtractionNode(previous, parser.subExpression())).newToken().named("number").matchesPattern("[0-9]+").prefixParseAs((previous, match, parser, lbp) -> new NumberNode(Integer.parseInt(match.getText())))
+                .infixParseAs((previous, match, parser, lbp) -> new SubtractionNode(previous, parser.subExpression())).end()
+                .newToken().named("number").matchesPattern("[0-9]+").prefixParseAs((previous, match, parser, lbp) -> new NumberNode(Integer.parseInt(match.getText()))).end()
                 .completeLanguage();
 
         assertEquals(3, l.getLexParser().tryParse("1+2").getRootNode().evaluate());
