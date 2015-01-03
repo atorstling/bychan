@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LexemeStack<N> {
-    public static final LexemeStack<Object> EMPTY = new LexemeStack<>();
+    private static final LexemeStack<Object> EMPTY = new LexemeStack<>();
     @NotNull
     private final ArrayDeque<Lexeme<N>> lexemes;
     @Nullable
