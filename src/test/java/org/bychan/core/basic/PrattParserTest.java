@@ -180,7 +180,7 @@ public class PrattParserTest {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Current lexeme does not support prefix parsing' @ mock position", e.getMessage());
+            assertEquals("Parsing failed: 'Current lexeme does not support nud parsing' @ mock position", e.getMessage());
         }
     }
 
@@ -197,17 +197,17 @@ public class PrattParserTest {
     }
 
     @Test
-    public void failsWhenInfixNotSupported() {
+    public void failsWhenLedNotSupported() {
         Lexeme first = mock(Lexeme.class);
         when(first.toString()).thenReturn("firstToken");
         NudParseAction nudParseAction = mock(NudParseAction.class);
         //noinspection unchecked
-        when(nudParseAction.parse(any(), any())).thenReturn("prefixParsingResult");
-        when(first.getPrefixParser()).thenReturn(nudParseAction);
+        when(nudParseAction.parse(any(), any())).thenReturn("nudParsingResult");
+        when(first.getNud()).thenReturn(nudParseAction);
 
         Lexeme second = mock(Lexeme.class);
         when(second.toString()).thenReturn("secondToken");
-        when(second.getInfixParser()).thenReturn(null);
+        when(second.getLed()).thenReturn(null);
         when(second.leftBindingPower()).thenReturn(1);
         when(second.getToken()).thenReturn(mock(Token.class));
         //noinspection unchecked
@@ -220,14 +220,14 @@ public class PrattParserTest {
             p.parseExpression(5, 0);
             fail("Expected exception");
         } catch(ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Current token does not support infix parsing' @ mock position", e.getMessage());
+            assertEquals("Parsing failed: 'Current token does not support led parsing' @ mock position", e.getMessage());
         }
     }
 
     @Test
-    public void failsWhenPrefixNotSupported() {
+    public void failsWhenNudNotSupported() {
         Lexeme lexeme = mock(Lexeme.class);
-        when(lexeme.getPrefixParser()).thenReturn(null);
+        when(lexeme.getNud()).thenReturn(null);
         when(lexeme.toString()).thenReturn("bleargh");
         //noinspection unchecked
         LexingMatch<Object> match = mock(LexingMatch.class);
@@ -239,7 +239,7 @@ public class PrattParserTest {
             p.parseExpression(null, 0);
             fail("Expected exception");
         } catch(ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Current lexeme does not support prefix parsing' @ mock position", e.getMessage());
+            assertEquals("Parsing failed: 'Current lexeme does not support nud parsing' @ mock position", e.getMessage());
         }
     }
 }

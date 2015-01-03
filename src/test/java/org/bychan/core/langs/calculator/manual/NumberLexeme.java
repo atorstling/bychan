@@ -52,13 +52,13 @@ public class NumberLexeme implements Lexeme<CalculatorNode> {
 
     @Nullable
     @Override
-    public NudParseAction<CalculatorNode> getPrefixParser() {
+    public NudParseAction<CalculatorNode> getNud() {
         return (previous, parser) -> new NumberNode(value);
     }
 
     @Nullable
     @Override
-    public LedParseAction<CalculatorNode> getInfixParser() {
+    public LedParseAction<CalculatorNode> getLed() {
         return null;
     }
 

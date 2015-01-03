@@ -35,7 +35,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
      */
     @NotNull
     public N parseExpression(@Nullable N previous, final int powerFloor) {
-        // An expression always starts with a symbol which can qualify as a prefix value
+        // An expression always starts with a symbol which can qualify as a nud value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
         // "-" as in "negative", used in for instance "-3 + 5", parses to -(rest of expression)
@@ -43,9 +43,9 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         Lexeme<N> firstLexeme = pop();
-        final N first = prefixParse(previous, firstLexeme);
-        // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
-        // returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
+        final N first = nud(previous, firstLexeme);
+        // When we have the nud parsing settled, we cannot be sure that the parsing is done. Digit parsing
+        // returns almost immediately for instance. If the nud parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
         //
         // If there is more to parse, however, we should keep parsing as long as we encounter stronger tokens
@@ -61,7 +61,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         // The multiplication token will here call parse on the rest of the expression ("2+3"). This parse
         // should abort as soon as the weaker addition token is encountered, so that it returns "2" as the RHS
         // of the multiplication.
-        // The addition operators infix-parser is then called by the top-level expression parser,
+        // The addition operators led-parser is then called by the top-level expression parser,
         // passing (1*2) into it as the expression parsed so far. It will then proceed to swallow the 3,
         // completing the expression.
         return parseLoop(first, powerFloor);
@@ -72,16 +72,16 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         if (peekedLexeme.leftBindingPower() > powerFloor) {
             //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
             Lexeme<N> takenLexeme = pop();
-            N nextExpression = infixParse(currentLeftHandSide, takenLexeme);
+            N nextExpression = led(currentLeftHandSide, takenLexeme);
             return parseLoop(nextExpression, powerFloor);
         }
         return currentLeftHandSide;
     }
 
-    private N infixParse(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
-        LedParseAction<N> ledParseAction = takenLexeme.getInfixParser();
+    private N led(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
+        LedParseAction<N> ledParseAction = takenLexeme.getLed();
         if (ledParseAction == null) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support led parsing", getParsingPosition()));
         }
         return ledParseAction.parse(currentLeftHandSide, this);
     }
@@ -102,10 +102,10 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     @Override
-    public N prefixParse(@Nullable N previous, @NotNull Lexeme<N> lexeme) {
-        NudParseAction<N> nudParseAction = lexeme.getPrefixParser();
+    public N nud(@Nullable N previous, @NotNull Lexeme<N> lexeme) {
+        NudParseAction<N> nudParseAction = lexeme.getNud();
         if (nudParseAction == null) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current lexeme does not support prefix parsing", getParsingPosition()));
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current lexeme does not support nud parsing", getParsingPosition()));
         }
         return nudParseAction.parse(previous, this);
     }

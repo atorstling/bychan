@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
     private String pattern;
-    private DynamicPrefixParseAction<N> prefixBuilder;
-    private DynamicInfixParseAction<N> infixBuilder;
+    private DynamicNudParseAction<N> nud;
+    private DynamicLedParseAction<N> led;
     private boolean parsed;
     private String tokenName;
     private int leftBindingPower = 1;
@@ -28,8 +28,8 @@ public class TokenDefinitionBuilder<N> {
         parsed = true;
     }
 
-    public TokenDefinitionBuilder<N> prefixParseAs(DynamicPrefixParseAction<N> prefixBuilder) {
-        this.prefixBuilder = prefixBuilder;
+    public TokenDefinitionBuilder<N> nud(DynamicNudParseAction<N> nud) {
+        this.nud = nud;
         return this;
     }
 
@@ -41,11 +41,11 @@ public class TokenDefinitionBuilder<N> {
         if (tokenName == null) {
             tokenName = "token" + languageBuilder.increaseUnnamedTokenCounter();
         }
-        return new TokenDefinition<>(Pattern.compile(pattern), prefixBuilder, infixBuilder, tokenName, parsed, leftBindingPower);
+        return new TokenDefinition<>(Pattern.compile(pattern), nud, led, tokenName, parsed, leftBindingPower);
     }
 
-    public TokenDefinitionBuilder<N> infixParseAs(DynamicInfixParseAction<N> infixBuilder) {
-        this.infixBuilder = infixBuilder;
+    public TokenDefinitionBuilder<N> led(DynamicLedParseAction<N> led) {
+        this.led = led;
         return this;
     }
 

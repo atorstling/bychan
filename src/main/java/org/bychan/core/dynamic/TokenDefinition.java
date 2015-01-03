@@ -15,19 +15,19 @@ public class TokenDefinition<N> {
     @NotNull
     private final Pattern pattern;
     @Nullable
-    private final DynamicPrefixParseAction<N> prefixBuilder;
+    private final DynamicNudParseAction<N> nud;
     @Nullable
-    private final DynamicInfixParseAction<N> infixBuilder;
+    private final DynamicLedParseAction<N> led;
     @NotNull
     private final String tokenName;
     private final boolean parse;
     private final int leftBindingPower;
     private final TokenKey tokenKey;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicPrefixParseAction<N> prefixBuilder, @Nullable final DynamicInfixParseAction<N> infixBuilder, @NotNull final String tokenName, boolean parse, int leftBindingPower) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean parse, int leftBindingPower) {
         this.pattern = pattern;
-        this.prefixBuilder = prefixBuilder;
-        this.infixBuilder = infixBuilder;
+        this.nud = nud;
+        this.led = led;
         this.tokenName = tokenName;
         this.parse = parse;
         this.leftBindingPower = leftBindingPower;
@@ -49,13 +49,13 @@ public class TokenDefinition<N> {
     }
 
     @Nullable
-    public DynamicPrefixParseAction<N> getPrefixBuilder() {
-        return prefixBuilder;
+    public DynamicNudParseAction<N> getNud() {
+        return nud;
     }
 
     @Nullable
-    public DynamicInfixParseAction<N> getInfixBuilder() {
-        return infixBuilder;
+    public DynamicLedParseAction<N> getLed() {
+        return led;
     }
 
     @NotNull

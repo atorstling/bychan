@@ -19,7 +19,7 @@ public class EndLexeme<N> implements Lexeme<N> {
 
     @Nullable
     @Override
-    public NudParseAction<N> getPrefixParser() {
+    public NudParseAction<N> getNud() {
         return (previous, parser) -> {
             throw ParsingFailedException.forFailedAfterLexing("Premature end reached", parser);
         };
@@ -27,7 +27,7 @@ public class EndLexeme<N> implements Lexeme<N> {
 
     @Nullable
     @Override
-    public LedParseAction<N> getInfixParser() {
+    public LedParseAction<N> getLed() {
         return null;
     }
 

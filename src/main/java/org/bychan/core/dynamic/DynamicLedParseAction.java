@@ -9,6 +9,6 @@ import org.jetbrains.annotations.Nullable;
  * which is needed in the dynamic environment.
  *
  */
-public interface DynamicInfixParseAction<N> {
+public interface DynamicLedParseAction<N> {
     N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser, int currentBindingPower);
 }

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
  * which is needed in the dynamic environment.
  *
  */
-public interface DynamicPrefixParseAction<N> {
+public interface DynamicNudParseAction<N> {
     @NotNull
     N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser, int currentPowerFloor);
 }

@@ -12,34 +12,34 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     private final TokenDefinition<N> def;
     private final DynamicTokenFinder<N> tokenFinder;
     @Nullable
-    private final DynamicInfixParseAction<N> infixBuilder;
+    private final DynamicLedParseAction<N> led;
     @Nullable
-    private final DynamicPrefixParseAction<N> prefixBuilder;
+    private final DynamicNudParseAction<N> nud;
 
     public DynamicLexeme(@NotNull final DynamicToken<N> token, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.token = token;
         this.match = match;
         this.def = def;
         this.tokenFinder = tokenFinder;
-        infixBuilder = def.getInfixBuilder();
-        prefixBuilder = def.getPrefixBuilder();
+        led = def.getLed();
+        nud = def.getNud();
     }
 
     @Nullable
     @Override
-    public NudParseAction<N> getPrefixParser() {
-        return prefixBuilder == null ? null : (previous, parser) -> {
+    public NudParseAction<N> getNud() {
+        return nud == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return prefixBuilder.parse(previous, match, callback, leftBindingPower());
+            return nud.parse(previous, match, callback, leftBindingPower());
         };
     }
 
     @Nullable
     @Override
-    public LedParseAction<N> getInfixParser() {
-        return infixBuilder == null ? null : (previous, parser) -> {
+    public LedParseAction<N> getLed() {
+        return led == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return infixBuilder.parse(previous, match, callback, leftBindingPower());
+            return led.parse(previous, match, callback, leftBindingPower());
         };
     }
 

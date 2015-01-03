@@ -21,7 +21,7 @@ public interface TokenParserCallback<N> {
     Lexeme<N> peek();
 
     @NotNull
-    N prefixParse(@Nullable N previous, @NotNull Lexeme<N> lexeme);
+    N nud(@Nullable N previous, @NotNull Lexeme<N> lexeme);
 
     @NotNull
     ParsingPosition getParsingPosition();

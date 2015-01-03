@@ -15,13 +15,13 @@ public class NotLexeme implements Lexeme<BooleanExpressionNode> {
 
     @Nullable
     @Override
-    public NudParseAction<BooleanExpressionNode> getPrefixParser() {
+    public NudParseAction<BooleanExpressionNode> getNud() {
         return (previous, parser) -> new NotNode(parser.parseExpression(previous, leftBindingPower()));
     }
 
     @Nullable
     @Override
-    public LedParseAction<BooleanExpressionNode> getInfixParser() {
+    public LedParseAction<BooleanExpressionNode> getLed() {
         return null;
     }
 

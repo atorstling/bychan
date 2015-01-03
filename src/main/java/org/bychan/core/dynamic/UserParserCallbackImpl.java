@@ -55,7 +55,7 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @Override
     public N parseSingleToken(N previous, @NotNull TokenKey tokenKey) {
         Lexeme<N> lexeme = swallow(tokenKey, parser);
-        return parser.prefixParse(previous, lexeme);
+        return parser.nud(previous, lexeme);
     }
 
     @NotNull

@@ -8,14 +8,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface Lexeme<N> {
     @Nullable
-    NudParseAction<N> getPrefixParser();
+    NudParseAction<N> getNud();
 
     @Nullable
-    LedParseAction<N> getInfixParser();
-
-
+    LedParseAction<N> getLed();
     /**
-     * @return How strongly this lexeme, when interpreted as an infix operator, binds to the previous argument.
+     * @return How strongly this lexeme, when interpreted as an infix operator (led), binds to the previous argument.
      */
     int leftBindingPower();
 
