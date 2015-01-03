@@ -10,5 +10,9 @@ import org.jetbrains.annotations.Nullable;
  *
  */
 public interface DynamicLedParseAction<N> {
+    /**
+     * @param match               The match corresponding to the current lexeme
+     * @param currentBindingPower The left binding power of the current token
+     */
     N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser, int currentBindingPower);
 }

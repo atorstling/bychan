@@ -22,7 +22,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     /**
      * Parse upcoming tokens from the stream into an expression, and keep going
-     * until token binding powers drop down to or below the supplied floor. If this
+     * until token binding powers drop down to or below the supplied right binding power. If this
      * feels backwards, remember that weak operands end up higher in the parse tree, consider for instance
      * <code>1*2 + 3 </code> which becomes
      * <pre>
@@ -34,7 +34,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    public N parseExpression(@Nullable N previous, final int powerFloor) {
+    public N parseExpression(@Nullable N previous, final int rightBindingPower) {
         // An expression always starts with a symbol which can qualify as a nud value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -64,16 +64,16 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         // The addition operators led-parser is then called by the top-level expression parser,
         // passing (1*2) into it as the expression parsed so far. It will then proceed to swallow the 3,
         // completing the expression.
-        return parseLoop(first, powerFloor);
+        return parseLoop(first, rightBindingPower);
     }
 
-    private N parseLoop(@NotNull final N currentLeftHandSide, final int powerFloor) {
+    private N parseLoop(@NotNull final N currentLeftHandSide, final int rightBindingPower) {
         Lexeme<N> peekedLexeme = peek();
-        if (peekedLexeme.leftBindingPower() > powerFloor) {
+        if (peekedLexeme.leftBindingPower() > rightBindingPower) {
             //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
             Lexeme<N> takenLexeme = pop();
             N nextExpression = led(currentLeftHandSide, takenLexeme);
-            return parseLoop(nextExpression, powerFloor);
+            return parseLoop(nextExpression, rightBindingPower);
         }
         return currentLeftHandSide;
     }

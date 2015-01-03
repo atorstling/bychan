@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface TokenParserCallback<N> {
     @NotNull
-    N parseExpression(@Nullable N previous, int powerFloor);
+    N parseExpression(@Nullable N previous, int rightBindingPower);
 
     /**
      * Swallow a token of the specified token.
