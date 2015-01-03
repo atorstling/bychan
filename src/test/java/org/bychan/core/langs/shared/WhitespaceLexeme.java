@@ -5,12 +5,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class WhitespaceLexeme<N> implements Lexeme<N> {
-    private final WhitespaceToken<N> type;
+    private final WhitespaceToken<N> token;
     @NotNull
     private final LexingMatch match;
 
-    public WhitespaceLexeme(WhitespaceToken<N> type, @NotNull final LexingMatch match) {
-        this.type = type;
+    public WhitespaceLexeme(WhitespaceToken<N> token, @NotNull final LexingMatch match) {
+        this.token = token;
         this.match = match;
     }
 
@@ -34,7 +34,7 @@ public class WhitespaceLexeme<N> implements Lexeme<N> {
     @NotNull
     @Override
     public Token<N> getToken() {
-        return type;
+        return token;
     }
 
     @NotNull

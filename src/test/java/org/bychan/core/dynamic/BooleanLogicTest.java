@@ -18,7 +18,7 @@ public class BooleanLogicTest {
         DynamicPrefixParseAction<BooleanExpressionNode> parseAction = (previous, match, parser, lbp) -> new VariableNode(match.getText());
         Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser, lbp) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
-            parser.expectSingleToken(rparen.getKey());
+            parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).end()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().end()
@@ -36,7 +36,7 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         TokenDefinition<BooleanExpressionNode> lparen = lb.newToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser, lbp) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
-            parser.expectSingleToken(rparen.getKey());
+            parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
@@ -63,7 +63,7 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> parseResult = l.getLexParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
         ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
-        assertEquals("Parsing failed: 'Expected a token of type 'rparen', but got 'END'' @  position 1:2 (index 1), current token is END and remaining tokens are []", errorMessage.toString());
+        assertEquals("Parsing failed: 'Expected token 'rparen', but got 'END'' @  position 1:2 (index 1), current lexeme is END and remaining lexemes are []", errorMessage.toString());
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {

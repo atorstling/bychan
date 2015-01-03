@@ -71,7 +71,7 @@ public class JsonTest {
             fail("Expected exception");
         } catch (ParsingFailedException e) {
             ParsingFailedInformation actual = e.getParsingFailedInformation();
-            assertEquals("Parsing failed: 'Current token does not support infix parsing' @  position 1:2 (index 1), current token is number_literal(1.5) and remaining tokens are [END]", actual.toString());
+            assertEquals("Parsing failed: 'Current token does not support infix parsing' @  position 1:2 (index 1), current lexeme is number_literal(1.5) and remaining lexemes are [END]", actual.toString());
         }
     }
 

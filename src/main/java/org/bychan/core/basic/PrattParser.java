@@ -95,7 +95,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     public Lexeme<N> swallow(@NotNull Token<N> token) {
         Lexeme<N> next = lexemeStack.pop();
         if (!next.getToken().equals(token)) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + token.getName() + "', but got '" + next + "'", getParsingPosition()));
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected token '" + token.getName() + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
     }

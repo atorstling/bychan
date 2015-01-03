@@ -39,10 +39,10 @@ public interface UserParserCallback<N> {
     N subExpression();
 
     /**
-     * Parse a single token of the type indicated by the token definition passed in.
+     * Parse a single lexeme of the token identified by the given key.
      */
     @NotNull
-    Lexeme<N> expectSingleToken(@NotNull TokenKey tokenKey);
+    Lexeme<N> expectSingleLexeme(@NotNull TokenKey tokenKey);
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean nextIs(@NotNull TokenKey tokenKey);

@@ -28,10 +28,10 @@ class JsonLangBuilder {
                     while (!parser.nextIs(rbracket.getKey())) {
                         expressions.add(parser.subExpression());
                         if (!parser.nextIs(rbracket.getKey())) {
-                            parser.expectSingleToken(comma.getKey());
+                            parser.expectSingleLexeme(comma.getKey());
                         }
                     }
-                    parser.expectSingleToken(rbracket.getKey());
+                    parser.expectSingleLexeme(rbracket.getKey());
                     return new ArrayNode(expressions);
                 }).build();
         TokenDefinition<JsonNode> lcurly = new TokenDefinitionBuilder<>(lb).named("lcurly").matchesString("{")
@@ -39,14 +39,14 @@ class JsonLangBuilder {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
                     while (!parser.nextIs(rcurly.getKey())) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string.getKey());
-                        parser.expectSingleToken(colon.getKey());
+                        parser.expectSingleLexeme(colon.getKey());
                         JsonNode value = parser.subExpression();
                         pairs.put(key, value);
                         if (!parser.nextIs(rcurly.getKey())) {
-                            parser.expectSingleToken(comma.getKey());
+                            parser.expectSingleLexeme(comma.getKey());
                         }
                     }
-                    parser.expectSingleToken(rcurly.getKey());
+                    parser.expectSingleLexeme(rcurly.getKey());
                     return new ObjectNode(pairs);
                 }).build();
 
