@@ -75,6 +75,4 @@ public class Language<N> {
     public String getName() {
         return name;
     }
-
-
 }

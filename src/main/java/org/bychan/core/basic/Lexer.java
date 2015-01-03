@@ -72,9 +72,4 @@ public class Lexer<N> {
             return LexingResult.failure(new LexingFailedInformation(e.getMessage(), e.getLexingPosition()));
         }
     }
-
-    @NotNull
-    public Token<N> getToken(@NotNull String name) {
-        return tokens.stream().filter((t) -> t.getName().equals(name)).findFirst().get();
-    }
 }
