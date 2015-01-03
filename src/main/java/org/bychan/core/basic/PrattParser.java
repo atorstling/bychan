@@ -7,17 +7,17 @@ import java.util.List;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
     @NotNull
-    private final TokenStack<N> tokenStack;
+    private final LexemeStack<N> lexemeStack;
     @NotNull
     private final PositionTracer<N> positionTracer;
 
-    PrattParser(@NotNull List<Token<N>> tokens, @NotNull final PositionTracer<N> positionTracer) {
-        this.tokenStack = new TokenStack<>(tokens);
+    PrattParser(@NotNull List<Lexeme<N>> lexemes, @NotNull final PositionTracer<N> positionTracer) {
+        this.lexemeStack = new LexemeStack<>(lexemes);
         this.positionTracer = positionTracer;
     }
 
-    public PrattParser(@NotNull List<Token<N>> tokens, @NotNull final String originalInputString) {
-        this(tokens, new PositionTracerImpl<>(originalInputString));
+    public PrattParser(@NotNull List<Lexeme<N>> lexemes, @NotNull final String originalInputString) {
+        this(lexemes, new PositionTracerImpl<>(originalInputString));
     }
 
     /**
@@ -42,8 +42,8 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         // "(" as in "start sub-expression", used in for instance "(3)", parses rest of expression with 0 strength,
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
-        Token<N> firstToken = pop();
-        final N first = prefixParse(previous, firstToken);
+        Lexeme<N> firstLexeme = pop();
+        final N first = prefixParse(previous, firstLexeme);
         // When we have the prefix parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the prefix parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -68,18 +68,18 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     }
 
     private N parseLoop(@NotNull final N currentLeftHandSide, final int powerFloor) {
-        Token<N> peekedToken = peek();
-        if (peekedToken.leftBindingPower() > powerFloor) {
+        Lexeme<N> peekedLexeme = peek();
+        if (peekedLexeme.leftBindingPower() > powerFloor) {
             //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
-            Token<N> takenToken = pop();
-            N nextExpression = infixParse(currentLeftHandSide, takenToken);
+            Lexeme<N> takenLexeme = pop();
+            N nextExpression = infixParse(currentLeftHandSide, takenLexeme);
             return parseLoop(nextExpression, powerFloor);
         }
         return currentLeftHandSide;
     }
 
-    private N infixParse(@NotNull N currentLeftHandSide, @NotNull Token<N> takenToken) {
-        InfixParseAction<N> infixParseAction = takenToken.getInfixParser();
+    private N infixParse(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
+        InfixParseAction<N> infixParseAction = takenLexeme.getInfixParser();
         if (infixParseAction == null) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support infix parsing", getParsingPosition()));
         }
@@ -88,36 +88,36 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     public ParsingPosition getParsingPosition() {
-        return positionTracer.getParsingPosition(tokenStack);
+        return positionTracer.getParsingPosition(lexemeStack);
     }
 
     @NotNull
-    public Token<N> swallow(@NotNull TokenType<N> type) {
-        Token<N> next = tokenStack.pop();
-        if (!next.getType().equals(type)) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + type.getName() + "', but got '" + next + "'", getParsingPosition()));
+    public Lexeme<N> swallow(@NotNull Token<N> token) {
+        Lexeme<N> next = lexemeStack.pop();
+        if (!next.getToken().equals(token)) {
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Expected a token of type '" + token.getName() + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
     }
 
     @NotNull
     @Override
-    public N prefixParse(@Nullable N previous, @NotNull Token<N> token) {
-        PrefixParseAction<N> prefixParseAction = token.getPrefixParser();
+    public N prefixParse(@Nullable N previous, @NotNull Lexeme<N> lexeme) {
+        PrefixParseAction<N> prefixParseAction = lexeme.getPrefixParser();
         if (prefixParseAction == null) {
-            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current token does not support prefix parsing", getParsingPosition()));
+            throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current lexeme does not support prefix parsing", getParsingPosition()));
         }
         return prefixParseAction.parse(previous, this);
     }
 
     @NotNull
     @Override
-    public Token<N> peek() {
-        return tokenStack.peek();
+    public Lexeme<N> peek() {
+        return lexemeStack.peek();
     }
 
     @NotNull
-    private Token<N> pop() {
-        return tokenStack.pop();
+    private Lexeme<N> pop() {
+        return lexemeStack.pop();
     }
 }

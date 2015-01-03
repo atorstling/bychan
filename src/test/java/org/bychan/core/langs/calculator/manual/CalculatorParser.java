@@ -1,9 +1,9 @@
 package org.bychan.core.langs.calculator.manual;
 
-import org.bychan.core.langs.calculator.nodes.CalculatorNode;
+import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.Lexer;
 import org.bychan.core.basic.PrattParser;
-import org.bychan.core.basic.Token;
+import org.bychan.core.langs.calculator.nodes.CalculatorNode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 class CalculatorParser {
     @NotNull
     public CalculatorNode parse(@NotNull final String input) {
-        List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.get()).lex(input);
-        return new PrattParser<>(tokens, input).parseExpression(null, 0);
+        List<Lexeme<CalculatorNode>> lexemes = new Lexer<>(CalculatorTokens.get()).lex(input);
+        return new PrattParser<>(lexemes, input).parseExpression(null, 0);
     }
 }

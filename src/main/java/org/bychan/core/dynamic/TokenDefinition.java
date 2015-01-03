@@ -6,8 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.regex.Pattern;
 
 /**
- * The recorded definition of a dynamic token. Utilized to form both {@link DynamicTokenType}s and
- * {@link DynamicToken}s
+ * The recorded definition of a dynamic token. Utilized to form both {@link DynamicToken}s and
+ * {@link DynamicLexeme}s
  *
  *
  */
@@ -19,19 +19,19 @@ public class TokenDefinition<N> {
     @Nullable
     private final DynamicInfixParseAction<N> infixBuilder;
     @NotNull
-    private final String tokenTypeName;
+    private final String tokenName;
     private final boolean parse;
     private final int leftBindingPower;
     private final TokenKey tokenKey;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicPrefixParseAction<N> prefixBuilder, @Nullable final DynamicInfixParseAction<N> infixBuilder, @NotNull final String tokenTypeName, boolean parse, int leftBindingPower) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicPrefixParseAction<N> prefixBuilder, @Nullable final DynamicInfixParseAction<N> infixBuilder, @NotNull final String tokenName, boolean parse, int leftBindingPower) {
         this.pattern = pattern;
         this.prefixBuilder = prefixBuilder;
         this.infixBuilder = infixBuilder;
-        this.tokenTypeName = tokenTypeName;
+        this.tokenName = tokenName;
         this.parse = parse;
         this.leftBindingPower = leftBindingPower;
-        this.tokenKey = new TokenKey(getTokenTypeName());
+        this.tokenKey = new TokenKey(tokenName());
     }
 
     @NotNull
@@ -45,7 +45,7 @@ public class TokenDefinition<N> {
 
     @Override
     public String toString() {
-        return tokenTypeName;
+        return tokenName;
     }
 
     @Nullable
@@ -59,8 +59,8 @@ public class TokenDefinition<N> {
     }
 
     @NotNull
-    public String getTokenTypeName() {
-        return tokenTypeName;
+    public String tokenName() {
+        return tokenName;
     }
 
     public int getLeftBindingPower() {

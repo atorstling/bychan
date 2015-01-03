@@ -1,16 +1,13 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.basic.LexingMatch;
-import org.bychan.core.basic.Token;
-import org.bychan.core.basic.TokenType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
-class MockTokenType implements TokenType<Object> {
+class MockToken implements Token<Object> {
     @NotNull
     @Override
-    public Token<Object> toToken(@NotNull LexingMatch match) {
+    public Lexeme<Object> toLexeme(@NotNull LexingMatch match) {
         throw new IllegalStateException();
     }
 

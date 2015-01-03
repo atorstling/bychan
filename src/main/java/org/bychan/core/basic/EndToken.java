@@ -1,70 +1,37 @@
 package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-/**
- * A token signaling the end of the lexing stream
- *
- *
- */
+import java.util.regex.Pattern;
+
 public class EndToken<N> implements Token<N> {
+
+    private static final EndToken INSTANCE = new EndToken<>();
+
     @NotNull
-    private final LexingMatch lexingMatch;
-
-    public EndToken(@NotNull final LexingMatch lexingMatch) {
-        this.lexingMatch = lexingMatch;
-    }
-
-
-    @Nullable
     @Override
-    public PrefixParseAction<N> getPrefixParser() {
-        return (previous, parser) -> {
-            throw ParsingFailedException.forFailedAfterLexing("Premature end reached", parser);
-        };
+    public Lexeme<N> toLexeme(@NotNull LexingMatch match) {
+        throw new UnsupportedOperationException("End token should not be lexed");
     }
 
-    @Nullable
-    @Override
-    public InfixParseAction<N> getInfixParser() {
-        return null;
-    }
-
-    public int leftBindingPower() {
-        return 0;
-    }
-
-
-    @Override
     @NotNull
-    public TokenType<N> getType() {
-        return EndTokenType.get();
+    @Override
+    public Pattern getPattern() {
+        throw new UnsupportedOperationException("End token should not be lexed");
     }
 
-    @org.jetbrains.annotations.NotNull
     @Override
-    public LexingMatch getMatch() {
-        return lexingMatch;
+    public boolean include() {
+        return true;
+    }
+
+    @NotNull
+    public static <N> EndToken<N> get() {
+        //noinspection unchecked
+        return (EndToken<N>) INSTANCE;
     }
 
     public String toString() {
-        return "END";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EndToken endToken = (EndToken) o;
-
-        return lexingMatch.equals(endToken.lexingMatch);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return lexingMatch.hashCode();
+        return getClass().getSimpleName();
     }
 }

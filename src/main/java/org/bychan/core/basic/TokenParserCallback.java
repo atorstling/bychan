@@ -12,16 +12,16 @@ public interface TokenParserCallback<N> {
     N parseExpression(@Nullable N previous, int powerFloor);
 
     /**
-     * Swallow a token of the specified type.
+     * Swallow a token of the specified token.
      */
     @NotNull
-    Token<N> swallow(@NotNull TokenType<N> type);
+    Lexeme<N> swallow(@NotNull Token<N> token);
 
     @NotNull
-    Token<N> peek();
+    Lexeme<N> peek();
 
     @NotNull
-    N prefixParse(@Nullable N previous, @NotNull Token<N> token);
+    N prefixParse(@Nullable N previous, @NotNull Lexeme<N> lexeme);
 
     @NotNull
     ParsingPosition getParsingPosition();

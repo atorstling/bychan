@@ -1,43 +1,33 @@
 package org.bychan.core.langs.boolexp;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class OrToken implements Token<BooleanExpressionNode> {
+    private static final OrToken INSTANCE = new OrToken();
+
     @NotNull
-    private final LexingMatch match;
-
-    public OrToken(@NotNull final LexingMatch match) {
-        this.match = match;
-    }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
-        return (previous, parser) -> new OrNode(previous, parser.parseExpression(previous, leftBindingPower()));
-    }
-
-    public int leftBindingPower() {
-        return 20;
-    }
-
-
-    @Override
-    @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
-        return OrTokenType.get();
+    public Lexeme<BooleanExpressionNode> toLexeme(@NotNull LexingMatch match) {
+        return new OrLexeme(match);
     }
 
     @NotNull
+    public Pattern getPattern() {
+        return Pattern.compile("\\+");
+    }
+
     @Override
-    public LexingMatch getMatch() {
-        return match;
+    public boolean include() {
+        return true;
+    }
+
+    @NotNull
+    public static OrToken get() {
+        //noinspection unchecked
+        return INSTANCE;
     }
 }

@@ -43,14 +43,14 @@ public class LexParser<N> {
     }
 
     @NotNull
-    private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Token<N>> tokens, @NotNull final String text) {
-        PrattParser<N> parser = new PrattParser<>(tokens, text);
+    private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Lexeme<N>> lexemes, @NotNull final String text) {
+        PrattParser<N> parser = new PrattParser<>(lexemes, text);
         ParseResult<N> parsed = tryParse(() -> parser.parseExpression(previous, 0));
         if (parsed.isSuccess()) {
-            if (!parser.peek().getType().equals(EndTokenType.get())) {
+            if (!parser.peek().getToken().equals(EndToken.get())) {
                 return ParseResult.failure(ParsingFailedInformation.forFailedAfterLexing("The input stream was not completely parsed", parser.getParsingPosition()));
             }
-            parser.swallow(EndTokenType.get());
+            parser.swallow(EndToken.get());
         }
         return parsed;
     }

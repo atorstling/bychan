@@ -1,35 +1,31 @@
 package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 /**
- * A token in the lexing stream.
- *
+ * A token defines how to make certain types of lexemes.
+ * A pattern defines which string segments to match during lexing,
+ * and a factory method makes lexemes out of the resulting matches.
  *
  */
 public interface Token<N> {
-    @Nullable
-    PrefixParseAction<N> getPrefixParser();
-
-    @Nullable
-    InfixParseAction<N> getInfixParser();
-
-
-    /**
-     * @return How strongly this token, when interpreted as an infix operator, binds to the previous argument.
-     */
-    int leftBindingPower();
-
-    /**
-     * Check the type of this token.
-     */
     @NotNull
-    TokenType<N> getType();
+    Lexeme<N> toLexeme(@NotNull final LexingMatch match);
+
+    @NotNull
+    Pattern getPattern();
 
     /**
-     * @return the lexing match which this token originated from
+     * @return whether the lexer should ignore this token or not.
+     * Ignored token will not be part of the lexeme stream which the lexer produces, but they
+     * might still be useful to ignore certain patterns (such as whitespace and comments).
      */
+    boolean include();
+
     @NotNull
-    LexingMatch getMatch();
+    default String getName() {
+        return getClass().getSimpleName();
+    }
 }

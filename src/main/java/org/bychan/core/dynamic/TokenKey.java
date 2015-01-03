@@ -7,10 +7,10 @@ import org.jetbrains.annotations.NotNull;
  */
 class TokenKey {
     @NotNull
-    private final String tokenTypeName;
+    private final String tokenName;
 
-    TokenKey(@NotNull String tokenTypeName) {
-        this.tokenTypeName = tokenTypeName;
+    TokenKey(@NotNull String tokenName) {
+        this.tokenName = tokenName;
     }
 
     @Override
@@ -20,18 +20,18 @@ class TokenKey {
 
         TokenKey tokenKey = (TokenKey) o;
 
-        return tokenTypeName.equals(tokenKey.tokenTypeName);
+        return tokenName.equals(tokenKey.tokenName);
 
     }
 
     @Override
     public int hashCode() {
-        return tokenTypeName.hashCode();
+        return tokenName.hashCode();
     }
 
     @Override
     public String toString() {
-        return "token(" + tokenTypeName + ")";
+        return "token(" + tokenName + ")";
     }
 }
 

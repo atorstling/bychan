@@ -7,23 +7,23 @@ import java.util.List;
 
 public class LexingResult<N> {
     @Nullable
-    private final List<Token<N>> tokens;
+    private final List<Lexeme<N>> lexemes;
     @Nullable
     private final LexingFailedInformation failedInformation;
 
-    private LexingResult(@Nullable List<Token<N>> tokens, @Nullable LexingFailedInformation failedInformation) {
-        if (tokens == null && failedInformation == null) {
+    private LexingResult(@Nullable List<Lexeme<N>> lexemes, @Nullable LexingFailedInformation failedInformation) {
+        if (lexemes == null && failedInformation == null) {
             throw new IllegalArgumentException("Either argument must be present");
         }
-        if (tokens != null && failedInformation != null) {
+        if (lexemes != null && failedInformation != null) {
             throw new IllegalArgumentException("Both arguments cannot be present");
         }
-        this.tokens = tokens;
+        this.lexemes = lexemes;
         this.failedInformation = failedInformation;
     }
 
     boolean isSuccess() {
-        return tokens != null;
+        return lexemes != null;
     }
 
     public boolean isFailure() {
@@ -31,12 +31,12 @@ public class LexingResult<N> {
     }
 
     @NotNull
-    public List<Token<N>> getSuccessValue() {
+    public List<Lexeme<N>> getSuccessValue() {
         if (isFailure()) {
             throw new IllegalStateException("Was failure");
         }
-        assert tokens != null;
-        return tokens;
+        assert lexemes != null;
+        return lexemes;
     }
 
     @NotNull
@@ -52,7 +52,7 @@ public class LexingResult<N> {
         return new LexingResult<>(null, failedInformation);
     }
 
-    public static <N> LexingResult<N> success(List<Token<N>> tokens) {
-        return new LexingResult<>(tokens, null);
+    public static <N> LexingResult<N> success(List<Lexeme<N>> lexemes) {
+        return new LexingResult<>(lexemes, null);
     }
 }

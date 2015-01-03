@@ -1,6 +1,6 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.basic.Token;
+import org.bychan.core.basic.Lexeme;
 import org.junit.Test;
 
 import java.util.List;
@@ -26,8 +26,8 @@ public class DirectEvaluationTest {
                 .addToken(addition)
                 .completeLanguage();
         String expr = "1+3";
-        List<Token<Integer>> tokens = lang.getLexer().lex(expr);
-        assertEquals("[number(1), addition(+), number(3), END]", tokens.toString());
+        List<Lexeme<Integer>> lexemes = lang.getLexer().lex(expr);
+        assertEquals("[number(1), addition(+), number(3), END]", lexemes.toString());
         assertEquals(4, (int) lang.getLexParser().tryParse(0, expr).getRootNode());
 
     }

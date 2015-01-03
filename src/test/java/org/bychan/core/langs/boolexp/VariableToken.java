@@ -1,54 +1,34 @@
 package org.bychan.core.langs.boolexp;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class VariableToken implements Token<BooleanExpressionNode> {
-    @NotNull
-    private final String name;
-    @NotNull
-    private final LexingMatch match;
 
-    private VariableToken(@NotNull final LexingMatch match) {
-        this.match = match;
-        this.name = match.getText();
-        if (!name.matches("[a-z]+")) {
-            throw new IllegalArgumentException("Variable name can only contain lower-case letters, was '" + name + "'");
-        }
+    private static final VariableToken INSTANCE = new VariableToken();
+
+    @NotNull
+    public Lexeme<BooleanExpressionNode> toLexeme(@NotNull LexingMatch match) {
+        return VariableLexeme.valueOf(match);
     }
 
     @NotNull
-    public static  VariableToken valueOf(@NotNull final LexingMatch match) {
-        return new VariableToken(match);
-    }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
-        return (previous, parser) -> new VariableNode(name);
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
-        return null;
-    }
-
-    public int leftBindingPower() {
-        throw new UnsupportedOperationException();
+    public Pattern getPattern() {
+        return Pattern.compile("[a-z]+");
     }
 
     @Override
-    @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
-        return VariableTokenType.get();
+    public boolean include() {
+        return true;
     }
 
     @NotNull
-    @Override
-    public LexingMatch getMatch() {
-        return match;
+    public static VariableToken get() {
+        //noinspection unchecked
+        return INSTANCE;
     }
 }
-

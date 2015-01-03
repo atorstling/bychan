@@ -1,67 +1,56 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class DynamicToken<N> implements Token<N> {
-    private final DynamicTokenType<N> tokenType;
-    @NotNull
-    private final LexingMatch match;
     @NotNull
     private final TokenDefinition<N> def;
     private final DynamicTokenFinder<N> tokenFinder;
-    @Nullable
-    private final DynamicInfixParseAction<N> infixBuilder;
-    @Nullable
-    private final DynamicPrefixParseAction<N> prefixBuilder;
 
-    public DynamicToken(@NotNull final DynamicTokenType<N> tokenType, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
-        this.tokenType = tokenType;
-        this.match = match;
+    public DynamicToken(@NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
-        infixBuilder = def.getInfixBuilder();
-        prefixBuilder = def.getPrefixBuilder();
     }
 
-    @Nullable
-    @Override
-    public PrefixParseAction<N> getPrefixParser() {
-        return prefixBuilder == null ? null : (previous, parser) -> {
-            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return prefixBuilder.parse(previous, match, callback, leftBindingPower());
-        };
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<N> getInfixParser() {
-        return infixBuilder == null ? null : (previous, parser) -> {
-            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return infixBuilder.parse(previous, match, callback, leftBindingPower());
-        };
-    }
-
-    @Override
-    public int leftBindingPower() {
-        return def.getLeftBindingPower();
-    }
-
-    @Override
     @NotNull
-    public TokenType<N> getType() {
-        return tokenType;
+    @Override
+    public Lexeme<N> toLexeme(@NotNull final LexingMatch match) {
+        return new DynamicLexeme<>(this, match, def, tokenFinder);
+    }
+
+    @NotNull
+    @Override
+    public Pattern getPattern() {
+        return def.getPattern();
+    }
+
+    @Override
+    public boolean include() {
+        return def.parse();
+    }
+
+    @NotNull
+    @Override
+    public String getName() {
+        return def.tokenName();
     }
 
     public String toString() {
-        return tokenType.getTokenDefinition().getTokenTypeName() + "(" + match.getText() + ")";
+        return def.getLeftBindingPower() + ":" + getName();
     }
 
     @NotNull
-    @Override
-    public LexingMatch getMatch() {
-        return match;
+    public TokenDefinition<N> getTokenDefinition() {
+        return def;
     }
 
+    @NotNull
+    public TokenKey getKey() {
+        return def.getKey();
+    }
 }

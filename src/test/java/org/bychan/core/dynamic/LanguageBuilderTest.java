@@ -28,6 +28,6 @@ public class LanguageBuilderTest {
         LanguageBuilder<Object> lb = new LanguageBuilder<>();
         TokenDefinition<Object> tokenDefinition = lb.newToken().matchesString("[0-9]+").buildAndAdd();
         lb.completeLanguage();
-        assertEquals("token1", tokenDefinition.getTokenTypeName());
+        assertEquals("token1", tokenDefinition.tokenName());
     }
 }

@@ -9,7 +9,7 @@ public class TokenDefinitionBuilder<N> {
     private DynamicPrefixParseAction<N> prefixBuilder;
     private DynamicInfixParseAction<N> infixBuilder;
     private boolean parsed;
-    private String tokenTypeName;
+    private String tokenName;
     private int leftBindingPower = 1;
     private final LanguageBuilder<N> languageBuilder;
     private TokenKey tokenKey;
@@ -38,10 +38,10 @@ public class TokenDefinitionBuilder<N> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
-        if (tokenTypeName == null) {
-            tokenTypeName = "token" + languageBuilder.increaseUnnamedTokenCounter();
+        if (tokenName == null) {
+            tokenName = "token" + languageBuilder.increaseUnnamedTokenCounter();
         }
-        return new TokenDefinition<>(Pattern.compile(pattern), prefixBuilder, infixBuilder, tokenTypeName, parsed, leftBindingPower);
+        return new TokenDefinition<>(Pattern.compile(pattern), prefixBuilder, infixBuilder, tokenName, parsed, leftBindingPower);
     }
 
     public TokenDefinitionBuilder<N> infixParseAs(DynamicInfixParseAction<N> infixBuilder) {
@@ -55,8 +55,8 @@ public class TokenDefinitionBuilder<N> {
     }
 
     public TokenDefinitionBuilder<N> named(String name) {
-        this.tokenTypeName = name;
-        tokenKey = new TokenKey(tokenTypeName);
+        this.tokenName = name;
+        tokenKey = new TokenKey(tokenName);
         return this;
     }
 

@@ -13,50 +13,50 @@ import java.util.regex.Pattern;
  * A regex sub-pattern-based lexer
  */
 public class Lexer<N> {
-    private final List<TokenType<N>> tokenTypes;
+    private final List<Token<N>> tokens;
 
-    public Lexer(@NotNull final Collection<? extends TokenType<N>> tokenTypes) {
-        this.tokenTypes = new ArrayList<>(tokenTypes);
+    public Lexer(@NotNull final Collection<? extends Token<N>> tokens) {
+        this.tokens = new ArrayList<>(tokens);
     }
 
-    public List<Token<N>> lex(@NotNull final String input) {
-        final List<Token<N>> tokens = new ArrayList<>();
+    public List<Lexeme<N>> lex(@NotNull final String input) {
+        final List<Lexeme<N>> lexemes = new ArrayList<>();
         for (int i = 0; i < input.length(); ) {
             String substring = input.substring(i);
-            Token<N> token = findMatchingToken(i, substring);
-            if (token == null) {
+            Lexeme<N> lexeme = findMatchingToken(i, substring);
+            if (lexeme == null) {
                 throw new LexingFailedException(new LexingPosition(i, substring), "No matching rule for char-range starting at " + i + ": '" + substring + "'");
             }
-            if (token.getType().include()) {
-                tokens.add(token);
+            if (lexeme.getToken().include()) {
+                lexemes.add(lexeme);
             }
-            TokenType<N> tokenType = token.getType();
-            LexingMatch match = token.getMatch();
+            Token<N> token = lexeme.getToken();
+            LexingMatch match = lexeme.getMatch();
             int progress = match.getEndPosition() - match.getStartPosition();
             if (progress < 1) {
-                throw new LexingFailedException(new LexingPosition(i, substring), String.format("Match '%s' for token type '%s' produced token '%s' but did not advance lexing. Aborting.", match, tokenType, token));
+                throw new LexingFailedException(new LexingPosition(i, substring), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
             }
             i += progress;
         }
-        tokens.add(makeEndToken(input));
-        return tokens;
+        lexemes.add(makeEndToken(input));
+        return lexemes;
     }
 
     @NotNull
-    static <N> EndToken<N> makeEndToken(@NotNull String input) {
-        return new EndToken<>(new LexingMatch<>(input.length(), input.length(), "", EndTokenType.get()));
+    static <N> EndLexeme<N> makeEndToken(@NotNull String input) {
+        return new EndLexeme<>(new LexingMatch<>(input.length(), input.length(), "", EndToken.get()));
     }
 
     @Nullable
-    private Token<N> findMatchingToken(final int i, @NotNull final String substring) {
-        for (TokenType<N> tokenType : tokenTypes) {
-            Pattern pattern = tokenType.getPattern();
+    private Lexeme<N> findMatchingToken(final int i, @NotNull final String substring) {
+        for (Token<N> token : tokens) {
+            Pattern pattern = token.getPattern();
             Matcher matcher = pattern.matcher(substring);
             if (matcher.lookingAt()) {
                 int substringStart = matcher.start();
                 int substringEnd = matcher.end();
                 String stringMatch = substring.substring(0, substringEnd);
-                LexingMatch<N> match = new LexingMatch<>(substringStart + i, substringEnd + i, stringMatch, tokenType);
+                LexingMatch<N> match = new LexingMatch<>(substringStart + i, substringEnd + i, stringMatch, token);
                 return match.toToken();
             }
         }
@@ -66,15 +66,15 @@ public class Lexer<N> {
     @NotNull
     public LexingResult<N> tryLex(@NotNull final String text) {
         try {
-            final List<Token<N>> tokens = lex(text);
-            return LexingResult.success(tokens);
+            final List<Lexeme<N>> lexemes = lex(text);
+            return LexingResult.success(lexemes);
         } catch (LexingFailedException e) {
             return LexingResult.failure(new LexingFailedInformation(e.getMessage(), e.getLexingPosition()));
         }
     }
 
     @NotNull
-    public TokenType<N> getToken(@NotNull String name) {
-        return tokenTypes.stream().filter((t) -> t.getName().equals(name)).findFirst().get();
+    public Token<N> getToken(@NotNull String name) {
+        return tokens.stream().filter((t) -> t.getName().equals(name)).findFirst().get();
     }
 }

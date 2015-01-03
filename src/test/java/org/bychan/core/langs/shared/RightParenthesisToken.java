@@ -1,49 +1,37 @@
 package org.bychan.core.langs.shared;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class RightParenthesisToken<N> implements Token<N> {
 
+    private static final RightParenthesisToken INSTANCE = new RightParenthesisToken<>();
+
     @NotNull
-    private final LexingMatch match;
-
-    public RightParenthesisToken(@NotNull final LexingMatch match) {
-        this.match = match;
+    public Lexeme<N> toLexeme(@NotNull LexingMatch match) {
+        return new RightParenthesisLexeme<>(match);
     }
 
-    @Nullable
+    @NotNull
+    public Pattern getPattern() {
+        return Pattern.compile("\\)");
+    }
+
     @Override
-    public PrefixParseAction<N> getPrefixParser() {
-        return null;
+    public boolean include() {
+        return true;
     }
 
-    @Nullable
-    @Override
-    public InfixParseAction<N> getInfixParser() {
-        return null;
-    }
-
-    public int leftBindingPower() {
-        return 0;
+    public static <N> RightParenthesisToken<N> get() {
+        //noinspection unchecked
+        return (RightParenthesisToken<N>) INSTANCE;
     }
 
     public String toString() {
-        return ")";
-    }
-
-
-    @Override
-    @NotNull
-    public TokenType<N> getType() {
-        return RightParenthesisTokenType.get();
-    }
-
-
-    @NotNull
-    @Override
-    public LexingMatch getMatch() {
-        return match;
+        return getClass().getSimpleName();
     }
 }

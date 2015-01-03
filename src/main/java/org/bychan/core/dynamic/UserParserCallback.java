@@ -1,6 +1,6 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.basic.Token;
+import org.bychan.core.basic.Lexeme;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,7 +42,7 @@ public interface UserParserCallback<N> {
      * Parse a single token of the type indicated by the token definition passed in.
      */
     @NotNull
-    Token<N> expectSingleToken(@NotNull TokenKey tokenKey);
+    Lexeme<N> expectSingleToken(@NotNull TokenKey tokenKey);
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean nextIs(@NotNull TokenKey tokenKey);

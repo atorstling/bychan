@@ -1,45 +1,33 @@
 package org.bychan.core.langs.shared;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class WhitespaceToken<N> implements Token<N> {
-    private final WhitespaceTokenType<N> type;
-    @NotNull
-    private final LexingMatch match;
+    private final String pattern;
 
-    public WhitespaceToken(WhitespaceTokenType<N> type, @NotNull final LexingMatch match) {
-        this.type = type;
-        this.match = match;
-    }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<N> getPrefixParser() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<N> getInfixParser() {
-        return null;
-    }
-
-    @Override
-    public int leftBindingPower() {
-        return 0;
+    public WhitespaceToken() {
+        this.pattern = "\\s+";
     }
 
     @NotNull
     @Override
-    public TokenType<N> getType() {
-        return type;
+    public Lexeme<N> toLexeme(@NotNull LexingMatch match) {
+        return new WhitespaceLexeme<>(this, match);
     }
 
     @NotNull
     @Override
-    public LexingMatch getMatch() {
-        return match;
+    public Pattern getPattern() {
+        return Pattern.compile(pattern);
+    }
+
+    @Override
+    public boolean include() {
+        return false;
     }
 }

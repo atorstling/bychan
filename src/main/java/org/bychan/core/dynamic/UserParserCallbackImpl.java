@@ -1,6 +1,6 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.basic.Token;
+import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.TokenParserCallback;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -35,27 +35,27 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public Token<N> expectSingleToken(@NotNull TokenKey tokenKey) {
+    public Lexeme<N> expectSingleToken(@NotNull TokenKey tokenKey) {
         return swallow(tokenKey, parser);
     }
 
     @NotNull
-    private Token<N> swallow(@NotNull TokenKey tokenKey, TokenParserCallback<N> parser) {
-        DynamicTokenType<N> type = tokenFinder.getTokenTypeFor(tokenKey);
+    private Lexeme<N> swallow(@NotNull TokenKey tokenKey, TokenParserCallback<N> parser) {
+        DynamicToken<N> type = tokenFinder.getToken(tokenKey);
         return parser.swallow(type);
     }
 
     @Override
     public boolean nextIs(@NotNull TokenKey tokenKey) {
-        DynamicTokenType<N> expectedType = tokenFinder.getTokenTypeFor(tokenKey);
-        return parser.peek().getType().equals(expectedType);
+        DynamicToken<N> expectedType = tokenFinder.getToken(tokenKey);
+        return parser.peek().getToken().equals(expectedType);
     }
 
     @NotNull
     @Override
     public N parseSingleToken(N previous, @NotNull TokenKey tokenKey) {
-        Token<N> token = swallow(tokenKey, parser);
-        return parser.prefixParse(previous, token);
+        Lexeme<N> lexeme = swallow(tokenKey, parser);
+        return parser.prefixParse(previous, lexeme);
     }
 
     @NotNull

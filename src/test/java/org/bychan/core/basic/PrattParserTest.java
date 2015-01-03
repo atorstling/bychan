@@ -1,14 +1,14 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.langs.calculator.manual.MultiplicationLexeme;
 import org.bychan.core.langs.calculator.manual.MultiplicationNode;
-import org.bychan.core.langs.calculator.manual.MultiplicationToken;
-import org.bychan.core.langs.calculator.manual.NumberToken;
-import org.bychan.core.langs.calculator.manual.SubtractionToken;
+import org.bychan.core.langs.calculator.manual.NumberLexeme;
+import org.bychan.core.langs.calculator.manual.SubtractionLexeme;
 import org.bychan.core.langs.calculator.nodes.CalculatorNode;
 import org.bychan.core.langs.calculator.nodes.NumberNode;
 import org.bychan.core.langs.calculator.nodes.SubtractionNode;
-import org.bychan.core.langs.shared.LeftParenthesisToken;
-import org.bychan.core.langs.shared.RightParenthesisToken;
+import org.bychan.core.langs.shared.LeftParenthesisLexeme;
+import org.bychan.core.langs.shared.RightParenthesisLexeme;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -25,30 +25,30 @@ public class PrattParserTest {
     @Test
     public void singleDigit() {
         String text = "1";
-        List<Token<CalculatorNode>> tokens = Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(createTestMatch(text)),
+        List<Lexeme<CalculatorNode>> lexemes = Arrays.<Lexeme<CalculatorNode>>asList(
+                new NumberLexeme(createTestMatch(text)),
                 createTestEndToken());
-        PrattParser<CalculatorNode> p = createParser(tokens);
+        PrattParser<CalculatorNode> p = createParser(lexemes);
         CalculatorNode rootNode = p.parseExpression(null, 0);
         assertEquals(new NumberNode(1), rootNode);
     }
 
     @NotNull
-    private <N> PrattParser<N> createParser(List<Token<N>> tokens) {
+    private <N> PrattParser<N> createParser(List<Lexeme<N>> lexemes) {
         //noinspection unchecked
         PositionTracer<N> positionTracer = mock(PositionTracer.class);
         ParsingPosition parsingPosition = mock(ParsingPosition.class);
         when(parsingPosition.toString()).thenReturn("mock position");
         when(positionTracer.getParsingPosition(any())).thenReturn(parsingPosition);
-        return new PrattParser<>(tokens, positionTracer);
+        return new PrattParser<>(lexemes, positionTracer);
     }
 
-    private EndToken createTestEndToken() {
-        return new EndToken(new LexingMatch<>(7, 8, "", EndTokenType.get()));
+    private EndLexeme createTestEndToken() {
+        return new EndLexeme(new LexingMatch<>(7, 8, "", EndToken.get()));
     }
 
     private LexingMatch createTestMatch(String text) {
-        return new LexingMatch<>(0, 1, text, new MockTokenType());
+        return new LexingMatch<>(0, 1, text, new MockToken());
     }
 
     @NotNull
@@ -58,10 +58,10 @@ public class PrattParserTest {
 
     @Test
     public void subtraction() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(createTestMatch("1")),
-                new SubtractionToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new NumberLexeme(createTestMatch("1")),
+                new SubtractionLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
@@ -69,10 +69,10 @@ public class PrattParserTest {
 
     @Test
     public void paranthesis() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new LeftParenthesisToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
-                new RightParenthesisToken(nextMatch()),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new LeftParenthesisLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
+                new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         assertEquals(new NumberNode(2), rootNode);
@@ -80,14 +80,14 @@ public class PrattParserTest {
 
     @Test
     public void ambiguous() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new LeftParenthesisToken(nextMatch()),
-                new NumberToken(createTestMatch("1")),
-                new SubtractionToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
-                new RightParenthesisToken(nextMatch()),
-                new SubtractionToken(nextMatch()),
-                new NumberToken(createTestMatch("3")),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new LeftParenthesisLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("1")),
+                new SubtractionLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
+                new RightParenthesisLexeme(nextMatch()),
+                new SubtractionLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         SubtractionNode previous = new SubtractionNode(new NumberNode(1), new NumberNode(2));
@@ -97,14 +97,14 @@ public class PrattParserTest {
 
     @Test
     public void ambiguous2() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(createTestMatch("1")),
-                new SubtractionToken(nextMatch()),
-                new LeftParenthesisToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
-                new SubtractionToken(nextMatch()),
-                new NumberToken(createTestMatch("3")),
-                new RightParenthesisToken(nextMatch()),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new NumberLexeme(createTestMatch("1")),
+                new SubtractionLexeme(nextMatch()),
+                new LeftParenthesisLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
+                new SubtractionLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("3")),
+                new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         NumberNode previous = new NumberNode(1);
@@ -114,12 +114,12 @@ public class PrattParserTest {
 
     @Test
     public void priority() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(createTestMatch("1")),
-                new SubtractionToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
-                new MultiplicationToken(nextMatch()),
-                new NumberToken(createTestMatch("3")),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new NumberLexeme(createTestMatch("1")),
+                new SubtractionLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
+                new MultiplicationLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         NumberNode previous = new NumberNode(1);
@@ -129,12 +129,12 @@ public class PrattParserTest {
 
     @Test
     public void priorityReverse() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(createTestMatch("1")),
-                new MultiplicationToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
-                new SubtractionToken(nextMatch()),
-                new NumberToken(createTestMatch("3")),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new NumberLexeme(createTestMatch("1")),
+                new MultiplicationLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
+                new SubtractionLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
@@ -144,12 +144,12 @@ public class PrattParserTest {
 
     @Test
     public void multipleSameOp() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new NumberToken(createTestMatch("1")),
-                new MultiplicationToken(nextMatch()),
-                new NumberToken(createTestMatch("2")),
-                new MultiplicationToken(nextMatch()),
-                new NumberToken(createTestMatch("3")),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new NumberLexeme(createTestMatch("1")),
+                new MultiplicationLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("2")),
+                new MultiplicationLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
         MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
@@ -159,34 +159,34 @@ public class PrattParserTest {
 
     @Test
     public void unclosedParenthesis() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new LeftParenthesisToken(nextMatch()),
-                new NumberToken(createTestMatch("1")),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new LeftParenthesisLexeme(nextMatch()),
+                new NumberLexeme(createTestMatch("1")),
                 createTestEndToken()));
         try {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Expected a token of type 'RightParenthesisTokenType', but got 'END'' @ mock position", e.getParsingFailedInformation().toString());
+            assertEquals("Parsing failed: 'Expected a token of type 'RightParenthesisToken', but got 'END'' @ mock position", e.getParsingFailedInformation().toString());
         }
     }
 
     @Test
     public void wrongOrderParenthesis() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
-                new RightParenthesisToken(nextMatch()),
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+                new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
         try {
             p.parseExpression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Current token does not support prefix parsing' @ mock position", e.getMessage());
+            assertEquals("Parsing failed: 'Current lexeme does not support prefix parsing' @ mock position", e.getMessage());
         }
     }
 
     @Test
     public void empty() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Token<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
                 createTestEndToken()));
         try {
             p.parseExpression(null, 0);
@@ -198,18 +198,18 @@ public class PrattParserTest {
 
     @Test
     public void failsWhenInfixNotSupported() {
-        Token first = mock(Token.class);
+        Lexeme first = mock(Lexeme.class);
         when(first.toString()).thenReturn("firstToken");
         PrefixParseAction prefixParseAction = mock(PrefixParseAction.class);
         //noinspection unchecked
         when(prefixParseAction.parse(any(), any())).thenReturn("prefixParsingResult");
         when(first.getPrefixParser()).thenReturn(prefixParseAction);
 
-        Token second = mock(Token.class);
+        Lexeme second = mock(Lexeme.class);
         when(second.toString()).thenReturn("secondToken");
         when(second.getInfixParser()).thenReturn(null);
         when(second.leftBindingPower()).thenReturn(1);
-        when(second.getType()).thenReturn(mock(TokenType.class));
+        when(second.getToken()).thenReturn(mock(Token.class));
         //noinspection unchecked
         LexingMatch<Object> match = mock(LexingMatch.class);
         when(match.getStartPosition()).thenReturn(1);
@@ -226,20 +226,20 @@ public class PrattParserTest {
 
     @Test
     public void failsWhenPrefixNotSupported() {
-        Token token = mock(Token.class);
-        when(token.getPrefixParser()).thenReturn(null);
-        when(token.toString()).thenReturn("bleargh");
+        Lexeme lexeme = mock(Lexeme.class);
+        when(lexeme.getPrefixParser()).thenReturn(null);
+        when(lexeme.toString()).thenReturn("bleargh");
         //noinspection unchecked
         LexingMatch<Object> match = mock(LexingMatch.class);
         when(match.getStartPosition()).thenReturn(1);
-        when(token.getMatch()).thenReturn(match);
-        when(token.getType()).thenReturn(mock(TokenType.class));
-        PrattParser<Object> p = createParser(Arrays.asList(token));
+        when(lexeme.getMatch()).thenReturn(match);
+        when(lexeme.getToken()).thenReturn(mock(Token.class));
+        PrattParser<Object> p = createParser(Arrays.asList(lexeme));
         try {
             p.parseExpression(null, 0);
             fail("Expected exception");
         } catch(ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Current token does not support prefix parsing' @ mock position", e.getMessage());
+            assertEquals("Parsing failed: 'Current lexeme does not support prefix parsing' @ mock position", e.getMessage());
         }
     }
 }

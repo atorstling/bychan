@@ -1,53 +1,33 @@
 package org.bychan.core.langs.calculator.manual;
 
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.bychan.core.langs.calculator.nodes.CalculatorNode;
-import org.bychan.core.langs.calculator.nodes.SubtractionNode;
-import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class SubtractionToken implements Token<CalculatorNode> {
+    private static final SubtractionToken INSTANCE = new SubtractionToken();
+
     @NotNull
-    private final LexingMatch match;
-
-    public SubtractionToken(@NotNull final LexingMatch match) {
-        this.match = match;
-    }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<CalculatorNode> getPrefixParser() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<CalculatorNode> getInfixParser() {
-        return (previous, parser) -> {
-            CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
-            return new SubtractionNode(previous, right);
-        };
+    public Lexeme<CalculatorNode> toLexeme(@NotNull LexingMatch match) {
+        return new SubtractionLexeme(match);
     }
 
     @NotNull
-    @Override
-    public LexingMatch getMatch() {
-        return match;
+    public Pattern getPattern() {
+        return Pattern.compile("-");
     }
-
-    public int leftBindingPower() {
-        return 10;
-    }
-
-    public String toString() {
-        return "-";
-    }
-
 
     @Override
-    @NotNull
-    public TokenType<CalculatorNode> getType() {
-        return SubtractionTokenType.get();
+    public boolean include() {
+        return true;
     }
 
+    public static SubtractionToken get() {
+        //noinspection unchecked
+        return INSTANCE;
+    }
 }

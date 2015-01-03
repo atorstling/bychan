@@ -1,45 +1,34 @@
 package org.bychan.core.langs.boolexp;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class AndToken implements Token<BooleanExpressionNode> {
-    private final LexingMatch match;
 
-    public AndToken(@NotNull final LexingMatch match) {
-        this.match = match;
-    }
+    private static final AndToken INSTANCE = new AndToken();
 
-    @Nullable
-    @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
-        return (previous, parser) -> {
-            BooleanExpressionNode right = parser.parseExpression(previous, leftBindingPower());
-            return new AndNode(previous, right);
-        };
-    }
-
-    public int leftBindingPower() {
-        return 10;
-    }
-
-    @Override
     @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
-        return AndTokenType.get();
+    public Lexeme<BooleanExpressionNode> toLexeme(@NotNull LexingMatch match) {
+        return new AndLexeme(match);
     }
 
-    @org.jetbrains.annotations.NotNull
+    @NotNull
+    public Pattern getPattern() {
+        return Pattern.compile("\\*");
+    }
+
     @Override
-    public LexingMatch getMatch() {
-        return match;
+    public boolean include() {
+        return true;
+    }
+
+    @NotNull
+    public static AndToken get() {
+        //noinspection unchecked
+        return INSTANCE;
     }
 }
-

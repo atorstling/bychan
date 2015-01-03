@@ -7,11 +7,11 @@ public class ParsingPosition {
     @NotNull
     private final TextPosition textPosition;
     @NotNull
-    private final TokenStack<?> tokenStack;
+    private final LexemeStack<?> lexemeStack;
 
-    public ParsingPosition(@NotNull TextPosition textPosition, @NotNull TokenStack<?> tokenStack) {
+    public ParsingPosition(@NotNull TextPosition textPosition, @NotNull LexemeStack<?> lexemeStack) {
         this.textPosition = textPosition;
-        this.tokenStack = tokenStack;
+        this.lexemeStack = lexemeStack;
     }
 
     @Override
@@ -21,21 +21,21 @@ public class ParsingPosition {
 
         ParsingPosition that = (ParsingPosition) o;
 
-        return textPosition.equals(that.textPosition) && tokenStack.equals(that.tokenStack);
+        return textPosition.equals(that.textPosition) && lexemeStack.equals(that.lexemeStack);
 
     }
 
     @Override
     public int hashCode() {
         int result = textPosition.hashCode();
-        result = 31 * result + tokenStack.hashCode();
+        result = 31 * result + lexemeStack.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         return " position " + textPosition +
-                ", current token is " + tokenStack.previous() + " and remaining tokens are " + tokenStack.remaining();
+                ", current token is " + lexemeStack.previous() + " and remaining tokens are " + lexemeStack.remaining();
     }
 
     @NotNull

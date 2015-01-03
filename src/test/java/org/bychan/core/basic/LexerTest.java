@@ -1,13 +1,13 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.langs.calculator.manual.CalculatorTokenTypes;
-import org.bychan.core.langs.calculator.manual.NumberToken;
-import org.bychan.core.langs.calculator.manual.NumberTokenType;
-import org.bychan.core.langs.calculator.manual.SubtractionToken;
-import org.bychan.core.langs.calculator.nodes.CalculatorNode;
-import org.bychan.core.langs.shared.LeftParenthesisToken;
-import org.bychan.core.langs.shared.RightParenthesisToken;
 import junit.framework.Assert;
+import org.bychan.core.langs.calculator.manual.CalculatorTokens;
+import org.bychan.core.langs.calculator.manual.NumberLexeme;
+import org.bychan.core.langs.calculator.manual.NumberToken;
+import org.bychan.core.langs.calculator.manual.SubtractionLexeme;
+import org.bychan.core.langs.calculator.nodes.CalculatorNode;
+import org.bychan.core.langs.shared.LeftParenthesisLexeme;
+import org.bychan.core.langs.shared.RightParenthesisLexeme;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -22,19 +22,19 @@ import static org.junit.Assert.fail;
 public class LexerTest {
     @Test
     public void calculatorTest() {
-        List<Token<CalculatorNode>> tokens = new Lexer<>(CalculatorTokenTypes.get()).lex("(1 -) ");
-        assertEquals(tokens.toString(), 5, tokens.size());
-        assertTrue(tokens.get(0) instanceof LeftParenthesisToken);
-        Assert.assertEquals(new NumberToken(new LexingMatch<>(0, 1, "1", NumberTokenType.get())), tokens.get(1));
-        assertTrue(tokens.get(2) instanceof SubtractionToken);
-        assertTrue(tokens.get(3) instanceof RightParenthesisToken);
-        assertTrue(tokens.get(4) instanceof EndToken);
+        List<Lexeme<CalculatorNode>> lexemes = new Lexer<>(CalculatorTokens.get()).lex("(1 -) ");
+        assertEquals(lexemes.toString(), 5, lexemes.size());
+        assertTrue(lexemes.get(0) instanceof LeftParenthesisLexeme);
+        Assert.assertEquals(new NumberLexeme(new LexingMatch<>(0, 1, "1", NumberToken.get())), lexemes.get(1));
+        assertTrue(lexemes.get(2) instanceof SubtractionLexeme);
+        assertTrue(lexemes.get(3) instanceof RightParenthesisLexeme);
+        assertTrue(lexemes.get(4) instanceof EndLexeme);
     }
 
     @Test
     public void stopsAtUnknownCharacters() {
         try {
-            new Lexer<>(CalculatorTokenTypes.get()).lex("1;1");
+            new Lexer<>(CalculatorTokens.get()).lex("1;1");
             fail("expected exception");
         } catch (LexingFailedException e) {
             assertEquals("No matching rule for char-range starting at 1: ';1'", e.getMessage());
@@ -44,7 +44,7 @@ public class LexerTest {
     @Test
     public void stopsAtUnknownCharactersAtStart() {
         try {
-            new Lexer<>(CalculatorTokenTypes.get()).lex(";1");
+            new Lexer<>(CalculatorTokens.get()).lex(";1");
             fail("expected exception");
         } catch (LexingFailedException e) {
             assertEquals("No matching rule for char-range starting at 0: ';1'", e.getMessage());
@@ -54,7 +54,7 @@ public class LexerTest {
     @Test
     public void stopsAtUnknownCharactersAtEnd() {
         try {
-            new Lexer<>(CalculatorTokenTypes.get()).lex("1;");
+            new Lexer<>(CalculatorTokens.get()).lex("1;");
             fail("expected exception");
         } catch (LexingFailedException e) {
             assertEquals("No matching rule for char-range starting at 1: ';'", e.getMessage());
@@ -64,7 +64,7 @@ public class LexerTest {
     @Test
     public void stopsAtUnknownCharactersAlone() {
         try {
-            new Lexer<>(CalculatorTokenTypes.get()).lex(";");
+            new Lexer<>(CalculatorTokens.get()).lex(";");
             fail("expected exception");
         } catch (LexingFailedException e) {
             assertEquals("No matching rule for char-range starting at 0: ';'", e.getMessage());
@@ -73,7 +73,7 @@ public class LexerTest {
 
     @Test
     public void abortOnMatchWithoutProgress() {
-        Lexer<Integer> l = new Lexer<>(Collections.singleton(new MatchAllTokenType()));
+        Lexer<Integer> l = new Lexer<>(Collections.singleton(new MatchAllToken()));
         try {
             l.lex("a");
         } catch (LexingFailedException e) {
@@ -82,11 +82,11 @@ public class LexerTest {
         }
     }
 
-    private static class MatchAllTokenType implements TokenType<Integer> {
+    private static class MatchAllToken implements Token<Integer> {
         @NotNull
         @Override
-        public Token<Integer> toToken(@NotNull LexingMatch match) {
-            return new LeftParenthesisToken<>(match);
+        public Lexeme<Integer> toLexeme(@NotNull LexingMatch match) {
+            return new LeftParenthesisLexeme<>(match);
         }
 
         @NotNull

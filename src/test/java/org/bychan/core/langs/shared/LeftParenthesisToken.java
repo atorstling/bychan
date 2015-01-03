@@ -1,52 +1,30 @@
 package org.bychan.core.langs.shared;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class LeftParenthesisToken<N> implements Token<N> {
 
     @NotNull
-    private final LexingMatch match;
-
-    public LeftParenthesisToken(@NotNull final LexingMatch match) {
-        this.match = match;
+    public Lexeme<N> toLexeme(@NotNull LexingMatch match) {
+        return new LeftParenthesisLexeme<>(match);
     }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<N> getPrefixParser() {
-        return (previous, parser) -> {
-            N expression = parser.parseExpression(previous, 0);
-            parser.swallow(RightParenthesisTokenType.<N>get());
-            return expression;
-        };
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<N> getInfixParser() {
-        return null;
-    }
-
-    public int leftBindingPower() {
-        throw new UnsupportedOperationException();
-    }
-
-    public String toString() {
-        return "(";
-    }
-
-    @Override
-    @NotNull
-    public TokenType<N> getType() {
-        return LeftParenthesisTokenType.get();
-    }
-
 
     @NotNull
+    public Pattern getPattern() {
+        return Pattern.compile("\\(");
+    }
+
     @Override
-    public LexingMatch getMatch() {
-        return match;
+    public boolean include() {
+        return true;
+    }
+
+    public static <N> LeftParenthesisToken<N> get() {
+        return new LeftParenthesisToken<>();
     }
 }

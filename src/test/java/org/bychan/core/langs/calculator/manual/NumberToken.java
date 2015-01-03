@@ -1,73 +1,33 @@
 package org.bychan.core.langs.calculator.manual;
 
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.bychan.core.langs.calculator.nodes.CalculatorNode;
-import org.bychan.core.langs.calculator.nodes.NumberNode;
-import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class NumberToken implements Token<CalculatorNode> {
-    @NotNull
-    private final LexingMatch match;
+    private static final NumberToken INSTANCE = new NumberToken();
 
-
-    @Override
     @NotNull
-    public TokenType<CalculatorNode> getType() {
-        return NumberTokenType.get();
+    public Lexeme<CalculatorNode> toLexeme(@NotNull LexingMatch match) {
+        return NumberLexeme.valueOf(match);
     }
 
     @NotNull
-    @Override
-    public LexingMatch getMatch() {
-        return match;
-    }
-
-    private final int value;
-
-    public NumberToken(@NotNull LexingMatch match) {
-        this.match = match;
-        this.value = Integer.parseInt(match.getText());
-    }
-
-    public static  Token<CalculatorNode> valueOf(@NotNull final LexingMatch match) {
-        return new NumberToken(match);
+    public Pattern getPattern() {
+        return Pattern.compile("\\d+");
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        NumberToken that = (NumberToken) o;
-
-        return value == that.value;
-
+    public boolean include() {
+        return true;
     }
 
-    @Override
-    public int hashCode() {
-        return value;
+    public static NumberToken get() {
+        //noinspection unchecked
+        return INSTANCE;
     }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<CalculatorNode> getPrefixParser() {
-        return (previous, parser) -> new NumberNode(value);
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<CalculatorNode> getInfixParser() {
-        return null;
-    }
-
-    public int leftBindingPower() {
-        throw new UnsupportedOperationException();
-    }
-
-    public String toString() {
-        return String.valueOf(value);
-    }
-
 }

@@ -1,43 +1,33 @@
 package org.bychan.core.langs.boolexp;
 
-import org.bychan.core.basic.*;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class NotToken implements Token<BooleanExpressionNode> {
 
+    private static final NotToken INSTANCE = new NotToken();
+
     @NotNull
-    private final LexingMatch match;
-
-    public NotToken(@NotNull LexingMatch match) {
-        this.match = match;
-    }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<BooleanExpressionNode> getPrefixParser() {
-        return (previous, parser) -> new NotNode(parser.parseExpression(previous, leftBindingPower()));
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<BooleanExpressionNode> getInfixParser() {
-        return null;
-    }
-
-    public int leftBindingPower() {
-        return 1;
-    }
-
-    @Override
-    @NotNull
-    public TokenType<BooleanExpressionNode> getType() {
-        return NotTokenType.get();
+    public Lexeme<BooleanExpressionNode> toLexeme(@NotNull LexingMatch match) {
+        return new NotLexeme(match);
     }
 
     @NotNull
+    public Pattern getPattern() {
+        return Pattern.compile("!");
+    }
+
     @Override
-    public LexingMatch getMatch() {
-        return match;
+    public boolean include() {
+        return true;
+    }
+
+    public static NotToken get() {
+        //noinspection unchecked
+        return INSTANCE;
     }
 }

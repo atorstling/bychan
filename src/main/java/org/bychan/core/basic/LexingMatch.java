@@ -7,9 +7,9 @@ import java.util.regex.Matcher;
 /**
  * The result of a lexing match.
  * <p>
- * When the lexer finds a piece of the input text which matches a particular {@link org.bychan.core.basic.TokenType} it
+ * When the lexer finds a piece of the input text which matches a particular {@link Token} it
  * makes a {@link org.bychan.core.basic.LexingMatch} to describe the match: The matching text fragment, it's location and the
- * the originating {@link TokenType}.
+ * the originating {@link Token}.
  * </p>
  */
 public class LexingMatch<N> {
@@ -19,13 +19,13 @@ public class LexingMatch<N> {
     @NotNull
     private final String text;
     @NotNull
-    private final TokenType<N> tokenType;
+    private final Token<N> token;
 
-    public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final TokenType<N> tokenType) {
+    public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final Token<N> token) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.text = text;
-        this.tokenType = tokenType;
+        this.token = token;
     }
 
     @NotNull
@@ -70,7 +70,7 @@ public class LexingMatch<N> {
 
     @NotNull
     public String group(int i) {
-        Matcher matcher = tokenType.getPattern().matcher(text);
+        Matcher matcher = token.getPattern().matcher(text);
         boolean matches = matcher.matches();
         if (!matches) {
             throw new IllegalStateException();
@@ -79,7 +79,7 @@ public class LexingMatch<N> {
     }
 
     @NotNull
-    public Token<N> toToken() {
-        return tokenType.toToken(this);
+    public Lexeme<N> toToken() {
+        return token.toLexeme(this);
     }
 }

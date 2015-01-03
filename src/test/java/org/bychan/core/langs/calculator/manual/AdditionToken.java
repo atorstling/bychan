@@ -1,52 +1,33 @@
 package org.bychan.core.langs.calculator.manual;
 
-
-import org.bychan.core.langs.calculator.nodes.AdditionNode;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.LexingMatch;
+import org.bychan.core.basic.Token;
 import org.bychan.core.langs.calculator.nodes.CalculatorNode;
-import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 public class AdditionToken implements Token<CalculatorNode> {
+    private static final AdditionToken INSTANCE = new AdditionToken();
+
     @NotNull
-    private final LexingMatch match;
-
-    public AdditionToken(@NotNull final LexingMatch match) {
-        this.match = match;
-    }
-
-    @Nullable
-    @Override
-    public PrefixParseAction<CalculatorNode> getPrefixParser() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public InfixParseAction<CalculatorNode> getInfixParser() {
-        return (previous, parser) -> {
-            CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
-            return new AdditionNode(previous, right);
-        };
-    }
-
-    public int leftBindingPower() {
-        return 10;
-    }
-
-    public String toString() {
-        return "+";
-    }
-
-    @Override
-    @NotNull
-    public TokenType<CalculatorNode> getType() {
-        return AdditionTokenType.get();
+    public Lexeme<CalculatorNode> toLexeme(@NotNull LexingMatch match) {
+        return new AdditionLexeme(match);
     }
 
     @NotNull
+    public Pattern getPattern() {
+        return Pattern.compile("\\+");
+    }
+
     @Override
-    public LexingMatch getMatch() {
-        return match;
+    public boolean include() {
+        return true;
+    }
+
+    public static AdditionToken get() {
+        //noinspection unchecked
+        return INSTANCE;
     }
 }

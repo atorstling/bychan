@@ -14,14 +14,14 @@ public class PositionTracerImpl<N> implements PositionTracer<N> {
 
     @NotNull
     @Override
-    public ParsingPosition getParsingPosition(@NotNull TokenStack<N> tokenStack) {
-        Token<N> current = tokenStack.previous();
+    public ParsingPosition getParsingPosition(@NotNull LexemeStack<N> lexemeStack) {
+        Lexeme<N> current = lexemeStack.previous();
         final TextPosition textPosition = getTextPosition(current);
-        return new ParsingPosition(textPosition, tokenStack);
+        return new ParsingPosition(textPosition, lexemeStack);
     }
 
     @NotNull
-    private TextPosition getTextPosition(@Nullable Token<N> current) {
+    private TextPosition getTextPosition(@Nullable Lexeme<N> current) {
         if (originalInputString.isEmpty()) {
             return new TextPosition(0,1,1);
         }
@@ -29,14 +29,14 @@ public class PositionTracerImpl<N> implements PositionTracer<N> {
         return StringUtils.getTextPosition(originalInputString, positionToUse);
     }
 
-    private int getPositionToUse(@Nullable Token<N> current) {
+    private int getPositionToUse(@Nullable Lexeme<N> current) {
         //Null means that we haven't started parsing yet. In this case we use the first string position.
         if (current == null) {
             return 0;
         }
         final int currentPosition = current.getMatch().getStartPosition();
         if (currentPosition == originalInputString.length()) {
-            assert current.getType().equals(EndTokenType.get());
+            assert current.getToken().equals(EndToken.get());
             //If we are at the END token (past the input length), use the last position.
             return originalInputString.length() -1;
         }

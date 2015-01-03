@@ -1,8 +1,8 @@
 package org.bychan.core.langs.boolexp;
 
-import org.bychan.core.basic.EndToken;
+import org.bychan.core.basic.EndLexeme;
+import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.Lexer;
-import org.bychan.core.basic.Token;
 import org.junit.Test;
 
 import java.util.List;
@@ -15,11 +15,11 @@ public class BooleanExpressionParserTest {
     @Test
     public void lexing() {
         Lexer<BooleanExpressionNode> lexer = new Lexer<>(BooleanExpressionTokens.<BooleanSymbolTable>get());
-        List<Token<BooleanExpressionNode>> tokenStream = lexer.lex("a + b");
-        assertTrue(tokenStream.get(0) instanceof VariableToken);
-        assertTrue(tokenStream.get(1) instanceof OrToken);
-        assertTrue(tokenStream.get(2) instanceof VariableToken);
-        assertTrue(tokenStream.get(3) instanceof EndToken);
+        List<Lexeme<BooleanExpressionNode>> lexemeStream = lexer.lex("a + b");
+        assertTrue(lexemeStream.get(0) instanceof VariableLexeme);
+        assertTrue(lexemeStream.get(1) instanceof OrLexeme);
+        assertTrue(lexemeStream.get(2) instanceof VariableLexeme);
+        assertTrue(lexemeStream.get(3) instanceof EndLexeme);
     }
 
     @Test

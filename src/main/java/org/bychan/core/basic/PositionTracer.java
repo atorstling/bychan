@@ -10,5 +10,5 @@ import org.jetbrains.annotations.NotNull;
  */
 interface PositionTracer<N> {
     @NotNull
-    ParsingPosition getParsingPosition(@NotNull TokenStack<N> tokenStack);
+    ParsingPosition getParsingPosition(@NotNull LexemeStack<N> lexemeStack);
 }
