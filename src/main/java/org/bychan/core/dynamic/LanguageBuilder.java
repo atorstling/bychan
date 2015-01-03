@@ -20,6 +20,10 @@ public class LanguageBuilder<N> {
      * tracked by this counter.
      */
     private int currentLeftBindingPower;
+    /**
+     * Counter which numbers unnamed tokens
+     */
+    private int unnamedTokenCounter;
 
     public LanguageBuilder() {
         this.tokens = new ArrayList<>();
@@ -55,5 +59,9 @@ public class LanguageBuilder<N> {
 
     private TokenDefinitionBuilder<N> newTokenInternal() {
         return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLeftBindingPower++);
+    }
+
+    public int increaseUnnamedTokenCounter() {
+        return ++unnamedTokenCounter;
     }
 }

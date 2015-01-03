@@ -74,7 +74,7 @@ public class Lexer<N> {
     }
 
     @NotNull
-    public TokenType<N> getTokenType(@NotNull String name) {
+    public TokenType<N> getToken(@NotNull String name) {
         return tokenTypes.stream().filter((t) -> t.getName().equals(name)).findFirst().get();
     }
 }

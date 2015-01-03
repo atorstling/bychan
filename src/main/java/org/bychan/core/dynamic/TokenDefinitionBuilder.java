@@ -38,6 +38,9 @@ public class TokenDefinitionBuilder<N> {
         if (pattern == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
+        if (tokenTypeName == null) {
+            tokenTypeName = "token" + languageBuilder.increaseUnnamedTokenCounter();
+        }
         return new TokenDefinition<>(Pattern.compile(pattern), prefixBuilder, infixBuilder, tokenTypeName, parsed, leftBindingPower);
     }
 
@@ -73,7 +76,7 @@ public class TokenDefinitionBuilder<N> {
     }
 
     @NotNull
-    public TokenDefinition<N> completeTokenAndPause() {
+    public TokenDefinition<N> buildAndAdd() {
         TokenDefinition<N> result = build();
         languageBuilder.addToken(result);
         return result;

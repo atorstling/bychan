@@ -14,7 +14,7 @@ public class BooleanLogicTest {
     @Test
     public void terserSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
-        final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").completeTokenAndPause();
+        final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").buildAndAdd();
         //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
         DynamicPrefixParseAction<BooleanExpressionNode> parseAction = (previous, match, parser, lbp) -> new VariableNode(match.getText());
         Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser, lbp) -> {
