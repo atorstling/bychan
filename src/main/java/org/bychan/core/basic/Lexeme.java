@@ -5,8 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * A lexeme in the lexing stream.
- *
- *
  */
 public interface Lexeme<N> {
     @Nullable
@@ -17,18 +15,18 @@ public interface Lexeme<N> {
 
 
     /**
-     * @return How strongly this token, when interpreted as an infix operator, binds to the previous argument.
+     * @return How strongly this lexeme, when interpreted as an infix operator, binds to the previous argument.
      */
     int leftBindingPower();
 
     /**
-     * Check the type of this token.
+     * Get the token of this lexeme.
      */
     @NotNull
     Token<N> getToken();
 
     /**
-     * @return the lexing match which this token originated from
+     * @return the lexing match which this lexeme originated from
      */
     @NotNull
     LexingMatch getMatch();
