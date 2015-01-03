@@ -1,6 +1,9 @@
 package org.bychan.core.dynamic.json;
 
-import org.bychan.core.dynamic.*;
+import org.bychan.core.dynamic.Language;
+import org.bychan.core.dynamic.LanguageBuilder;
+import org.bychan.core.dynamic.TokenDefinition;
+import org.bychan.core.dynamic.TokenDefinitionBuilder;
 import org.bychan.core.dynamic.json.nodes.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +23,7 @@ class JsonLangBuilder {
         TokenDefinition<JsonNode> numberLiteral = numberLiteral(lb);
         TokenDefinition<JsonNode> whitespace = lb.newToken().named("whitespace").ignoredWhenParsing().matchesWhitespace().build();
         TokenDefinition<JsonNode> lbracket = lb.newToken().named("lbracket").matchesString("[")
-                .prefixParseAs((previous, match, parser) -> {
+                .prefixParseAs((previous, match, parser, lbp) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(rbracket.getKey())) {
                         expressions.add(parser.subExpression());
@@ -32,7 +35,7 @@ class JsonLangBuilder {
                     return new ArrayNode(expressions);
                 }).build();
         TokenDefinition<JsonNode> lcurly = new TokenDefinitionBuilder<>(lb).named("lcurly").matchesString("{")
-                .prefixParseAs((previous, match, parser) -> {
+                .prefixParseAs((previous, match, parser, lbp) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
                     while (!parser.nextIs(rcurly.getKey())) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string.getKey());
@@ -80,19 +83,19 @@ class JsonLangBuilder {
 
 
     static TokenDefinition<JsonNode> nullLiteral(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<>(lb).named("null_literal").matchesString("null").prefixParseAs((previous, match, parser) -> NullLiteral.get()).build();
+        return new TokenDefinitionBuilder<>(lb).named("null_literal").matchesString("null").prefixParseAs((previous, match, parser, lbp) -> NullLiteral.get()).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> boolLiteral(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<>(lb).named("bool_literal").matchesPattern("(true)|(false)").prefixParseAs((previous, match, parser) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
+        return new TokenDefinitionBuilder<>(lb).named("bool_literal").matchesPattern("(true)|(false)").prefixParseAs((previous, match, parser, lbp) -> new BooleanLiteralNode(Boolean.valueOf(match.getText()))).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> stringLiteral(LanguageBuilder<JsonNode> lb) {
         @org.intellij.lang.annotations.Language("RegExp")
         String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
-        return new TokenDefinitionBuilder<>(lb).named("string").matchesPattern(pattern).prefixParseAs((previous, match, parser) -> {
+        return new TokenDefinitionBuilder<>(lb).named("string").matchesPattern(pattern).prefixParseAs((previous, match, parser, lbp) -> {
             String withinQuotationMarks = match.group(1);
             return new StringLiteralNode(withinQuotationMarks);
         }).build();
@@ -100,6 +103,6 @@ class JsonLangBuilder {
 
     @NotNull
     static TokenDefinition<JsonNode> numberLiteral(LanguageBuilder<JsonNode> lb) {
-        return new TokenDefinitionBuilder<>(lb).named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?").prefixParseAs((previous, match, parser) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
+        return new TokenDefinitionBuilder<>(lb).named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?").prefixParseAs((previous, match, parser, lbp) -> new NumberLiteralNode(Float.valueOf(match.getText()))).build();
     }
 }

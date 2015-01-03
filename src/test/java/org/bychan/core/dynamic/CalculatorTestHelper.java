@@ -5,10 +5,10 @@ public class CalculatorTestHelper {
         LanguageBuilder<Integer> b = new LanguageBuilder<>();
         return b.named("simpleCalc").newToken().named("whitespace").matchesPattern("\\s+").ignoredWhenParsing()
                 .newToken().named("plus").matchesString("+")
-                .infixParseAs((previous, match, parser) -> previous + parser.subExpression())
+                .infixParseAs((previous, match, parser, lbp) -> previous + parser.subExpression())
                 .newToken().named("multiplication").matchesString("*")
-                .infixParseAs((previous, match, parser) -> previous * parser.subExpression())
-                .newToken().named("integer").matchesPattern("[0-9]+").prefixParseAs((previous, match, parser) -> Integer.parseInt(match.getText()))
+                .infixParseAs((previous, match, parser, lbp) -> previous * parser.subExpression())
+                .newToken().named("integer").matchesPattern("[0-9]+").prefixParseAs((previous, match, parser, lbp) -> Integer.parseInt(match.getText()))
                 .completeLanguage();
     }
 }

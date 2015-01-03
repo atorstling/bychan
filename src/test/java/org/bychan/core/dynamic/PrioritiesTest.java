@@ -8,9 +8,9 @@ public class PrioritiesTest {
     @Test
     public void doit() {
         Language<Integer> l = new LanguageBuilder<Integer>().named("parantheses")
-                .newToken().named("mult").leftBindingPower(1).matchesString("*").infixParseAs((previous, match, parser) -> previous * parser.subExpression())
-                .newToken().named("plus").leftBindingPower(2).matchesString("+").infixParseAs((previous, match, parser) -> previous + parser.subExpression())
-                .newToken().named("num").leftBindingPower(3).matchesPattern("[0-9]+").prefixParseAs((previous, match, parser) -> Integer.parseInt(match.getText()))
+                .newToken().named("mult").leftBindingPower(1).matchesString("*").infixParseAs((previous, match, parser, lbp) -> previous * parser.subExpression())
+                .newToken().named("plus").leftBindingPower(2).matchesString("+").infixParseAs((previous, match, parser, lbp) -> previous + parser.subExpression())
+                .newToken().named("num").leftBindingPower(3).matchesPattern("[0-9]+").prefixParseAs((previous, match, parser, lbp) -> Integer.parseInt(match.getText()))
                 .completeLanguage();
         //ssertEquals(0, ((DynamicTokenType<Integer>) l.getTokenType("plus")).getLeftBindingPower());
         //assertEquals(1, ((DynamicTokenType<Integer>) l.getTokenType("mult")).getLeftBindingPower());

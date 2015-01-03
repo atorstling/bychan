@@ -10,5 +10,5 @@ import org.jetbrains.annotations.Nullable;
  *
  */
 public interface DynamicInfixParseAction<N> {
-    N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser);
+    N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser, int currentBindingPower);
 }

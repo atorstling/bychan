@@ -34,7 +34,7 @@ public class ParsingPosition {
 
     @Override
     public String toString() {
-        return " textPosition " + textPosition +
+        return " position " + textPosition +
                 ", current token is " + tokenStack.previous() + " and remaining tokens are " + tokenStack.remaining();
     }
 

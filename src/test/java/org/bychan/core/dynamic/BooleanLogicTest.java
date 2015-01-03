@@ -1,7 +1,8 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.basic.ParseResult;
+import org.bychan.core.basic.ParsingFailedInformation;
 import org.bychan.core.langs.boolexp.*;
-import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,15 +16,15 @@ public class BooleanLogicTest {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").completeTokenAndPause();
         //Very irky syntax. A level doesn't get registered if it's never ended. Consider looking for incomplete levels.
-        DynamicPrefixParseAction<BooleanExpressionNode> parseAction = (previous, match, parser) -> new VariableNode(match.getText());
-        Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
+        DynamicPrefixParseAction<BooleanExpressionNode> parseAction = (previous, match, parser, lbp) -> new VariableNode(match.getText());
+        Language<BooleanExpressionNode> l = lb.startToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser, lbp) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
             parser.expectSingleToken(rparen.getKey());
             return trailingExpression;
         }).completeToken()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().completeToken()
-                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.subExpression())).completeToken()
-                .startToken().matchesString("&").named("and").infixParseAs((previous, match, parser) -> new AndNode(previous, parser.subExpression())).completeToken()
+                .startToken().matchesString("!").named("not").prefixParseAs((previous, match, parser, lbp) -> new NotNode(parser.subExpression())).completeToken()
+                .startToken().matchesString("&").named("and").infixParseAs((previous, match, parser, lbp) -> new AndNode(previous, parser.subExpression())).completeToken()
                 .startToken().matchesPattern("[a-z]+").named("variable").prefixParseAs(parseAction).completeToken()
                 .completeLanguage();
         checkparanthesisPrio(l);
@@ -34,15 +35,15 @@ public class BooleanLogicTest {
     public void clearerSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
-        TokenDefinition<BooleanExpressionNode> lparen = lb.newToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser) -> {
+        TokenDefinition<BooleanExpressionNode> lparen = lb.newToken().matchesString("(").named("lparen").prefixParseAs((previous, match, parser, lbp) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression();
             parser.expectSingleToken(rparen.getKey());
             return trailingExpression;
         }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
-        TokenDefinition<BooleanExpressionNode> not = lb.newToken().matchesString("!").named("not").prefixParseAs((previous, match, parser) -> new NotNode(parser.subExpression())).build();
-        TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").infixParseAs((previous, match, parser) -> new AndNode(previous, parser.subExpression())).build();
-        TokenDefinition<BooleanExpressionNode> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").prefixParseAs((previous, match, parser) -> new VariableNode(match.getText())).build();
+        TokenDefinition<BooleanExpressionNode> not = lb.newToken().matchesString("!").named("not").prefixParseAs((previous, match, parser, lbp) -> new NotNode(parser.subExpression())).build();
+        TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").infixParseAs((previous, match, parser, lbp) -> new AndNode(previous, parser.subExpression())).build();
+        TokenDefinition<BooleanExpressionNode> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").prefixParseAs((previous, match, parser, lbp) -> new VariableNode(match.getText())).build();
         Language<BooleanExpressionNode> l = lb
                 .addToken(lparen).addToken(rparen).addToken(whitespace)
                 .addToken(not)

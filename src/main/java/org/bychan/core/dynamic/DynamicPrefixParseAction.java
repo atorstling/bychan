@@ -11,5 +11,5 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface DynamicPrefixParseAction<N> {
     @NotNull
-    N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser);
+    N parse(@Nullable N previous, @NotNull LexingMatch match, @NotNull UserParserCallback<N> parser, int currentPowerFloor);
 }
