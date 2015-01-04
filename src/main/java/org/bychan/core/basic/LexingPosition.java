@@ -1,15 +1,24 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.TextPosition;
 import org.jetbrains.annotations.NotNull;
 
 public class LexingPosition {
-    private final int streamPosition;
+    @NotNull
+    private final TextPosition textPosition;
     @NotNull
     private final String remainingText;
 
-    public LexingPosition(final int streamPosition, @NotNull final String remainingText) {
-        this.streamPosition = streamPosition;
+    public LexingPosition(@NotNull final TextPosition textPosition, @NotNull final String remainingText) {
+        this.textPosition = textPosition;
         this.remainingText = remainingText;
+    }
+
+
+    @Override
+    public String toString() {
+        return " position " + textPosition +
+                ", remaining text is '" + remainingText + "'";
     }
 
     @Override
@@ -19,19 +28,16 @@ public class LexingPosition {
 
         LexingPosition that = (LexingPosition) o;
 
-        return streamPosition == that.streamPosition && remainingText.equals(that.remainingText);
+        if (!remainingText.equals(that.remainingText)) return false;
+        if (!textPosition.equals(that.textPosition)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return 31 * streamPosition + remainingText.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "LexingPosition{" +
-                "streamPosition=" + streamPosition +
-                ", remainingText='" + remainingText + '\'' +
-                '}';
+        int result = textPosition.hashCode();
+        result = 31 * result + remainingText.hashCode();
+        return result;
     }
 }

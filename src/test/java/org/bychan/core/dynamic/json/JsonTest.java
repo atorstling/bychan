@@ -4,6 +4,7 @@ import org.bychan.core.basic.*;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
 import org.bychan.core.dynamic.json.nodes.*;
+import org.bychan.core.utils.StringUtils;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -76,8 +77,10 @@ public class JsonTest {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
         Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
                 .completeLanguage();
-        ParseResult<JsonNode> pr = l.getLexParser().tryParse("\"\\phello\"");
-        assertEquals(ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range starting at 0: '\"\\phello\"'", new LexingPosition(0, "\"\\phello\""))), pr.getErrorMessage());
+        String indata = "\"\\phello\"";
+        ParseResult<JsonNode> pr = l.getLexParser().tryParse(indata);
+        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range '\"\\phello\"'", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata)));
+        assertEquals(pfi, pr.getErrorMessage());
     }
 
 

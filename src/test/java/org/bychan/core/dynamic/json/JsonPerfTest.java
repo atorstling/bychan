@@ -3,7 +3,6 @@ package org.bychan.core.dynamic.json;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.json.nodes.JsonNode;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +33,7 @@ public class JsonPerfTest {
         }
     }
 
-    @Test
+    //@Test
     public void perf() {
         InputStream is = getClass().getResourceAsStream("/sample.json");
         assertNotNull(is);

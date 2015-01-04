@@ -8,6 +8,7 @@ import org.bychan.core.langs.calculator.manual.SubtractionLexeme;
 import org.bychan.core.langs.calculator.nodes.CalculatorNode;
 import org.bychan.core.langs.shared.LeftParenthesisLexeme;
 import org.bychan.core.langs.shared.RightParenthesisLexeme;
+import org.bychan.core.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -37,7 +38,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex("1;1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range starting at 1: ';1'", e.getMessage());
+            assertEquals("No matching rule for char-range ';1'", e.getMessage());
         }
     }
 
@@ -47,7 +48,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex(";1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range starting at 0: ';1'", e.getMessage());
+            assertEquals("No matching rule for char-range ';1'", e.getMessage());
         }
     }
 
@@ -57,7 +58,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex("1;");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range starting at 1: ';'", e.getMessage());
+            assertEquals("No matching rule for char-range ';'", e.getMessage());
         }
     }
 
@@ -67,7 +68,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex(";");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range starting at 0: ';'", e.getMessage());
+            assertEquals("No matching rule for char-range ';'", e.getMessage());
         }
     }
 
@@ -77,7 +78,7 @@ public class LexerTest {
         try {
             l.lex("a");
         } catch (LexingFailedException e) {
-            assertEquals(new LexingPosition(0, "a"), e.getLexingPosition());
+            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a"), e.getLexingPosition());
             assertTrue(e.getMessage().contains("did not advance lexing"));
         }
     }

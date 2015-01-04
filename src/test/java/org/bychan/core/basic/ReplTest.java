@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +31,7 @@ public class ReplTest {
     public void error() throws InterruptedException, IOException {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         String expected = "welcome to the REPL for 'simpleCalc'\n" +
-                ">Error:Lexing failed: 'No matching rule for char-range starting at 4: 'jocke'' @ LexingPosition{streamPosition=4, remainingText='jocke'}\n" +
+                ">Error:Lexing failed: 'No matching rule for char-range 'jocke'' @  position 1:5 (index 4), remaining text is 'jocke'\n" +
                 ">leaving";
         BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("2*3+jocke").thenReturn("quit");
