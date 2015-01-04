@@ -12,8 +12,8 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @Nullable
     private TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(int leftBindingPower, @NotNull DynamicTokenFinder<N> tokenFinder) {
-        this.leftBindingPower = leftBindingPower;
+    public UserParserCallbackImpl(TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder) {
+        this.leftBindingPower = def.getLeftBindingPower();
         this.tokenFinder = tokenFinder;
         this.parser = null;
     }
@@ -33,7 +33,8 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     }
 
     public void offer(@NotNull TokenParserCallback<N> parser) {
-        if (this.parser == null) {
+        //Overwrite as soon as the parser changes.
+        if (this.parser != parser) {
             this.parser = parser;
         }
     }

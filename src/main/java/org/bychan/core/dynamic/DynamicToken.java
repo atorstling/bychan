@@ -10,17 +10,17 @@ import java.util.regex.Pattern;
 public class DynamicToken<N> implements Token<N> {
     @NotNull
     private final TokenDefinition<N> def;
-    private final DynamicTokenFinder<N> tokenFinder;
+    private final UserParserCallbackImpl<N> callback;
 
     public DynamicToken(@NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.def = def;
-        this.tokenFinder = tokenFinder;
+        callback = new UserParserCallbackImpl<>(def, tokenFinder);
     }
 
     @NotNull
     @Override
     public Lexeme<N> toLexeme(@NotNull final LexingMatch match) {
-        return new DynamicLexeme<>(this, match, def, tokenFinder);
+        return new DynamicLexeme<>(this, match, def, callback);
     }
 
     @NotNull

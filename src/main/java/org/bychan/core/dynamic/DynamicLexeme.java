@@ -10,7 +10,6 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     private final LexingMatch match;
     @NotNull
     private final TokenDefinition<N> def;
-    private final DynamicTokenFinder<N> tokenFinder;
     @Nullable
     private final DynamicLedParseAction<N> led;
     @Nullable
@@ -18,14 +17,13 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     @NotNull
     private final UserParserCallbackImpl<N> callback;
 
-    public DynamicLexeme(@NotNull final DynamicToken<N> token, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
+    public DynamicLexeme(@NotNull final DynamicToken<N> token, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull UserParserCallbackImpl<N> callback) {
         this.token = token;
         this.match = match;
         this.def = def;
-        this.tokenFinder = tokenFinder;
+        this.callback = callback;
         led = def.getLed();
         nud = def.getNud();
-        callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder);
     }
 
     @Nullable
