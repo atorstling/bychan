@@ -15,6 +15,8 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     private final DynamicLedParseAction<N> led;
     @Nullable
     private final DynamicNudParseAction<N> nud;
+    @NotNull
+    private final UserParserCallbackImpl<N> callback;
 
     public DynamicLexeme(@NotNull final DynamicToken<N> token, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.token = token;
@@ -23,13 +25,14 @@ public class DynamicLexeme<N> implements Lexeme<N> {
         this.tokenFinder = tokenFinder;
         led = def.getLed();
         nud = def.getNud();
+        callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder);
     }
 
     @Nullable
     @Override
     public NudParseAction<N> getNud() {
         return nud == null ? null : (previous, parser) -> {
-            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
+            callback.offer(parser);
             return nud.parse(previous, callback, this);
         };
     }
@@ -38,7 +41,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     @Override
     public LedParseAction<N> getLed() {
         return led == null ? null : (previous, parser) -> {
-            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
+            callback.offer(parser);
             return led.parse(previous, callback, this);
         };
     }

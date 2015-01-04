@@ -31,14 +31,6 @@ public interface UserParserCallback<N> {
     N subExpression(@Nullable final N previous);
 
     /**
-     * Same as {@link #subExpression(Object)}, but with <code>previous</code> set to be the
-     * same {@code previous} as the passed into the handler which performs this call.
-     * This makes sense if you haven't done any custom parsing in your handler.
-     */
-    @NotNull
-    N subExpression();
-
-    /**
      * Parse a single lexeme of the token identified by the given key.
      */
     @NotNull

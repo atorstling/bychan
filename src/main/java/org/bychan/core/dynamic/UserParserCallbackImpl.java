@@ -9,28 +9,39 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull
     private final DynamicTokenFinder<N> tokenFinder;
-    @NotNull
-    private final TokenParserCallback<N> parser;
     @Nullable
-    private final N previous;
+    private TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(int leftBindingPower, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull TokenParserCallback<N> parser, @Nullable final N previous) {
+    public UserParserCallbackImpl(int leftBindingPower, @NotNull DynamicTokenFinder<N> tokenFinder) {
         this.leftBindingPower = leftBindingPower;
         this.tokenFinder = tokenFinder;
-        this.parser = parser;
-        this.previous = previous;
+        this.parser = null;
     }
 
     @NotNull
     @Override
     public N subExpression(@Nullable N previous, int leftBindingPower) {
-        return parser.parseExpression(previous, leftBindingPower);
+        return getParser().parseExpression(previous, leftBindingPower);
+    }
+
+    @NotNull
+    private TokenParserCallback<N> getParser() {
+        if (parser == null) {
+            throw new IllegalStateException("No parser available");
+        }
+        return parser;
+    }
+
+    public void offer(@NotNull TokenParserCallback<N> parser) {
+        if (this.parser == null) {
+            this.parser = parser;
+        }
     }
 
     @NotNull
     @Override
     public N subExpression(@Nullable N previous) {
-        return parser.parseExpression(previous, leftBindingPower);
+        return getParser().parseExpression(previous, leftBindingPower);
     }
 
     @NotNull
@@ -48,19 +59,13 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @Override
     public boolean nextIs(@NotNull TokenKey tokenKey) {
         DynamicToken<N> expectedToken = tokenFinder.getToken(tokenKey);
-        return parser.peek().getToken().equals(expectedToken);
+        return getParser().peek().getToken().equals(expectedToken);
     }
 
     @NotNull
     @Override
     public N parseSingleToken(N previous, @NotNull TokenKey tokenKey) {
         Lexeme<N> lexeme = swallow(tokenKey, parser);
-        return parser.nud(previous, lexeme);
-    }
-
-    @NotNull
-    @Override
-    public N subExpression() {
-        return subExpression(previous);
+        return getParser().nud(previous, lexeme);
     }
 }
