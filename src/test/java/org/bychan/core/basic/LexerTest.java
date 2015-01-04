@@ -38,7 +38,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex("1;1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range ';1'", e.getMessage());
+            assertEquals("No matching rule @  position 1:2 (index 1), remaining text is ';1'", e.toString());
         }
     }
 
@@ -48,7 +48,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex(";1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range ';1'", e.getMessage());
+            assertEquals("No matching rule @  position 1:1 (index 0), remaining text is ';1'", e.toString());
         }
     }
 
@@ -58,7 +58,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex("1;");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range ';'", e.getMessage());
+            assertEquals("No matching rule @  position 1:2 (index 1), remaining text is ';'", e.toString());
         }
     }
 
@@ -68,7 +68,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex(";");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule for char-range ';'", e.getMessage());
+            assertEquals("No matching rule @  position 1:1 (index 0), remaining text is ';'", e.toString());
         }
     }
 

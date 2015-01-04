@@ -13,4 +13,9 @@ class LexingFailedException extends RuntimeException {
     public LexingPosition getLexingPosition() {
         return lexingPosition;
     }
+
+    @Override
+    public String toString() {
+        return super.getMessage() + " @ " + lexingPosition;
+    }
 }

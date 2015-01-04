@@ -26,7 +26,7 @@ public class Lexer<N> {
             String substring = input.substring(i);
             Lexeme<N> lexeme = findMatchingToken(i, substring);
             if (lexeme == null) {
-                throw new LexingFailedException(getLexingPosition(input, i, substring), "No matching rule for char-range '" + substring + "'");
+                throw new LexingFailedException(getLexingPosition(input, i, substring), "No matching rule");
             }
             if (lexeme.getToken().include()) {
                 lexemes.add(lexeme);

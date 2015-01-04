@@ -31,7 +31,7 @@ public class ReplTest {
     public void error() throws InterruptedException, IOException {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         String expected = "welcome to the REPL for 'simpleCalc'\n" +
-                ">Error:Lexing failed: 'No matching rule for char-range 'jocke'' @  position 1:5 (index 4), remaining text is 'jocke'\n" +
+                ">Error:Lexing failed: 'No matching rule' @  position 1:5 (index 4), remaining text is 'jocke'\n" +
                 ">leaving";
         BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("2*3+jocke").thenReturn("quit");

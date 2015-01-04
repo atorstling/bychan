@@ -79,7 +79,7 @@ public class JsonTest {
                 .completeLanguage();
         String indata = "\"\\phello\"";
         ParseResult<JsonNode> pr = l.getLexParser().tryParse(indata);
-        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule for char-range '\"\\phello\"'", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata)));
+        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata)));
         assertEquals(pfi, pr.getErrorMessage());
     }
 
