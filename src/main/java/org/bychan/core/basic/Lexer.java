@@ -23,10 +23,9 @@ public class Lexer<N> {
     public List<Lexeme<N>> lex(@NotNull final String input) {
         final List<Lexeme<N>> lexemes = new ArrayList<>();
         for (int i = 0; i < input.length(); ) {
-            String substring = input.substring(i);
-            Lexeme<N> lexeme = findMatchingToken(i, substring);
+            Lexeme<N> lexeme = findMatchingToken(i, input);
             if (lexeme == null) {
-                throw new LexingFailedException(getLexingPosition(input, i, substring), "No matching rule");
+                throw new LexingFailedException(getLexingPosition(input, i), "No matching rule");
             }
             if (lexeme.getToken().include()) {
                 lexemes.add(lexeme);
@@ -35,7 +34,7 @@ public class Lexer<N> {
             LexingMatch match = lexeme.getMatch();
             int progress = match.getEndPosition() - match.getStartPosition();
             if (progress < 1) {
-                throw new LexingFailedException(getLexingPosition(input, i, substring), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
+                throw new LexingFailedException(getLexingPosition(input, i), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
             }
             i += progress;
         }
@@ -43,8 +42,8 @@ public class Lexer<N> {
         return lexemes;
     }
 
-    private LexingPosition getLexingPosition(String input, int i, String substring) {
-        return new LexingPosition(StringUtils.getTextPosition(input, i), substring);
+    private LexingPosition getLexingPosition(String input, int i) {
+        return new LexingPosition(StringUtils.getTextPosition(input, i), input.substring(i));
     }
 
     @NotNull
@@ -53,15 +52,15 @@ public class Lexer<N> {
     }
 
     @Nullable
-    private Lexeme<N> findMatchingToken(final int i, @NotNull final String substring) {
+    private Lexeme<N> findMatchingToken(final int i, @NotNull final String input) {
         for (Token<N> token : tokens) {
             Pattern pattern = token.getPattern();
-            Matcher matcher = pattern.matcher(substring);
+            Matcher matcher = pattern.matcher(input);
+            matcher.region(i, input.length());
             if (matcher.lookingAt()) {
-                int substringStart = matcher.start();
                 int substringEnd = matcher.end();
-                String stringMatch = substring.substring(0, substringEnd);
-                LexingMatch<N> match = new LexingMatch<>(substringStart + i, substringEnd + i, stringMatch, token);
+                String stringMatch = input.substring(i, substringEnd);
+                LexingMatch<N> match = new LexingMatch<>(i, substringEnd, stringMatch, token);
                 return match.toLexeme();
             }
         }
