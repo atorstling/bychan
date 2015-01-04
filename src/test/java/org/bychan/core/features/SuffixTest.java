@@ -15,7 +15,7 @@ public class SuffixTest {
     public void supportsInfixOperators() {
         LanguageBuilder<Object> lb = new LanguageBuilder<>().named("test");
         lb.addToken(lb.newToken().named("variable").matchesPattern("[a-z]{1}").nud((previous, match, parser, currentBindingPower) -> match.getText().charAt(0)).build());
-        lb.addToken(lb.newToken().named("inc").matchesString("++").led((previous, match, parser, currentBindingPower) -> (char) (((char) previous) + 1)).build());
+        lb.addToken(lb.newToken().named("inc").matchesString("++").led((previous, parser, lexeme) -> (char) (((char) previous) + 1)).build());
         Language<Object> l = lb.completeLanguage();
         assertEquals('d', l.getLexParser().parse("c++"));
     }

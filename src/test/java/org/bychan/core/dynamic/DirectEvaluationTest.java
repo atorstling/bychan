@@ -19,7 +19,7 @@ public class DirectEvaluationTest {
         TokenDefinition<Integer> addition = builder.newToken()
                 .named("addition")
                 .matchesString("+")
-                .led((previous, match, parser, lbp) -> previous + parser.subExpression())
+                .led((previous, parser, lexeme) -> previous + parser.subExpression())
                 .build();
         Language<Integer> lang = builder
                 .addToken(number)

@@ -37,14 +37,14 @@ public class CalculatorTest {
                 .matchesString("+")
                 .named("plus")
                 .nud((previous, match, parser, lbp) -> parser.subExpression())
-                .led((previous, match, parser, lbp) -> new AdditionNode(previous, parser.subExpression()))
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression()))
                 .build();
 
         TokenDefinition<CalculatorNode> minus = lb.newToken()
                 .matchesString("-")
                 .named("minus")
                 .nud((previous, match, parser, lbp) -> new NegationNode(parser.subExpression()))
-                .led((previous, match, parser, lbp) -> new SubtractionNode(previous, parser.subExpression())).build();
+                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression())).build();
 
         TokenDefinition<CalculatorNode> number = lb.newToken()
                 .matchesPattern("[0-9]+")
@@ -70,10 +70,10 @@ public class CalculatorTest {
                 .newToken().named("lparen").matchesString("(").end()
                 .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().end()
                 .newToken().named("plus").matchesString("+")
-                .led((previous, match, parser, lbp) -> new AdditionNode(previous, parser.subExpression())).end()
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression())).end()
                 .newToken().named("minus").matchesString("-")
                 .nud((previous, match, parser, lbp) -> new NegationNode(parser.subExpression()))
-                .led((previous, match, parser, lbp) -> new SubtractionNode(previous, parser.subExpression())).end()
+                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression())).end()
                 .newToken().named("number").matchesPattern("[0-9]+").nud((previous, match, parser, lbp) -> new NumberNode(Integer.parseInt(match.getText()))).end()
                 .completeLanguage();
 

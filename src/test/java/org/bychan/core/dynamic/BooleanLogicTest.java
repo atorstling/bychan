@@ -23,7 +23,7 @@ public class BooleanLogicTest {
         }).end()
                 .startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().end()
                 .startToken().matchesString("!").named("not").nud((previous, match, parser, lbp) -> new NotNode(parser.subExpression())).end()
-                .startToken().matchesString("&").named("and").led((previous, match, parser, lbp) -> new AndNode(previous, parser.subExpression())).end()
+                .startToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.subExpression())).end()
                 .startToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).end()
                 .completeLanguage();
         checkparanthesisPrio(l);
@@ -41,7 +41,7 @@ public class BooleanLogicTest {
         }).build();
         TokenDefinition<BooleanExpressionNode> whitespace = lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
         TokenDefinition<BooleanExpressionNode> not = lb.newToken().matchesString("!").named("not").nud((previous, match, parser, lbp) -> new NotNode(parser.subExpression())).build();
-        TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").led((previous, match, parser, lbp) -> new AndNode(previous, parser.subExpression())).build();
+        TokenDefinition<BooleanExpressionNode> and = lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.subExpression())).build();
         TokenDefinition<BooleanExpressionNode> variable = lb.newToken().matchesPattern("[a-z]+").named("variable").nud((previous, match, parser, lbp) -> new VariableNode(match.getText())).build();
         Language<BooleanExpressionNode> l = lb
                 .addToken(lparen).addToken(rparen).addToken(whitespace)

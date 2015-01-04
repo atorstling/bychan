@@ -64,17 +64,17 @@ public class MiniLangTest {
                 .matchesString("+")
                 .named("plus")
                 .nud((previous, match, parser, lbp) -> parser.subExpression())
-                .led((previous, match, parser, lbp) -> new AdditionNode(previous, parser.subExpression()));
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression()));
 
         TokenDefinitionBuilder<LaiLaiNode> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .led((previous, match, parser, lbp) -> new HatNode(previous, parser.subExpression()));
+                .led((previous, parser, lexeme) -> new HatNode(previous, parser.subExpression()));
 
         TokenDefinitionBuilder<LaiLaiNode> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
-                .led((previous, match, parser, lbp) -> {
+                .led((previous, parser, lexeme) -> {
                     LaiLaiNode right = parser.subExpression();
                     return new AssignNode(previous, right);
                 });
@@ -119,7 +119,7 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
-                .led((previous, match, parser, lbp) -> new StatementNode(previous, parser.subExpression()));
+                .led((previous, parser, lexeme) -> new StatementNode(previous, parser.subExpression()));
 
         final TokenDefinitionBuilder<LaiLaiNode> listEnd = lb.newToken()
                 .matchesString("]")

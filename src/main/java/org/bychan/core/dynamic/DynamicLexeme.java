@@ -39,7 +39,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     public LedParseAction<N> getLed() {
         return led == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return led.parse(previous, match, callback, leftBindingPower());
+            return led.parse(previous, callback, this);
         };
     }
 
