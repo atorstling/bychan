@@ -14,6 +14,8 @@ public class DynamicToken<N> implements Token<N> {
 
     public DynamicToken(@NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
         this.def = def;
+        //This callback means that the token knows of the parser, which in turn means that things will go
+        //haywire if you share tokens between languages.
         callback = new UserParserCallbackImpl<>(def, tokenFinder);
     }
 
