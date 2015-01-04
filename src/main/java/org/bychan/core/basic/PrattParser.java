@@ -64,16 +64,24 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         // The addition operators led-parser is then called by the top-level expression parser,
         // passing (1*2) into it as the expression parsed so far. It will then proceed to swallow the 3,
         // completing the expression.
-        return parseLoop(first, rightBindingPower);
+        return iterativeParseLoop(first, rightBindingPower);
     }
 
-    private N parseLoop(@NotNull final N currentLeftHandSide, final int rightBindingPower) {
+    private N iterativeParseLoop(@NotNull N currentLeftHandSide, final int rightBindingPower) {
+        while (peek().leftBindingPower() > rightBindingPower) {
+            Lexeme<N> next = pop();
+            currentLeftHandSide = led(currentLeftHandSide, next);
+        }
+        return currentLeftHandSide;
+    }
+
+    private N recursiveParseLoop(@NotNull final N currentLeftHandSide, final int rightBindingPower) {
         Lexeme<N> peekedLexeme = peek();
         if (peekedLexeme.leftBindingPower() > rightBindingPower) {
             //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
-            Lexeme<N> takenLexeme = pop();
-            N nextExpression = led(currentLeftHandSide, takenLexeme);
-            return parseLoop(nextExpression, rightBindingPower);
+            Lexeme<N> next = pop();
+            N nextExpression = led(currentLeftHandSide, next);
+            return recursiveParseLoop(nextExpression, rightBindingPower);
         }
         return currentLeftHandSide;
     }
