@@ -14,7 +14,7 @@ public class DirectEvaluationTest {
         LanguageBuilder<Integer> builder = new LanguageBuilder<>();
         TokenDefinition<Integer> number = builder.newToken()
                 .named("number")
-                .matchesPattern("[0-9]+").nud((previous, match, parser, lbp) -> Integer.parseInt(match.getText()))
+                .matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
                 .build();
         TokenDefinition<Integer> addition = builder.newToken()
                 .named("addition")

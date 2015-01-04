@@ -30,7 +30,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     public NudParseAction<N> getNud() {
         return nud == null ? null : (previous, parser) -> {
             UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(leftBindingPower(), tokenFinder, parser, previous);
-            return nud.parse(previous, match, callback, leftBindingPower());
+            return nud.parse(previous, callback, this);
         };
     }
 

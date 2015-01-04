@@ -28,4 +28,9 @@ public interface Lexeme<N> {
      */
     @NotNull
     LexingMatch getMatch();
+
+    @NotNull
+    default String getText() {
+        return getMatch().getText();
+    }
 }

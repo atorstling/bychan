@@ -9,7 +9,7 @@ public class CalculatorTestHelper {
                 .led((previous, parser, lexeme) -> previous + parser.subExpression()).end()
                 .newToken().named("multiplication").matchesString("*")
                 .led((previous, parser, lexeme) -> previous * parser.subExpression()).end()
-                .newToken().named("integer").matchesPattern("[0-9]+").nud((previous, match, parser, lbp) -> Integer.parseInt(match.getText())).end()
+                .newToken().named("integer").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> Integer.parseInt(lexeme.getText())).end()
                 .completeLanguage();
     }
 }
