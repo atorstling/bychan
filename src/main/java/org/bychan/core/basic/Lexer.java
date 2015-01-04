@@ -62,7 +62,7 @@ public class Lexer<N> {
                 int substringEnd = matcher.end();
                 String stringMatch = substring.substring(0, substringEnd);
                 LexingMatch<N> match = new LexingMatch<>(substringStart + i, substringEnd + i, stringMatch, token);
-                return match.toToken();
+                return match.toLexeme();
             }
         }
         return null;

@@ -79,7 +79,7 @@ public class LexingMatch<N> {
     }
 
     @NotNull
-    public Lexeme<N> toToken() {
+    public Lexeme<N> toLexeme() {
         return token.toLexeme(this);
     }
 }
