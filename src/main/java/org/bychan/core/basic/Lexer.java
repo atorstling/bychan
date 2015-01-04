@@ -25,9 +25,8 @@ public class Lexer<N> {
         for (int i = 0; i < input.length(); ) {
             String substring = input.substring(i);
             Lexeme<N> lexeme = findMatchingToken(i, substring);
-            LexingPosition lexingPosition = new LexingPosition(StringUtils.getTextPosition(input, i), substring);
             if (lexeme == null) {
-                throw new LexingFailedException(lexingPosition, "No matching rule for char-range '" + substring + "'");
+                throw new LexingFailedException(getLexingPosition(input, i, substring), "No matching rule for char-range '" + substring + "'");
             }
             if (lexeme.getToken().include()) {
                 lexemes.add(lexeme);
@@ -36,12 +35,16 @@ public class Lexer<N> {
             LexingMatch match = lexeme.getMatch();
             int progress = match.getEndPosition() - match.getStartPosition();
             if (progress < 1) {
-                throw new LexingFailedException(lexingPosition, String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
+                throw new LexingFailedException(getLexingPosition(input, i, substring), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
             }
             i += progress;
         }
         lexemes.add(makeEndToken(input));
         return lexemes;
+    }
+
+    private LexingPosition getLexingPosition(String input, int i, String substring) {
+        return new LexingPosition(StringUtils.getTextPosition(input, i), substring);
     }
 
     @NotNull
