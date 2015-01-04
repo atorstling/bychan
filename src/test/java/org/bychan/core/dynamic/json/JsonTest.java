@@ -34,6 +34,44 @@ public class JsonTest {
     }
 
     @Test
+    public void stringWithQuotedBackslash() {
+        LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
+                .completeLanguage();
+        JsonNode ast = l.getLexParser().parse("\"\\\\\"");
+        assertEquals(new StringLiteralNode("\\\\"), ast);
+    }
+
+    @Test
+    public void stringWithUnicodeLiteral() {
+        LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
+                .completeLanguage();
+        JsonNode ast = l.getLexParser().parse("\"\\uabCD\"");
+        assertEquals(new StringLiteralNode("\\uabCD"), ast);
+    }
+
+    @Test
+    public void stringWithCrazyText() {
+        LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
+                .completeLanguage();
+        String crazy = "6U閆崬밺뀫颒myj츥휘\uECED:$薈mY햚#\uF6A2rz飏+玭V㭢뾿愴Y\uEC11ꖚX亥ᮉ푊\\u0006垡㐭룝\\\"厓ᔧḅ^Sqpv媫\\\"⤽걒\\\"˽Ἆ?ꇆ䬔未tv{DV鯀Tἆl凸g\\\\㈭ĭ즿UH㽤";
+        JsonNode ast = l.getLexParser().parse("\"" + crazy + "\"");
+        assertEquals(new StringLiteralNode(crazy), ast);
+    }
+
+    @Test
+    public void stringWithAnotherCrazyText() {
+        LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
+        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
+                .completeLanguage();
+        String crazy = "e\uE7A1浱u\uEFE3p\u007F蔽Cr\u0DE0JK軵xCʨ<뜡癙Y獩ｹ齈X/螗唻\uEB3F?<蘡+뷄㩤쳖3偑犾&\\\\첊xz坍崦ݻ\uE2D1鍴\\\"嵥B3㰃詤豺嚼aqJ⑆∥韼@\\u000b㢊\\u0015L臯.샥";
+        JsonNode ast = l.getLexParser().parse("\"" + crazy + "\"");
+        assertEquals(new StringLiteralNode(crazy), ast);
+    }
+
+    @Test
     public void stringWithInvalidEscape() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
         Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))

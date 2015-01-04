@@ -94,7 +94,7 @@ class JsonLangBuilder {
     @NotNull
     static TokenDefinition<JsonNode> stringLiteral(LanguageBuilder<JsonNode> lb) {
         @org.intellij.lang.annotations.Language("RegExp")
-        String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/bnrft]|u[0-9A-F]{4}))*)\"";
+        String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/\\\\bnrft]|u[0-9A-Fa-f]{4}))*)\"";
         return new TokenDefinitionBuilder<>(lb).named("string").matchesPattern(pattern).nud((previous, parser, lexeme) -> {
             String withinQuotationMarks = lexeme.getMatch().group(1);
             return new StringLiteralNode(withinQuotationMarks);
