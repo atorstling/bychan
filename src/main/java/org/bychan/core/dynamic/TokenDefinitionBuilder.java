@@ -79,7 +79,7 @@ public class TokenDefinitionBuilder<N> {
 
     @NotNull
     public TokenKey getKey() {
-        if (tokenName == null) {
+        if (tokenKey == null) {
             throw new IllegalStateException("You must set a name first");
         }
         return tokenKey;
