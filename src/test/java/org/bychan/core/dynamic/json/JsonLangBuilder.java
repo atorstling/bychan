@@ -26,28 +26,28 @@ class JsonLangBuilder {
         lb.newToken().named("lbracket").matchesString("[")
                 .nud((previous, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs(rbracket.getKey())) {
+                    while (!parser.nextIs(rbracket.tokenName())) {
                         expressions.add(parser.subExpression(previous));
-                        if (!parser.nextIs(rbracket.getKey())) {
-                            parser.expectSingleLexeme(comma.getKey());
+                        if (!parser.nextIs(rbracket.tokenName())) {
+                            parser.expectSingleLexeme(comma.tokenName());
                         }
                     }
-                    parser.expectSingleLexeme(rbracket.getKey());
+                    parser.expectSingleLexeme(rbracket.tokenName());
                     return new ArrayNode(expressions);
                 }).build();
         lb.newToken().named("lcurly").matchesString("{")
                 .nud((previous, parser, lexeme) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.nextIs(rcurly.getKey())) {
-                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string.getKey());
-                        parser.expectSingleLexeme(colon.getKey());
+                    while (!parser.nextIs(rcurly.tokenName())) {
+                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string.tokenName());
+                        parser.expectSingleLexeme(colon.tokenName());
                         JsonNode value = parser.subExpression(previous);
                         pairs.put(key, value);
-                        if (!parser.nextIs(rcurly.getKey())) {
-                            parser.expectSingleLexeme(comma.getKey());
+                        if (!parser.nextIs(rcurly.tokenName())) {
+                            parser.expectSingleLexeme(comma.tokenName());
                         }
                     }
-                    parser.expectSingleLexeme(rcurly.getKey());
+                    parser.expectSingleLexeme(rcurly.tokenName());
                     return new ObjectNode(pairs);
                 }).build();
 

@@ -31,14 +31,14 @@ public interface UserParserCallback<N> {
     N subExpression(@Nullable final N previous);
 
     /**
-     * Parse a single lexeme of the token identified by the given key.
+     * Parse a single lexeme of the token identified by the given name.
      */
     @NotNull
-    Lexeme<N> expectSingleLexeme(@NotNull TokenKey tokenKey);
+    Lexeme<N> expectSingleLexeme(@NotNull String tokenName);
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    boolean nextIs(@NotNull TokenKey tokenKey);
+    boolean nextIs(@NotNull String tokenName);
 
     @NotNull
-    N parseSingleToken(N previous, @NotNull TokenKey tokenKey);
+    N parseSingleToken(N previous, @NotNull String tokenName);
 }

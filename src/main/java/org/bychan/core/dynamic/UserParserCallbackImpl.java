@@ -32,26 +32,26 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public Lexeme<N> expectSingleLexeme(@NotNull TokenKey tokenKey) {
-        return swallow(tokenKey, parser);
+    public Lexeme<N> expectSingleLexeme(@NotNull String tokenName) {
+        return swallow(tokenName, parser);
     }
 
     @NotNull
-    private Lexeme<N> swallow(@NotNull TokenKey tokenKey, TokenParserCallback<N> parser) {
-        DynamicToken<N> token = tokenFinder.getToken(tokenKey);
+    private Lexeme<N> swallow(@NotNull String tokenName, TokenParserCallback<N> parser) {
+        DynamicToken<N> token = tokenFinder.getToken(tokenName);
         return parser.swallow(token);
     }
 
     @Override
-    public boolean nextIs(@NotNull TokenKey tokenKey) {
-        DynamicToken<N> expectedToken = tokenFinder.getToken(tokenKey);
+    public boolean nextIs(@NotNull String tokenName) {
+        DynamicToken<N> expectedToken = tokenFinder.getToken(tokenName);
         return parser.peek().getToken().equals(expectedToken);
     }
 
     @NotNull
     @Override
-    public N parseSingleToken(N previous, @NotNull TokenKey tokenKey) {
-        Lexeme<N> lexeme = swallow(tokenKey, parser);
+    public N parseSingleToken(N previous, @NotNull String tokenName) {
+        Lexeme<N> lexeme = swallow(tokenName, parser);
         return parser.nud(previous, lexeme);
     }
 }

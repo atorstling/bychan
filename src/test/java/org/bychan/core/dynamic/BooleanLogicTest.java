@@ -18,7 +18,7 @@ public class BooleanLogicTest {
         DynamicNudParseAction<BooleanExpressionNode> parseAction = (previous, parser, lexeme) -> new VariableNode(lexeme.getText());
         lb.startToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression(previous);
-            parser.expectSingleLexeme(rparen.getKey());
+            parser.expectSingleLexeme(rparen.tokenName());
             return trailingExpression;
         }).build();
         lb.startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
@@ -38,7 +38,7 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         lb.newToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression(previous);
-            parser.expectSingleLexeme(rparen.getKey());
+            parser.expectSingleLexeme(rparen.tokenName());
             return trailingExpression;
         }).build();
         lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();

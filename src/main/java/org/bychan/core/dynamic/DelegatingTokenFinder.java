@@ -13,9 +13,9 @@ public class DelegatingTokenFinder<N> implements DynamicTokenFinder<N> {
 
     @NotNull
     @Override
-    public DynamicToken<N> getToken(@NotNull TokenKey soughtKey) {
+    public DynamicToken<N> getToken(@NotNull String soughtName) {
         assert delegate != null;
-        return delegate.getToken(soughtKey);
+        return delegate.getToken(soughtName);
     }
 
     public void setDelegate(@SuppressWarnings("NullableProblems") @NotNull final DynamicTokenFinder<N> delegate) {
