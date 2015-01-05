@@ -9,40 +9,25 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull
     private final DynamicTokenFinder<N> tokenFinder;
-    @Nullable
+    @NotNull
     private TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder) {
+    public UserParserCallbackImpl(TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser) {
         this.leftBindingPower = def.getLeftBindingPower();
         this.tokenFinder = tokenFinder;
-        this.parser = null;
+        this.parser = parser;
     }
 
     @NotNull
     @Override
     public N subExpression(@Nullable N previous, int leftBindingPower) {
-        return getParser().parseExpression(previous, leftBindingPower);
-    }
-
-    @NotNull
-    private TokenParserCallback<N> getParser() {
-        if (parser == null) {
-            throw new IllegalStateException("No parser available");
-        }
-        return parser;
-    }
-
-    public void offer(@NotNull TokenParserCallback<N> parser) {
-        //Overwrite as soon as the parser changes.
-        if (this.parser != parser) {
-            this.parser = parser;
-        }
+        return parser.parseExpression(previous, leftBindingPower);
     }
 
     @NotNull
     @Override
     public N subExpression(@Nullable N previous) {
-        return getParser().parseExpression(previous, leftBindingPower);
+        return parser.parseExpression(previous, leftBindingPower);
     }
 
     @NotNull
@@ -60,13 +45,13 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @Override
     public boolean nextIs(@NotNull TokenKey tokenKey) {
         DynamicToken<N> expectedToken = tokenFinder.getToken(tokenKey);
-        return getParser().peek().getToken().equals(expectedToken);
+        return parser.peek().getToken().equals(expectedToken);
     }
 
     @NotNull
     @Override
     public N parseSingleToken(N previous, @NotNull TokenKey tokenKey) {
         Lexeme<N> lexeme = swallow(tokenKey, parser);
-        return getParser().nud(previous, lexeme);
+        return parser.nud(previous, lexeme);
     }
 }
