@@ -31,8 +31,8 @@ public class DynamicToken<N> implements Token<N> {
     }
 
     @Override
-    public boolean include() {
-        return def.parse();
+    public boolean keepAfterLexing() {
+        return def.keepAfterLexing();
     }
 
     @NotNull

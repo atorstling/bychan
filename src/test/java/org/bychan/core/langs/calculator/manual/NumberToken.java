@@ -22,7 +22,7 @@ public class NumberToken implements Token<CalculatorNode> {
     }
 
     @Override
-    public boolean include() {
+    public boolean keepAfterLexing() {
         return true;
     }
 

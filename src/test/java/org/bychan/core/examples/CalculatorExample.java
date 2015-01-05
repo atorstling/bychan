@@ -13,7 +13,7 @@ public class CalculatorExample {
 
     public static void main(String[] args) {
         LanguageBuilder<Long> lb = new LanguageBuilder<>("calc");
-        lb.newToken().matchesWhitespace().ignoreWhenParsing();
+        lb.newToken().matchesWhitespace().discardAfterLexing();
         lb.newToken().matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> Long.parseLong(lexeme.getText())).build();
         lb.newToken().matchesString("+").led((previous, parser, lexeme) -> previous + parser.expression(previous)).build();
         lb.newToken().matchesString("-").led((previous, parser, lexeme) -> previous - parser.expression(previous)).build();

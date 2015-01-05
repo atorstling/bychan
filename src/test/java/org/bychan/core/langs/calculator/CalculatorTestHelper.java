@@ -6,7 +6,7 @@ import org.bychan.core.dynamic.LanguageBuilder;
 public class CalculatorTestHelper {
     public static Language<Integer> getSimpleCalculatorLanguage() {
         LanguageBuilder<Integer> b = new LanguageBuilder<>("simpleCalc");
-        b.newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing()
+        b.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing()
                 .build();
         b.newToken().named("plus").matchesString("+")
                 .led((previous, parser, lexeme) -> previous + parser.expression(previous))

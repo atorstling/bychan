@@ -20,7 +20,7 @@ public class LeftParenthesisToken<N> implements Token<N> {
     }
 
     @Override
-    public boolean include() {
+    public boolean keepAfterLexing() {
         return true;
     }
 

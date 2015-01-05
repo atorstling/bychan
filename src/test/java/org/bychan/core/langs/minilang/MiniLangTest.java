@@ -58,7 +58,7 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> whitespace = lb2.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
-                .ignoreWhenParsing();
+                .discardAfterLexing();
 
         TokenDefinitionBuilder<LaiLaiNode> plus = lb2.newToken()
                 .matchesString("+")

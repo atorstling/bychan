@@ -22,7 +22,7 @@ public interface Token<N> {
      * Ignored token will not be part of the lexeme stream which the lexer produces, but they
      * might still be useful to ignore certain patterns (such as whitespace and comments).
      */
-    boolean include();
+    boolean keepAfterLexing();
 
     @NotNull
     default String getName() {

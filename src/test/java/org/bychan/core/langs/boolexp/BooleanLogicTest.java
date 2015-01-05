@@ -21,7 +21,7 @@ public class BooleanLogicTest {
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
-        lb.newToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().build();
+        lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
         TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder1 = lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous)));
         booleanExpressionNodeTokenDefinitionBuilder1.build();
         TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder = lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous)));
@@ -41,7 +41,7 @@ public class BooleanLogicTest {
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
-        lb.newToken().matchesPattern("\\s+").named("whitespace").ignoreWhenParsing().build();
+        lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
         lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous))).build();
         lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous))).build();
         lb.newToken().matchesPattern("[a-z]+").named("variable").nud((previous, parser, lexeme) -> new VariableNode(lexeme.getText())).build();

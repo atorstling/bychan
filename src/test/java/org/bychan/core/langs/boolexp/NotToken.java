@@ -22,7 +22,7 @@ public class NotToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public boolean include() {
+    public boolean keepAfterLexing() {
         return true;
     }
 

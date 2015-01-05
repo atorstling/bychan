@@ -19,7 +19,7 @@ public class EndTokenTest {
 
     @Test
     public void isIncluded() {
-        assertTrue(EndToken.get().include());
+        assertTrue(EndToken.get().keepAfterLexing());
     }
 
 }

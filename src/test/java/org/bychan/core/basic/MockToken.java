@@ -18,7 +18,7 @@ class MockToken implements Token<Object> {
     }
 
     @Override
-    public boolean include() {
+    public boolean keepAfterLexing() {
         throw new IllegalStateException();
     }
 }

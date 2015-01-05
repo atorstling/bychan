@@ -34,7 +34,7 @@ public class CalculatorTest {
         lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
-                .ignoreWhenParsing()
+                .discardAfterLexing()
                 .build();
 
         lb.newToken()
@@ -65,7 +65,7 @@ public class CalculatorTest {
         LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
         lb.newToken().named("rparen").matchesString(")").build();
         lb.newToken().named("lparen").matchesString("(").build();
-        lb.newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().build();
+        lb.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing().build();
         TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder2 = lb.newToken().named("plus").matchesString("+")
                 .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.expression(previous)));
         calculatorNodeTokenDefinitionBuilder2.build();

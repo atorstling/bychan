@@ -28,7 +28,7 @@ public class Lexer<N> {
                 throw new LexingFailedException(getLexingPosition(input, i), "No matching rule");
             }
             Lexeme<N> lexeme = match.toLexeme();
-            if (lexeme.getToken().include()) {
+            if (lexeme.getToken().keepAfterLexing()) {
                 lexemes.add(lexeme);
             }
             Token<N> token = lexeme.getToken();

@@ -22,7 +22,7 @@ class JsonLangBuilder {
         TokenDefinition<JsonNode> colon = colon(lb);
         TokenDefinition<JsonNode> rbracket = rbracket(lb);
         numberLiteral(lb);
-        lb.newToken().named("whitespace").ignoreWhenParsing().matchesWhitespace().build();
+        lb.newToken().named("whitespace").discardAfterLexing().matchesWhitespace().build();
         lb.newToken().named("lbracket").matchesString("[")
                 .nud((previous, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();

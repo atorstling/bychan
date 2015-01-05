@@ -8,7 +8,7 @@ public class TokenDefinitionBuilder<N> {
     private String pattern;
     private DynamicNudParseAction<N> nud;
     private DynamicLedParseAction<N> led;
-    private boolean parsed;
+    private boolean keepAfterLexing;
     private String tokenName;
     private int leftBindingPower = 1;
     private final TokenDefinitionOwner<N> tokenDefinitionOwner;
@@ -25,7 +25,7 @@ public class TokenDefinitionBuilder<N> {
 
     public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
         this.tokenDefinitionOwner = tokenDefinitionOwner;
-        parsed = true;
+        keepAfterLexing = true;
     }
 
     public TokenDefinitionBuilder<N> nud(DynamicNudParseAction<N> nud) {
@@ -41,7 +41,7 @@ public class TokenDefinitionBuilder<N> {
         if (tokenName == null) {
             tokenName = "token" + tokenDefinitionOwner.increaseUnnamedTokenCounter();
         }
-        TokenDefinition<N> token = new TokenDefinition<>(Pattern.compile(pattern), nud, led, tokenName, parsed, leftBindingPower);
+        TokenDefinition<N> token = new TokenDefinition<>(Pattern.compile(pattern), nud, led, tokenName, keepAfterLexing, leftBindingPower);
         tokenDefinitionOwner.tokenBuilt(token);
         return token;
     }
@@ -51,8 +51,8 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> ignoreWhenParsing() {
-        this.parsed = false;
+    public TokenDefinitionBuilder<N> discardAfterLexing() {
+        this.keepAfterLexing = false;
         return this;
     }
 

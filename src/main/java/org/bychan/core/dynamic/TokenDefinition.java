@@ -20,16 +20,16 @@ public class TokenDefinition<N> {
     private final DynamicLedParseAction<N> led;
     @NotNull
     private final String tokenName;
-    private final boolean parse;
+    private final boolean keepAfterLexing;
     private final int leftBindingPower;
     private final TokenKey tokenKey;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean parse, int leftBindingPower) {
+    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean keepAfterLexing, int leftBindingPower) {
         this.pattern = pattern;
         this.nud = nud;
         this.led = led;
         this.tokenName = tokenName;
-        this.parse = parse;
+        this.keepAfterLexing = keepAfterLexing;
         this.leftBindingPower = leftBindingPower;
         this.tokenKey = new TokenKey(tokenName());
     }
@@ -39,8 +39,8 @@ public class TokenDefinition<N> {
         return pattern;
     }
 
-    public boolean parse() {
-        return parse;
+    public boolean keepAfterLexing() {
+        return keepAfterLexing;
     }
 
     @Override

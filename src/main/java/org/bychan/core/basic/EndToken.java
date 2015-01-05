@@ -21,7 +21,7 @@ public class EndToken<N> implements Token<N> {
     }
 
     @Override
-    public boolean include() {
+    public boolean keepAfterLexing() {
         return true;
     }
 

@@ -21,7 +21,7 @@ public class OrToken implements Token<BooleanExpressionNode> {
     }
 
     @Override
-    public boolean include() {
+    public boolean keepAfterLexing() {
         return true;
     }
 
