@@ -155,14 +155,13 @@ Install via maven central:
 ```
 
 ##Feedback
-Please give feedback if you are using Bychan. Issues, mail or anything will do. I'd be glad to hear from you and to accept your contributions.
+Please give feedback if you are using Bychan. Create issues, send mail or whatever you prefer. I'd be glad to hear from you with or without any contributions.
 
 ##License
 MIT
 
 ##Maturity
-This is the first public version of Bychan. For this release I tried to focus on expressions, so functionality for statements might be a bit lacking. Please let me know if you run into limitations in this area. Documentation is
-also slim to none, if there is interest in this project this will definately improve.
+This is the first public version of Bychan. For this release I tried to focus on parsing expressions, so functionality for statements might be a bit lacking. Please let me know if you run into limitations in this area. Documentation is also slim to none, if there is interest in this project this will definitely improve.
  
  
 
