@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 /**
  * The recorded definition of a dynamic token. Utilized to form both {@link DynamicToken}s and
  * {@link DynamicLexeme}s
- *
- *
  */
 public class TokenDefinition<N> {
     @NotNull

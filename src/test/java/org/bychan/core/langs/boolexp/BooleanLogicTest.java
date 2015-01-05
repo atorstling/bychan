@@ -2,7 +2,10 @@ package org.bychan.core.langs.boolexp;
 
 import org.bychan.core.basic.ParseResult;
 import org.bychan.core.basic.ParsingFailedInformation;
-import org.bychan.core.dynamic.*;
+import org.bychan.core.dynamic.DynamicNudParseAction;
+import org.bychan.core.dynamic.Language;
+import org.bychan.core.dynamic.LanguageBuilder;
+import org.bychan.core.dynamic.TokenDefinition;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,10 +25,8 @@ public class BooleanLogicTest {
             return trailingExpression;
         }).build();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
-        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder1 = lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous)));
-        booleanExpressionNodeTokenDefinitionBuilder1.build();
-        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder = lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous)));
-        booleanExpressionNodeTokenDefinitionBuilder.build();
+        lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous))).build();
+        lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous))).build();
         lb.newToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
