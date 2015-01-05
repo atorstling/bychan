@@ -26,8 +26,12 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     private int unnamedTokenCounter;
 
     public LanguageBuilder() {
+        this("unnamed");
+    }
+
+    public LanguageBuilder(@NotNull final String name) {
         this.tokens = new ArrayList<>();
-        this.name = "unnamed";
+        this.name = name;
     }
 
     @NotNull
@@ -38,12 +42,6 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     @NotNull
     public TokenDefinitionBuilder<N> newToken() {
         return newTokenInternal();
-    }
-
-    @NotNull
-    public LanguageBuilder<N> named(@NotNull final String name) {
-        this.name = name;
-        return this;
     }
 
     @NotNull

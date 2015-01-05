@@ -13,7 +13,7 @@ public class SuffixTest {
 
     @Test
     public void supportsInfixOperators() {
-        LanguageBuilder<Object> lb = new LanguageBuilder<>().named("test");
+        LanguageBuilder<Object> lb = new LanguageBuilder<>("test");
         lb.newToken().named("variable").matchesPattern("[a-z]{1}").nud((previous, parser, lexeme) -> lexeme.getText().charAt(0)).build();
         lb.newToken().named("inc").matchesString("++").led((previous, parser, lexeme) -> (char) (((char) previous) + 1)).build();
         Language<Object> l = lb.completeLanguage();

@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class PrioritiesTest {
     @Test
     public void prioritiesAreObeyed() {
-        LanguageBuilder<Integer> lb = new LanguageBuilder<Integer>().named("parantheses");
+        LanguageBuilder<Integer> lb = new LanguageBuilder<>("parantheses");
         lb.newToken().named("mult").leftBindingPower(1).matchesString("*").led((previous, parser, lexeme) -> previous * parser.subExpression(previous)).build();
         TokenDefinitionBuilder<Integer> integerTokenDefinitionBuilder1 = lb.newToken().named("plus").leftBindingPower(2).matchesString("+").led((previous, parser, lexeme) -> previous + parser.subExpression(previous));
         integerTokenDefinitionBuilder1.build();
