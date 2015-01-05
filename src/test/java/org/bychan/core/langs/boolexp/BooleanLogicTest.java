@@ -2,7 +2,6 @@ package org.bychan.core.langs.boolexp;
 
 import org.bychan.core.basic.ParseResult;
 import org.bychan.core.basic.ParsingFailedInformation;
-import org.bychan.core.dynamic.DynamicNudParseAction;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
 import org.bychan.core.dynamic.TokenDefinition;
@@ -18,7 +17,6 @@ public class BooleanLogicTest {
     public void terserSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
-        DynamicNudParseAction<BooleanExpressionNode> parseAction = (previous, parser, lexeme) -> new VariableNode(lexeme.getText());
         lb.newToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
             BooleanExpressionNode trailingExpression = parser.expression(previous);
             parser.expectSingleLexeme(rparen.getKey());
@@ -27,7 +25,7 @@ public class BooleanLogicTest {
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
         lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous))).build();
         lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous))).build();
-        lb.newToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).build();
+        lb.newToken().matchesPattern("[a-z]+").named("variable").nud((previous, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);
