@@ -15,7 +15,7 @@ What it does do is to help you with the boring bits: lexing, error handling and 
 ##Show me the code
 Sure! Let's start with a simple calculator:
 ```Java
-    @Test
+        @Test
         public void simpleCalc() {
             LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
             lb.newToken().named("digit").matchesPattern("[0-9]+")
@@ -37,7 +37,7 @@ Sure! Let's start with a simple calculator:
 This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sens, we get a result directly!
 You are not limited to digits, though. Lets try to write a parser which converts to RPN:
 ```Java
-@Test
+    @Test
     public void simpleCalcRpn() {
         LanguageBuilder<String> lb = new LanguageBuilder<>("simpleCalc");
         lb.newToken().named("digit").matchesPattern("[0-9]+")
