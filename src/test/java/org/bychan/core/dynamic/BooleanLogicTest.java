@@ -14,19 +14,19 @@ public class BooleanLogicTest {
     @Test
     public void terserSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
-        final TokenDefinition<BooleanExpressionNode> rparen = lb.startToken().matchesString(")").named("rparen").build();
+        final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         DynamicNudParseAction<BooleanExpressionNode> parseAction = (previous, parser, lexeme) -> new VariableNode(lexeme.getText());
-        lb.startToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
+        lb.newToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
             BooleanExpressionNode trailingExpression = parser.subExpression(previous);
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
-        lb.startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
-        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder1 = lb.startToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.subExpression(previous)));
+        lb.newToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
+        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder1 = lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.subExpression(previous)));
         booleanExpressionNodeTokenDefinitionBuilder1.build();
-        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder = lb.startToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.subExpression(previous)));
+        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder = lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.subExpression(previous)));
         booleanExpressionNodeTokenDefinitionBuilder.build();
-        lb.startToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).build();
+        lb.newToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);

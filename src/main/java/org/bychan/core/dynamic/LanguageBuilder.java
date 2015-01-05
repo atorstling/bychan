@@ -41,23 +41,9 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
 
     @NotNull
     public TokenDefinitionBuilder<N> newToken() {
-        return newTokenInternal();
-    }
-
-    @NotNull
-    public LanguageBuilder<N> addToken(@NotNull TokenDefinition<N> tokenDefinition) {
-        tokens.add(tokenDefinition);
-        return this;
-    }
-
-
-    public TokenDefinitionBuilder<N> startToken() {
-        return newTokenInternal();
-    }
-
-    private TokenDefinitionBuilder<N> newTokenInternal() {
         return new TokenDefinitionBuilder<>(this).leftBindingPower(++currentLeftBindingPower);
     }
+
 
     @Override
     public int increaseUnnamedTokenCounter() {
@@ -66,6 +52,6 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
 
     @Override
     public void tokenBuilt(@NotNull TokenDefinition<N> token) {
-        addToken(token);
+        tokens.add(token);
     }
 }
