@@ -40,7 +40,7 @@ public class JsonPerfTest {
         assertNotNull(is);
         Language<JsonNode> l = new JsonLangBuilder().build();
         String original = streamToString(is);
-        JsonNode parsed = l.getLexParser().parse(original);
+        JsonNode parsed = l.newLexParser().parse(original);
         String prettyPrinted = parsed.prettyPrint(0);
         assertTrue(prettyPrinted.contains("V{>ꤩ혙넪㭪"));
     }

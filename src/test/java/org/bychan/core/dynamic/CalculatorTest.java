@@ -57,9 +57,9 @@ public class CalculatorTest {
                 .addToken(minus)
                 .addToken(number)
                 .completeLanguage();
-        assertEquals(3, l.getLexParser().tryParse("1+2").getRootNode().evaluate());
-        assertEquals(-1, l.getLexParser().tryParse("1+-2").getRootNode().evaluate());
-        assertEquals(3, l.getLexParser().tryParse("1--2").getRootNode().evaluate());
+        assertEquals(3, l.newLexParser().tryParse("1+2").getRootNode().evaluate());
+        assertEquals(-1, l.newLexParser().tryParse("1+-2").getRootNode().evaluate());
+        assertEquals(3, l.newLexParser().tryParse("1--2").getRootNode().evaluate());
     }
 
 
@@ -77,22 +77,22 @@ public class CalculatorTest {
                 .newToken().named("number").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).end()
                 .completeLanguage();
 
-        assertEquals(3, l.getLexParser().tryParse("1+2").getRootNode().evaluate());
-        assertEquals(-1, l.getLexParser().tryParse("1+-2").getRootNode().evaluate());
-        assertEquals(3, l.getLexParser().tryParse("1--2").getRootNode().evaluate());
+        assertEquals(3, l.newLexParser().tryParse("1+2").getRootNode().evaluate());
+        assertEquals(-1, l.newLexParser().tryParse("1+-2").getRootNode().evaluate());
+        assertEquals(3, l.newLexParser().tryParse("1--2").getRootNode().evaluate());
     }
 
     @Test
     public void testDirectCalculation() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        assertEquals(Integer.valueOf(7), l.getLexParser().tryParse("1 + 2 * 3").getRootNode());
+        assertEquals(Integer.valueOf(7), l.newLexParser().tryParse("1 + 2 * 3").getRootNode());
     }
 
     @Test
     public void emptyInput() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         try {
-            l.getLexParser().parse("");
+            l.newLexParser().parse("");
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Premature end reached", e.getParsingFailedInformation().getFailedAfterLexingInformation().getFailureMessage());

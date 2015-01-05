@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -18,47 +16,29 @@ import java.util.stream.Collectors;
  */
 public class Language<N> {
     @NotNull
-    private final Lexer<N> lexer;
-    @NotNull
-    private final LexParser<N> lexParser;
-    @NotNull
     private final String name;
     @NotNull
-    private final Map<TokenKey, DynamicToken<N>> tokensByKey;
+    private final List<TokenDefinition<N>> tokenDefinitions;
 
     public Language(@NotNull final String name, @NotNull final List<TokenDefinition<N>> tokenDefinitions) {
         this.name = name;
+        this.tokenDefinitions = tokenDefinitions;
+    }
+
+    @NotNull
+    public LexParser<N> newLexParser() {
+        return new LexParser<>(newLexer());
+    }
+
+    @NotNull
+    Lexer<N> newLexer() {
         // Use a delegating finder to break the circular dependency between DynamicToken
         // and DynamicTokenFinder. First build all tokens with an empty finder, then build the
         // finder with the result.
         DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
         final Collection<DynamicToken<N>> dynamicTokens = toTokens(tokenDefinitions, delegatingFinder);
-        tokensByKey = dynamicTokens.stream().collect(Collectors.toMap(DynamicToken::getKey, Function.identity()));
-        delegatingFinder.setDelegate(this::findTokenByKey);
-        lexer = new Lexer<>(dynamicTokens);
-        lexParser = new LexParser<>(lexer);
-    }
-
-    @NotNull
-    private DynamicToken<N> findTokenByKey(@NotNull TokenKey soughtKey) {
-        DynamicToken<N> candidate = tokensByKey.get(soughtKey);
-        if (candidate == null) {
-            throw new IllegalStateException("No registered token definition keyed '" + soughtKey + "' was found. Did you register your token before referring to it?");
-        } else if (candidate.getKey().equals(soughtKey)) {
-            return candidate;
-        } else {
-            throw new IllegalStateException("Found a candidate token definition with the same key ('" + soughtKey + "'), but it had a different specification. Do you have multiple copies of this token definition?");
-        }
-    }
-
-    @NotNull
-    public Lexer<N> getLexer() {
-        return lexer;
-    }
-
-    @NotNull
-    public LexParser<N> getLexParser() {
-        return lexParser;
+        delegatingFinder.setDelegate(new DynamicTokenFinderImpl<>(dynamicTokens));
+        return new Lexer<>(dynamicTokens);
     }
 
 
@@ -75,4 +55,5 @@ public class Language<N> {
     public String getName() {
         return name;
     }
+
 }

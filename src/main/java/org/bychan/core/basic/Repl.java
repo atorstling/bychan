@@ -21,7 +21,7 @@ public class Repl<N> implements Runnable {
 
     public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out) {
         languageName = language.getName();
-        this.lexParser = language.getLexParser();
+        this.lexParser = language.newLexParser();
         this.in = in;
         this.out = out;
     }

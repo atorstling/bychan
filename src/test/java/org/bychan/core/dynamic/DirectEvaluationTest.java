@@ -26,9 +26,9 @@ public class DirectEvaluationTest {
                 .addToken(addition)
                 .completeLanguage();
         String expr = "1+3";
-        List<Lexeme<Integer>> lexemes = lang.getLexer().lex(expr);
+        List<Lexeme<Integer>> lexemes = lang.newLexer().lex(expr);
         assertEquals("[number(1), addition(+), number(3), END]", lexemes.toString());
-        assertEquals(4, (int) lang.getLexParser().tryParse(0, expr).getRootNode());
+        assertEquals(4, (int) lang.newLexParser().tryParse(0, expr).getRootNode());
 
     }
 }

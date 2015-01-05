@@ -12,6 +12,6 @@ public class PrioritiesTest {
                 .newToken().named("plus").leftBindingPower(2).matchesString("+").led((previous, parser, lexeme) -> previous + parser.subExpression(previous)).end()
                 .newToken().named("num").leftBindingPower(3).matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> Integer.parseInt(lexeme.getText())).end()
                 .completeLanguage();
-        assertEquals((Integer) 9, l.getLexParser().tryParse("1+2*3").getRootNode());
+        assertEquals((Integer) 9, l.newLexParser().tryParse("1+2*3").getRootNode());
     }
 }

@@ -17,6 +17,6 @@ public class SuffixTest {
         lb.addToken(lb.newToken().named("variable").matchesPattern("[a-z]{1}").nud((previous, parser, lexeme) -> lexeme.getText().charAt(0)).build());
         lb.addToken(lb.newToken().named("inc").matchesString("++").led((previous, parser, lexeme) -> (char) (((char) previous) + 1)).build());
         Language<Object> l = lb.completeLanguage();
-        assertEquals('d', l.getLexParser().parse("c++"));
+        assertEquals('d', l.newLexParser().parse("c++"));
     }
 }
