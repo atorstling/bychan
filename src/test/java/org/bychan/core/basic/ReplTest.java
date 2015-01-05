@@ -1,7 +1,7 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.dynamic.CalculatorTestHelper;
 import org.bychan.core.dynamic.Language;
+import org.bychan.core.langs.calculator.CalculatorTestHelper;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
