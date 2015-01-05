@@ -144,25 +144,24 @@ public class MiniLangTest {
                     return new ListNode(previous, expressions);
                 });
 
-        Language<LaiLaiNode> l = lb
-                .addToken(booleanLiteral.leftBindingPower(first).build())
-                .addToken(lcurly.leftBindingPower(first).build())
-                .addToken(rcurly.leftBindingPower(first).build())
-                .addToken(listEnd.leftBindingPower(first).build())
-                .addToken(lparen.leftBindingPower(first).build())
-                .addToken(rparen.leftBindingPower(first).build())
-                .addToken(listStart.leftBindingPower(first).build())
-                .addToken(comma.leftBindingPower(first).build())
-                .addToken(whitespace.leftBindingPower(first).build())
-                .addToken(integerLiteral.leftBindingPower(first).build())
-                .addToken(floatLiteral.leftBindingPower(first).build())
-                .addToken(variableDeclaration.leftBindingPower(first).build())
-                .addToken(variableReference.leftBindingPower(second).build())
-                .addToken(semicolon.leftBindingPower(third).build())
-                .addToken(assign.leftBindingPower(fourth).build())
-                .addToken(plus.leftBindingPower(fifth).build())
-                .addToken(hat.leftBindingPower(fifth).build())
-                .completeLanguage();
+        booleanLiteral.leftBindingPower(first).build();
+        lcurly.leftBindingPower(first).build();
+        rcurly.leftBindingPower(first).build();
+        listEnd.leftBindingPower(first).build();
+        lparen.leftBindingPower(first).build();
+        rparen.leftBindingPower(first).build();
+        listStart.leftBindingPower(first).build();
+        comma.leftBindingPower(first).build();
+        whitespace.leftBindingPower(first).build();
+        integerLiteral.leftBindingPower(first).build();
+        floatLiteral.leftBindingPower(first).build();
+        variableDeclaration.leftBindingPower(first).build();
+        variableReference.leftBindingPower(second).build();
+        semicolon.leftBindingPower(third).build();
+        assign.leftBindingPower(fourth).build();
+        plus.leftBindingPower(fifth).build();
+        hat.leftBindingPower(fifth).build();
+        Language<LaiLaiNode> l = lb.completeLanguage();
         testOne(l);
         testTwo(l);
 

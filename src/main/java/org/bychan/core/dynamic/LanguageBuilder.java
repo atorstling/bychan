@@ -9,7 +9,7 @@ import java.util.List;
  * Builds dynamic languages
  *
  */
-public class LanguageBuilder<N> {
+public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     @NotNull
     private final List<TokenDefinition<N>> tokens;
     @NotNull
@@ -58,10 +58,16 @@ public class LanguageBuilder<N> {
     }
 
     private TokenDefinitionBuilder<N> newTokenInternal() {
-        return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLeftBindingPower++);
+        return new TokenDefinitionBuilder<>(this).leftBindingPower(++currentLeftBindingPower);
     }
 
+    @Override
     public int increaseUnnamedTokenCounter() {
         return ++unnamedTokenCounter;
+    }
+
+    @Override
+    public void tokenBuilt(@NotNull TokenDefinition<N> token) {
+        addToken(token);
     }
 }

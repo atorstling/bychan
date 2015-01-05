@@ -18,7 +18,7 @@ public class CalculatorTest {
                 .named("rparen")
                 .build();
 
-        TokenDefinition<CalculatorNode> lparen = lb.newToken()
+        lb.newToken()
                 .matchesString("(")
                 .named("lparen")
                 .nud((previous, parser, lexeme) -> {
@@ -27,36 +27,29 @@ public class CalculatorTest {
                     return trailingExpression;
                 }).build();
 
-        TokenDefinition<CalculatorNode> whitespace = lb.newToken()
+        lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing()
                 .build();
 
-        TokenDefinition<CalculatorNode> plus = lb.newToken()
+        lb.newToken()
                 .matchesString("+")
                 .named("plus")
                 .nud((previous, parser, lexeme) -> parser.subExpression(previous))
                 .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous)))
                 .build();
 
-        TokenDefinition<CalculatorNode> minus = lb.newToken()
+        lb.newToken()
                 .matchesString("-")
                 .named("minus")
                 .nud((previous, parser, lexeme) -> new NegationNode(parser.subExpression(previous)))
                 .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous))).build();
 
-        TokenDefinition<CalculatorNode> number = lb.newToken()
+        lb.newToken()
                 .matchesPattern("[0-9]+")
                 .named("number").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).build();
-        Language<CalculatorNode> l = lb
-                .addToken(lparen)
-                .addToken(rparen)
-                .addToken(whitespace)
-                .addToken(plus)
-                .addToken(minus)
-                .addToken(number)
-                .completeLanguage();
+        Language<CalculatorNode> l = lb.completeLanguage();
         assertEquals(3, l.newLexParser().tryParse("1+2").getRootNode().evaluate());
         assertEquals(-1, l.newLexParser().tryParse("1+-2").getRootNode().evaluate());
         assertEquals(3, l.newLexParser().tryParse("1--2").getRootNode().evaluate());
@@ -66,16 +59,16 @@ public class CalculatorTest {
     @Test
     public void testClearerSyntax() {
         LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
-        Language<CalculatorNode> l = lb.newToken().named("rparen").matchesString(")").end()
-                .newToken().named("lparen").matchesString("(").end()
-                .newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().end()
-                .newToken().named("plus").matchesString("+")
-                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous))).end()
-                .newToken().named("minus").matchesString("-")
+        lb.newToken().named("rparen").matchesString(")").build();
+        lb.newToken().named("lparen").matchesString("(").end();
+        lb.newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().end();
+        lb.newToken().named("plus").matchesString("+")
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous))).end();
+        lb.newToken().named("minus").matchesString("-")
                 .nud((previous, parser, lexeme) -> new NegationNode(parser.subExpression(previous)))
-                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous))).end()
-                .newToken().named("number").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).end()
-                .completeLanguage();
+                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous))).end();
+        lb.newToken().named("number").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).end();
+        Language<CalculatorNode> l = lb.completeLanguage();
 
         assertEquals(3, l.newLexParser().tryParse("1+2").getRootNode().evaluate());
         assertEquals(-1, l.newLexParser().tryParse("1+-2").getRootNode().evaluate());

@@ -19,8 +19,8 @@ public class JsonTest {
     @Test
     public void simpleStringLiteral() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("\"hello\"");
         assertEquals(new StringLiteralNode("hello"), ast);
     }
@@ -28,8 +28,8 @@ public class JsonTest {
     @Test
     public void stringWithQuoteEscape() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("\"\\\"hello\"");
         assertEquals(new StringLiteralNode("\\\"hello"), ast);
     }
@@ -37,8 +37,8 @@ public class JsonTest {
     @Test
     public void stringWithQuotedBackslash() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("\"\\\\\"");
         assertEquals(new StringLiteralNode("\\\\"), ast);
     }
@@ -46,8 +46,8 @@ public class JsonTest {
     @Test
     public void stringWithUnicodeLiteral() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("\"\\uabCD\"");
         assertEquals(new StringLiteralNode("\\uabCD"), ast);
     }
@@ -55,8 +55,8 @@ public class JsonTest {
     @Test
     public void stringWithCrazyText() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         String crazy = "6U閆崬밺뀫颒myj츥휘\uECED:$薈mY햚#\uF6A2rz飏+玭V㭢뾿愴Y\uEC11ꖚX亥ᮉ푊\\u0006垡㐭룝\\\"厓ᔧḅ^Sqpv媫\\\"⤽걒\\\"˽Ἆ?ꇆ䬔未tv{DV鯀Tἆl凸g\\\\㈭ĭ즿UH㽤";
         JsonNode ast = l.newLexParser().parse("\"" + crazy + "\"");
         assertEquals(new StringLiteralNode(crazy), ast);
@@ -65,8 +65,8 @@ public class JsonTest {
     @Test
     public void stringWithAnotherCrazyText() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         String crazy = "e\uE7A1浱u\uEFE3p\u007F蔽Cr\u0DE0JK軵xCʨ<뜡癙Y獩ｹ齈X/螗唻\uEB3F?<蘡+뷄㩤쳖3偑犾&\\\\첊xz坍崦ݻ\uE2D1鍴\\\"嵥B3㰃詤豺嚼aqJ⑆∥韼@\\u000b㢊\\u0015L臯.샥";
         JsonNode ast = l.newLexParser().parse("\"" + crazy + "\"");
         assertEquals(new StringLiteralNode(crazy), ast);
@@ -75,8 +75,8 @@ public class JsonTest {
     @Test
     public void stringWithInvalidEscape() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.stringLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.stringLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         String indata = "\"\\phello\"";
         ParseResult<JsonNode> pr = l.newLexParser().tryParse(indata);
         ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata)));
@@ -87,8 +87,8 @@ public class JsonTest {
     @Test
     public void positiveInteger() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.numberLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.numberLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("1");
         assertEquals(new NumberLiteralNode(1), ast);
     }
@@ -96,8 +96,8 @@ public class JsonTest {
     @Test
     public void negativeExponent() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.numberLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.numberLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("-0.5e-5");
         assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
     }
@@ -105,8 +105,8 @@ public class JsonTest {
     @Test
     public void leadingZeroesForbidden() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.numberLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.numberLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         try {
             l.newLexParser().parse("01.5");
             fail("Expected exception");
@@ -119,8 +119,8 @@ public class JsonTest {
     @Test
     public void bool() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.boolLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.boolLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("true");
         assertEquals(new BooleanLiteralNode(true), ast);
     }
@@ -128,8 +128,8 @@ public class JsonTest {
     @Test
     public void nul() {
         LanguageBuilder<JsonNode> lb = new LanguageBuilder<>();
-        Language<JsonNode> l = lb.addToken(JsonLangBuilder.nullLiteral(lb))
-                .completeLanguage();
+        JsonLangBuilder.nullLiteral(lb);
+        Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("null");
         assertEquals(NullLiteral.get(), ast);
     }

@@ -11,7 +11,7 @@ public class TokenDefinitionBuilder<N> {
     private boolean parsed;
     private String tokenName;
     private int leftBindingPower = 1;
-    private final LanguageBuilder<N> languageBuilder;
+    private final TokenDefinitionOwner<N> tokenDefinitionOwner;
     private TokenKey tokenKey;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
@@ -23,8 +23,8 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder(@NotNull LanguageBuilder<N> languageBuilder) {
-        this.languageBuilder = languageBuilder;
+    public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
+        this.tokenDefinitionOwner = tokenDefinitionOwner;
         parsed = true;
     }
 
@@ -39,9 +39,11 @@ public class TokenDefinitionBuilder<N> {
             throw new IllegalStateException("No matching pattern has been set");
         }
         if (tokenName == null) {
-            tokenName = "token" + languageBuilder.increaseUnnamedTokenCounter();
+            tokenName = "token" + tokenDefinitionOwner.increaseUnnamedTokenCounter();
         }
-        return new TokenDefinition<>(Pattern.compile(pattern), nud, led, tokenName, parsed, leftBindingPower);
+        TokenDefinition<N> token = new TokenDefinition<>(Pattern.compile(pattern), nud, led, tokenName, parsed, leftBindingPower);
+        tokenDefinitionOwner.tokenBuilt(token);
+        return token;
     }
 
     public TokenDefinitionBuilder<N> led(DynamicLedParseAction<N> led) {
@@ -71,23 +73,16 @@ public class TokenDefinitionBuilder<N> {
     }
 
     @NotNull
-    public TokenDefinition<N> buildAndAdd() {
-        TokenDefinition<N> result = build();
-        languageBuilder.addToken(result);
-        return result;
-    }
-
-    @NotNull
-    public LanguageBuilder<N> end() {
-        return languageBuilder.addToken(build());
-    }
-
-    @NotNull
     public TokenDefinitionBuilder<N> ignoreWhenParsing() {
         return ignoredWhenParsing();
     }
 
     public TokenKey getKey() {
         return tokenKey;
+    }
+
+    @NotNull
+    public TokenDefinition<N> end() {
+        return build();
     }
 }

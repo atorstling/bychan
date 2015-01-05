@@ -16,7 +16,7 @@ public class LanguageBuilderTest {
     public void noPatternOnTokenIsError() {
         LanguageBuilder<Object> lb = new LanguageBuilder<>();
         try {
-            lb.newToken().buildAndAdd();
+            lb.newToken().build();
             fail("exception expected");
         } catch (IllegalStateException e) {
             assertEquals("No matching pattern has been set", e.getMessage());
@@ -26,7 +26,7 @@ public class LanguageBuilderTest {
     @Test
     public void noNameOnTokenResultsInDefault() {
         LanguageBuilder<Object> lb = new LanguageBuilder<>();
-        TokenDefinition<Object> tokenDefinition = lb.newToken().matchesString("[0-9]+").buildAndAdd();
+        TokenDefinition<Object> tokenDefinition = lb.newToken().matchesString("[0-9]+").build();
         lb.completeLanguage();
         assertEquals("token1", tokenDefinition.tokenName());
     }
