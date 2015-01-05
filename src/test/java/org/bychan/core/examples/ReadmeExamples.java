@@ -108,11 +108,11 @@ public class ReadmeExamples {
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.parse("false&&false");
+        BoolNode one = lexParser.parse("false&&false&&false");
         assertFalse(one.evaluate());
-        BoolNode two = lexParser.parse("true&&false");
+        BoolNode two = lexParser.parse("true&&false&&true");
         assertFalse(two.evaluate());
-        BoolNode three = lexParser.parse("true&&true");
+        BoolNode three = lexParser.parse("true&&true&&true");
         assertTrue(three.evaluate());
     }
 
