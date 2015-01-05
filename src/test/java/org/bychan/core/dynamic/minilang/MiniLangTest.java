@@ -24,13 +24,13 @@ public class MiniLangTest {
         int fourth = 4;
         int fifth = 5;
 
-        LanguageBuilder<LaiLaiNode> lb = new LanguageBuilder<>();
+        LanguageBuilder<LaiLaiNode> lb2 = new LanguageBuilder<>();
 
-        final TokenDefinitionBuilder<LaiLaiNode> rcurly = lb.newToken()
+        final TokenDefinitionBuilder<LaiLaiNode> rcurly = lb2.newToken()
                 .matchesString("}")
                 .named("rcurly");
 
-        final TokenDefinitionBuilder<LaiLaiNode> lcurly = lb.newToken()
+        final TokenDefinitionBuilder<LaiLaiNode> lcurly = lb2.newToken()
                 .matchesString("{")
                 .named("lcurly")
                 .nud((previous, parser, lexeme) -> {
@@ -42,11 +42,11 @@ public class MiniLangTest {
                     return scopeNode;
                 });
 
-        final TokenDefinitionBuilder<LaiLaiNode> rparen = lb.newToken()
+        final TokenDefinitionBuilder<LaiLaiNode> rparen = lb2.newToken()
                 .matchesString(")")
                 .named("rparen");
 
-        TokenDefinitionBuilder<LaiLaiNode> lparen = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> lparen = lb2.newToken()
                 .matchesString("(")
                 .named("lparen")
                 .nud((previous, parser, lexeme) -> {
@@ -55,23 +55,23 @@ public class MiniLangTest {
                     return trailingExpression;
                 });
 
-        TokenDefinitionBuilder<LaiLaiNode> whitespace = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> whitespace = lb2.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
                 .ignoredWhenParsing();
 
-        TokenDefinitionBuilder<LaiLaiNode> plus = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> plus = lb2.newToken()
                 .matchesString("+")
                 .named("plus")
                 .nud((previous, parser, lexeme) -> parser.subExpression(previous))
                 .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous)));
 
-        TokenDefinitionBuilder<LaiLaiNode> hat = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> hat = lb2.newToken()
                 .matchesString("^")
                 .named("hat")
                 .led((previous, parser, lexeme) -> new HatNode(previous, parser.subExpression(previous)));
 
-        TokenDefinitionBuilder<LaiLaiNode> assign = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> assign = lb2.newToken()
                 .matchesString("=")
                 .named("assign")
                 .led((previous, parser, lexeme) -> {
@@ -90,46 +90,46 @@ public class MiniLangTest {
             }
             return new VariableDefNode(previous, ExpressionType.forTypeDeclaration(matcher.group(1)), matcher.group(2));
         };
-        TokenDefinitionBuilder<LaiLaiNode> variableDeclaration = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> variableDeclaration = lb2.newToken()
                 .matchesPattern("(?:float|int|bool) [a-z]+")
                 .named("variableDef").nud(parseAction4);
 
-        TokenDefinitionBuilder<LaiLaiNode> variableReference = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> variableReference = lb2.newToken()
                 .matchesPattern("[a-z]+")
                 .named("variableRef").nud((previous, parser, lexeme) -> {
                     String name = lexeme.getText();
                     return new VariableRefNode(name);
                 });
 
-        TokenDefinitionBuilder<LaiLaiNode> booleanLiteral = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> booleanLiteral = lb2.newToken()
                 .matchesPattern("true|false")
                 .named("bool").nud((previous, parser, lexeme) -> new BooleanLiteralNode(Boolean.parseBoolean(lexeme.getText())));
 
-        TokenDefinitionBuilder<LaiLaiNode> integerLiteral = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> integerLiteral = lb2.newToken()
                 .matchesPattern("[0-9]+i")
                 .named("int").nud((previous, parser, lexeme) -> {
                     String text = lexeme.getText();
                     return new IntegerLiteralNode(previous, Integer.parseInt(text.substring(0, text.length() - 1)));
                 });
 
-        TokenDefinitionBuilder<LaiLaiNode> floatLiteral = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> floatLiteral = lb2.newToken()
                 .matchesPattern("[0-9]+f")
                 .named("float").nud((previous, parser, lexeme) -> new FloatLiteralNode(previous, Float.parseFloat(lexeme.getText())));
 
-        TokenDefinitionBuilder<LaiLaiNode> semicolon = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> semicolon = lb2.newToken()
                 .matchesString(";")
                 .named("statement")
                 .led((previous, parser, lexeme) -> new StatementNode(previous, parser.subExpression(previous)));
 
-        final TokenDefinitionBuilder<LaiLaiNode> listEnd = lb.newToken()
+        final TokenDefinitionBuilder<LaiLaiNode> listEnd = lb2.newToken()
                 .matchesString("]")
                 .named("listEnd");
 
-        final TokenDefinitionBuilder<LaiLaiNode> comma = lb.newToken()
+        final TokenDefinitionBuilder<LaiLaiNode> comma = lb2.newToken()
                 .matchesString(",")
                 .named("comma");
 
-        TokenDefinitionBuilder<LaiLaiNode> listStart = lb.newToken()
+        TokenDefinitionBuilder<LaiLaiNode> listStart = lb2.newToken()
                 .matchesString("[")
                 .named("listStart")
                 .nud((previous, parser, lexeme) -> {
@@ -161,7 +161,7 @@ public class MiniLangTest {
         assign.leftBindingPower(fourth).build();
         plus.leftBindingPower(fifth).build();
         hat.leftBindingPower(fifth).build();
-        Language<LaiLaiNode> l = lb.completeLanguage();
+        Language<LaiLaiNode> l = lb2.completeLanguage();
         testOne(l);
         testTwo(l);
 
