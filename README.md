@@ -34,8 +34,10 @@ Sure! Let's start with a simple calculator:
             assertEquals((Long) 7l, lexParser.parse("1+2*3"));
         }
 ```
-This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sens, we get a result directly!
-You are not limited to digits, though. Lets try to write a parser which converts to RPN:
+This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense.
+ Instead we get a result directly!
+
+You can choose any AST node type. Lets try to write a parser which converts to RPN:
 ```Java
     @Test
     public void simpleCalcRpn() {
