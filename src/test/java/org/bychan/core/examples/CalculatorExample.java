@@ -16,17 +16,12 @@ public class CalculatorExample {
     @Test
     public void simpleCalc() {
         LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
-        lb.newToken().named("digit")
-                .matchesPattern("[0-9]+")
+        lb.newToken().named("digit").matchesPattern("[0-9]+")
                 .nud((previous, parser, lexeme) -> Long.parseLong(lexeme.getText()))
                 .build();
         lb.newToken().named("plus")
                 .matchesString("+")
                 .led((previous, parser, lexeme) -> previous + parser.expression(previous))
-                .build();
-        lb.newToken().named("minus")
-                .matchesString("-")
-                .led((previous, parser, lexeme) -> previous - parser.expression(previous))
                 .build();
         lb.newToken().named("mult")
                 .matchesString("*")
@@ -35,6 +30,25 @@ public class CalculatorExample {
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
         assertEquals((Long) 7l, lexParser.parse("1+2*3"));
+    }
+
+    @Test
+    public void simpleCalcRpn() {
+        LanguageBuilder<String> lb = new LanguageBuilder<>("simpleCalc");
+        lb.newToken().named("digit").matchesPattern("[0-9]+")
+                .nud((previous, parser, lexeme) -> lexeme.getText())
+                .build();
+        lb.newToken().named("plus")
+                .matchesString("+")
+                .led((previous, parser, lexeme) -> "(+ " + previous + " " + parser.expression(previous) + ")")
+                .build();
+        lb.newToken().named("mult")
+                .matchesString("*")
+                .led((previous, parser, lexeme) -> "(* " + previous + " " + parser.expression(previous) + ")")
+                .build();
+        Language<String> language = lb.completeLanguage();
+        LexParser<String> lexParser = language.newLexParser();
+        assertEquals("(+ 1 (* 2 3))", lexParser.parse("1+2*3"));
     }
 
     @Test
@@ -70,7 +84,7 @@ public class CalculatorExample {
                 .build();
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
-        assertEquals((Long) 7l, lexParser.parse("1+2*3"));
-        assertEquals((Long) 9l, lexParser.parse("(1+2)*3"));
+        assertEquals((Long) 3l, lexParser.parse("1+2*3-4"));
+        assertEquals((Long) 7l, lexParser.parse("(1+2)*3-2"));
     }
 }
