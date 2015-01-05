@@ -15,61 +15,61 @@ What it does do is to help you with the boring bits: lexing, error handling and 
 ##Show me the Code
 Sure! Let's start with a simple calculator:
 ```Java
-        @Test
-        public void simpleCalc() {
-            LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
-            lb.newToken().named("digit").matchesPattern("[0-9]+")
-                    .nud((previous, parser, lexeme) -> Long.parseLong(lexeme.getText()))
-                    .build();
-            lb.newToken().named("plus")
-                    .matchesString("+")
-                    .led((previous, parser, lexeme) -> previous + parser.expression(previous))
-                    .build();
-            lb.newToken().named("mult")
-                    .matchesString("*")
-                    .led((previous, parser, lexeme) -> previous * parser.expression(previous))
-                    .build();
-            Language<Long> language = lb.completeLanguage();
-            LexParser<Long> lexParser = language.newLexParser();
-            assertEquals((Long) 7l, lexParser.parse("1+2*3"));
-        }
+    @Test
+    public void simpleCalc() {
+        LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
+        lb.newToken().named("digit").matchesPattern("[0-9]+")
+                .nud((previous, parser, lexeme) -> Long.parseLong(lexeme.getText()))
+                .build();
+        lb.newToken().named("plus")
+                .matchesString("+")
+                .led((previous, parser, lexeme) -> previous + parser.expression(previous))
+                .build();
+        lb.newToken().named("mult")
+                .matchesString("*")
+                .led((previous, parser, lexeme) -> previous * parser.expression(previous))
+                .build();
+        Language<Long> language = lb.completeLanguage();
+        LexParser<Long> lexParser = language.newLexParser();
+        assertEquals((Long) 7l, lexParser.parse("1+2*3"));
+    }
 ```
 This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense. Instead we get a result directly!
 
 You can choose any AST node type. Lets try to write a parser which converts to RPN,
 and throw in some whitespace and parentheses while we're at it:
 ```Java
-            @Test
-            public void toRpn() {
-                LanguageBuilder<String> lb = new LanguageBuilder<>("calc");
-                lb.newToken().named("whitespace")
-                                .matchesWhitespace()
-                                .discardAfterLexing()
-                        .build();
-                lb.newToken().named("digit").matchesPattern("[0-9]+")
-                        .nud((previous, parser, lexeme) -> lexeme.getText())
-                        .build();
-                TokenDefinition<String> rparen = lb.newToken()
-                        .named("rparen")
-                        .matchesString(")")
-                        .build();
-                lb.newToken().named("lparen").matchesString("(").nud((previous, parser, lexeme) -> {
-                    String next = parser.expression(previous);
-                    parser.expectSingleLexeme(rparen.getKey());
-                    return next;
-                }).build();
-                lb.newToken().named("plus")
-                        .matchesString("+")
-                        .led((previous, parser, lexeme) -> "(+ " + previous + " " + parser.expression(previous) + ")")
-                        .build();
-                lb.newToken().named("mult")
-                        .matchesString("*")
-                        .led((previous, parser, lexeme) -> "(* " + previous + " " + parser.expression(previous) + ")")
-                        .build();
-                Language<String> language = lb.completeLanguage();
-                LexParser<String> lexParser = language.newLexParser();
-                assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.parse("( 1 + 2 ) * 3 + 5"));
-            }
+    @Test
+    public void toRpn() {
+        LanguageBuilder<String> lb = new LanguageBuilder<>("calc");
+        lb.newToken().named("whitespace")
+                .matchesWhitespace()
+                .discardAfterLexing()
+                .build();
+        lb.newToken().named("digit").matchesPattern("[0-9]+")
+                .nud((previous, parser, lexeme) -> lexeme.getText())
+                .build();
+        TokenDefinition<String> rparen = lb.newToken()
+                .named("rparen")
+                .matchesString(")")
+                .build();
+        lb.newToken().named("lparen").matchesString("(").nud((previous, parser, lexeme) -> {
+            String next = parser.expression(previous);
+            parser.expectSingleLexeme(rparen.getKey());
+            return next;
+        }).build();
+        lb.newToken().named("plus")
+                .matchesString("+")
+                .led((previous, parser, lexeme) -> "(+ " + previous + " " + parser.expression(previous) + ")")
+                .build();
+        lb.newToken().named("mult")
+                .matchesString("*")
+                .led((previous, parser, lexeme) -> "(* " + previous + " " + parser.expression(previous) + ")")
+                .build();
+        Language<String> language = lb.completeLanguage();
+        LexParser<String> lexParser = language.newLexParser();
+        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.parse("( 1 + 2 ) * 3 + 5"));
+    }
 ```
 If you want you can use your own classes as AST nodes. Shall we try with some simple boolean logic?
 ```Java
@@ -160,8 +160,7 @@ Please give feedback if you are using Bychan. Issues, mail or anything will do. 
 MIT
 
 ##Maturity
-This is the first release of Bychan. For this release I tried to focus on expressions, so functionality for statements
- might be a bit lacking. Please let me know if you run into limitations in this area.
+This is the first public version of Bychan. For this release I tried to focus on expressions, so functionality for statements might be a bit lacking. Please let me know if you run into limitations in this area.
  
  
 
