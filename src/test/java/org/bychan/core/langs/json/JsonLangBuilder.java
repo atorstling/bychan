@@ -22,12 +22,12 @@ class JsonLangBuilder {
         TokenDefinition<JsonNode> colon = colon(lb);
         TokenDefinition<JsonNode> rbracket = rbracket(lb);
         numberLiteral(lb);
-        lb.newToken().named("whitespace").ignoredWhenParsing().matchesWhitespace().build();
+        lb.newToken().named("whitespace").ignoreWhenParsing().matchesWhitespace().build();
         lb.newToken().named("lbracket").matchesString("[")
                 .nud((previous, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(rbracket.getKey())) {
-                        expressions.add(parser.subExpression(previous));
+                        expressions.add(parser.expression(previous));
                         if (!parser.nextIs(rbracket.getKey())) {
                             parser.expectSingleLexeme(comma.getKey());
                         }
@@ -41,7 +41,7 @@ class JsonLangBuilder {
                     while (!parser.nextIs(rcurly.getKey())) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string.getKey());
                         parser.expectSingleLexeme(colon.getKey());
-                        JsonNode value = parser.subExpression(previous);
+                        JsonNode value = parser.expression(previous);
                         pairs.put(key, value);
                         if (!parser.nextIs(rcurly.getKey())) {
                             parser.expectSingleLexeme(comma.getKey());

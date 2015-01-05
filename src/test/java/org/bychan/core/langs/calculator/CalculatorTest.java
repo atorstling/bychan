@@ -26,7 +26,7 @@ public class CalculatorTest {
                 .matchesString("(")
                 .named("lparen")
                 .nud((previous, parser, lexeme) -> {
-                    CalculatorNode trailingExpression = parser.subExpression(previous);
+                    CalculatorNode trailingExpression = parser.expression(previous);
                     parser.expectSingleLexeme(rparen.getKey());
                     return trailingExpression;
                 }).build();
@@ -34,21 +34,21 @@ public class CalculatorTest {
         lb.newToken()
                 .matchesPattern("\\s+")
                 .named("whitespace")
-                .ignoredWhenParsing()
+                .ignoreWhenParsing()
                 .build();
 
         lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .nud((previous, parser, lexeme) -> parser.subExpression(previous))
-                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous)))
+                .nud((previous, parser, lexeme) -> parser.expression(previous))
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.expression(previous)))
                 .build();
 
         lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .nud((previous, parser, lexeme) -> new NegationNode(parser.subExpression(previous)))
-                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous))).build();
+                .nud((previous, parser, lexeme) -> new NegationNode(parser.expression(previous)))
+                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.expression(previous))).build();
 
         lb.newToken()
                 .matchesPattern("[0-9]+")
@@ -67,11 +67,11 @@ public class CalculatorTest {
         lb.newToken().named("lparen").matchesString("(").build();
         lb.newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().build();
         TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder2 = lb.newToken().named("plus").matchesString("+")
-                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous)));
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.expression(previous)));
         calculatorNodeTokenDefinitionBuilder2.build();
         TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder1 = lb.newToken().named("minus").matchesString("-")
-                .nud((previous, parser, lexeme) -> new NegationNode(parser.subExpression(previous)))
-                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous)));
+                .nud((previous, parser, lexeme) -> new NegationNode(parser.expression(previous)))
+                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.expression(previous)));
         calculatorNodeTokenDefinitionBuilder1.build();
         TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder = lb.newToken().named("number").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText())));
         calculatorNodeTokenDefinitionBuilder.build();

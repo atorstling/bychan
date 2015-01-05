@@ -17,7 +17,7 @@ public interface UserParserCallback<N> {
      *                 node before the sub-expression which you are trying to parse.
      */
     @NotNull
-    N subExpression(@Nullable final N previous, int leftBindingPower);
+    N expression(@Nullable final N previous, int leftBindingPower);
 
     /**
      * Parse the directly following tokens an an expression. Proceed while tokens
@@ -28,7 +28,7 @@ public interface UserParserCallback<N> {
      *                 node before the sub-expression which you are trying to parse.
      */
     @NotNull
-    N subExpression(@Nullable final N previous);
+    N expression(@Nullable final N previous);
 
     /**
      * Parse a single lexeme of the token identified by the given key.

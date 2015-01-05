@@ -20,7 +20,9 @@ public class LexParser<N> {
     }
 
     public N parse(@NotNull final String text) {
-        return tryParse(text).getRootNode();
+        List<Lexeme<N>> lexemes = lexer.lex(text);
+        PrattParser<N> parser = new PrattParser<>(lexemes, text);
+        return parser.parseExpression(null, 0);
     }
 
     public ParseResult<N> tryParse(@NotNull final String text) {

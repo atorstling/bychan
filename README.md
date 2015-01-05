@@ -12,8 +12,14 @@ Bychan does not generate code, niether the parser itself nor the AST. It is enti
 Bychan tries to stay out of your way as much as possible.
 What it does do is to help you with the boring bits: lexing, error handling and writing REPLs.
 
+Show me the code
+----------------
+Sure! Let's start with the classic calculator. Let's throw in
+
 Maturity
 --------
 This is the first release of Bychan. For this release I tried to focus on expressions, so functionality for statements
- might be a bit lacking. But there is a (not entirely correct) JSON parser implementation and a miniature language.
+ might be a bit lacking.
+ But there is a (not entirely correct) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
+ implementation and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
 

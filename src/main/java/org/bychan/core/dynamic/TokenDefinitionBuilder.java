@@ -51,7 +51,7 @@ public class TokenDefinitionBuilder<N> {
         return this;
     }
 
-    public TokenDefinitionBuilder<N> ignoredWhenParsing() {
+    public TokenDefinitionBuilder<N> ignoreWhenParsing() {
         this.parsed = false;
         return this;
     }
@@ -70,11 +70,6 @@ public class TokenDefinitionBuilder<N> {
     public TokenDefinitionBuilder<N> leftBindingPower(int leftBindingPower) {
         this.leftBindingPower = leftBindingPower;
         return this;
-    }
-
-    @NotNull
-    public TokenDefinitionBuilder<N> ignoreWhenParsing() {
-        return ignoredWhenParsing();
     }
 
     @NotNull

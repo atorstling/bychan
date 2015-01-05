@@ -8,8 +8,8 @@ public class PrioritiesTest {
     @Test
     public void prioritiesAreObeyed() {
         LanguageBuilder<Integer> lb = new LanguageBuilder<>("parantheses");
-        lb.newToken().named("mult").leftBindingPower(1).matchesString("*").led((previous, parser, lexeme) -> previous * parser.subExpression(previous)).build();
-        TokenDefinitionBuilder<Integer> integerTokenDefinitionBuilder1 = lb.newToken().named("plus").leftBindingPower(2).matchesString("+").led((previous, parser, lexeme) -> previous + parser.subExpression(previous));
+        lb.newToken().named("mult").leftBindingPower(1).matchesString("*").led((previous, parser, lexeme) -> previous * parser.expression(previous)).build();
+        TokenDefinitionBuilder<Integer> integerTokenDefinitionBuilder1 = lb.newToken().named("plus").leftBindingPower(2).matchesString("+").led((previous, parser, lexeme) -> previous + parser.expression(previous));
         integerTokenDefinitionBuilder1.build();
         TokenDefinitionBuilder<Integer> integerTokenDefinitionBuilder = lb.newToken().named("num").leftBindingPower(3).matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> Integer.parseInt(lexeme.getText()));
         integerTokenDefinitionBuilder.build();
