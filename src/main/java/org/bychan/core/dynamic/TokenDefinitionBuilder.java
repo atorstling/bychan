@@ -12,6 +12,7 @@ public class TokenDefinitionBuilder<N> {
     private String tokenName;
     private int leftBindingPower = 1;
     private final TokenDefinitionOwner<N> tokenDefinitionOwner;
+    private TokenKey tokenKey;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
         return matchesPattern(Pattern.quote(text));
@@ -57,6 +58,7 @@ public class TokenDefinitionBuilder<N> {
 
     public TokenDefinitionBuilder<N> named(String name) {
         this.tokenName = name;
+        tokenKey = new TokenKey(tokenName);
         return this;
     }
 
@@ -75,8 +77,8 @@ public class TokenDefinitionBuilder<N> {
         return ignoredWhenParsing();
     }
 
-    public String getName() {
-        return tokenName;
+    public TokenKey getKey() {
+        return tokenKey;
     }
 
 }

@@ -51,7 +51,7 @@ public class DynamicToken<N> implements Token<N> {
     }
 
     @NotNull
-    public String getTokenName() {
-        return def.tokenName();
+    public TokenKey getKey() {
+        return def.getKey();
     }
 }

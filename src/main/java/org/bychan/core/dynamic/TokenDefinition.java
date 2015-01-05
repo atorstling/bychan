@@ -22,6 +22,7 @@ public class TokenDefinition<N> {
     private final String tokenName;
     private final boolean parse;
     private final int leftBindingPower;
+    private final TokenKey tokenKey;
 
     public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean parse, int leftBindingPower) {
         this.pattern = pattern;
@@ -30,6 +31,7 @@ public class TokenDefinition<N> {
         this.tokenName = tokenName;
         this.parse = parse;
         this.leftBindingPower = leftBindingPower;
+        this.tokenKey = new TokenKey(tokenName());
     }
 
     @NotNull
@@ -65,4 +67,7 @@ public class TokenDefinition<N> {
         return leftBindingPower;
     }
 
+    public TokenKey getKey() {
+        return tokenKey;
+    }
 }
