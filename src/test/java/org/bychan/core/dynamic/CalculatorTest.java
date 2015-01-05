@@ -60,14 +60,17 @@ public class CalculatorTest {
     public void testClearerSyntax() {
         LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
         lb.newToken().named("rparen").matchesString(")").build();
-        lb.newToken().named("lparen").matchesString("(").end();
-        lb.newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().end();
-        lb.newToken().named("plus").matchesString("+")
-                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous))).end();
-        lb.newToken().named("minus").matchesString("-")
+        lb.newToken().named("lparen").matchesString("(").build();
+        lb.newToken().named("whitespace").matchesPattern("\\s+").ignoreWhenParsing().build();
+        TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder2 = lb.newToken().named("plus").matchesString("+")
+                .led((previous, parser, lexeme) -> new AdditionNode(previous, parser.subExpression(previous)));
+        calculatorNodeTokenDefinitionBuilder2.build();
+        TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder1 = lb.newToken().named("minus").matchesString("-")
                 .nud((previous, parser, lexeme) -> new NegationNode(parser.subExpression(previous)))
-                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous))).end();
-        lb.newToken().named("number").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).end();
+                .led((previous, parser, lexeme) -> new SubtractionNode(previous, parser.subExpression(previous)));
+        calculatorNodeTokenDefinitionBuilder1.build();
+        TokenDefinitionBuilder<CalculatorNode> calculatorNodeTokenDefinitionBuilder = lb.newToken().named("number").matchesPattern("[0-9]+").nud((previous, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText())));
+        calculatorNodeTokenDefinitionBuilder.build();
         Language<CalculatorNode> l = lb.completeLanguage();
 
         assertEquals(3, l.newLexParser().tryParse("1+2").getRootNode().evaluate());

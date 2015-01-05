@@ -81,8 +81,4 @@ public class TokenDefinitionBuilder<N> {
         return tokenKey;
     }
 
-    @NotNull
-    public TokenDefinition<N> end() {
-        return build();
-    }
 }

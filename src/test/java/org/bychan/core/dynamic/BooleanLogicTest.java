@@ -21,10 +21,12 @@ public class BooleanLogicTest {
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
-        lb.startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().end();
-        lb.startToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.subExpression(previous))).end();
-        lb.startToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.subExpression(previous))).end();
-        lb.startToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).end();
+        lb.startToken().matchesPattern("\\s+").named("whitespace").ignoredWhenParsing().build();
+        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder1 = lb.startToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.subExpression(previous)));
+        booleanExpressionNodeTokenDefinitionBuilder1.build();
+        TokenDefinitionBuilder<BooleanExpressionNode> booleanExpressionNodeTokenDefinitionBuilder = lb.startToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.subExpression(previous)));
+        booleanExpressionNodeTokenDefinitionBuilder.build();
+        lb.startToken().matchesPattern("[a-z]+").named("variable").nud(parseAction).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);
