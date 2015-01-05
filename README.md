@@ -2,7 +2,7 @@
 
 A Pratt (TDOP) Expression Parser Library for Java
 
-##About
+##Summary
 
 Bychan is a library for TDOP parsing. TDOP is essentially recursive descent with a clever way
 of incorporating shunting-yard for the handling of expressions. It is a surprisingly powerful technique
@@ -12,7 +12,7 @@ Bychan does not generate code, niether the parser itself nor the AST. It is enti
 Bychan tries to stay out of your way as much as possible.
 What it does do is to help you with the boring bits: lexing, error handling and writing REPLs.
 
-##Show me the code
+##Show me the Code
 Sure! Let's start with a simple calculator:
 ```Java
         @Test
@@ -73,28 +73,36 @@ and throw in some whitespace and parentheses while we're at it:
 ```
 If you want you can use your own classes as AST nodes. Shall we try with some simple boolean logic?
 ```Java
-    interface BoolNode{
+    interface BoolNode {
         boolean evaluate();
     }
+
     class LiteralNode implements BoolNode {
         boolean value;
+
         public LiteralNode(boolean value) {
             this.value = value;
         }
+
         @Override
         public boolean evaluate() {
             return value;
         }
     }
+
     class AndNode implements BoolNode {
         public BoolNode left;
         public BoolNode right;
+
         public AndNode(BoolNode left, BoolNode right) {
             this.left = left;
             this.right = right;
         }
+
         @Override
-        public boolean evaluate() { return left.evaluate() && right.evaluate(); }
+        public boolean evaluate() {
+            return left.evaluate() && right.evaluate();
+        }
     }
     @Test
     public void boolLogic() {
@@ -109,21 +117,51 @@ If you want you can use your own classes as AST nodes. Shall we try with some si
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.parse("false&&false");
+        BoolNode one = lexParser.parse("false&&false&&false");
         assertFalse(one.evaluate());
-        BoolNode two = lexParser.parse("true&&false");
+        BoolNode two = lexParser.parse("true&&false&&true");
         assertFalse(two.evaluate());
-        BoolNode three = lexParser.parse("true&&true");
+        BoolNode three = lexParser.parse("true&&true&&true");
         assertTrue(three.evaluate());
     }
 ```
+If you have a language you can also get a REPL by calling `language.repl().run()`. A session looks something like this:
+```
+welcome to the REPL for 'simpleCalc'
+>2+3+7*8
+61
+>rubbish
+Error:Lexing failed: 'No matching rule' @  position 1:1 (index 0), remaining text is 'rubbish'
+>
+```
+##More Examples
+Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not entirely correct) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
+ and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
+
+##Links
+You can read about TDOP in the [original paper](http://hall.org.ua/halls/wizzard/pdf/Vaughan.Pratt.TDOP.pdf) or at [Eli Benderskys](http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing) or [Douglas Crockfords](http://javascript.crockford.com/tdop/tdop.html) sites.
+
+##Installing
+Install via maven central:
+```xml
+<dependencies>
+  <dependency>
+    <groupId>org.bychan</groupId>
+    <artifactId>bychan-core</artifactId>
+    <version>0.1.0</version>
+  </dependency>
+</dependencies>
+```
+
+##Feedback
+Please give feedback if you are using Bychan. Issues, mail or anything will do. I'd be glad to hear from you and to accept your contributions.
 
 ##License
-MIT.
+MIT
 
 ##Maturity
 This is the first release of Bychan. For this release I tried to focus on expressions, so functionality for statements
- might be a bit lacking.
- But there is a (not entirely correct) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
- implementation and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
+ might be a bit lacking. Please let me know if you run into limitations in this area.
+ 
+ 
 
