@@ -10,8 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by alext on 2015-01-04.
@@ -43,5 +42,9 @@ public class JsonPerfTest {
         JsonNode parsed = l.newLexParser().parse(original);
         String prettyPrinted = parsed.prettyPrint(0);
         assertTrue(prettyPrinted.contains("V{>ꤩ혙넪㭪"));
+        String pattern = "[ \\t\\n\\r]";
+        String outputStripped = prettyPrinted.replaceAll(pattern, "");
+        String originalStripped = original.replaceAll(pattern, "");
+        assertEquals(originalStripped, outputStripped);
     }
 }

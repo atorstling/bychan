@@ -41,4 +41,9 @@ public class ObjectNode implements JsonNode {
         }
         return "{\n" + String.join(",\n", pairStrings) + "\n"+ indentation +"}";
     }
+
+    @Override
+    public String toString() {
+        return prettyPrint(0);
+    }
 }

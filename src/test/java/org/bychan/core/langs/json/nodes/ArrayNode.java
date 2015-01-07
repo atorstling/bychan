@@ -42,4 +42,9 @@ public class ArrayNode implements JsonNode {
         }).collect(Collectors.toList());
         return "[" + String.join(", ", prettyPrintedElements) + "]";
     }
+
+    @Override
+    public String toString() {
+        return prettyPrint(0);
+    }
 }

@@ -90,7 +90,7 @@ public class JsonTest {
         JsonLangBuilder.numberLiteral(lb);
         Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("1");
-        assertEquals(new NumberLiteralNode(1), ast);
+        assertEquals(NumberLiteralNode.fromFloat(1), ast);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class JsonTest {
         JsonLangBuilder.numberLiteral(lb);
         Language<JsonNode> l = lb.completeLanguage();
         JsonNode ast = l.newLexParser().parse("-0.5e-5");
-        assertEquals(new NumberLiteralNode(-0.5e-5f), ast);
+        assertEquals(new NumberLiteralNode("-0.5e-5"), ast);
     }
 
     @Test
@@ -145,14 +145,14 @@ public class JsonTest {
     public void singleElementArray() {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.newLexParser().parse("[3]");
-        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3))), ast);
+        assertEquals(new ArrayNode(Arrays.asList(NumberLiteralNode.fromFloat(3))), ast);
     }
 
     @Test
     public void multipleElementArray() {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.newLexParser().parse("[3,2,4]");
-        assertEquals(new ArrayNode(Arrays.asList(new NumberLiteralNode(3), new NumberLiteralNode(2), new NumberLiteralNode(4))), ast);
+        assertEquals(new ArrayNode(Arrays.asList(NumberLiteralNode.fromFloat(3), NumberLiteralNode.fromFloat(2), NumberLiteralNode.fromFloat(4))), ast);
     }
 
     @Test
@@ -167,7 +167,7 @@ public class JsonTest {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.newLexParser().parse("{\"a\":3}");
         LinkedHashMap<StringLiteralNode, JsonNode> expected = new LinkedHashMap<>();
-        expected.put(new StringLiteralNode("a"), new NumberLiteralNode(3));
+        expected.put(new StringLiteralNode("a"), NumberLiteralNode.fromFloat(3));
         assertEquals(new ObjectNode(expected), ast);
     }
 
@@ -176,7 +176,7 @@ public class JsonTest {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.newLexParser().parse("{\"a\":{\"b\":3}}");
         LinkedHashMap<StringLiteralNode, JsonNode> inner = new LinkedHashMap<>();
-        inner.put(new StringLiteralNode("b"), new NumberLiteralNode(3));
+        inner.put(new StringLiteralNode("b"), NumberLiteralNode.fromFloat(3));
         LinkedHashMap<StringLiteralNode, JsonNode> outer = new LinkedHashMap<>();
         outer.put(new StringLiteralNode("a"), new ObjectNode(inner));
         assertEquals(new ObjectNode(outer), ast);
@@ -187,7 +187,7 @@ public class JsonTest {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.newLexParser().parse(" { \"a\" :  3 }");
         LinkedHashMap<StringLiteralNode, JsonNode> outer = new LinkedHashMap<>();
-        outer.put(new StringLiteralNode("a"), new NumberLiteralNode(3));
+        outer.put(new StringLiteralNode("a"), NumberLiteralNode.fromFloat(3));
         assertEquals(new ObjectNode(outer), ast);
     }
 

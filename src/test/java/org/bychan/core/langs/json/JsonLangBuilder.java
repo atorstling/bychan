@@ -101,6 +101,9 @@ class JsonLangBuilder {
 
     @NotNull
     static TokenDefinition<JsonNode> numberLiteral(LanguageBuilder<JsonNode> lb) {
-        return lb.newToken().named("number_literal").matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?").nud((previous, parser, lexeme) -> new NumberLiteralNode(Float.valueOf(lexeme.getText()))).build();
+        return lb.newToken().named("number_literal")
+                .matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
+                .nud((previous, parser, lexeme) -> new NumberLiteralNode(lexeme.getText()))
+                .build();
     }
 }
