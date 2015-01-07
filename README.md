@@ -12,6 +12,8 @@ Bychan does not generate code, niether the parser itself nor the AST. It is enti
 Bychan tries to stay out of your way as much as possible.
 What it does do is to help you with the boring bits: lexing, error handling and writing REPLs.
 
+You could call it a middle ground between using a parser generator and writing a parser by hand.
+
 ##Show me the Code
 Sure! Let's start with a simple calculator:
 ```Java
