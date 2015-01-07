@@ -34,7 +34,7 @@ Sure! Let's start with a simple calculator:
         assertEquals((Long) 7l, lexParser.parse("1+2*3"));
     }
 ```
-This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense. Instead we get a result directly!
+This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense. Instead we keep a sort of running total as we parse. When we are finished we get a result directly! Worth noting in this example is that the left binding power (lbp) of the tokens is set automatically in increasing order unless otherwise specified. So "mult" has the highest lbp and "digit" the lowest.
 
 You can choose any AST node type. Lets try to write a parser which converts to RPN,
 and throw in some whitespace and parentheses while we're at it:
@@ -71,7 +71,7 @@ and throw in some whitespace and parentheses while we're at it:
         assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.parse("( 1 + 2 ) * 3 + 5"));
     }
 ```
-If you want you can use your own classes as AST nodes. Shall we try with some simple boolean logic?
+If you want to build an AST you can build it directly with your own classes. Shall we try with some simple boolean logic?
 ```Java
     interface BoolNode {
         boolean evaluate();
