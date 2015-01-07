@@ -136,7 +136,7 @@ Error:Lexing failed: 'No matching rule' @  position 1:1 (index 0), remaining tex
 leaving
 ```
 ##More Examples
-Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not entirely correct) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
+Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not extensively tested) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
  and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
 
 ##Links
