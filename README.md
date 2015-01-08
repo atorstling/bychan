@@ -12,6 +12,8 @@ Bychan does not generate code, niether the parser itself nor the AST. It is enti
 Bychan tries to stay out of your way as much as possible.
 What it does do is to help you with the boring bits: lexing, error handling and writing REPLs.
 
+You could call it a middle ground between using a parser generator and writing a parser by hand.
+
 ##Show me the Code
 Sure! Let's start with a simple calculator:
 ```Java
@@ -136,7 +138,7 @@ Error:Lexing failed: 'No matching rule' @  position 1:1 (index 0), remaining tex
 leaving
 ```
 ##More Examples
-Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not entirely correct) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
+Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not extensively tested) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
  and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
 
 ##Links
