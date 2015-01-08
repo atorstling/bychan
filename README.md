@@ -91,8 +91,8 @@ If you want to build an AST you can build it directly with your own classes. Sha
     }
 
     class AndNode implements BoolNode {
-        public BoolNode left;
-        public BoolNode right;
+        BoolNode left;
+        BoolNode right;
 
         public AndNode(BoolNode left, BoolNode right) {
             this.left = left;

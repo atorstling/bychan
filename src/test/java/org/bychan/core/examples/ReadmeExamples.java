@@ -82,8 +82,8 @@ public class ReadmeExamples {
     }
 
     class AndNode implements BoolNode {
-        public BoolNode left;
-        public BoolNode right;
+        BoolNode left;
+        BoolNode right;
 
         public AndNode(BoolNode left, BoolNode right) {
             this.left = left;
