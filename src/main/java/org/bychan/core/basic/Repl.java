@@ -4,6 +4,8 @@ import org.bychan.core.dynamic.Language;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Repl<N> implements Runnable {
 
@@ -36,19 +38,21 @@ public class Repl<N> implements Runnable {
     }
 
     private void runInternal() throws IOException {
-        out.write("welcome to the REPL for '" + languageName + "'");
+        out.write("Welcome to the REPL for '" + languageName + "'.");
         out.newLine();
-        String line;
+        out.write("End with an empty line or Ctrl+D.");
+        out.newLine();
+        out.flush();
+        String snippet;
         while (true) {
-            out.write(">");
-            out.flush();
-            line = in.readLine();
-            if (line == null || line.matches("^(quit|end|q)$")) {
+            snippet = readSnippet();
+            if (snippet.isEmpty() || snippet.matches("^(quit|end|q)$")) {
                 out.write("leaving");
+                out.newLine();
                 out.flush();
                 break;
             }
-            ParseResult<N> result = lexParser.tryParse(line);
+            ParseResult<N> result = lexParser.tryParse(snippet);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());
                 out.newLine();
@@ -59,5 +63,20 @@ public class Repl<N> implements Runnable {
                 out.flush();
             }
         }
+    }
+
+    @NotNull
+    private String readSnippet() throws IOException {
+        List<String> lines = new ArrayList<>();
+        while (true) {
+            out.write(">");
+            out.flush();
+            String line = in.readLine();
+            if (line == null || line.isEmpty()) {
+                break;
+            }
+            lines.add(line);
+        }
+        return String.join("\n", lines);
     }
 }
