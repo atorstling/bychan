@@ -2,11 +2,13 @@
 
 A Pratt (TDOP) Expression Parser Library for Java
 
-##Summary
+##Introduction
 
 Bychan is a library for TDOP parsing. TDOP is essentially recursive descent with a clever way
 of incorporating shunting-yard for the handling of expressions. It is a surprisingly powerful technique
 despite its relative simplicity.
+
+You can read about TDOP in the [original paper](http://hall.org.ua/halls/wizzard/pdf/Vaughan.Pratt.TDOP.pdf) or at [Eli Benderskys](http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing) or [Douglas Crockfords](http://javascript.crockford.com/tdop/tdop.html) sites.
 
 Bychan does not generate code, niether the parser itself nor the AST. It is entirely runtime based.
 Bychan tries to stay out of your way as much as possible.
@@ -140,9 +142,6 @@ leaving
 ##More Examples
 Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not extensively tested) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
  and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
-
-##Links
-You can read about TDOP in the [original paper](http://hall.org.ua/halls/wizzard/pdf/Vaughan.Pratt.TDOP.pdf) or at [Eli Benderskys](http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing) or [Douglas Crockfords](http://javascript.crockford.com/tdop/tdop.html) sites.
 
 ##Installing
 Install via maven central:
