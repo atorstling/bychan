@@ -19,7 +19,12 @@ public class TokenDefinitionBuilder<N> {
 
     @NotNull
     public TokenDefinitionBuilder<N> matchesString(@NotNull final String text) {
-        this.matcher = new StringMatcher(text);
+        return matches(new StringMatcher(text));
+    }
+
+    @NotNull
+    private TokenDefinitionBuilder<N> matches(@NotNull final TokenMatcher matcher) {
+        this.matcher = matcher;
         return this;
     }
 
@@ -30,8 +35,7 @@ public class TokenDefinitionBuilder<N> {
 
     @NotNull
     private TokenDefinitionBuilder<N> matchesPattern(@NotNull final Pattern pattern) {
-        this.matcher = new RegexMatcher(pattern);
-        return this;
+        return matches(new RegexMatcher(pattern));
     }
 
     public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
