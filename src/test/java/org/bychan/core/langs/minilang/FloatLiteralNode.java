@@ -5,11 +5,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class FloatLiteralNode implements LiteralNode {
     @NotNull
-    private final LaiLaiNode previous;
+    private final LaiLaiNode left;
     private final float value;
 
-    public FloatLiteralNode(@NotNull LaiLaiNode previous, float value) {
-        this.previous = previous;
+    public FloatLiteralNode(@NotNull LaiLaiNode left, float value) {
+        this.left = left;
         this.value = value;
     }
 
@@ -28,7 +28,7 @@ public class FloatLiteralNode implements LiteralNode {
     @Nullable
     @Override
     public Scope getScope() {
-        return previous.getScope();
+        return left.getScope();
     }
 
     @Override

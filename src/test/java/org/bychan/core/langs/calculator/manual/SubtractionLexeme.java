@@ -23,9 +23,9 @@ public class SubtractionLexeme implements Lexeme<CalculatorNode> {
     @Nullable
     @Override
     public LedParseAction<CalculatorNode> getLed() {
-        return (previous, parser) -> {
-            CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
-            return new SubtractionNode(previous, right);
+        return (left, parser) -> {
+            CalculatorNode right = parser.parseExpression(left, leftBindingPower());
+            return new SubtractionNode(left, right);
         };
     }
 

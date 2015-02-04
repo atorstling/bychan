@@ -16,7 +16,7 @@ public class NotLexeme implements Lexeme<BooleanExpressionNode> {
     @Nullable
     @Override
     public NudParseAction<BooleanExpressionNode> getNud() {
-        return (previous, parser) -> new NotNode(parser.parseExpression(previous, leftBindingPower()));
+        return (left, parser) -> new NotNode(parser.parseExpression(left, leftBindingPower()));
     }
 
     @Nullable

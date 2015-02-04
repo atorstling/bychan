@@ -13,10 +13,10 @@ public class DirectEvaluationTest {
     public void directEvaluationCalculator() {
         LanguageBuilder<Integer> lb = new LanguageBuilder<>();
         lb.newToken().named("number").matchesPattern("[0-9]+")
-                .nud((previous, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
+                .nud((left, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
                 .build();
         lb.newToken().named("addition").matchesString("+")
-                .led((previous, parser, lexeme) -> previous + parser.expression(previous))
+                .led((left, parser, lexeme) -> left + parser.expression(left))
                 .build();
         Language<Integer> lang = lb.completeLanguage();
         String expr = "1+3";

@@ -8,12 +8,12 @@ import java.util.Map;
 
 public class NestedScope implements Scope {
     @NotNull
-    private final Scope previousScope;
+    private final Scope leftScope;
     @NotNull
     private final Map<String, VariableDefNode> variablesByName;
 
-    public NestedScope(@NotNull final Scope previousScope) {
-        this.previousScope = previousScope;
+    public NestedScope(@NotNull final Scope leftScope) {
+        this.leftScope = leftScope;
         variablesByName = new HashMap<>();
     }
 
@@ -23,7 +23,7 @@ public class NestedScope implements Scope {
         if (variablesByName.containsKey(name)) {
             return variablesByName.get(name);
         }
-        return previousScope.find(name);
+        return leftScope.find(name);
     }
 
     @Override

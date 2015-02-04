@@ -1,11 +1,11 @@
 package org.bychan.core.langs.calculator.nodes;
 
 public class SubtractionNode implements CalculatorNode {
-    private final CalculatorNode previous;
+    private final CalculatorNode left;
     private final CalculatorNode right;
 
-    public SubtractionNode(CalculatorNode previous, CalculatorNode right) {
-        this.previous = previous;
+    public SubtractionNode(CalculatorNode left, CalculatorNode right) {
+        this.left = left;
         this.right = right;
     }
 
@@ -16,7 +16,7 @@ public class SubtractionNode implements CalculatorNode {
 
         SubtractionNode that = (SubtractionNode) o;
 
-        if (previous != null ? !previous.equals(that.previous) : that.previous != null) return false;
+        if (left != null ? !left.equals(that.left) : that.left != null) return false;
         //noinspection RedundantIfStatement
         if (right != null ? !right.equals(that.right) : that.right != null) return false;
 
@@ -25,16 +25,16 @@ public class SubtractionNode implements CalculatorNode {
 
     @Override
     public int hashCode() {
-        int result = previous != null ? previous.hashCode() : 0;
+        int result = left != null ? left.hashCode() : 0;
         result = 31 * result + (right != null ? right.hashCode() : 0);
         return result;
     }
 
     public int evaluate() {
-        return previous.evaluate() - right.evaluate();
+        return left.evaluate() - right.evaluate();
     }
 
     public String toString() {
-        return "(" + previous.toString() + "-" + right.toString() + ")";
+        return "(" + left.toString() + "-" + right.toString() + ")";
     }
 }

@@ -17,15 +17,15 @@ public class BooleanLogicTest {
     public void terserSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
-        lb.newToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
-            BooleanExpressionNode trailingExpression = parser.expression(previous);
+        lb.newToken().matchesString("(").named("lparen").nud((left, parser, lexeme) -> {
+            BooleanExpressionNode trailingExpression = parser.expression(left);
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
-        lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous))).build();
-        lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous))).build();
-        lb.newToken().matchesPattern("[a-z]+").named("variable").nud((previous, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
+        lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left))).build();
+        lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left))).build();
+        lb.newToken().matchesPattern("[a-z]+").named("variable").nud((left, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);
@@ -35,15 +35,15 @@ public class BooleanLogicTest {
     public void clearerSyntax() {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
-        lb.newToken().matchesString("(").named("lparen").nud((previous, parser, lexeme) -> {
-            BooleanExpressionNode trailingExpression = parser.expression(previous);
+        lb.newToken().matchesString("(").named("lparen").nud((left, parser, lexeme) -> {
+            BooleanExpressionNode trailingExpression = parser.expression(left);
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
-        lb.newToken().matchesString("!").named("not").nud((previous, parser, lexeme) -> new NotNode(parser.expression(previous))).build();
-        lb.newToken().matchesString("&").named("and").led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous))).build();
-        lb.newToken().matchesPattern("[a-z]+").named("variable").nud((previous, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
+        lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left))).build();
+        lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left))).build();
+        lb.newToken().matchesPattern("[a-z]+").named("variable").nud((left, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
         checkParseFailure(l);

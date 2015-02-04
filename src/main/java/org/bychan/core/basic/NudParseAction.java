@@ -11,7 +11,7 @@ public interface NudParseAction<N> {
     /**
      * Parse this lexeme as the start of a new block.
      *
-     * @param previous the result of parsing the lexemes directly preceding this lexeme. This parameter is passed
+     * @param left the result of parsing the lexemes directly preceding this lexeme. This parameter is passed
      *                 in the NUD case even though it is not specified in the original paper. The reason is that
      *                 it might be handy to know the directly preceding result when implementing nested scopes and
      *                 other constructions. Without this knowledge the parser must keep external extra state for these
@@ -20,5 +20,5 @@ public interface NudParseAction<N> {
      * @return the resulting AST node.
      */
     @NotNull
-    N parse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
+    N parse(@Nullable N left, @NotNull TokenParserCallback<N> parser);
 }

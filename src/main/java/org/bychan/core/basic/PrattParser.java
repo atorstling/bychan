@@ -34,7 +34,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    public N parseExpression(@Nullable N previous, final int rightBindingPower) {
+    public N parseExpression(@Nullable N left, final int rightBindingPower) {
         // An expression always starts with a symbol which can qualify as a nud value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -43,7 +43,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         Lexeme<N> firstLexeme = pop();
-        final N first = nud(previous, firstLexeme);
+        final N first = nud(left, firstLexeme);
         // When we have the nud parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the nud parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -64,9 +64,10 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         // The addition operators led-parser is then called by the top-level expression parser,
         // passing (1*2) into it as the expression parsed so far. It will then proceed to swallow the 3,
         // completing the expression.
-        return iterativeParseLoop(first, rightBindingPower);
+        return recursiveParseLoop(first, rightBindingPower);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     private N iterativeParseLoop(@NotNull N currentLeftHandSide, final int rightBindingPower) {
         while (peek().leftBindingPower() > rightBindingPower) {
             Lexeme<N> next = pop();
@@ -78,7 +79,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     private N recursiveParseLoop(@NotNull final N currentLeftHandSide, final int rightBindingPower) {
         Lexeme<N> peekedLexeme = peek();
         if (peekedLexeme.leftBindingPower() > rightBindingPower) {
-            //Parsing happens by passing the previous LHS to the operator, which will continue parsing.
+            //Parsing happens by passing the left LHS to the operator, which will continue parsing.
             Lexeme<N> next = pop();
             N nextExpression = led(currentLeftHandSide, next);
             return recursiveParseLoop(nextExpression, rightBindingPower);
@@ -110,12 +111,12 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     @Override
-    public N nud(@Nullable N previous, @NotNull Lexeme<N> lexeme) {
+    public N nud(@Nullable N left, @NotNull Lexeme<N> lexeme) {
         NudParseAction<N> nudParseAction = lexeme.getNud();
         if (nudParseAction == null) {
             throw new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing("Current lexeme does not support nud parsing", getParsingPosition()));
         }
-        return nudParseAction.parse(previous, this);
+        return nudParseAction.parse(left, this);
     }
 
     @NotNull

@@ -10,5 +10,5 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface DynamicNudParseAction<N> {
     @NotNull
-    N parse(@Nullable N previous, @NotNull UserParserCallback<N> parser, @NotNull Lexeme<N> lexeme);
+    N parse(@Nullable N left, @NotNull UserParserCallback<N> parser, @NotNull Lexeme<N> lexeme);
 }

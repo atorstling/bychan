@@ -20,7 +20,7 @@ public class EndLexeme<N> implements Lexeme<N> {
     @Nullable
     @Override
     public NudParseAction<N> getNud() {
-        return (previous, parser) -> {
+        return (left, parser) -> {
             throw ParsingFailedException.forFailedAfterLexing("Premature end reached", parser);
         };
     }

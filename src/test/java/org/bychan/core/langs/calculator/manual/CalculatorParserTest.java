@@ -18,8 +18,8 @@ public class CalculatorParserTest {
         CalculatorNode rootNode = new CalculatorParser().parse("( (1-  2)* 3) -4");
         NumberNode topRight = new NumberNode(4);
         NumberNode secondRight = new NumberNode(3);
-        SubtractionNode secondprevious = new SubtractionNode(new NumberNode(1), new NumberNode(2));
-        assertEquals(new SubtractionNode(new MultiplicationNode(secondprevious, secondRight), topRight), rootNode);
+        SubtractionNode secondleft = new SubtractionNode(new NumberNode(1), new NumberNode(2));
+        assertEquals(new SubtractionNode(new MultiplicationNode(secondleft, secondRight), topRight), rootNode);
         assertEquals(rootNode.evaluate(), -7);
     }
 

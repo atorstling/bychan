@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public interface TokenParserCallback<N> {
     @NotNull
-    N parseExpression(@Nullable N previous, int rightBindingPower);
+    N parseExpression(@Nullable N left, int rightBindingPower);
 
     /**
      * Swallow a token of the specified token.
@@ -21,7 +21,7 @@ public interface TokenParserCallback<N> {
     Lexeme<N> peek();
 
     @NotNull
-    N nud(@Nullable N previous, @NotNull Lexeme<N> lexeme);
+    N nud(@Nullable N left, @NotNull Lexeme<N> lexeme);
 
     @NotNull
     ParsingPosition getParsingPosition();

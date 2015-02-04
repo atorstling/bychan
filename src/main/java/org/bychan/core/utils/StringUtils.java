@@ -33,19 +33,19 @@ public class StringUtils {
     @NotNull
     private static TextPosition getTextPosition(@NotNull BufferedReader reader, int index) {
         try {
-            //Bother with previous token since we don't want to increase row until _after_ a newline char.
-            int current=-1, previous;
+            //Bother with left token since we don't want to increase row until _after_ a newline char.
+            int current = -1, preceding;
             int row = 1, col = 1;
             for (int read=0; read <= index; read++) {
-                previous = current;
+                preceding = current;
                 current = reader.read();
                 if (current == -1) {
                     throw new IndexOutOfBoundsException("At index " + index);
                 }
-                if (previous=='\n') {
+                if (preceding == '\n') {
                     row++;
                     col=1;
-                } else if (previous != -1) {
+                } else if (preceding != -1) {
                     col++;
                 }
             }

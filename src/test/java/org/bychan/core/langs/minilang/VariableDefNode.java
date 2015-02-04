@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class VariableDefNode implements VariableNode {
     @NotNull
-    private final LaiLaiNode previous;
+    private final LaiLaiNode left;
     @NotNull
     private final ExpressionType type;
     @NotNull
@@ -13,8 +13,8 @@ public class VariableDefNode implements VariableNode {
     @Nullable
     private Object value;
 
-    public VariableDefNode(@NotNull LaiLaiNode previous, @NotNull final ExpressionType type, @NotNull final String name) {
-        this.previous = previous;
+    public VariableDefNode(@NotNull LaiLaiNode left, @NotNull final ExpressionType type, @NotNull final String name) {
+        this.left = left;
         this.type = type;
         this.name = name;
         this.value = null;
@@ -38,7 +38,7 @@ public class VariableDefNode implements VariableNode {
     @Nullable
     @Override
     public Scope getScope() {
-        return previous.getScope();
+        return left.getScope();
     }
 
     @Override

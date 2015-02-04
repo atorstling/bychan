@@ -20,14 +20,14 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public N expression(@Nullable N previous, int leftBindingPower) {
-        return parser.parseExpression(previous, leftBindingPower);
+    public N expression(@Nullable N left, int leftBindingPower) {
+        return parser.parseExpression(left, leftBindingPower);
     }
 
     @NotNull
     @Override
-    public N expression(@Nullable N previous) {
-        return parser.parseExpression(previous, leftBindingPower);
+    public N expression(@Nullable N left) {
+        return parser.parseExpression(left, leftBindingPower);
     }
 
     @NotNull
@@ -50,8 +50,8 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public N parseSingleToken(N previous, @NotNull TokenKey tokenKey) {
+    public N parseSingleToken(N left, @NotNull TokenKey tokenKey) {
         Lexeme<N> lexeme = swallow(tokenKey, parser);
-        return parser.nud(previous, lexeme);
+        return parser.nud(left, lexeme);
     }
 }

@@ -3,16 +3,16 @@ package org.bychan.core.langs.calculator.manual;
 import org.bychan.core.langs.calculator.nodes.CalculatorNode;
 
 public class MultiplicationNode implements CalculatorNode {
-    private final CalculatorNode previous;
+    private final CalculatorNode left;
     private final CalculatorNode right;
 
-    public MultiplicationNode(CalculatorNode previous, CalculatorNode right) {
-        this.previous = previous;
+    public MultiplicationNode(CalculatorNode left, CalculatorNode right) {
+        this.left = left;
         this.right = right;
     }
 
     public int evaluate() {
-        return previous.evaluate() * right.evaluate();
+        return left.evaluate() * right.evaluate();
     }
 
     @Override
@@ -22,7 +22,7 @@ public class MultiplicationNode implements CalculatorNode {
 
         MultiplicationNode that = (MultiplicationNode) o;
 
-        if (previous != null ? !previous.equals(that.previous) : that.previous != null) return false;
+        if (left != null ? !left.equals(that.left) : that.left != null) return false;
         //noinspection RedundantIfStatement
         if (right != null ? !right.equals(that.right) : that.right != null) return false;
 
@@ -31,12 +31,12 @@ public class MultiplicationNode implements CalculatorNode {
 
     @Override
     public int hashCode() {
-        int result = previous != null ? previous.hashCode() : 0;
+        int result = left != null ? left.hashCode() : 0;
         result = 31 * result + (right != null ? right.hashCode() : 0);
         return result;
     }
 
     public String toString() {
-        return "(" + previous.toString() + " * " + right.toString() + ")";
+        return "(" + left.toString() + " * " + right.toString() + ")";
     }
 }

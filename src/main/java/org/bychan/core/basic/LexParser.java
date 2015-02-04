@@ -30,24 +30,24 @@ public class LexParser<N> {
     }
 
     @NotNull
-    public ParseResult<N> tryParse(@NotNull N previous, @NotNull final String text) {
-        return tryParseInternal(previous, text);
+    public ParseResult<N> tryParse(@NotNull N left, @NotNull final String text) {
+        return tryParseInternal(left, text);
     }
 
     @NotNull
-    private ParseResult<N> tryParseInternal(@Nullable N previous, @NotNull final String text) {
+    private ParseResult<N> tryParseInternal(@Nullable N left, @NotNull final String text) {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
             ParsingFailedInformation parsingFailedInformation = ParsingFailedInformation.forFailedLexing(lexingResult.getFailureValue());
             return ParseResult.failure(parsingFailedInformation);
         }
-        return tryParse(previous, lexingResult.getSuccessValue(), text);
+        return tryParse(left, lexingResult.getSuccessValue(), text);
     }
 
     @NotNull
-    private ParseResult<N> tryParse(@Nullable N previous, @NotNull final List<Lexeme<N>> lexemes, @NotNull final String text) {
+    private ParseResult<N> tryParse(@Nullable N left, @NotNull final List<Lexeme<N>> lexemes, @NotNull final String text) {
         PrattParser<N> parser = new PrattParser<>(lexemes, text);
-        ParseResult<N> parsed = tryParse(() -> parser.parseExpression(previous, 0));
+        ParseResult<N> parsed = tryParse(() -> parser.parseExpression(left, 0));
         if (parsed.isSuccess()) {
             if (!parser.peek().getToken().equals(EndToken.get())) {
                 return ParseResult.failure(ParsingFailedInformation.forFailedAfterLexing("The input stream was not completely parsed", parser.getParsingPosition()));

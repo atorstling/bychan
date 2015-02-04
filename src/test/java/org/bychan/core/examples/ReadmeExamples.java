@@ -17,15 +17,15 @@ public class ReadmeExamples {
     public void simpleCalc() {
         LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
         lb.newToken().named("digit").matchesPattern("[0-9]+")
-                .nud((previous, parser, lexeme) -> Long.parseLong(lexeme.getText()))
+                .nud((left, parser, lexeme) -> Long.parseLong(lexeme.getText()))
                 .build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((previous, parser, lexeme) -> previous + parser.expression(previous))
+                .led((left, parser, lexeme) -> left + parser.expression(left))
                 .build();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((previous, parser, lexeme) -> previous * parser.expression(previous))
+                .led((left, parser, lexeme) -> left * parser.expression(left))
                 .build();
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
@@ -40,24 +40,24 @@ public class ReadmeExamples {
                 .discardAfterLexing()
                 .build();
         lb.newToken().named("digit").matchesPattern("[0-9]+")
-                .nud((previous, parser, lexeme) -> lexeme.getText())
+                .nud((left, parser, lexeme) -> lexeme.getText())
                 .build();
         TokenDefinition<String> rparen = lb.newToken()
                 .named("rparen")
                 .matchesString(")")
                 .build();
-        lb.newToken().named("lparen").matchesString("(").nud((previous, parser, lexeme) -> {
-            String next = parser.expression(previous);
+        lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
+            String next = parser.expression(left);
             parser.expectSingleLexeme(rparen.getKey());
             return next;
         }).build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((previous, parser, lexeme) -> "(+ " + previous + " " + parser.expression(previous) + ")")
+                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left) + ")")
                 .build();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((previous, parser, lexeme) -> "(* " + previous + " " + parser.expression(previous) + ")")
+                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left) + ")")
                 .build();
         Language<String> language = lb.completeLanguage();
         LexParser<String> lexParser = language.newLexParser();
@@ -100,11 +100,11 @@ public class ReadmeExamples {
         LanguageBuilder<BoolNode> lb = new LanguageBuilder<>("boolLogic");
         lb.newToken().named("literal")
                 .matchesPattern("true|false")
-                .nud((previous, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.getText())))
+                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.getText())))
                 .build();
         lb.newToken().named("and")
                 .matchesString("&&")
-                .led((previous, parser, lexeme) -> new AndNode(previous, parser.expression(previous)))
+                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left)))
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();

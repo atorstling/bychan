@@ -24,10 +24,10 @@ class JsonLangBuilder {
         numberLiteral(lb);
         lb.newToken().named("whitespace").discardAfterLexing().matchesWhitespace().build();
         lb.newToken().named("lbracket").matchesString("[")
-                .nud((previous, parser, lexeme) -> {
+                .nud((left, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(rbracket.getKey())) {
-                        expressions.add(parser.expression(previous));
+                        expressions.add(parser.expression(left));
                         if (!parser.nextIs(rbracket.getKey())) {
                             parser.expectSingleLexeme(comma.getKey());
                         }
@@ -36,12 +36,12 @@ class JsonLangBuilder {
                     return new ArrayNode(expressions);
                 }).build();
         lb.newToken().named("lcurly").matchesString("{")
-                .nud((previous, parser, lexeme) -> {
+                .nud((left, parser, lexeme) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
                     while (!parser.nextIs(rcurly.getKey())) {
-                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(previous, string.getKey());
+                        StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(left, string.getKey());
                         parser.expectSingleLexeme(colon.getKey());
-                        JsonNode value = parser.expression(previous);
+                        JsonNode value = parser.expression(left);
                         pairs.put(key, value);
                         if (!parser.nextIs(rcurly.getKey())) {
                             parser.expectSingleLexeme(comma.getKey());
@@ -81,19 +81,19 @@ class JsonLangBuilder {
 
 
     static TokenDefinition<JsonNode> nullLiteral(LanguageBuilder<JsonNode> lb) {
-        return lb.newToken().named("null_literal").matchesString("null").nud((previous, parser, lexeme) -> NullLiteral.get()).build();
+        return lb.newToken().named("null_literal").matchesString("null").nud((left, parser, lexeme) -> NullLiteral.get()).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> boolLiteral(LanguageBuilder<JsonNode> lb) {
-        return lb.newToken().named("bool_literal").matchesPattern("(true)|(false)").nud((previous, parser, lexeme) -> new BooleanLiteralNode(Boolean.valueOf(lexeme.getText()))).build();
+        return lb.newToken().named("bool_literal").matchesPattern("(true)|(false)").nud((left, parser, lexeme) -> new BooleanLiteralNode(Boolean.valueOf(lexeme.getText()))).build();
     }
 
     @NotNull
     static TokenDefinition<JsonNode> stringLiteral(LanguageBuilder<JsonNode> lb) {
         @org.intellij.lang.annotations.Language("RegExp")
         String pattern = "\"((?:[^\"\\\\]|\\\\(?:[\"/\\\\bnrft]|u[0-9A-Fa-f]{4}))*)\"";
-        return lb.newToken().named("string").matchesPattern(pattern).nud((previous, parser, lexeme) -> {
+        return lb.newToken().named("string").matchesPattern(pattern).nud((left, parser, lexeme) -> {
             String withinQuotationMarks = lexeme.getMatch().group(1);
             return new StringLiteralNode(withinQuotationMarks);
         }).build();
@@ -103,7 +103,7 @@ class JsonLangBuilder {
     static TokenDefinition<JsonNode> numberLiteral(LanguageBuilder<JsonNode> lb) {
         return lb.newToken().named("number_literal")
                 .matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
-                .nud((previous, parser, lexeme) -> new NumberLiteralNode(lexeme.getText()))
+                .nud((left, parser, lexeme) -> new NumberLiteralNode(lexeme.getText()))
                 .build();
     }
 }

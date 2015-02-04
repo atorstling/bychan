@@ -53,7 +53,7 @@ public class NumberLexeme implements Lexeme<CalculatorNode> {
     @Nullable
     @Override
     public NudParseAction<CalculatorNode> getNud() {
-        return (previous, parser) -> new NumberNode(value);
+        return (left, parser) -> new NumberNode(value);
     }
 
     @Nullable

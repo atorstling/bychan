@@ -9,13 +9,13 @@ public class CalculatorTestHelper {
         b.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing()
                 .build();
         b.newToken().named("plus").matchesString("+")
-                .led((previous, parser, lexeme) -> previous + parser.expression(previous))
+                .led((left, parser, lexeme) -> left + parser.expression(left))
                 .build();
         b.newToken().named("multiplication").matchesString("*")
-                .led((previous, parser, lexeme) -> previous * parser.expression(previous))
+                .led((left, parser, lexeme) -> left * parser.expression(left))
                 .build();
         b.newToken().named("integer").matchesPattern("[0-9]+")
-                .nud((previous, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
+                .nud((left, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
                 .build();
         return b.completeLanguage();
     }

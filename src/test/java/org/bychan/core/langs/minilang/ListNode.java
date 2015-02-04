@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 
 public class ListNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode previous;
+    private final LaiLaiNode left;
     @NotNull
     private final List<LaiLaiNode> expressions;
 
-    public ListNode(@NotNull LaiLaiNode previous, @NotNull final List<LaiLaiNode> expressions) {
-        this.previous = previous;
+    public ListNode(@NotNull LaiLaiNode left, @NotNull final List<LaiLaiNode> expressions) {
+        this.left = left;
         this.expressions = expressions;
     }
 
@@ -35,7 +35,7 @@ public class ListNode implements LaiLaiNode {
     @Nullable
     @Override
     public Scope getScope() {
-        return previous.getScope();
+        return left.getScope();
     }
 
     @Override

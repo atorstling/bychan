@@ -5,18 +5,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class AdditionNode implements LaiLaiNode {
     @NotNull
-    private final LaiLaiNode previous;
+    private final LaiLaiNode left;
     @NotNull
     private final LaiLaiNode right;
 
-    public AdditionNode(@NotNull final LaiLaiNode previous, @NotNull final LaiLaiNode right) {
-        this.previous = previous;
+    public AdditionNode(@NotNull final LaiLaiNode left, @NotNull final LaiLaiNode right) {
+        this.left = left;
         this.right = right;
     }
 
     private void checkTypes(ScopeNode currentScope) {
-        if (!ExpressionType.INT.equals(previous.getExpressionType(currentScope))) {
-            throw new IllegalArgumentException("previous not of type int: " + previous);
+        if (!ExpressionType.INT.equals(left.getExpressionType(currentScope))) {
+            throw new IllegalArgumentException("left not of type int: " + left);
         }
         if (!ExpressionType.INT.equals(right.getExpressionType(currentScope))) {
             throw new IllegalArgumentException("Right not of type int: " + right);
@@ -27,25 +27,25 @@ public class AdditionNode implements LaiLaiNode {
     @Override
     public Object evaluate(@Nullable ScopeNode currentScope) {
         checkTypes(currentScope);
-        return ((Integer) previous.evaluate(currentScope)) + ((Integer) right.evaluate(currentScope));
+        return ((Integer) left.evaluate(currentScope)) + ((Integer) right.evaluate(currentScope));
     }
 
     @NotNull
     @Override
     public ExpressionType getExpressionType(@Nullable ScopeNode currentScope) {
-        ExpressionType previousType = previous.getExpressionType(currentScope);
+        ExpressionType leftType = left.getExpressionType(currentScope);
         ExpressionType rightType = right.getExpressionType(currentScope);
-        return ExpressionType.union(previousType, rightType);
+        return ExpressionType.union(leftType, rightType);
     }
 
     @Nullable
     @Override
     public Scope getScope() {
-        return previous.getScope();
+        return left.getScope();
     }
 
     @Override
     public String toString() {
-        return "(+ " + previous + " " + right + ")";
+        return "(+ " + left + " " + right + ")";
     }
 }

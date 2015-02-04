@@ -24,9 +24,9 @@ public class MultiplicationLexeme implements Lexeme<CalculatorNode> {
     @Nullable
     @Override
     public LedParseAction<CalculatorNode> getLed() {
-        return (previous, parser) -> {
-            CalculatorNode right = parser.parseExpression(previous, leftBindingPower());
-            return new MultiplicationNode(previous, right);
+        return (left, parser) -> {
+            CalculatorNode right = parser.parseExpression(left, leftBindingPower());
+            return new MultiplicationNode(left, right);
         };
     }
 

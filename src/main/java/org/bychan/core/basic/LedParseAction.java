@@ -10,10 +10,10 @@ public interface LedParseAction<N> {
     /**
      * Parse this lexeme as the continuation of a block.
      *
-     * @param previous The result of parsing the lexemes directly preceding this lexeme.
+     * @param left The result of parsing the lexemes directly preceding this lexeme.
      * @param parser   Useful for continuing the parsing
      * @return the resulting AST node.
      */
     @NotNull
-    N parse(@Nullable N previous, @NotNull TokenParserCallback<N> parser);
+    N parse(@Nullable N left, @NotNull TokenParserCallback<N> parser);
 }

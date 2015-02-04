@@ -13,7 +13,7 @@ public interface Lexeme<N> {
     @Nullable
     LedParseAction<N> getLed();
     /**
-     * @return How strongly this lexeme, when interpreted as an infix operator (led), binds to the previous argument.
+     * @return How strongly this lexeme, when interpreted as an infix operator (led), binds to the left argument.
      */
     int leftBindingPower();
 

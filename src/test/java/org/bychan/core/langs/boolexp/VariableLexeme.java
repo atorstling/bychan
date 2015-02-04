@@ -26,7 +26,7 @@ public class VariableLexeme implements Lexeme<BooleanExpressionNode> {
     @Nullable
     @Override
     public NudParseAction<BooleanExpressionNode> getNud() {
-        return (previous, parser) -> new VariableNode(name);
+        return (left, parser) -> new VariableNode(name);
     }
 
     @Nullable

@@ -26,7 +26,7 @@ public class VariableRefNode implements VariableNode {
         Scope scope = currentScope.getScope();
         VariableDefNode variable = scope.find(name);
         if (variable == null) {
-            throw new IllegalStateException("No variable named '" + name + "' found in the previous scope: " + currentScope);
+            throw new IllegalStateException("No variable named '" + name + "' found in the left scope: " + currentScope);
         }
         return variable;
     }

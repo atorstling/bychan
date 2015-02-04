@@ -1,15 +1,15 @@
 package org.bychan.core.langs.calculator.nodes;
 
 public class AdditionNode implements CalculatorNode {
-    private final CalculatorNode previous;
+    private final CalculatorNode left;
     private final CalculatorNode right;
 
-    public AdditionNode(CalculatorNode previous, CalculatorNode right) {
-        this.previous = previous;
+    public AdditionNode(CalculatorNode left, CalculatorNode right) {
+        this.left = left;
         this.right = right;
     }
 
     public int evaluate() {
-        return previous.evaluate() + right.evaluate();
+        return left.evaluate() + right.evaluate();
     }
 }

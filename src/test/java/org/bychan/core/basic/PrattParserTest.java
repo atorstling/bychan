@@ -90,9 +90,9 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
-        SubtractionNode previous = new SubtractionNode(new NumberNode(1), new NumberNode(2));
+        SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
-        assertEquals(new SubtractionNode(previous, right), rootNode);
+        assertEquals(new SubtractionNode(left, right), rootNode);
     }
 
     @Test
@@ -107,9 +107,9 @@ public class PrattParserTest {
                 new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
-        NumberNode previous = new NumberNode(1);
+        NumberNode left = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
-        assertEquals(new SubtractionNode(previous, right), rootNode);
+        assertEquals(new SubtractionNode(left, right), rootNode);
     }
 
     @Test
@@ -122,9 +122,9 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
-        NumberNode previous = new NumberNode(1);
+        NumberNode left = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
-        assertEquals(new SubtractionNode(previous, right), rootNode);
+        assertEquals(new SubtractionNode(left, right), rootNode);
     }
 
     @Test
@@ -137,9 +137,9 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
-        MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
+        MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
-        assertEquals(new SubtractionNode(previous, right), rootNode);
+        assertEquals(new SubtractionNode(left, right), rootNode);
     }
 
     @Test
@@ -152,9 +152,9 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
         CalculatorNode rootNode = p.parseExpression(null, 0);
-        MultiplicationNode previous = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
+        MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
-        assertEquals(new MultiplicationNode(previous, right), rootNode);
+        assertEquals(new MultiplicationNode(left, right), rootNode);
     }
 
     @Test
