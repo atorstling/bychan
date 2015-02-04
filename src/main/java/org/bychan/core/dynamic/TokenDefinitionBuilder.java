@@ -5,6 +5,8 @@ import org.bychan.core.StringMatcher;
 import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Pattern;
+
 public class TokenDefinitionBuilder<N> {
     private TokenMatcher matcher;
     private DynamicNudParseAction<N> nud;
@@ -15,12 +17,19 @@ public class TokenDefinitionBuilder<N> {
     private final TokenDefinitionOwner<N> tokenDefinitionOwner;
     private TokenKey tokenKey;
 
-    public TokenDefinitionBuilder<N> matchesString(String text) {
+    @NotNull
+    public TokenDefinitionBuilder<N> matchesString(@NotNull final String text) {
         this.matcher = new StringMatcher(text);
         return this;
     }
 
-    public TokenDefinitionBuilder<N> matchesPattern(String pattern) {
+    @NotNull
+    public TokenDefinitionBuilder<N> matchesPattern(@NotNull final String pattern) {
+        return matchesPattern(Pattern.compile(pattern));
+    }
+
+    @NotNull
+    private TokenDefinitionBuilder<N> matchesPattern(@NotNull final Pattern pattern) {
         this.matcher = new RegexMatcher(pattern);
         return this;
     }
@@ -30,6 +39,7 @@ public class TokenDefinitionBuilder<N> {
         keepAfterLexing = true;
     }
 
+    @NotNull
     public TokenDefinitionBuilder<N> nud(DynamicNudParseAction<N> nud) {
         this.nud = nud;
         return this;
@@ -48,17 +58,20 @@ public class TokenDefinitionBuilder<N> {
         return token;
     }
 
-    public TokenDefinitionBuilder<N> led(DynamicLedParseAction<N> led) {
+    @NotNull
+    public TokenDefinitionBuilder<N> led(@NotNull final DynamicLedParseAction<N> led) {
         this.led = led;
         return this;
     }
 
+    @NotNull
     public TokenDefinitionBuilder<N> discardAfterLexing() {
         this.keepAfterLexing = false;
         return this;
     }
 
-    public TokenDefinitionBuilder<N> named(String name) {
+    @NotNull
+    public TokenDefinitionBuilder<N> named(@NotNull final String name) {
         this.tokenName = name;
         tokenKey = new TokenKey(tokenName);
         return this;
@@ -69,6 +82,7 @@ public class TokenDefinitionBuilder<N> {
         return matchesPattern("\\s+");
     }
 
+    @NotNull
     public TokenDefinitionBuilder<N> leftBindingPower(int leftBindingPower) {
         this.leftBindingPower = leftBindingPower;
         return this;
