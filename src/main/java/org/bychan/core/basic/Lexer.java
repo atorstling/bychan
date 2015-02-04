@@ -1,5 +1,6 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.TokenMatcher;
 import org.bychan.core.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -7,8 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A regex sub-pattern-based lexer
@@ -22,10 +21,10 @@ public class Lexer<N> {
 
     public List<Lexeme<N>> lex(@NotNull final String input) {
         final List<Lexeme<N>> lexemes = new ArrayList<>();
-        for (int i = 0; i < input.length(); ) {
-            LexingMatch<N> match = findMatch(i, input);
+        for (int searchStart = 0; searchStart < input.length(); ) {
+            LexingMatch<N> match = findMatch(searchStart, input);
             if (match == null) {
-                throw new LexingFailedException(getLexingPosition(input, i), "No matching rule");
+                throw new LexingFailedException(getLexingPosition(input, searchStart), "No matching rule");
             }
             Lexeme<N> lexeme = match.toLexeme();
             if (lexeme.getToken().keepAfterLexing()) {
@@ -34,9 +33,9 @@ public class Lexer<N> {
             Token<N> token = lexeme.getToken();
             int progress = match.getEndPosition() - match.getStartPosition();
             if (progress < 1) {
-                throw new LexingFailedException(getLexingPosition(input, i), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
+                throw new LexingFailedException(getLexingPosition(input, searchStart), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
             }
-            i += progress;
+            searchStart += progress;
         }
         lexemes.add(makeEndToken(input));
         return lexemes;
@@ -52,15 +51,13 @@ public class Lexer<N> {
     }
 
     @Nullable
-    private LexingMatch<N> findMatch(final int i, @NotNull final String input) {
+    private LexingMatch<N> findMatch(final int searchStart, @NotNull final String input) {
         for (Token<N> token : tokens) {
-            Pattern pattern = token.getPattern();
-            Matcher matcher = pattern.matcher(input);
-            matcher.region(i, input.length());
-            if (matcher.lookingAt()) {
-                int substringEnd = matcher.end();
-                String stringMatch = input.substring(i, substringEnd);
-                return new LexingMatch<>(i, substringEnd, stringMatch, token);
+            TokenMatcher matcher = token.getMatcher();
+            int matchEnd = matcher.tryMatch(input, searchStart);
+            if (matchEnd != -1) {
+                String stringMatch = input.substring(searchStart, matchEnd);
+                return new LexingMatch<>(searchStart, matchEnd, stringMatch, token);
             }
         }
         return null;

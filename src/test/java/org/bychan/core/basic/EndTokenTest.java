@@ -14,7 +14,7 @@ public class EndTokenTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void getPatternNotSupported() {
-        EndToken.get().getPattern();
+        EndToken.get().getMatcher();
     }
 
     @Test

@@ -1,8 +1,7 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 public class EndToken<N> implements Token<N> {
 
@@ -16,7 +15,7 @@ public class EndToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public Pattern getPattern() {
+    public TokenMatcher getMatcher() {
         throw new UnsupportedOperationException("End token should not be lexed");
     }
 

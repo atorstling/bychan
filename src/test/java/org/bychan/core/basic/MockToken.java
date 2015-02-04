@@ -1,8 +1,7 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 class MockToken implements Token<Object> {
     @NotNull
@@ -13,7 +12,7 @@ class MockToken implements Token<Object> {
 
     @NotNull
     @Override
-    public Pattern getPattern() {
+    public TokenMatcher getMatcher() {
         throw new IllegalStateException();
     }
 

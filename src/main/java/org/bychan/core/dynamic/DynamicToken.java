@@ -1,11 +1,10 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.TokenMatcher;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.LexingMatch;
 import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 public class DynamicToken<N> implements Token<N> {
     @NotNull
@@ -26,8 +25,8 @@ public class DynamicToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public Pattern getPattern() {
-        return def.getPattern();
+    public TokenMatcher getMatcher() {
+        return def.getMatcher();
     }
 
     @Override

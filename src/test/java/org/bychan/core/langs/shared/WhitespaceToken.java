@@ -1,11 +1,11 @@
 package org.bychan.core.langs.shared;
 
+import org.bychan.core.RegexMatcher;
+import org.bychan.core.TokenMatcher;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.LexingMatch;
 import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 public class WhitespaceToken<N> implements Token<N> {
     private final String pattern;
@@ -22,8 +22,8 @@ public class WhitespaceToken<N> implements Token<N> {
 
     @NotNull
     @Override
-    public Pattern getPattern() {
-        return Pattern.compile(pattern);
+    public TokenMatcher getMatcher() {
+        return new RegexMatcher(pattern);
     }
 
     @Override

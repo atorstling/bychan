@@ -1,11 +1,13 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.RegexMatcher;
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
-    private String pattern;
+    private TokenMatcher matcher;
     private DynamicNudParseAction<N> nud;
     private DynamicLedParseAction<N> led;
     private boolean keepAfterLexing;
@@ -19,7 +21,7 @@ public class TokenDefinitionBuilder<N> {
     }
 
     public TokenDefinitionBuilder<N> matchesPattern(String pattern) {
-        this.pattern = pattern;
+        this.matcher = new RegexMatcher(pattern);
         return this;
     }
 
@@ -35,13 +37,13 @@ public class TokenDefinitionBuilder<N> {
 
     @NotNull
     public TokenDefinition<N> build() {
-        if (pattern == null) {
+        if (matcher == null) {
             throw new IllegalStateException("No matching pattern has been set");
         }
         if (tokenName == null) {
             tokenName = "token" + tokenDefinitionOwner.increaseUnnamedTokenCounter();
         }
-        TokenDefinition<N> token = new TokenDefinition<>(Pattern.compile(pattern), nud, led, tokenName, keepAfterLexing, leftBindingPower);
+        TokenDefinition<N> token = new TokenDefinition<>(matcher, nud, led, tokenName, keepAfterLexing, leftBindingPower);
         tokenDefinitionOwner.tokenBuilt(token);
         return token;
     }

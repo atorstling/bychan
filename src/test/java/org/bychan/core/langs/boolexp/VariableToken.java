@@ -1,11 +1,11 @@
 package org.bychan.core.langs.boolexp;
 
+import org.bychan.core.RegexMatcher;
+import org.bychan.core.TokenMatcher;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.LexingMatch;
 import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 public class VariableToken implements Token<BooleanExpressionNode> {
 
@@ -17,8 +17,8 @@ public class VariableToken implements Token<BooleanExpressionNode> {
     }
 
     @NotNull
-    public Pattern getPattern() {
-        return Pattern.compile("[a-z]+");
+    public TokenMatcher getMatcher() {
+        return new RegexMatcher("[a-z]+");
     }
 
     @Override

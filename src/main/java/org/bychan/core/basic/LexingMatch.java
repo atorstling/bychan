@@ -1,5 +1,6 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.RegexMatcher;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
@@ -70,7 +71,7 @@ public class LexingMatch<N> {
 
     @NotNull
     public String group(int i) {
-        Matcher matcher = token.getPattern().matcher(text);
+        Matcher matcher = ((RegexMatcher) token.getMatcher()).matcher(text);
         boolean matches = matcher.matches();
         if (!matches) {
             throw new IllegalStateException();

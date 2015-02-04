@@ -1,9 +1,8 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.regex.Pattern;
 
 /**
  * The recorded definition of a dynamic token. Utilized to form both {@link DynamicToken}s and
@@ -11,7 +10,7 @@ import java.util.regex.Pattern;
  */
 public class TokenDefinition<N> {
     @NotNull
-    private final Pattern pattern;
+    private final TokenMatcher matcher;
     @Nullable
     private final DynamicNudParseAction<N> nud;
     @Nullable
@@ -22,8 +21,8 @@ public class TokenDefinition<N> {
     private final int leftBindingPower;
     private final TokenKey tokenKey;
 
-    public TokenDefinition(@NotNull final Pattern pattern, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean keepAfterLexing, int leftBindingPower) {
-        this.pattern = pattern;
+    public TokenDefinition(@NotNull final TokenMatcher matcher, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean keepAfterLexing, int leftBindingPower) {
+        this.matcher = matcher;
         this.nud = nud;
         this.led = led;
         this.tokenName = tokenName;
@@ -33,8 +32,8 @@ public class TokenDefinition<N> {
     }
 
     @NotNull
-    public Pattern getPattern() {
-        return pattern;
+    public TokenMatcher getMatcher() {
+        return matcher;
     }
 
     public boolean keepAfterLexing() {

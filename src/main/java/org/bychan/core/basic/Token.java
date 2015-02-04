@@ -1,8 +1,7 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 /**
  * A token defines how to make certain types of lexemes.
@@ -15,7 +14,7 @@ public interface Token<N> {
     Lexeme<N> toLexeme(@NotNull final LexingMatch match);
 
     @NotNull
-    Pattern getPattern();
+    TokenMatcher getMatcher();
 
     /**
      * @return whether the lexer should ignore this token or not.

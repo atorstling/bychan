@@ -1,6 +1,8 @@
 package org.bychan.core.basic;
 
 import junit.framework.Assert;
+import org.bychan.core.RegexMatcher;
+import org.bychan.core.TokenMatcher;
 import org.bychan.core.langs.calculator.manual.CalculatorTokens;
 import org.bychan.core.langs.calculator.manual.NumberLexeme;
 import org.bychan.core.langs.calculator.manual.NumberToken;
@@ -14,7 +16,6 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -92,8 +93,8 @@ public class LexerTest {
 
         @NotNull
         @Override
-        public Pattern getPattern() {
-            return Pattern.compile("");
+        public TokenMatcher getMatcher() {
+            return new RegexMatcher("");
         }
 
         @Override
