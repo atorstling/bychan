@@ -1,10 +1,9 @@
 package org.bychan.core.dynamic;
 
 import org.bychan.core.RegexMatcher;
+import org.bychan.core.StringMatcher;
 import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
     private TokenMatcher matcher;
@@ -17,7 +16,8 @@ public class TokenDefinitionBuilder<N> {
     private TokenKey tokenKey;
 
     public TokenDefinitionBuilder<N> matchesString(String text) {
-        return matchesPattern(Pattern.quote(text));
+        this.matcher = new StringMatcher(text);
+        return this;
     }
 
     public TokenDefinitionBuilder<N> matchesPattern(String pattern) {

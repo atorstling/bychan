@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by alext on 2015-02-04.
+ * Matches input against a regular expression
  */
 public class RegexMatcher implements TokenMatcher {
     @NotNull
