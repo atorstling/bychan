@@ -40,8 +40,12 @@ public interface Lexeme<N> {
         return getMatch().getMatcher();
     }
 
-    @Nullable
+    @NotNull
     default Object getLexerValue() {
-        return getMatch().getLexerValue();
+        Object lexerValue = getMatch().getLexerValue();
+        if (lexerValue == null) {
+            throw new IllegalStateException("No lexer value recorded");
+        }
+        return lexerValue;
     }
 }
