@@ -1,5 +1,6 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.SuccessfulTokenMatchResult;
 import org.bychan.core.TokenMatcher;
 import org.bychan.core.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -54,10 +55,10 @@ public class Lexer<N> {
     private LexingMatch<N> findMatch(final int searchStart, @NotNull final String input) {
         for (Token<N> token : tokens) {
             TokenMatcher matcher = token.getMatcher();
-            int matchEnd = matcher.tryMatch(input, searchStart);
-            if (matchEnd != -1) {
-                String stringMatch = input.substring(searchStart, matchEnd);
-                return new LexingMatch<>(searchStart, matchEnd, stringMatch, token);
+            SuccessfulTokenMatchResult<Object> result = matcher.tryMatch(input, searchStart);
+            if (result != null) {
+                String stringMatch = input.substring(searchStart, result.getEndPosition());
+                return new LexingMatch<>(searchStart, result.getEndPosition(), stringMatch, token, result.getLexerResult());
             }
         }
         return null;

@@ -1,6 +1,7 @@
 package org.bychan.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Tries to match input against an exact string
@@ -14,10 +15,11 @@ public class StringMatcher implements TokenMatcher {
     }
 
     @Override
-    public int tryMatch(@NotNull String input, int searchStart) {
+    @Nullable
+    public SuccessfulTokenMatchResult<Object> tryMatch(@NotNull String input, int searchStart) {
         if (input.regionMatches(searchStart, text, 0, text.length())) {
-            return searchStart + text.length();
+            return SuccessfulTokenMatchResult.create(searchStart + text.length());
         }
-        return -1;
+        return null;
     }
 }

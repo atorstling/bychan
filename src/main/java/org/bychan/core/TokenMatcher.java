@@ -1,15 +1,19 @@
 package org.bychan.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by alext on 2015-02-04.
+ * Created by alext on 2015-02-04
+ * @param <M> match result type, if applicable.
  */
-public interface TokenMatcher {
+public interface TokenMatcher<M> {
     /**
      * Try to match agains the input string at given start location
      *
-     * @return <code>-1</code> if no match, otherwise the index of the match end.
+     * @return <code>null</code> if no match, otherwise a {@link org.bychan.core.TokenMatchResult} with the
+     * index of the match end and any parsed object which you want to be able to pass to your parser callback.
      */
-    int tryMatch(@NotNull final String input, int searchStart);
+    @Nullable
+    SuccessfulTokenMatchResult<M> tryMatch(@NotNull final String input, int searchStart);
 }

@@ -1,6 +1,7 @@
 package org.bychan.core;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,7 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Matches input against a regular expression
  */
-public class RegexMatcher implements TokenMatcher {
+public class RegexMatcher implements TokenMatcher<Matcher> {
     @NotNull
     private final Pattern pattern;
 
@@ -24,14 +25,15 @@ public class RegexMatcher implements TokenMatcher {
         return pattern.matcher(text);
     }
 
+    @Nullable
     @Override
-    public int tryMatch(@NotNull String input, int searchStart) {
+    public SuccessfulTokenMatchResult<Matcher> tryMatch(@NotNull String input, int searchStart) {
         Matcher matcher = pattern.matcher(input);
         matcher.region(searchStart, input.length());
         if (matcher.lookingAt()) {
-            return matcher.end();
+            return SuccessfulTokenMatchResult.create(matcher, matcher.end());
         }
-        return -1;
+        return null;
     }
 
     public String group(int i, @NotNull final String text) {

@@ -1,5 +1,6 @@
 package org.bychan.core.features;
 
+import org.bychan.core.SuccessfulTokenMatchResult;
 import org.bychan.core.TokenMatcher;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
@@ -31,11 +32,12 @@ public class CustomMatcherTest {
         @Nullable
         private String savedResult;
 
+        @Nullable
         @Override
-        public int tryMatch(@NotNull String input, int searchStart) {
+        public SuccessfulTokenMatchResult<Object> tryMatch(@NotNull String input, int searchStart) {
             int end = searchStart + 1;
             savedResult = input.substring(searchStart, end);
-            return end;
+            return SuccessfulTokenMatchResult.create(end);
         }
 
         @Nullable

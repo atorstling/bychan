@@ -9,8 +9,8 @@ public class StringMatcherTest {
     @Test
     public void matches() {
         StringMatcher sm = new StringMatcher("wo");
-        assertEquals(-1, sm.tryMatch("hello world", 0));
-        assertEquals(8, sm.tryMatch("hello world", 6));
+        assertEquals(null, sm.tryMatch("hello world", 0));
+        assertEquals(SuccessfulTokenMatchResult.create(8), sm.tryMatch("hello world", 6));
     }
 
 }

@@ -3,6 +3,7 @@ package org.bychan.core.basic;
 import org.bychan.core.RegexMatcher;
 import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The result of a lexing match.
@@ -20,12 +21,19 @@ public class LexingMatch<N> {
     private final String text;
     @NotNull
     private final Token<N> token;
+    @Nullable
+    private final Object lexerResult;
 
     public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final Token<N> token) {
+        this(startPosition, endPosition, text, token, null);
+    }
+
+    public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final Token<N> token, @Nullable Object lexerResult) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.text = text;
         this.token = token;
+        this.lexerResult = lexerResult;
     }
 
     @NotNull
