@@ -1,5 +1,6 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,5 +33,10 @@ public interface Lexeme<N> {
     @NotNull
     default String getText() {
         return getMatch().getText();
+    }
+
+    @NotNull
+    default TokenMatcher getMatcher() {
+        return getMatch().getMatcher();
     }
 }

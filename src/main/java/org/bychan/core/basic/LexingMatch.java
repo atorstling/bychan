@@ -1,9 +1,8 @@
 package org.bychan.core.basic;
 
 import org.bychan.core.RegexMatcher;
+import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.regex.Matcher;
 
 /**
  * The result of a lexing match.
@@ -70,13 +69,13 @@ public class LexingMatch<N> {
     }
 
     @NotNull
+    public TokenMatcher getMatcher() {
+        return token.getMatcher();
+    }
+
+    @NotNull
     public String group(int i) {
-        Matcher matcher = ((RegexMatcher) token.getMatcher()).matcher(text);
-        boolean matches = matcher.matches();
-        if (!matches) {
-            throw new IllegalStateException();
-        }
-        return matcher.group(i);
+        return ((RegexMatcher) getMatcher()).group(i, text);
     }
 
     @NotNull

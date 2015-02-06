@@ -33,4 +33,13 @@ public class RegexMatcher implements TokenMatcher {
         }
         return -1;
     }
+
+    public String group(int i, @NotNull final String text) {
+        Matcher matcher = matcher(text);
+        boolean matches = matcher.matches();
+        if (!matches) {
+            throw new IllegalStateException();
+        }
+        return matcher.group(i);
+    }
 }
