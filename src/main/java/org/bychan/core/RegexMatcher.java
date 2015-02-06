@@ -35,13 +35,4 @@ public class RegexMatcher implements TokenMatcher<Matcher> {
         }
         return null;
     }
-
-    public String group(int i, @NotNull final String text) {
-        Matcher matcher = matcher(text);
-        boolean matches = matcher.matches();
-        if (!matches) {
-            throw new IllegalStateException();
-        }
-        return matcher.group(i);
-    }
 }

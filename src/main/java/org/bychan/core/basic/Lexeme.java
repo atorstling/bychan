@@ -42,10 +42,6 @@ public interface Lexeme<N> {
 
     @NotNull
     default Object getLexerValue() {
-        Object lexerValue = getMatch().getLexerValue();
-        if (lexerValue == null) {
-            throw new IllegalStateException("No lexer value recorded");
-        }
-        return lexerValue;
+        return getMatch().getLexerValue();
     }
 }

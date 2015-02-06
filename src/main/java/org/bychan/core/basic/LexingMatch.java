@@ -1,9 +1,10 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.RegexMatcher;
 import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Matcher;
 
 /**
  * The result of a lexing match.
@@ -83,7 +84,7 @@ public class LexingMatch<N> {
 
     @NotNull
     public String group(int i) {
-        return ((RegexMatcher) getMatcher()).group(i, text);
+        return ((Matcher) getLexerValue()).group(i);
     }
 
     @NotNull
@@ -91,8 +92,11 @@ public class LexingMatch<N> {
         return token.toLexeme(this);
     }
 
-    @Nullable
+    @NotNull
     public Object getLexerValue() {
+        if (lexerValue == null) {
+            throw new IllegalStateException("No lexer value recorded");
+        }
         return lexerValue;
     }
 }
