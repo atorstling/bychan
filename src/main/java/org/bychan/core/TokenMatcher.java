@@ -15,5 +15,5 @@ public interface TokenMatcher<M> {
      * index of the match end and any parsed object which you want to be able to pass to your parser callback.
      */
     @Nullable
-    SuccessfulTokenMatchResult<M> tryMatch(@NotNull final String input, int searchStart);
+    TokenMatchResult<M> tryMatch(@NotNull final String input, int searchStart);
 }

@@ -8,24 +8,24 @@ import org.jetbrains.annotations.Nullable;
  *
  * @param <M> type of object which a lexerResult results in
  */
-public class SuccessfulTokenMatchResult<M> {
+public class TokenMatchResult<M> {
     @Nullable
     private final M lexerResult;
     private final int endPosition;
 
-    private SuccessfulTokenMatchResult(@Nullable final M lexerResult, int endPosition) {
+    private TokenMatchResult(@Nullable final M lexerResult, int endPosition) {
         this.lexerResult = lexerResult;
         this.endPosition = endPosition;
     }
 
     @NotNull
-    public static <M> SuccessfulTokenMatchResult<M> create(int endPosition) {
-        return new SuccessfulTokenMatchResult<>(null, endPosition);
+    public static <M> TokenMatchResult<M> create(int endPosition) {
+        return new TokenMatchResult<>(null, endPosition);
     }
 
     @NotNull
-    public static <M> SuccessfulTokenMatchResult<M> create(@NotNull final M lexerResult, int endPosition) {
-        return new SuccessfulTokenMatchResult<>(lexerResult, endPosition);
+    public static <M> TokenMatchResult<M> create(@NotNull final M lexerResult, int endPosition) {
+        return new TokenMatchResult<>(lexerResult, endPosition);
     }
 
     @Nullable
@@ -42,12 +42,10 @@ public class SuccessfulTokenMatchResult<M> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SuccessfulTokenMatchResult that = (SuccessfulTokenMatchResult) o;
+        TokenMatchResult that = (TokenMatchResult) o;
 
-        if (endPosition != that.endPosition) return false;
-        if (lexerResult != null ? !lexerResult.equals(that.lexerResult) : that.lexerResult != null) return false;
-
-        return true;
+        return endPosition == that.endPosition && !(lexerResult != null ? !lexerResult.equals(that.lexerResult) :
+                that.lexerResult != null);
     }
 
     @Override

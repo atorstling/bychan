@@ -27,11 +27,11 @@ public class RegexMatcher implements TokenMatcher<Matcher> {
 
     @Nullable
     @Override
-    public SuccessfulTokenMatchResult<Matcher> tryMatch(@NotNull String input, int searchStart) {
+    public TokenMatchResult<Matcher> tryMatch(@NotNull String input, int searchStart) {
         Matcher matcher = pattern.matcher(input);
         matcher.region(searchStart, input.length());
         if (matcher.lookingAt()) {
-            return SuccessfulTokenMatchResult.create(matcher, matcher.end());
+            return TokenMatchResult.create(matcher, matcher.end());
         }
         return null;
     }

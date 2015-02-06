@@ -10,7 +10,7 @@ public class StringMatcherTest {
     public void matches() {
         StringMatcher sm = new StringMatcher("wo");
         assertEquals(null, sm.tryMatch("hello world", 0));
-        assertEquals(SuccessfulTokenMatchResult.create(8), sm.tryMatch("hello world", 6));
+        assertEquals(TokenMatchResult.create(8), sm.tryMatch("hello world", 6));
     }
 
 }

@@ -16,9 +16,9 @@ public class StringMatcher implements TokenMatcher {
 
     @Override
     @Nullable
-    public SuccessfulTokenMatchResult<Object> tryMatch(@NotNull String input, int searchStart) {
+    public TokenMatchResult<Object> tryMatch(@NotNull String input, int searchStart) {
         if (input.regionMatches(searchStart, text, 0, text.length())) {
-            return SuccessfulTokenMatchResult.create(searchStart + text.length());
+            return TokenMatchResult.create(searchStart + text.length());
         }
         return null;
     }

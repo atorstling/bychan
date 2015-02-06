@@ -39,4 +39,9 @@ public interface Lexeme<N> {
     default TokenMatcher getMatcher() {
         return getMatch().getMatcher();
     }
+
+    @Nullable
+    default Object getLexerResult() {
+        return getMatch().getLexerResult();
+    }
 }

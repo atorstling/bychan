@@ -90,4 +90,9 @@ public class LexingMatch<N> {
     public Lexeme<N> toLexeme() {
         return token.toLexeme(this);
     }
+
+    @Nullable
+    public Object getLexerResult() {
+        return lexerResult;
+    }
 }
