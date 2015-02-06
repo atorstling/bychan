@@ -6,15 +6,15 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by alext on 2015-02-06.
  *
- * @param <M> type of object which a lexerResult results in
+ * @param <M> type of object which a lexerValue results in
  */
 public class TokenMatchResult<M> {
     @Nullable
-    private final M lexerResult;
+    private final M lexerValue;
     private final int endPosition;
 
-    private TokenMatchResult(@Nullable final M lexerResult, int endPosition) {
-        this.lexerResult = lexerResult;
+    private TokenMatchResult(@Nullable final M lexerValue, int endPosition) {
+        this.lexerValue = lexerValue;
         this.endPosition = endPosition;
     }
 
@@ -24,13 +24,13 @@ public class TokenMatchResult<M> {
     }
 
     @NotNull
-    public static <M> TokenMatchResult<M> create(@NotNull final M lexerResult, int endPosition) {
-        return new TokenMatchResult<>(lexerResult, endPosition);
+    public static <M> TokenMatchResult<M> create(@NotNull final M lexerValue, int endPosition) {
+        return new TokenMatchResult<>(lexerValue, endPosition);
     }
 
     @Nullable
-    public M getLexerResult() {
-        return lexerResult;
+    public M getLexerValue() {
+        return lexerValue;
     }
 
     public int getEndPosition() {
@@ -44,13 +44,13 @@ public class TokenMatchResult<M> {
 
         TokenMatchResult that = (TokenMatchResult) o;
 
-        return endPosition == that.endPosition && !(lexerResult != null ? !lexerResult.equals(that.lexerResult) :
-                that.lexerResult != null);
+        return endPosition == that.endPosition && !(lexerValue != null ? !lexerValue.equals(that.lexerValue) :
+                that.lexerValue != null);
     }
 
     @Override
     public int hashCode() {
-        int result = lexerResult != null ? lexerResult.hashCode() : 0;
+        int result = lexerValue != null ? lexerValue.hashCode() : 0;
         result = 31 * result + endPosition;
         return result;
     }

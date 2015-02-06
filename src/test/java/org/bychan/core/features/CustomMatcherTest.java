@@ -17,13 +17,13 @@ public class CustomMatcherTest {
         lb.newToken().named("test")
                 .matches((input, searchStart) -> {
                     int end = searchStart + 1;
-                    String lexerResult = input.substring(searchStart, end);
-                    return TokenMatchResult.create(lexerResult, end);
+                    String lexerValue = input.substring(searchStart, end);
+                    return TokenMatchResult.create(lexerValue, end);
                 })
                 .nud((left, parser, lexeme) -> {
-                    String lexerResult = (String) lexeme.getLexerResult();
-                    assert lexerResult != null;
-                    return lexerResult;
+                    String lexerValue = (String) lexeme.getLexerValue();
+                    assert lexerValue != null;
+                    return lexerValue;
                 }).build();
         Language<Object> l = lb.completeLanguage();
         Assert.assertEquals("a", l.newLexParser().parse("a"));

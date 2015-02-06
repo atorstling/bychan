@@ -22,18 +22,18 @@ public class LexingMatch<N> {
     @NotNull
     private final Token<N> token;
     @Nullable
-    private final Object lexerResult;
+    private final Object lexerValue;
 
     public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final Token<N> token) {
         this(startPosition, endPosition, text, token, null);
     }
 
-    public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final Token<N> token, @Nullable Object lexerResult) {
+    public LexingMatch(int startPosition, int endPosition, @NotNull final String text, @NotNull final Token<N> token, @Nullable Object lexerValue) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.text = text;
         this.token = token;
-        this.lexerResult = lexerResult;
+        this.lexerValue = lexerValue;
     }
 
     @NotNull
@@ -92,7 +92,7 @@ public class LexingMatch<N> {
     }
 
     @Nullable
-    public Object getLexerResult() {
-        return lexerResult;
+    public Object getLexerValue() {
+        return lexerValue;
     }
 }

@@ -41,7 +41,7 @@ public interface Lexeme<N> {
     }
 
     @Nullable
-    default Object getLexerResult() {
-        return getMatch().getLexerResult();
+    default Object getLexerValue() {
+        return getMatch().getLexerValue();
     }
 }

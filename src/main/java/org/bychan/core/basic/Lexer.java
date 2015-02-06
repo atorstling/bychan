@@ -20,6 +20,11 @@ public class Lexer<N> {
         this.tokens = new ArrayList<>(tokens);
     }
 
+    @NotNull
+    static <N> EndLexeme<N> makeEndToken(@NotNull String input) {
+        return new EndLexeme<>(new LexingMatch<>(input.length(), input.length(), "", EndToken.get()));
+    }
+
     public List<Lexeme<N>> lex(@NotNull final String input) {
         final List<Lexeme<N>> lexemes = new ArrayList<>();
         for (int searchStart = 0; searchStart < input.length(); ) {
@@ -46,11 +51,6 @@ public class Lexer<N> {
         return new LexingPosition(StringUtils.getTextPosition(input, i), input.substring(i));
     }
 
-    @NotNull
-    static <N> EndLexeme<N> makeEndToken(@NotNull String input) {
-        return new EndLexeme<>(new LexingMatch<>(input.length(), input.length(), "", EndToken.get()));
-    }
-
     @Nullable
     private LexingMatch<N> findMatch(final int searchStart, @NotNull final String input) {
         for (Token<N> token : tokens) {
@@ -58,7 +58,7 @@ public class Lexer<N> {
             TokenMatchResult result = matcher.tryMatch(input, searchStart);
             if (result != null) {
                 String stringMatch = input.substring(searchStart, result.getEndPosition());
-                return new LexingMatch<>(searchStart, result.getEndPosition(), stringMatch, token, result.getLexerResult());
+                return new LexingMatch<>(searchStart, result.getEndPosition(), stringMatch, token, result.getLexerValue());
             }
         }
         return null;
