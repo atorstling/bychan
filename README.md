@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/atorstling/bychan.svg?branch=master)](https://travis-ci.org/atorstling/bychan)
-#Bychan
+#Bychan [![Build Status](https://travis-ci.org/atorstling/bychan.svg?branch=master)](https://travis-ci.org/atorstling/bychan)
 
 A Pratt (TDOP) Expression Parser Library for Java
 
