@@ -1,6 +1,5 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.TokenMatcher;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.basic.LexingMatch;
 import org.bychan.core.basic.Token;

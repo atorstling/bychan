@@ -1,11 +1,17 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.TokenMatcher;
+import org.bychan.core.dynamic.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 
 public class EndToken<N> implements Token<N> {
 
     private static final EndToken INSTANCE = new EndToken<>();
+
+    @NotNull
+    public static <N> EndToken<N> get() {
+        //noinspection unchecked
+        return (EndToken<N>) INSTANCE;
+    }
 
     @NotNull
     @Override
@@ -22,12 +28,6 @@ public class EndToken<N> implements Token<N> {
     @Override
     public boolean keepAfterLexing() {
         return true;
-    }
-
-    @NotNull
-    public static <N> EndToken<N> get() {
-        //noinspection unchecked
-        return (EndToken<N>) INSTANCE;
     }
 
     public String toString() {

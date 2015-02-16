@@ -1,8 +1,8 @@
 package org.bychan.core.features;
 
-import org.bychan.core.TokenMatchResult;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
+import org.bychan.core.dynamic.TokenMatchResult;
 import org.junit.Assert;
 import org.junit.Test;
 

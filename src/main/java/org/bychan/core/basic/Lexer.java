@@ -1,7 +1,7 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.TokenMatchResult;
-import org.bychan.core.TokenMatcher;
+import org.bychan.core.dynamic.TokenMatchResult;
+import org.bychan.core.dynamic.TokenMatcher;
 import org.bychan.core.utils.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

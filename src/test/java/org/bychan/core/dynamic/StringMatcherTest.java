@@ -1,4 +1,4 @@
-package org.bychan.core;
+package org.bychan.core.dynamic;
 
 import org.junit.Test;
 

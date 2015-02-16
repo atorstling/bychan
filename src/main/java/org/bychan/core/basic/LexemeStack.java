@@ -44,7 +44,7 @@ public class LexemeStack<N> {
     }
 
     @Nullable
-    public Lexeme<N> left() {
+    public Lexeme<N> previous() {
         return previous;
     }
 

@@ -1,8 +1,8 @@
 package org.bychan.core.basic;
 
 import junit.framework.Assert;
-import org.bychan.core.RegexMatcher;
-import org.bychan.core.TokenMatcher;
+import org.bychan.core.dynamic.RegexMatcher;
+import org.bychan.core.dynamic.TokenMatcher;
 import org.bychan.core.langs.calculator.manual.CalculatorTokens;
 import org.bychan.core.langs.calculator.manual.NumberLexeme;
 import org.bychan.core.langs.calculator.manual.NumberToken;

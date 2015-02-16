@@ -1,8 +1,5 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.RegexMatcher;
-import org.bychan.core.StringMatcher;
-import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Pattern;

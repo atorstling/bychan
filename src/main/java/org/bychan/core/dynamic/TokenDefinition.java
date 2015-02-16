@@ -1,6 +1,5 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
