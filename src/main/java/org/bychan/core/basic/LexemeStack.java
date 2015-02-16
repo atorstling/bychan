@@ -1,5 +1,6 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.BoundedFifo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.TestOnly;
@@ -13,8 +14,8 @@ public class LexemeStack<N> {
     private static final LexemeStack<Object> EMPTY = new LexemeStack<>();
     @NotNull
     private final ArrayDeque<Lexeme<N>> lexemes;
-    @Nullable
-    private Lexeme<N> previous;
+    @NotNull
+    private final BoundedFifo<Lexeme<N>> history;
 
     @SafeVarargs
     @TestOnly
@@ -24,7 +25,7 @@ public class LexemeStack<N> {
 
     public LexemeStack(List<Lexeme<N>> lexemes) {
         this.lexemes = new ArrayDeque<>(lexemes);
-        previous = null;
+        history = new BoundedFifo<>(2);
     }
 
     @NotNull
@@ -35,7 +36,7 @@ public class LexemeStack<N> {
 
     public Lexeme<N> pop() {
         Lexeme<N> popped = lexemes.pop();
-        previous = popped;
+        history.putLast(popped);
         return popped;
     }
 
@@ -44,8 +45,8 @@ public class LexemeStack<N> {
     }
 
     @Nullable
-    public Lexeme<N> previous() {
-        return previous;
+    public Lexeme<N> history(int i) {
+        return history.findFromFront(i);
     }
 
     @NotNull

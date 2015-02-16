@@ -15,7 +15,7 @@ public class PositionTracerImpl<N> implements PositionTracer<N> {
     @NotNull
     @Override
     public ParsingPosition getParsingPosition(@NotNull LexemeStack<N> lexemeStack) {
-        Lexeme<N> current = lexemeStack.previous();
+        Lexeme<N> current = lexemeStack.history(0);
         final TextPosition textPosition = getTextPosition(current);
         return new ParsingPosition(textPosition, lexemeStack);
     }

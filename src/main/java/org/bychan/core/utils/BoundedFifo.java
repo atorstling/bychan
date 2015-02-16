@@ -1,6 +1,7 @@
 package org.bychan.core.utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 
@@ -17,7 +18,7 @@ public class BoundedFifo<T> {
         this.unbounded = new LinkedList<>();
     }
 
-    public void put(@NotNull final T t) {
+    public void putLast(@NotNull final T t) {
         unbounded.add(t);
         while (unbounded.size() > maxCapacity) {
             unbounded.remove();
@@ -26,6 +27,23 @@ public class BoundedFifo<T> {
 
     @NotNull
     public T getFromFront(final int i) {
-        return unbounded.get(unbounded.size() - 1 - i);
+        T hit = findFromFront(i);
+        if (hit == null) {
+            throw new IndexOutOfBoundsException(String.valueOf(i));
+        }
+        return hit;
+    }
+
+    public boolean isEmpty() {
+        return unbounded.isEmpty();
+    }
+
+    @Nullable
+    public T findFromFront(int i) {
+        int expectedIndex = unbounded.size() - 1 - i;
+        if (expectedIndex < 0) {
+            return null;
+        }
+        return unbounded.get(expectedIndex);
     }
 }

@@ -59,7 +59,7 @@ public class BooleanLogicTest {
         ParseResult<BooleanExpressionNode> parseResult = l.newLexParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
         ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
-        assertEquals("Parsing failed: 'Expected token 'rparen', but got 'END'' @  position 1:2 (index 1), current lexeme is END and remaining lexemes are []", errorMessage.toString());
+        assertEquals("Parsing failed: 'Expected token 'rparen', but got 'END'' @  position 1:2 (index 1), current lexeme is END, previous was variable(a), and remaining are []", errorMessage.toString());
     }
 
     private void check(@NotNull final Language<BooleanExpressionNode> l, @NotNull final String expression, final boolean aValue, final boolean bValue, final boolean expectedOutcome) {
