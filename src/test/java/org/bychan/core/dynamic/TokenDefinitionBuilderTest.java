@@ -21,7 +21,7 @@ public class TokenDefinitionBuilderTest {
         //noinspection unchecked
         TokenDefinitionBuilder b = new TokenDefinitionBuilder<>(owner);
         b.named("hello");
-        assertEquals(new TokenKey("hello"), b.getKey());
+        assertEquals(TokenKey.byName("hello"), b.getKey());
     }
 
 }

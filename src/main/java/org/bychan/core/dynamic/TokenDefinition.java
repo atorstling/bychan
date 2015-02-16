@@ -28,7 +28,7 @@ public class TokenDefinition<N> {
         this.tokenName = tokenName;
         this.keepAfterLexing = keepAfterLexing;
         this.leftBindingPower = leftBindingPower;
-        this.tokenKey = new TokenKey(tokenName());
+        this.tokenKey = TokenKey.byName(tokenName());
     }
 
     @NotNull

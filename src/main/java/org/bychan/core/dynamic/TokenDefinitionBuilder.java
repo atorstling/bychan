@@ -8,14 +8,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
+    private final TokenDefinitionOwner<N> tokenDefinitionOwner;
     private TokenMatcher matcher;
     private DynamicNudParseAction<N> nud;
     private DynamicLedParseAction<N> led;
     private boolean keepAfterLexing;
     private String tokenName;
     private int leftBindingPower = 1;
-    private final TokenDefinitionOwner<N> tokenDefinitionOwner;
     private TokenKey tokenKey;
+
+    public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
+        this.tokenDefinitionOwner = tokenDefinitionOwner;
+        keepAfterLexing = true;
+    }
 
     @NotNull
     public TokenDefinitionBuilder<N> matchesString(@NotNull final String text) {
@@ -36,11 +41,6 @@ public class TokenDefinitionBuilder<N> {
     @NotNull
     public TokenDefinitionBuilder<N> matchesPattern(@NotNull final Pattern pattern) {
         return matches(new RegexMatcher(pattern));
-    }
-
-    public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
-        this.tokenDefinitionOwner = tokenDefinitionOwner;
-        keepAfterLexing = true;
     }
 
     @NotNull
@@ -77,7 +77,7 @@ public class TokenDefinitionBuilder<N> {
     @NotNull
     public TokenDefinitionBuilder<N> named(@NotNull final String name) {
         this.tokenName = name;
-        tokenKey = new TokenKey(tokenName);
+        tokenKey = TokenKey.byName(tokenName);
         return this;
     }
 

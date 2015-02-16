@@ -5,12 +5,16 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Used to refer to other tokens
  */
-class TokenKey {
+public class TokenKey {
     @NotNull
     private final String tokenName;
 
-    TokenKey(@NotNull String tokenName) {
+    private TokenKey(@NotNull String tokenName) {
         this.tokenName = tokenName;
+    }
+
+    public static TokenKey byName(@NotNull final String tokenName) {
+        return new TokenKey(tokenName);
     }
 
     @Override
