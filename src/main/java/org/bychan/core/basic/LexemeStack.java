@@ -14,7 +14,7 @@ public class LexemeStack<N> {
     @NotNull
     private final ArrayDeque<Lexeme<N>> lexemes;
     @Nullable
-    private Lexeme<N> left;
+    private Lexeme<N> previous;
 
     @SafeVarargs
     @TestOnly
@@ -24,12 +24,18 @@ public class LexemeStack<N> {
 
     public LexemeStack(List<Lexeme<N>> lexemes) {
         this.lexemes = new ArrayDeque<>(lexemes);
-        left = null;
+        previous = null;
+    }
+
+    @NotNull
+    public static <N> LexemeStack<N> empty() {
+        //noinspection unchecked
+        return (LexemeStack<N>) EMPTY;
     }
 
     public Lexeme<N> pop() {
         Lexeme<N> popped = lexemes.pop();
-        left = popped;
+        previous = popped;
         return popped;
     }
 
@@ -39,17 +45,11 @@ public class LexemeStack<N> {
 
     @Nullable
     public Lexeme<N> left() {
-        return left;
+        return previous;
     }
 
     @NotNull
     public List<Lexeme<N>> remaining() {
         return new ArrayList<>(lexemes);
-    }
-
-    @NotNull
-    public static <N> LexemeStack<N> empty() {
-        //noinspection unchecked
-        return (LexemeStack<N>) EMPTY;
     }
 }
