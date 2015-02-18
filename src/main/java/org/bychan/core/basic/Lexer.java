@@ -57,7 +57,14 @@ public class Lexer<N> {
             TokenMatcher matcher = token.getMatcher();
             TokenMatchResult result = matcher.tryMatch(input, searchStart);
             if (result != null) {
-                String stringMatch = input.substring(searchStart, result.getEndPosition());
+                int endPosition = result.getEndPosition();
+                if (endPosition <= searchStart) {
+                    throw new IllegalStateException("endPosition <= searchStart for token " + token);
+                }
+                if (endPosition > input.length()) {
+                    throw new IllegalStateException("endPosition > input length for token " + token);
+                }
+                String stringMatch = input.substring(searchStart, endPosition);
                 return new LexingMatch<>(searchStart, result.getEndPosition(), stringMatch, token, result.getLexerValue());
             }
         }

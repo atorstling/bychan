@@ -94,7 +94,7 @@ public class LexerTest {
         @NotNull
         @Override
         public TokenMatcher getMatcher() {
-            return new RegexMatcher("");
+            return new RegexMatcher(".");
         }
 
         @Override
