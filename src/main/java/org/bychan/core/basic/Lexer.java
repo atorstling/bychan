@@ -36,7 +36,6 @@ public class Lexer<N> {
             if (lexeme.getToken().keepAfterLexing()) {
                 lexemes.add(lexeme);
             }
-            Token<N> token = lexeme.getToken();
             int progress = match.getEndPosition() - match.getStartPosition();
             searchStart += progress;
         }
