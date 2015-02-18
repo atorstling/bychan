@@ -11,21 +11,21 @@ import org.jetbrains.annotations.Nullable;
 public class TokenMatchResult<M> {
     @Nullable
     private final M lexerValue;
-    private final int endPosition;
+    private final int matchEndPosition;
 
-    private TokenMatchResult(@Nullable final M lexerValue, int endPosition) {
+    private TokenMatchResult(@Nullable final M lexerValue, int matchEndPosition) {
         this.lexerValue = lexerValue;
-        this.endPosition = endPosition;
+        this.matchEndPosition = matchEndPosition;
     }
 
     @NotNull
-    public static <M> TokenMatchResult<M> create(int endPosition) {
-        return new TokenMatchResult<>(null, endPosition);
+    public static <M> TokenMatchResult<M> create(int matchEndPosition) {
+        return new TokenMatchResult<>(null, matchEndPosition);
     }
 
     @NotNull
-    public static <M> TokenMatchResult<M> create(@NotNull final M lexerValue, int endPosition) {
-        return new TokenMatchResult<>(lexerValue, endPosition);
+    public static <M> TokenMatchResult<M> create(@NotNull final M lexerValue, int matchEndPosition) {
+        return new TokenMatchResult<>(lexerValue, matchEndPosition);
     }
 
     @Nullable
@@ -33,8 +33,8 @@ public class TokenMatchResult<M> {
         return lexerValue;
     }
 
-    public int getEndPosition() {
-        return endPosition;
+    public int getMatchEndPosition() {
+        return matchEndPosition;
     }
 
     @Override
@@ -44,14 +44,14 @@ public class TokenMatchResult<M> {
 
         TokenMatchResult that = (TokenMatchResult) o;
 
-        return endPosition == that.endPosition && !(lexerValue != null ? !lexerValue.equals(that.lexerValue) :
+        return matchEndPosition == that.matchEndPosition && !(lexerValue != null ? !lexerValue.equals(that.lexerValue) :
                 that.lexerValue != null);
     }
 
     @Override
     public int hashCode() {
         int result = lexerValue != null ? lexerValue.hashCode() : 0;
-        result = 31 * result + endPosition;
+        result = 31 * result + matchEndPosition;
         return result;
     }
 }

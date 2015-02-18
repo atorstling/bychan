@@ -38,9 +38,6 @@ public class Lexer<N> {
             }
             Token<N> token = lexeme.getToken();
             int progress = match.getEndPosition() - match.getStartPosition();
-            if (progress < 1) {
-                throw new LexingFailedException(getLexingPosition(input, searchStart), String.format("Match '%s' for lexeme type '%s' produced lexeme '%s' but did not advance lexing. Aborting.", match, token, lexeme));
-            }
             searchStart += progress;
         }
         lexemes.add(makeEndToken(input));
@@ -57,15 +54,16 @@ public class Lexer<N> {
             TokenMatcher matcher = token.getMatcher();
             TokenMatchResult result = matcher.tryMatch(input, searchStart);
             if (result != null) {
-                int endPosition = result.getEndPosition();
-                if (endPosition <= searchStart) {
-                    throw new IllegalStateException("endPosition <= searchStart for token " + token);
+                int matchEndPosition = result.getMatchEndPosition();
+                int progress = matchEndPosition - searchStart;
+                if (progress < 1) {
+                    throw new LexingFailedException(getLexingPosition(input, searchStart),
+                            String.format("Match result '%s' for token '%s' matched but did not advance lexing. " +
+                                            "Search start position was %d, end was %d",
+                                    result, token, searchStart, matchEndPosition));
                 }
-                if (endPosition > input.length()) {
-                    throw new IllegalStateException("endPosition > input length for token " + token);
-                }
-                String stringMatch = input.substring(searchStart, endPosition);
-                return new LexingMatch<>(searchStart, result.getEndPosition(), stringMatch, token, result.getLexerValue());
+                String stringMatch = input.substring(searchStart, matchEndPosition);
+                return new LexingMatch<>(searchStart, result.getMatchEndPosition(), stringMatch, token, result.getLexerValue());
             }
         }
         return null;

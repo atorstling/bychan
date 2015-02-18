@@ -2,6 +2,7 @@ package org.bychan.core.basic;
 
 import junit.framework.Assert;
 import org.bychan.core.dynamic.RegexMatcher;
+import org.bychan.core.dynamic.TokenMatchResult;
 import org.bychan.core.dynamic.TokenMatcher;
 import org.bychan.core.langs.calculator.manual.CalculatorTokens;
 import org.bychan.core.langs.calculator.manual.NumberLexeme;
@@ -84,6 +85,17 @@ public class LexerTest {
         }
     }
 
+    @Test
+    public void abortOnNegativeLengthMatch() {
+        Lexer<Integer> l = new Lexer<>(Collections.singleton(new MatchNegativeToken()));
+        try {
+            l.lex("a");
+        } catch (LexingFailedException e) {
+            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a"), e.getLexingPosition());
+            assertTrue(e.getMessage().contains("did not advance lexing"));
+        }
+    }
+
     private static class MatchAllToken implements Token<Integer> {
         @NotNull
         @Override
@@ -95,6 +107,30 @@ public class LexerTest {
         @Override
         public TokenMatcher getMatcher() {
             return new RegexMatcher(".");
+        }
+
+        @Override
+        public boolean keepAfterLexing() {
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "matchAll";
+        }
+    }
+
+    private static class MatchNegativeToken implements Token<Integer> {
+        @NotNull
+        @Override
+        public Lexeme<Integer> toLexeme(@NotNull LexingMatch match) {
+            return new LeftParenthesisLexeme<>(match);
+        }
+
+        @NotNull
+        @Override
+        public TokenMatcher getMatcher() {
+            return (input, searchStart) -> TokenMatchResult.create("", searchStart - 1);
         }
 
         @Override
