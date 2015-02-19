@@ -16,15 +16,18 @@ public class TokenDefinition<N> {
     private final DynamicLedParseAction<N> led;
     @NotNull
     private final String tokenName;
+    @Nullable
+    private final String documentation;
     private final boolean keepAfterLexing;
     private final int leftBindingPower;
     private final TokenKey tokenKey;
 
-    public TokenDefinition(@NotNull final TokenMatcher matcher, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, boolean keepAfterLexing, int leftBindingPower) {
+    public TokenDefinition(@NotNull final TokenMatcher matcher, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, @Nullable final String documentation, boolean keepAfterLexing, int leftBindingPower) {
         this.matcher = matcher;
         this.nud = nud;
         this.led = led;
         this.tokenName = tokenName;
+        this.documentation = documentation;
         this.keepAfterLexing = keepAfterLexing;
         this.leftBindingPower = leftBindingPower;
         this.tokenKey = TokenKey.byName(tokenName());
@@ -65,5 +68,10 @@ public class TokenDefinition<N> {
 
     public TokenKey getKey() {
         return tokenKey;
+    }
+
+    @Nullable
+    public String getDocumentation() {
+        return documentation;
     }
 }

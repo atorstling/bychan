@@ -13,6 +13,7 @@ public class TokenDefinitionBuilder<N> {
     private String tokenName;
     private int leftBindingPower = 1;
     private TokenKey tokenKey;
+    private String documentation;
 
     public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
         this.tokenDefinitionOwner = tokenDefinitionOwner;
@@ -54,7 +55,7 @@ public class TokenDefinitionBuilder<N> {
         if (tokenName == null) {
             tokenName = "token" + tokenDefinitionOwner.increaseUnnamedTokenCounter();
         }
-        TokenDefinition<N> token = new TokenDefinition<>(matcher, nud, led, tokenName, keepAfterLexing, leftBindingPower);
+        TokenDefinition<N> token = new TokenDefinition<>(matcher, nud, led, tokenName, documentation, keepAfterLexing, leftBindingPower);
         tokenDefinitionOwner.tokenBuilt(token);
         return token;
     }
@@ -97,4 +98,9 @@ public class TokenDefinitionBuilder<N> {
         return tokenKey;
     }
 
+    @NotNull
+    public TokenDefinitionBuilder<N> doc(@NotNull final String documentation) {
+        this.documentation = documentation;
+        return this;
+    }
 }
