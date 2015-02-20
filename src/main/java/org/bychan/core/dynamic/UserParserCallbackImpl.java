@@ -10,13 +10,23 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @NotNull
     private final DynamicTokenFinder<N> tokenFinder;
     @NotNull
+    private final TokenDefinition<N> def;
+    @Nullable
+    private final N left;
+    @NotNull
+    private final DynamicLexeme<N> lexeme;
+    @NotNull
     private TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser) {
+    public UserParserCallbackImpl(TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
+        this.def = def;
+        this.left = left;
+        this.lexeme = lexeme;
         this.leftBindingPower = def.getLeftBindingPower();
         this.tokenFinder = tokenFinder;
         this.parser = parser;
     }
+
 
     @NotNull
     @Override
@@ -52,6 +62,11 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @Override
     public N parseSingleToken(N left, @NotNull TokenKey tokenKey) {
         Lexeme<N> lexeme = swallow(tokenKey, parser);
+        return parser.nud(left, lexeme);
+    }
+
+    @Override
+    public N nud() {
         return parser.nud(left, lexeme);
     }
 }

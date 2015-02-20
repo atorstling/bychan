@@ -41,4 +41,11 @@ public interface UserParserCallback<N> {
 
     @NotNull
     N parseSingleToken(N left, @NotNull TokenKey tokenKey);
+
+    /**
+     * Calls the nud parse action. This is pure convenience
+     * for led actions which resemble or partly consist of their
+     * nud counterparts.
+     */
+    N nud();
 }
