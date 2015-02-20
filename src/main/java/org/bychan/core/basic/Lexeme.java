@@ -44,4 +44,9 @@ public interface Lexeme<N> {
     default Object getLexerValue() {
         return getMatch().getLexerValue();
     }
+
+    @NotNull
+    default String group(int i) {
+        return getMatch().group(i);
+    }
 }
