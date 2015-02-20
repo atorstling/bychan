@@ -28,9 +28,9 @@ public class Lexer<N> {
     public List<Lexeme<N>> lex(@NotNull final String input) {
         final List<Lexeme<N>> lexemes = new ArrayList<>();
         for (int searchStart = 0; searchStart < input.length(); ) {
-            LexingMatch<N> match = findMatch(searchStart, input);
+            LexingMatch<N> match = findMatch(searchStart, input, lexemes);
             if (match == null) {
-                throw new LexingFailedException(getLexingPosition(input, searchStart), "No matching rule");
+                throw new LexingFailedException(getLexingPosition(input, searchStart, lexemes), "No matching rule");
             }
             Lexeme<N> lexeme = match.toLexeme();
             if (lexeme.getToken().keepAfterLexing()) {
@@ -43,12 +43,13 @@ public class Lexer<N> {
         return lexemes;
     }
 
-    private LexingPosition getLexingPosition(String input, int i) {
-        return new LexingPosition(StringUtils.getTextPosition(input, i), input.substring(i));
+    private LexingPosition getLexingPosition(String input, int i, @NotNull final List<Lexeme<N>> lexemes) {
+        Lexeme<N> last = lexemes.isEmpty() ? null : lexemes.get(lexemes.size() - 1);
+        return new LexingPosition(StringUtils.getTextPosition(input, i), input.substring(i), last);
     }
 
     @Nullable
-    private LexingMatch<N> findMatch(final int searchStart, @NotNull final String input) {
+    private LexingMatch<N> findMatch(final int searchStart, @NotNull final String input, @NotNull final List<Lexeme<N>> lexemes) {
         for (Token<N> token : tokens) {
             TokenMatcher matcher = token.getMatcher();
             TokenMatchResult result = matcher.tryMatch(input, searchStart);
@@ -56,7 +57,7 @@ public class Lexer<N> {
                 int matchEndPosition = result.getMatchEndPosition();
                 int progress = matchEndPosition - searchStart;
                 if (progress < 1) {
-                    throw new LexingFailedException(getLexingPosition(input, searchStart),
+                    throw new LexingFailedException(getLexingPosition(input, searchStart, lexemes),
                             String.format("Match result '%s' for token '%s' matched but did not advance lexing. " +
                                             "Search start position was %d, end was %d",
                                     result, token, searchStart, matchEndPosition));

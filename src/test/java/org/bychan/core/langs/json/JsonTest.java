@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class JsonTest {
 
@@ -79,7 +80,7 @@ public class JsonTest {
         Language<JsonNode> l = lb.completeLanguage();
         String indata = "\"\\phello\"";
         ParseResult<JsonNode> pr = l.newLexParser().tryParse(indata);
-        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata)));
+        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata, mock(Lexeme.class))));
         assertEquals(pfi, pr.getErrorMessage());
     }
 

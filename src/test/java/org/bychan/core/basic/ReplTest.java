@@ -45,7 +45,7 @@ public class ReplTest {
         String expected = "Welcome to the REPL for 'simpleCalc'.\n" +
                 "End with an empty line or Ctrl+D.\n" +
                 ">>" +
-                "Error:Lexing failed: 'No matching rule' @  position 1:5 (index 4), remaining text is 'jocke'\n" +
+                "Error:Lexing failed: 'No matching rule' @  position 1:5 (index 4): last lexeme was 'plus(+)', remaining text is 'jocke'\n" +
                 ">>" +
                 "leaving\n";
         BufferedReader in = mock(BufferedReader.class);

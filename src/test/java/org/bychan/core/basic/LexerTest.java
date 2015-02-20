@@ -21,6 +21,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
 
 public class LexerTest {
     @Test
@@ -40,7 +41,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex("1;1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule @  position 1:2 (index 1), remaining text is ';1'", e.toString());
+            assertEquals("No matching rule @  position 1:2 (index 1): last lexeme was '1', remaining text is ';1'", e.toString());
         }
     }
 
@@ -50,7 +51,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex(";1");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule @  position 1:1 (index 0), remaining text is ';1'", e.toString());
+            assertEquals("No matching rule @  position 1:1 (index 0): last lexeme was <none>, remaining text is ';1'", e.toString());
         }
     }
 
@@ -60,7 +61,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex("1;");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule @  position 1:2 (index 1), remaining text is ';'", e.toString());
+            assertEquals("No matching rule @  position 1:2 (index 1): last lexeme was '1', remaining text is ';'", e.toString());
         }
     }
 
@@ -70,7 +71,7 @@ public class LexerTest {
             new Lexer<>(CalculatorTokens.get()).lex(";");
             fail("expected exception");
         } catch (LexingFailedException e) {
-            assertEquals("No matching rule @  position 1:1 (index 0), remaining text is ';'", e.toString());
+            assertEquals("No matching rule @  position 1:1 (index 0): last lexeme was <none>, remaining text is ';'", e.toString());
         }
     }
 
@@ -80,7 +81,7 @@ public class LexerTest {
         try {
             l.lex("a");
         } catch (LexingFailedException e) {
-            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a"), e.getLexingPosition());
+            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a", mock(Lexeme.class)), e.getLexingPosition());
             assertTrue(e.getMessage().contains("did not advance lexing"));
         }
     }
@@ -91,7 +92,7 @@ public class LexerTest {
         try {
             l.lex("a");
         } catch (LexingFailedException e) {
-            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a"), e.getLexingPosition());
+            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a", mock(Lexeme.class)), e.getLexingPosition());
             assertTrue(e.getMessage().contains("did not advance lexing"));
         }
     }
