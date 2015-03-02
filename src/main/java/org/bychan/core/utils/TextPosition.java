@@ -20,6 +20,17 @@ public class TextPosition {
         this.col = col;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getIndex() {
+        return index;
+    }
 
     @Override
     public boolean equals(Object o) {
