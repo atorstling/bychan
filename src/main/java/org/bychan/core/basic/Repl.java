@@ -2,8 +2,11 @@ package org.bychan.core.basic;
 
 import org.bychan.core.dynamic.Language;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,10 +61,39 @@ public class Repl<N> implements Runnable {
                 out.newLine();
                 out.flush();
             } else {
-                out.write(result.getRootNode().toString());
+                N rootNode = result.getRootNode();
+                out.write(rootNode.toString());
+                Object evaluated = invokeEvaluate(rootNode);
+                if (evaluated != null) {
+                    out.write("=");
+                    out.write(evaluated.toString());
+                }
                 out.newLine();
                 out.flush();
             }
+        }
+    }
+
+    private Object invokeEvaluate(N rootNode) {
+        Method evaluate = getEvaluate(rootNode);
+        if (evaluate == null) {
+            return null;
+        }
+        try {
+            return evaluate.invoke(rootNode);
+        } catch (IllegalAccessException e) {
+            return null;
+        } catch (InvocationTargetException e) {
+            return null;
+        }
+    }
+
+    @Nullable
+    private Method getEvaluate(@NotNull final N rootNode) {
+        try {
+            return rootNode.getClass().getDeclaredMethod("evaluate");
+        } catch (NoSuchMethodException e) {
+            return null;
         }
     }
 
