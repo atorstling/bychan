@@ -84,14 +84,17 @@ public class Repl<N> implements Runnable {
         } catch (IllegalAccessException e) {
             return null;
         } catch (InvocationTargetException e) {
-            return null;
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            return "Exception:\n" + sw.toString();
         }
     }
 
     @Nullable
     private Method getEvaluate(@NotNull final N rootNode) {
         try {
-            return rootNode.getClass().getDeclaredMethod("evaluate");
+            return rootNode.getClass().getMethod("evaluate");
         } catch (NoSuchMethodException e) {
             return null;
         }
