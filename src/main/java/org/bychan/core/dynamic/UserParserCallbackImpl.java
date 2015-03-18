@@ -1,6 +1,7 @@
 package org.bychan.core.dynamic;
 
 import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.ParsingFailedException;
 import org.bychan.core.basic.TokenParserCallback;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -68,5 +69,10 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @Override
     public N nud() {
         return parser.nud(left, lexeme);
+    }
+
+    @Override
+    public N abort(@NotNull String message) {
+        throw ParsingFailedException.forFailedAfterLexing(message, parser);
     }
 }

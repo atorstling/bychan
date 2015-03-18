@@ -48,4 +48,6 @@ public interface UserParserCallback<N> {
      * nud counterparts.
      */
     N nud();
+
+    N abort(@NotNull final String message);
 }
