@@ -30,6 +30,7 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     }
 
     public LanguageBuilder(@NotNull final String name) {
+        this.currentLeftBindingPower = 1;
         this.tokens = new ArrayList<>();
         this.name = name;
     }
@@ -41,9 +42,8 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
 
     @NotNull
     public TokenDefinitionBuilder<N> newToken() {
-        return new TokenDefinitionBuilder<>(this).leftBindingPower(++currentLeftBindingPower);
+        return new TokenDefinitionBuilder<>(this).leftBindingPower(currentLeftBindingPower);
     }
-
 
     @Override
     public int increaseUnnamedTokenCounter() {
@@ -53,5 +53,9 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     @Override
     public void tokenBuilt(@NotNull TokenDefinition<N> token) {
         tokens.add(token);
+    }
+
+    public void powerUp() {
+        ++currentLeftBindingPower;
     }
 }

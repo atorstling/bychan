@@ -22,6 +22,7 @@ public class BooleanLogicTest {
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
+        lb.powerUp();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
         lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left))).build();
         lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left))).build();
@@ -40,6 +41,7 @@ public class BooleanLogicTest {
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
+        lb.powerUp();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
         lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left))).build();
         lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left))).build();

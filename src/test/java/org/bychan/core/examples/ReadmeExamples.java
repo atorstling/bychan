@@ -23,6 +23,7 @@ public class ReadmeExamples {
                 .matchesString("+")
                 .led((left, parser, lexeme) -> left + parser.expression(left))
                 .build();
+        lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
                 .led((left, parser, lexeme) -> left * parser.expression(left))
@@ -51,10 +52,12 @@ public class ReadmeExamples {
             parser.expectSingleLexeme(rparen.getKey());
             return next;
         }).build();
+        lb.powerUp();
         lb.newToken().named("plus")
                 .matchesString("+")
                 .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left) + ")")
                 .build();
+        lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
                 .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left) + ")")
@@ -62,6 +65,27 @@ public class ReadmeExamples {
         Language<String> language = lb.completeLanguage();
         LexParser<String> lexParser = language.newLexParser();
         assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.parse("( 1 + 2 ) * 3 + 5"));
+    }
+
+    @Test
+    public void boolLogic() {
+        LanguageBuilder<BoolNode> lb = new LanguageBuilder<>("boolLogic");
+        lb.newToken().named("literal")
+                .matchesPattern("true|false")
+                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.getText())))
+                .build();
+        lb.newToken().named("and")
+                .matchesString("&&")
+                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left)))
+                .build();
+        Language<BoolNode> l = lb.completeLanguage();
+        LexParser<BoolNode> lexParser = l.newLexParser();
+        BoolNode one = lexParser.parse("false&&false&&false");
+        assertFalse(one.evaluate());
+        BoolNode two = lexParser.parse("true&&false&&true");
+        assertFalse(two.evaluate());
+        BoolNode three = lexParser.parse("true&&true&&true");
+        assertTrue(three.evaluate());
     }
 
     interface BoolNode {
@@ -94,26 +118,6 @@ public class ReadmeExamples {
         public boolean evaluate() {
             return left.evaluate() && right.evaluate();
         }
-    }
-    @Test
-    public void boolLogic() {
-        LanguageBuilder<BoolNode> lb = new LanguageBuilder<>("boolLogic");
-        lb.newToken().named("literal")
-                .matchesPattern("true|false")
-                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.getText())))
-                .build();
-        lb.newToken().named("and")
-                .matchesString("&&")
-                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left)))
-                .build();
-        Language<BoolNode> l = lb.completeLanguage();
-        LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.parse("false&&false&&false");
-        assertFalse(one.evaluate());
-        BoolNode two = lexParser.parse("true&&false&&true");
-        assertFalse(two.evaluate());
-        BoolNode three = lexParser.parse("true&&true&&true");
-        assertTrue(three.evaluate());
     }
 
 
