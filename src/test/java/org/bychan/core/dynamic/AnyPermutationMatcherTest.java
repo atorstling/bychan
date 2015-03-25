@@ -42,4 +42,11 @@ public class AnyPermutationMatcherTest {
         }
     }
 
+    @Test
+    public void triplet() {
+        AnyPermutationMatcher m = new AnyPermutationMatcher(Arrays.asList("a", "b", "c"), Collections.singleton(":"));
+        TokenMatchResult result = m.tryMatch("a:b:c", 0);
+        assertEquals(TokenMatchResult.create(5), result);
+    }
+
 }
