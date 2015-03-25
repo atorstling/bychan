@@ -43,9 +43,9 @@ public class Lexer<N> {
         return lexemes;
     }
 
-    private LexingPosition getLexingPosition(String input, int i, @NotNull final List<Lexeme<N>> lexemes) {
+    private LexingPosition<N> getLexingPosition(String input, int i, @NotNull final List<Lexeme<N>> lexemes) {
         Lexeme<N> last = lexemes.isEmpty() ? null : lexemes.get(lexemes.size() - 1);
-        return new LexingPosition(StringUtils.getTextPosition(input, i), input.substring(i), last);
+        return new LexingPosition<>(StringUtils.getTextPosition(input, i), input.substring(i), last);
     }
 
     @Nullable

@@ -93,7 +93,7 @@ public class ReadmeExamples {
     }
 
     class LiteralNode implements BoolNode {
-        boolean value;
+        final boolean value;
 
         public LiteralNode(boolean value) {
             this.value = value;
@@ -106,8 +106,8 @@ public class ReadmeExamples {
     }
 
     class AndNode implements BoolNode {
-        BoolNode left;
-        BoolNode right;
+        final BoolNode left;
+        final BoolNode right;
 
         public AndNode(BoolNode left, BoolNode right) {
             this.left = left;

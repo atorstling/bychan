@@ -8,7 +8,7 @@ import static org.junit.Assert.fail;
 public class BoundedFifoTest {
 
     @Test
-    public void putGet() throws Exception {
+    public void putGet() {
         BoundedFifo<String> b = new BoundedFifo<>(2);
         b.putLast("a");
         b.putLast("b");
@@ -18,7 +18,7 @@ public class BoundedFifoTest {
     }
 
     @Test
-    public void overflow() throws Exception {
+    public void overflow() {
         BoundedFifo<String> b = new BoundedFifo<>(1);
         b.putLast("a");
         b.putLast("b");
@@ -27,7 +27,7 @@ public class BoundedFifoTest {
     }
 
     @Test
-    public void overflowWithTwo() throws Exception {
+    public void overflowWithTwo() {
         BoundedFifo<String> b = new BoundedFifo<>(2);
         b.putLast("a");
         b.putLast("b");
@@ -39,7 +39,7 @@ public class BoundedFifoTest {
     }
 
     @Test
-    public void getFromFront() throws Exception {
+    public void getFromFront() {
         BoundedFifo<String> b = new BoundedFifo<>(1);
         b.putLast("a");
         assertEquals("a", b.getFromFront(0));

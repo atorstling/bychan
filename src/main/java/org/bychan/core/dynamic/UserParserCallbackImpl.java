@@ -10,17 +10,14 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull
     private final DynamicTokenFinder<N> tokenFinder;
-    @NotNull
-    private final TokenDefinition<N> def;
     @Nullable
     private final N left;
     @NotNull
     private final DynamicLexeme<N> lexeme;
     @NotNull
-    private TokenParserCallback<N> parser;
+    private final TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
-        this.def = def;
+    public UserParserCallbackImpl(@NotNull final TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
         this.left = left;
         this.lexeme = lexeme;
         this.leftBindingPower = def.getLeftBindingPower();

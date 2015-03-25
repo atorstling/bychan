@@ -11,7 +11,7 @@ import java.util.LinkedList;
 public class BoundedFifo<T> {
 
     private final int maxCapacity;
-    private LinkedList<T> unbounded;
+    private final LinkedList<T> unbounded;
 
     public BoundedFifo(int maxCapacity) {
         this.maxCapacity = maxCapacity;

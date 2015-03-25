@@ -33,10 +33,8 @@ public class LexingPosition<N> {
 
         LexingPosition that = (LexingPosition) o;
 
-        if (!remainingText.equals(that.remainingText)) return false;
-        if (!textPosition.equals(that.textPosition)) return false;
+        return remainingText.equals(that.remainingText) && textPosition.equals(that.textPosition);
 
-        return true;
     }
 
     @Override

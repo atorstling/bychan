@@ -81,7 +81,9 @@ public class LexerTest {
         try {
             l.lex("a");
         } catch (LexingFailedException e) {
-            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a", mock(Lexeme.class)), e.getLexingPosition());
+            //noinspection unchecked
+            Lexeme<Integer> mockLexeme = mock(Lexeme.class);
+            assertEquals(new LexingPosition<>(StringUtils.getTextPosition("a", 0), "a", mockLexeme), e.getLexingPosition());
             assertTrue(e.getMessage().contains("did not advance lexing"));
         }
     }
@@ -92,7 +94,9 @@ public class LexerTest {
         try {
             l.lex("a");
         } catch (LexingFailedException e) {
-            assertEquals(new LexingPosition(StringUtils.getTextPosition("a", 0), "a", mock(Lexeme.class)), e.getLexingPosition());
+            //noinspection unchecked
+            Lexeme<Integer> mockLexeme = mock(Lexeme.class);
+            assertEquals(new LexingPosition<>(StringUtils.getTextPosition("a", 0), "a", mockLexeme), e.getLexingPosition());
             assertTrue(e.getMessage().contains("did not advance lexing"));
         }
     }

@@ -6,6 +6,10 @@ public class NumberLiteralNode implements JsonNode {
     @NotNull
     private final String value;
 
+    public NumberLiteralNode(@NotNull String value) {
+        this.value = value;
+    }
+
     public static NumberLiteralNode fromFloat(float f) {
         return new NumberLiteralNode(toString(f));
     }
@@ -28,18 +32,13 @@ public class NumberLiteralNode implements JsonNode {
 
         NumberLiteralNode that = (NumberLiteralNode) o;
 
-        if (!value.equals(that.value)) return false;
+        return value.equals(that.value);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         return value.hashCode();
-    }
-
-    public NumberLiteralNode(@NotNull String value) {
-        this.value = value;
     }
 
     @Override

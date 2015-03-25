@@ -13,7 +13,7 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     @NotNull
     private final List<TokenDefinition<N>> tokens;
     @NotNull
-    private String name;
+    private final String name;
     /**
      * If you don't specify binding powers of your tokens,
      * they will be automatically be set in increasing order. This is

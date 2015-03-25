@@ -80,7 +80,10 @@ public class JsonTest {
         Language<JsonNode> l = lb.completeLanguage();
         String indata = "\"\\phello\"";
         ParseResult<JsonNode> pr = l.newLexParser().tryParse(indata);
-        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", new LexingPosition(StringUtils.getTextPosition(indata, 0), indata, mock(Lexeme.class))));
+        //noinspection unchecked
+        Lexeme<JsonNode> mockLexeme = mock(Lexeme.class);
+        LexingPosition<JsonNode> lexingPosition = new LexingPosition<>(StringUtils.getTextPosition(indata, 0), indata, mockLexeme);
+        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", lexingPosition));
         assertEquals(pfi, pr.getErrorMessage());
     }
 

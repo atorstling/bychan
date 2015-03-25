@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class JsonPerfTest {
 
     @NotNull
-    public static String streamToString(@NotNull InputStream is) {
+    private static String streamToString(@NotNull InputStream is) {
         try {
             StringBuilder sb = new StringBuilder(2048);
             char[] read = new char[2048];
