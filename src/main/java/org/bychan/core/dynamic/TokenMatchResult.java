@@ -54,4 +54,12 @@ public class TokenMatchResult<M> {
         result = 31 * result + matchEndPosition;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "TokenMatchResult{" +
+                "lexerValue=" + lexerValue +
+                ", matchEndPosition=" + matchEndPosition +
+                '}';
+    }
 }

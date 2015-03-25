@@ -2,6 +2,8 @@ package org.bychan.core.dynamic;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
@@ -102,5 +104,10 @@ public class TokenDefinitionBuilder<N> {
     public TokenDefinitionBuilder<N> doc(@NotNull final String documentation) {
         this.documentation = documentation;
         return this;
+    }
+
+    @NotNull
+    public TokenDefinitionBuilder<N> matchesAnyPermutationOf(List<String> strings, Collection<String> ignoredSeparators) {
+        return matches(new AnyPermutationMatcher(strings, ignoredSeparators));
     }
 }
