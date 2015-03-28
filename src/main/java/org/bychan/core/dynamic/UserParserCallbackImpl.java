@@ -72,4 +72,10 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     public N abort(@NotNull String message) {
         throw ParsingFailedException.forFailedAfterLexing(message, parser);
     }
+
+    @NotNull
+    @Override
+    public Lexeme<N> next() {
+        return parser.next();
+    }
 }

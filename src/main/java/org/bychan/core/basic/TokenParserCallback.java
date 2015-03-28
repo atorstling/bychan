@@ -25,4 +25,7 @@ public interface TokenParserCallback<N> {
 
     @NotNull
     ParsingPosition getParsingPosition();
+
+    @NotNull
+    Lexeme<N> next();
 }

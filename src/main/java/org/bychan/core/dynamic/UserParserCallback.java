@@ -50,4 +50,7 @@ public interface UserParserCallback<N> {
     N nud();
 
     N abort(@NotNull final String message);
+
+    @NotNull
+    Lexeme<N> next();
 }
