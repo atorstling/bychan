@@ -69,7 +69,7 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     }
 
     @Override
-    public N abort(@NotNull String message) {
+    public <S> S abort(@NotNull String message) {
         throw ParsingFailedException.forFailedAfterLexing(message, parser);
     }
 
