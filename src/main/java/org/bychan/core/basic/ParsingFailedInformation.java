@@ -1,14 +1,15 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.TextPosition;
 import org.jetbrains.annotations.NotNull;
 
-public class FailedAfterLexingInformation {
+public class ParsingFailedInformation implements FailureInformation {
     @NotNull
     private final String failureMessage;
     @NotNull
     private final ParsingPosition parsingPosition;
 
-    public FailedAfterLexingInformation(@NotNull String failureMessage, @NotNull ParsingPosition parsingPosition) {
+    public ParsingFailedInformation(@NotNull String failureMessage, @NotNull ParsingPosition parsingPosition) {
         this.failureMessage = failureMessage;
         this.parsingPosition = parsingPosition;
     }
@@ -18,7 +19,7 @@ public class FailedAfterLexingInformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FailedAfterLexingInformation that = (FailedAfterLexingInformation) o;
+        ParsingFailedInformation that = (ParsingFailedInformation) o;
 
         return failureMessage.equals(that.failureMessage) && parsingPosition.equals(that.parsingPosition);
 
@@ -44,5 +45,11 @@ public class FailedAfterLexingInformation {
     @NotNull
     public ParsingPosition getParsingPosition() {
         return parsingPosition;
+    }
+
+    @NotNull
+    @Override
+    public TextPosition getTextPosition() {
+        return parsingPosition.getTextPosition();
     }
 }

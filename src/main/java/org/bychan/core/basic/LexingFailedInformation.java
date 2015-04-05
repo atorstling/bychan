@@ -1,8 +1,9 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.TextPosition;
 import org.jetbrains.annotations.NotNull;
 
-public class LexingFailedInformation {
+public class LexingFailedInformation implements FailureInformation {
     @NotNull
     private final String message;
     @NotNull
@@ -34,5 +35,11 @@ public class LexingFailedInformation {
         int result = message.hashCode();
         result = 31 * result + lexingPosition.hashCode();
         return result;
+    }
+
+    @NotNull
+    @Override
+    public TextPosition getTextPosition() {
+        return lexingPosition.getTextPosition();
     }
 }

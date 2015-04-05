@@ -43,4 +43,9 @@ public class LexingPosition<N> {
         result = 31 * result + remainingText.hashCode();
         return result;
     }
+
+    @NotNull
+    public TextPosition getTextPosition() {
+        return textPosition;
+    }
 }

@@ -1,35 +1,33 @@
 package org.bychan.core.basic;
 
+import org.bychan.core.utils.TextPosition;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class LexParsingFailedInformation {
-    @Nullable
-    private final LexingFailedInformation lexingFailedInformation;
-    @Nullable
-    private final FailedAfterLexingInformation failedAfterLexingInformation;
+    @NotNull
+    FailureInformation failureInformation;
 
-    private LexParsingFailedInformation(@Nullable LexingFailedInformation lexingFailedInformation, @Nullable FailedAfterLexingInformation failedAfterLexingInformation) {
-        this.lexingFailedInformation = lexingFailedInformation;
-        this.failedAfterLexingInformation = failedAfterLexingInformation;
+    private LexParsingFailedInformation(@NotNull final FailureInformation failureInformation) {
+        this.failureInformation = failureInformation;
     }
 
     public static LexParsingFailedInformation forFailedAfterLexing(@NotNull String failureMessage, @NotNull final ParsingPosition parsingPosition) {
-        return new LexParsingFailedInformation(null, new FailedAfterLexingInformation(failureMessage, parsingPosition));
+        return new LexParsingFailedInformation(new ParsingFailedInformation(failureMessage, parsingPosition));
     }
 
     @NotNull
     public static LexParsingFailedInformation forFailedLexing(@NotNull final LexingFailedInformation lexingFailedInformation) {
-        return new LexParsingFailedInformation(lexingFailedInformation, null);
+        return new LexParsingFailedInformation(lexingFailedInformation);
     }
 
     @NotNull
-    public FailedAfterLexingInformation getFailedAfterLexingInformation() {
-        if (failedAfterLexingInformation == null) {
-            throw new RuntimeException("Did not fail after lexing:" + lexingFailedInformation);
+    public ParsingFailedInformation getParsingFailedInformation() {
+        if (!(failureInformation instanceof ParsingFailedInformation)) {
+            throw new RuntimeException("Did not fail after lexing:" + failureInformation);
         }
-        return failedAfterLexingInformation;
+        return (ParsingFailedInformation) failureInformation;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -38,29 +36,22 @@ public class LexParsingFailedInformation {
 
         LexParsingFailedInformation that = (LexParsingFailedInformation) o;
 
-        return !(failedAfterLexingInformation != null ? !failedAfterLexingInformation.equals(that.failedAfterLexingInformation) : that.failedAfterLexingInformation != null) && !(lexingFailedInformation != null ? !lexingFailedInformation.equals(that.lexingFailedInformation) : that.lexingFailedInformation != null);
+        return failureInformation.equals(that.failureInformation);
 
     }
 
     @Override
     public int hashCode() {
-        int result = lexingFailedInformation != null ? lexingFailedInformation.hashCode() : 0;
-        result = 31 * result + (failedAfterLexingInformation != null ? failedAfterLexingInformation.hashCode() : 0);
-        return result;
+        return failureInformation.hashCode();
     }
 
     @Override
     public String toString() {
-        //noinspection ConstantConditions
-        return lexingFailedInformation != null ? lexingFailedInformation.toString() : failedAfterLexingInformation.toString();
+        return failureInformation.toString();
     }
 
-    /*
-    public CertPathValidatorException getTextPosition() {
-        getEither();
+    @NotNull
+    public TextPosition getTextPosition() {
+        return failureInformation.getTextPosition();
     }
-
-    private void getEither() {
-        return lexingFailedInformation != null ? lexingFailedInformation : failedAfterLexingInformation;
-    } */
 }
