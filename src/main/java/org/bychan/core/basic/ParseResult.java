@@ -10,9 +10,9 @@ public class ParseResult<N> {
     @Nullable
     private final N rootNode;
     @Nullable
-    private final ParsingFailedInformation errorMessage;
+    private final LexParsingFailedInformation errorMessage;
 
-    private ParseResult(@Nullable final N rootNode, @Nullable final ParsingFailedInformation errorMessage) {
+    private ParseResult(@Nullable final N rootNode, @Nullable final LexParsingFailedInformation errorMessage) {
         this.rootNode = rootNode;
         this.errorMessage = errorMessage;
     }
@@ -23,7 +23,7 @@ public class ParseResult<N> {
     }
 
     @NotNull
-    public static <N> ParseResult<N> failure(@NotNull final ParsingFailedInformation errorMessage) {
+    public static <N> ParseResult<N> failure(@NotNull final LexParsingFailedInformation errorMessage) {
         return new ParseResult<>(null, errorMessage);
     }
 
@@ -39,7 +39,7 @@ public class ParseResult<N> {
     }
 
     @NotNull
-    public ParsingFailedInformation getErrorMessage() {
+    public LexParsingFailedInformation getErrorMessage() {
         if (!isFailure()) {
             throw new IllegalStateException("Cannot fetch error message when parsing was successful.");
         }

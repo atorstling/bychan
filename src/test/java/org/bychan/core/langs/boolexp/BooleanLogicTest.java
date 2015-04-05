@@ -1,7 +1,7 @@
 package org.bychan.core.langs.boolexp;
 
+import org.bychan.core.basic.LexParsingFailedInformation;
 import org.bychan.core.basic.ParseResult;
-import org.bychan.core.basic.ParsingFailedInformation;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
 import org.bychan.core.dynamic.TokenDefinition;
@@ -60,7 +60,7 @@ public class BooleanLogicTest {
     private void checkParseFailure(@NotNull final Language<BooleanExpressionNode> l) {
         ParseResult<BooleanExpressionNode> parseResult = l.newLexParser().tryParse("(a");
         Assert.assertTrue(parseResult.isFailure());
-        ParsingFailedInformation errorMessage = parseResult.getErrorMessage();
+        LexParsingFailedInformation errorMessage = parseResult.getErrorMessage();
         assertEquals("Parsing failed: 'Expected token 'rparen', but got 'END'' @  position 1:2 (index 1), current lexeme is END, previous was variable(a), and remaining are []", errorMessage.toString());
     }
 

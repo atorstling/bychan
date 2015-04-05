@@ -12,6 +12,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class CalculatorTest {
+    public static void main(String[] args) {
+        Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
+        l.repl().run();
+    }
+
     @Test
     public void test() {
         LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
@@ -58,7 +63,6 @@ public class CalculatorTest {
         assertEquals(3, l.newLexParser().tryParse("1--2").getRootNode().evaluate());
     }
 
-
     @Test
     public void testClearerSyntax() {
         LanguageBuilder<CalculatorNode> lb = new LanguageBuilder<>();
@@ -91,14 +95,9 @@ public class CalculatorTest {
             l.newLexParser().parse("");
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Premature end reached", e.getParsingFailedInformation().getFailedAfterLexingInformation().getFailureMessage());
-            assertEquals(new TextPosition(0, 1, 1), e.getParsingFailedInformation().getFailedAfterLexingInformation().getParsingPosition().getTextPosition());
+            assertEquals("Premature end reached", e.getLexParsingFailedInformation().getFailedAfterLexingInformation().getFailureMessage());
+            assertEquals(new TextPosition(0, 1, 1), e.getLexParsingFailedInformation().getFailedAfterLexingInformation().getParsingPosition().getTextPosition());
         }
-    }
-
-    public static void main(String[] args) {
-        Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        l.repl().run();
     }
 
 }

@@ -83,7 +83,7 @@ public class JsonTest {
         //noinspection unchecked
         Lexeme<JsonNode> mockLexeme = mock(Lexeme.class);
         LexingPosition<JsonNode> lexingPosition = new LexingPosition<>(StringUtils.getTextPosition(indata, 0), indata, mockLexeme);
-        ParsingFailedInformation pfi = ParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", lexingPosition));
+        LexParsingFailedInformation pfi = LexParsingFailedInformation.forFailedLexing(new LexingFailedInformation("No matching rule", lexingPosition));
         assertEquals(pfi, pr.getErrorMessage());
     }
 
@@ -115,7 +115,7 @@ public class JsonTest {
             l.newLexParser().parse("01.5");
             fail("Expected exception");
         } catch (ParsingFailedException e) {
-            ParsingFailedInformation actual = e.getParsingFailedInformation();
+            LexParsingFailedInformation actual = e.getLexParsingFailedInformation();
             assertEquals("Parsing failed: 'Current token does not support led parsing' @  position 1:2 (index 1), current lexeme is number_literal(1.5), previous was number_literal(0), and remaining are [END]", actual.toString());
         }
     }

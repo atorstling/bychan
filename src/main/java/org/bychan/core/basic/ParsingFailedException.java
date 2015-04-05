@@ -4,19 +4,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class ParsingFailedException extends RuntimeException {
     @NotNull
-    private final ParsingFailedInformation parsingFailedInformation;
+    private final LexParsingFailedInformation lexParsingFailedInformation;
 
-    public ParsingFailedException(@NotNull ParsingFailedInformation parsingFailedInformation) {
-        super(parsingFailedInformation.toString());
-        this.parsingFailedInformation = parsingFailedInformation;
+    public ParsingFailedException(@NotNull LexParsingFailedInformation lexParsingFailedInformation) {
+        super(lexParsingFailedInformation.toString());
+        this.lexParsingFailedInformation = lexParsingFailedInformation;
     }
 
     public static ParsingFailedException forFailedAfterLexing(@NotNull String failureMessage, @NotNull TokenParserCallback<?> parser) {
-        return new ParsingFailedException(ParsingFailedInformation.forFailedAfterLexing(failureMessage, parser.getParsingPosition()));
+        return new ParsingFailedException(LexParsingFailedInformation.forFailedAfterLexing(failureMessage, parser.getParsingPosition()));
     }
 
     @NotNull
-    public ParsingFailedInformation getParsingFailedInformation() {
-        return parsingFailedInformation;
+    public LexParsingFailedInformation getLexParsingFailedInformation() {
+        return lexParsingFailedInformation;
     }
 }
