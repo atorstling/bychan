@@ -42,4 +42,10 @@ public class LexingFailedInformation implements FailureInformation {
     public TextPosition getTextPosition() {
         return lexingPosition.getTextPosition();
     }
+
+    @NotNull
+    @Override
+    public ParsingFailedInformation toParsingFailedInformation() {
+        throw new IllegalStateException("Did not fail during parsing: " + this);
+    }
 }

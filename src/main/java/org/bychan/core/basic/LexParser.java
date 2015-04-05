@@ -38,7 +38,7 @@ public class LexParser<N> {
     private ParseResult<N> tryParseInternal(@Nullable N left, @NotNull final String text) {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
-            LexParsingFailedInformation lexParsingFailedInformation = LexParsingFailedInformation.forFailedLexing(lexingResult.getFailureValue());
+            LexingFailedInformation lexParsingFailedInformation = lexingResult.getFailureValue();
             return ParseResult.failure(lexParsingFailedInformation);
         }
         return tryParse(left, lexingResult.getSuccessValue(), text);
@@ -50,7 +50,7 @@ public class LexParser<N> {
         ParseResult<N> parsed = tryParse(() -> parser.parseExpression(left, 0));
         if (parsed.isSuccess()) {
             if (!parser.peek().getToken().equals(EndToken.get())) {
-                return ParseResult.failure(LexParsingFailedInformation.forFailedAfterLexing("The input stream was not completely parsed", parser.getParsingPosition()));
+                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", parser.getParsingPosition()));
             }
             parser.swallow(EndToken.get());
         }
@@ -63,7 +63,7 @@ public class LexParser<N> {
             N rootNode = parseFunction.get();
             return ParseResult.success(rootNode);
         } catch (ParsingFailedException e) {
-            return ParseResult.failure(e.getLexParsingFailedInformation());
+            return ParseResult.failure(e.getFailureInformation());
         }
     }
 }

@@ -9,4 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public interface FailureInformation {
     @NotNull
     TextPosition getTextPosition();
+
+    @NotNull
+    ParsingFailedInformation toParsingFailedInformation();
 }

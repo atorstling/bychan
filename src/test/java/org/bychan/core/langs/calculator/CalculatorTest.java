@@ -95,8 +95,8 @@ public class CalculatorTest {
             l.newLexParser().parse("");
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Premature end reached", e.getLexParsingFailedInformation().getParsingFailedInformation().getFailureMessage());
-            assertEquals(new TextPosition(0, 1, 1), e.getLexParsingFailedInformation().getParsingFailedInformation().getParsingPosition().getTextPosition());
+            assertEquals("Premature end reached", e.getFailureInformation().toParsingFailedInformation().getFailureMessage());
+            assertEquals(new TextPosition(0, 1, 1), e.getFailureInformation().toParsingFailedInformation().getParsingPosition().getTextPosition());
         }
     }
 

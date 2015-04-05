@@ -90,7 +90,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     private N led(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
         LedParseAction<N> ledParseAction = takenLexeme.getLed();
         if (ledParseAction == null) {
-            throw new ParsingFailedException(LexParsingFailedInformation.forFailedAfterLexing("Current token does not support led parsing", getParsingPosition()));
+            throw new ParsingFailedException(new ParsingFailedInformation("Current token does not support led parsing", getParsingPosition()));
         }
         return ledParseAction.parse(currentLeftHandSide, this);
     }
@@ -110,7 +110,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     public Lexeme<N> swallow(@NotNull Token<N> token) {
         Lexeme<N> next = next();
         if (!next.getToken().equals(token)) {
-            throw new ParsingFailedException(LexParsingFailedInformation.forFailedAfterLexing("Expected token '" + token.getName() + "', but got '" + next + "'", getParsingPosition()));
+            throw new ParsingFailedException(new ParsingFailedInformation("Expected token '" + token.getName() + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
     }
@@ -120,7 +120,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
     public N nud(@Nullable N left, @NotNull Lexeme<N> lexeme) {
         NudParseAction<N> nudParseAction = lexeme.getNud();
         if (nudParseAction == null) {
-            throw new ParsingFailedException(LexParsingFailedInformation.forFailedAfterLexing("Current lexeme does not support nud parsing", getParsingPosition()));
+            throw new ParsingFailedException(new ParsingFailedInformation("Current lexeme does not support nud parsing", getParsingPosition()));
         }
         return nudParseAction.parse(left, this);
     }

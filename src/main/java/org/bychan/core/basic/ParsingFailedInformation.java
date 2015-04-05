@@ -52,4 +52,10 @@ public class ParsingFailedInformation implements FailureInformation {
     public TextPosition getTextPosition() {
         return parsingPosition.getTextPosition();
     }
+
+    @NotNull
+    @Override
+    public ParsingFailedInformation toParsingFailedInformation() {
+        return this;
+    }
 }
