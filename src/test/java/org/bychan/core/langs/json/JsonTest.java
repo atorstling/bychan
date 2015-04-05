@@ -149,7 +149,7 @@ public class JsonTest {
     public void singleElementArray() {
         Language<JsonNode> l = makeJson();
         JsonNode ast = l.newLexParser().parse("[3]");
-        assertEquals(new ArrayNode(Arrays.asList(NumberLiteralNode.fromFloat(3))), ast);
+        assertEquals(new ArrayNode(Collections.singletonList(NumberLiteralNode.fromFloat(3))), ast);
     }
 
     @Test

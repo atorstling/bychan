@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -186,7 +187,7 @@ public class PrattParserTest {
 
     @Test
     public void empty() {
-        PrattParser<CalculatorNode> p = createParser(Arrays.<Lexeme<CalculatorNode>>asList(
+        PrattParser<CalculatorNode> p = createParser(Collections.<Lexeme<CalculatorNode>>singletonList(
                 createTestEndToken()));
         try {
             p.parseExpression(null, 0);
@@ -234,7 +235,7 @@ public class PrattParserTest {
         when(match.getStartPosition()).thenReturn(1);
         when(lexeme.getMatch()).thenReturn(match);
         when(lexeme.getToken()).thenReturn(mock(Token.class));
-        PrattParser<Object> p = createParser(Arrays.asList(lexeme));
+        PrattParser<Object> p = createParser(Collections.singletonList(lexeme));
         try {
             p.parseExpression(null, 0);
             fail("Expected exception");
