@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class TokenDefinitionBuilder<N> {
@@ -109,5 +110,12 @@ public class TokenDefinitionBuilder<N> {
     @NotNull
     public TokenDefinitionBuilder<N> matchesAnyPermutationOf(List<String> strings, Collection<String> ignoredSeparators) {
         return matches(new AnyPermutationMatcher(strings, ignoredSeparators));
+    }
+
+    @NotNull
+    public TokenDefinitionBuilder<N> matchesAny(List<String> strings) {
+        return matches((input, searchStart) ->
+                strings.stream().map(StringMatcher::new).map(
+                        m -> m.tryMatch(input, searchStart)).filter(Objects::nonNull).findFirst().orElse(null));
     }
 }
