@@ -26,7 +26,7 @@ public class ReplBuilder<T> {
         this.language = language;
         withIn(System.in).withOut(System.out);
         parsingFunction = LexParser::tryParse;
-        evaluationFunction = Repl.EvaluationReflectionRunner::run;
+        evaluationFunction = Repl::reflectionInvokeEvaluate;
     }
 
     private ReplBuilder<T> withIn(InputStream in) {

@@ -176,9 +176,9 @@ public class ReplTest {
         final Repl<Test4> r = new ReplBuilder<>(l)
                 .withIn(in)
                 .withOut(out)
-                .withEvaluationFunction(runner -> {
+                .withEvaluationFunction(node -> {
                     try {
-                        return runner.run();
+                        return Repl.reflectionInvokeEvaluate(node);
                     } catch(TestException4 te4) {
                         return null;
                     }

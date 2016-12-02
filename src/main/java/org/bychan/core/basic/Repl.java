@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class Repl<N> implements Runnable {
 
@@ -24,15 +23,27 @@ public class Repl<N> implements Runnable {
     private final EvaluationFunction evaluationFunction;
 
     interface ParsingFunction<N> {
-        ParseResult<N> apply(LexParser<N> lexParser, String snippet);
+        /**
+         * A callback used to parse a snippet.
+         * Parses the given snippet with the parser. You may add try..catch to swallow exceptions if you wish .
+         * @param lexParser the lexParser to use to parse the ...
+         * @param snippet ... snippet.
+         * @return A parse result.
+         */
+        ParseResult<N> parse(LexParser<N> lexParser, String snippet);
     }
 
-    interface EvaluationReflectionRunner {
-        Object run();
-    }
-
-    interface EvaluationFunction {
-        Object evaluate(EvaluationReflectionRunner runner);
+    interface EvaluationFunction<N> {
+        /**
+         * A callback used to evaluate a node.
+         * To your help you may use {@link #reflectionInvokeEvaluate(Object)} which
+         * can call "evaluate" on the node. You may surround the call with try..catch or modify the call as you
+         * wish
+         * @param node the node
+         * @return the evaluated value, or <code>null</code> if you couldn't find any evaluation method. In
+         * this case no printout of the evaluation will be done.
+         */
+        Object evaluate(N node);
     }
 
     private final ParsingFunction<N> parsingFunction;
@@ -70,7 +81,7 @@ public class Repl<N> implements Runnable {
                 out.flush();
                 break;
             }
-            ParseResult<N> result = parsingFunction.apply(lexParser, snippet);
+            ParseResult<N> result = parsingFunction.parse(lexParser, snippet);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());
                 out.newLine();
@@ -79,7 +90,7 @@ public class Repl<N> implements Runnable {
                 N rootNode = result.getRootNode();
                 out.write(rootNode.toString());
 
-                Object evaluated = evaluationFunction.evaluate(() -> reflectionInvokeEvaluate(rootNode));
+                Object evaluated = evaluationFunction.evaluate(rootNode);
                 if (evaluated != null) {
                     out.write("=");
                     out.write(evaluated.toString());
@@ -91,13 +102,13 @@ public class Repl<N> implements Runnable {
     }
 
     @Nullable
-    private Object reflectionInvokeEvaluate(N rootNode) {
-        Method evaluateMethod = getEvaluateMethod(rootNode);
+    public static <N> Object reflectionInvokeEvaluate(N node) {
+        Method evaluateMethod = getEvaluateMethod(node);
         if (evaluateMethod == null) {
             return null;
         }
         try {
-            return evaluateMethod.invoke(rootNode);
+            return evaluateMethod.invoke(node);
         } catch (IllegalAccessException e) {
             // Could not access function, treat as if it doesn't exist
             return null;
@@ -108,9 +119,9 @@ public class Repl<N> implements Runnable {
     }
 
     @Nullable
-    private Method getEvaluateMethod(@NotNull final N rootNode) {
+    private static <N> Method getEvaluateMethod(@NotNull final N node) {
         try {
-            return rootNode.getClass().getMethod("evaluate");
+            return node.getClass().getMethod("evaluate");
         } catch (NoSuchMethodException e) {
             return null;
         }
