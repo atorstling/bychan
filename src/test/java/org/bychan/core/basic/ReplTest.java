@@ -6,10 +6,10 @@ import org.bychan.core.langs.calculator.CalculatorTestHelper;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
-import java.io.*;
-import java.util.concurrent.CompletableFuture;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
@@ -60,7 +60,7 @@ public class ReplTest {
     private void check(@NotNull Language<Integer> l, @NotNull BufferedReader in, @NotNull String expected) throws InterruptedException, TimeoutException, ExecutionException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         Repl<Integer> r = new ReplBuilder<>(l).withIn(in).withOut(out).build();
-        CompletableFuture.runAsync(r).get(1, TimeUnit.SECONDS);
+        r.run();
         assertEquals(expected, out.toString());
     }
 
