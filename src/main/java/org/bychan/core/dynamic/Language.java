@@ -3,6 +3,7 @@ package org.bychan.core.dynamic;
 import org.bychan.core.basic.LexParser;
 import org.bychan.core.basic.Lexer;
 import org.bychan.core.basic.Repl;
+import org.bychan.core.basic.ReplBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -48,7 +49,7 @@ public class Language<N> {
 
     @NotNull
     public Repl repl() {
-        return new Repl<>(this);
+        return new ReplBuilder<>(this).build();
     }
 
     @NotNull

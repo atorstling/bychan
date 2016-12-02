@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
     @NotNull
@@ -18,6 +19,32 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     public PrattParser(@NotNull List<Lexeme<N>> lexemes, @NotNull final String originalInputString) {
         this(lexemes, new PositionTracerImpl<>(originalInputString));
+    }
+
+    public N parseExpression() {
+        return parseExpression(null, 0);
+    }
+
+    @NotNull
+    public ParseResult<N> parseFully(@NotNull Supplier<N> parseFunction) {
+        ParseResult<N> parsed = tryParse(parseFunction::get);
+        if (parsed.isSuccess()) {
+            if (!peek().getToken().equals(EndToken.get())) {
+                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", getParsingPosition()));
+            }
+            swallow(EndToken.get());
+        }
+        return parsed;
+    }
+
+    @NotNull
+    private ParseResult<N> tryParse(@NotNull Supplier<N> parseFunction) {
+        try {
+            N rootNode = parseFunction.get();
+            return ParseResult.success(rootNode);
+        } catch (ParsingFailedException e) {
+            return ParseResult.failure(e.getFailureInformation());
+        }
     }
 
     /**

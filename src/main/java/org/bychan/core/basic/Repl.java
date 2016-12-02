@@ -1,6 +1,7 @@
 package org.bychan.core.basic;
 
 import org.bychan.core.dynamic.Language;
+import org.bychan.core.utils.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class Repl<N> implements Runnable {
 
@@ -20,15 +22,18 @@ public class Repl<N> implements Runnable {
     @NotNull
     private final String languageName;
 
-    public Repl(@NotNull Language<N> language) {
-        this(language, new BufferedReader(new InputStreamReader(System.in)), new BufferedWriter(new OutputStreamWriter(System.out)));
+    interface ParsingFunction<N> {
+        ParseResult<N> apply(LexParser<N> lexParser, String snippet);
     }
 
-    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out) {
+    private final ParsingFunction<N> parsingFunction;
+
+    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, ParsingFunction<N> parsingFunction) {
         languageName = language.getName();
         this.lexParser = language.newLexParser();
         this.in = in;
         this.out = out;
+        this.parsingFunction = parsingFunction;
     }
 
 
@@ -55,7 +60,7 @@ public class Repl<N> implements Runnable {
                 out.flush();
                 break;
             }
-            ParseResult<N> result = lexParser.tryParse(snippet);
+            ParseResult<N> result = parsingFunction.apply(lexParser, snippet);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());
                 out.newLine();
@@ -75,24 +80,23 @@ public class Repl<N> implements Runnable {
     }
 
     private Object invokeEvaluate(N rootNode) {
-        Method evaluate = getEvaluate(rootNode);
+        Method evaluate = getEvaluateMethod(rootNode);
         if (evaluate == null) {
             return null;
         }
         try {
             return evaluate.invoke(rootNode);
         } catch (IllegalAccessException e) {
+            // Assume no evaluate function is available
             return null;
         } catch (InvocationTargetException e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            return "Exception:\n" + sw.toString();
+            ExceptionUtils.sneakyThrow(e.getCause());
+            throw new IllegalStateException("Failed to throw InvocationTargetException", e);
         }
     }
 
     @Nullable
-    private Method getEvaluate(@NotNull final N rootNode) {
+    private Method getEvaluateMethod(@NotNull final N rootNode) {
         try {
             return rootNode.getClass().getMethod("evaluate");
         } catch (NoSuchMethodException e) {

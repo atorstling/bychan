@@ -19,10 +19,15 @@ public class LexParser<N> {
         this.lexer = lexer;
     }
 
+
     public N parse(@NotNull final String text) {
+        return getParser(text).parseExpression();
+    }
+
+    @NotNull
+    public PrattParser<N> getParser(@NotNull String text) {
         List<Lexeme<N>> lexemes = lexer.lex(text);
-        PrattParser<N> parser = new PrattParser<>(lexemes, text);
-        return parser.parseExpression(null, 0);
+        return new PrattParser<>(lexemes, text);
     }
 
     public ParseResult<N> tryParse(@NotNull final String text) {
@@ -65,5 +70,9 @@ public class LexParser<N> {
         } catch (ParsingFailedException e) {
             return ParseResult.failure(e.getFailureInformation());
         }
+    }
+
+    public Lexer<N> getLexer() {
+        return lexer;
     }
 }
