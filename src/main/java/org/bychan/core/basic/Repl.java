@@ -20,7 +20,7 @@ public class Repl<N> implements Runnable {
     private final BufferedWriter out;
     @NotNull
     private final String languageName;
-    private final EvaluationFunction evaluationFunction;
+    private final EvaluationFunction<N> evaluationFunction;
 
     interface ParsingFunction<N> {
         /**
@@ -48,7 +48,7 @@ public class Repl<N> implements Runnable {
 
     private final ParsingFunction<N> parsingFunction;
 
-    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, ParsingFunction<N> parsingFunction, EvaluationFunction evaluationFunction) {
+    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, ParsingFunction<N> parsingFunction, EvaluationFunction<N> evaluationFunction) {
         languageName = language.getName();
         this.lexParser = language.newLexParser();
         this.in = in;

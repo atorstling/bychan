@@ -8,56 +8,54 @@ import java.io.*;
 /**
  * Created by alext on 2016-12-02.
  */
-public class ReplBuilder<T> {
+public class ReplBuilder<N> {
 
     @NotNull
-    private final Language<T> language;
+    private final Language<N> language;
     @NotNull
-    private Repl.ParsingFunction<T> parsingFunction;
+    private Repl.ParsingFunction<N> parsingFunction;
     @NotNull
-    private Repl.EvaluationFunction evaluationFunction;
-    @NotNull
+    private Repl.EvaluationFunction<N> evaluationFunction;
     private BufferedReader in;
-    @NotNull
     private BufferedWriter out;
 
 
-    public ReplBuilder(@NotNull final Language<T> language) {
+    public ReplBuilder(@NotNull final Language<N> language) {
         this.language = language;
         withIn(System.in).withOut(System.out);
         parsingFunction = LexParser::tryParse;
         evaluationFunction = Repl::reflectionInvokeEvaluate;
     }
 
-    private ReplBuilder<T> withIn(InputStream in) {
+    private ReplBuilder<N> withIn(InputStream in) {
         return withIn(new BufferedReader(new InputStreamReader(in)));
     }
 
-    public ReplBuilder<T> withIn(@NotNull BufferedReader in) {
+    public ReplBuilder<N> withIn(@NotNull BufferedReader in) {
         this.in = in;
         return this;
     }
 
-    public ReplBuilder<T> withOut(@NotNull BufferedWriter out) {
+    public ReplBuilder<N> withOut(@NotNull BufferedWriter out) {
         this.out = out;
         return this;
     }
 
-    public ReplBuilder<T> withParsingFunction(@NotNull Repl.ParsingFunction<T> parsingFunction) {
+    public ReplBuilder<N> withParsingFunction(@NotNull Repl.ParsingFunction<N> parsingFunction) {
         this.parsingFunction = parsingFunction;
         return this;
     }
 
-    public ReplBuilder<T> withEvaluationFunction(@NotNull Repl.EvaluationFunction evaluationFunction) {
+    public ReplBuilder<N> withEvaluationFunction(@NotNull Repl.EvaluationFunction<N> evaluationFunction) {
         this.evaluationFunction = evaluationFunction;
         return this;
     }
 
-    public Repl<T> build() {
-        return new Repl<T>(language, in, out, parsingFunction, evaluationFunction);
+    public Repl<N> build() {
+        return new Repl<>(language, in, out, parsingFunction, evaluationFunction);
     }
 
-    public ReplBuilder<T> withOut(OutputStream out) {
+    public ReplBuilder<N> withOut(OutputStream out) {
         return withOut(new BufferedWriter(new OutputStreamWriter(out)));
     }
 }
