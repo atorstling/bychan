@@ -99,9 +99,7 @@ public class ReplTest {
     @Test
     public void propagateExceptionDuringEvaluate() throws Exception {
         final LanguageBuilder<Test2> b = new LanguageBuilder<>("test");
-        b.newToken().named("only").matchesString("a").nud((left, parser, lexeme) -> {
-            return new Test2();
-        }).build();
+        b.newToken().named("only").matchesString("a").nud((left, parser, lexeme) -> new Test2()).build();
         final Language<Test2> l = b.completeLanguage();
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
@@ -120,12 +118,6 @@ public class ReplTest {
 
 
     static class TestException3 extends RuntimeException {
-    }
-
-    static class Test3 {
-        public void evaluate() {
-            throw new TestException2();
-        }
     }
 
     @Test
@@ -154,6 +146,46 @@ public class ReplTest {
         assertEquals("Welcome to the REPL for 'test'.\n" +
                 "End with an empty line or Ctrl+D.\n" +
                 ">>Error:Parsing failed: 'Exception3 thrown' @  position 1:1 (index 0), current lexeme is an a(a), previous was null, and remaining are [END]\n" +
+                ">>leaving\n", out.toString());
+    }
+
+    static class TestException4 extends RuntimeException {
+    }
+
+    static class Test4 {
+        public void evaluate() {
+            throw new TestException4();
+        }
+
+        @Override
+        public String toString() {
+            return "Test4";
+        }
+    }
+
+    @Test
+    public void canRecoverFromExceptionDuringEvaluate() throws Exception {
+        final LanguageBuilder<Test4> b = new LanguageBuilder<>("test");
+        b.newToken().named("an a").matchesString("a").nud((left, parser, lexeme) -> new Test4()).build();
+        final Language<Test4> l = b.completeLanguage();
+        final BufferedReader in = mock(BufferedReader.class);
+        when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final Repl<Test4> r = new ReplBuilder<>(l)
+                .withIn(in)
+                .withOut(out)
+                .withEvaluationFunction(runner -> {
+                    try {
+                        return runner.run();
+                    } catch(TestException4 te4) {
+                        return null;
+                    }
+                })
+                .build();
+        r.run();
+        assertEquals("Welcome to the REPL for 'test'.\n" +
+                "End with an empty line or Ctrl+D.\n" +
+                ">>Test4\n" +
                 ">>leaving\n", out.toString());
     }
 

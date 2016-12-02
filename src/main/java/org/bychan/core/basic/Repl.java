@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class Repl<N> implements Runnable {
 
@@ -21,19 +20,29 @@ public class Repl<N> implements Runnable {
     private final BufferedWriter out;
     @NotNull
     private final String languageName;
+    private final EvaluationFunction evaluationFunction;
 
     interface ParsingFunction<N> {
         ParseResult<N> apply(LexParser<N> lexParser, String snippet);
     }
 
+    interface EvaluationReflectionRunner {
+        Object run();
+    }
+
+    interface EvaluationFunction {
+        Object evaluate(EvaluationReflectionRunner runner);
+    }
+
     private final ParsingFunction<N> parsingFunction;
 
-    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, ParsingFunction<N> parsingFunction) {
+    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, ParsingFunction<N> parsingFunction, EvaluationFunction evaluationFunction) {
         languageName = language.getName();
         this.lexParser = language.newLexParser();
         this.in = in;
         this.out = out;
         this.parsingFunction = parsingFunction;
+        this.evaluationFunction = evaluationFunction;
     }
 
 
@@ -68,7 +77,8 @@ public class Repl<N> implements Runnable {
             } else {
                 N rootNode = result.getRootNode();
                 out.write(rootNode.toString());
-                Object evaluated = invokeEvaluate(rootNode);
+
+                Object evaluated = evaluationFunction.evaluate(() -> reflectionInvokeEvaluate(rootNode));
                 if (evaluated != null) {
                     out.write("=");
                     out.write(evaluated.toString());
@@ -79,15 +89,16 @@ public class Repl<N> implements Runnable {
         }
     }
 
-    private Object invokeEvaluate(N rootNode) {
-        Method evaluate = getEvaluateMethod(rootNode);
-        if (evaluate == null) {
+    @Nullable
+    private Object reflectionInvokeEvaluate(N rootNode) {
+        Method evaluateMethod = getEvaluateMethod(rootNode);
+        if (evaluateMethod == null) {
             return null;
         }
         try {
-            return evaluate.invoke(rootNode);
+            return evaluateMethod.invoke(rootNode);
         } catch (IllegalAccessException e) {
-            // Assume no evaluate function is available
+            // Could not access function, treat as if it doesn't exist
             return null;
         } catch (InvocationTargetException e) {
             ExceptionUtils.sneakyThrow(e.getCause());

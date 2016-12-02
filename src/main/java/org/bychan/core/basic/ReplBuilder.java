@@ -15,6 +15,8 @@ public class ReplBuilder<T> {
     @NotNull
     private Repl.ParsingFunction<T> parsingFunction;
     @NotNull
+    private Repl.EvaluationFunction evaluationFunction;
+    @NotNull
     private BufferedReader in;
     @NotNull
     private BufferedWriter out;
@@ -24,6 +26,7 @@ public class ReplBuilder<T> {
         this.language = language;
         withIn(System.in).withOut(System.out);
         parsingFunction = LexParser::tryParse;
+        evaluationFunction = Repl.EvaluationReflectionRunner::run;
     }
 
     private ReplBuilder<T> withIn(InputStream in) {
@@ -45,8 +48,13 @@ public class ReplBuilder<T> {
         return this;
     }
 
+    public ReplBuilder<T> withEvaluationFunction(@NotNull Repl.EvaluationFunction evaluationFunction) {
+        this.evaluationFunction = evaluationFunction;
+        return this;
+    }
+
     public Repl<T> build() {
-        return new Repl<T>(language, in, out, parsingFunction);
+        return new Repl<T>(language, in, out, parsingFunction, evaluationFunction);
     }
 
     public ReplBuilder<T> withOut(OutputStream out) {
