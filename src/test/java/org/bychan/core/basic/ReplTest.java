@@ -141,20 +141,14 @@ public class ReplTest {
         final Repl<Integer> r = new ReplBuilder<>(l)
                 .withIn(in)
                 .withOut(out)
-                .withParsingFunction((lexParser, snippet) -> {
-                    final Lexer<Integer> lexer = lexParser.getLexer();
-                    LexingResult<Integer> lexingResult = lexer.tryLex(snippet);
-                    if (lexingResult.isFailure()) {
-                        LexingFailedInformation lexParsingFailedInformation = lexingResult.getFailureValue();
-                        return ParseResult.failure(lexParsingFailedInformation);
-                    }
-                    final PrattParser<Integer> parser = new PrattParser<>(lexingResult.getSuccessValue(), snippet);
+                .withParsingFunction((lexParser, snippet) -> lexParser.tryParse(snippet, p -> {
                     try {
-                        return ParseResult.success(parser.parseExpression());
+                        final Integer node = p.parseExpression();
+                        return ParseResult.success(node);
                     } catch (TestException3 te3) {
-                        return ParseResult.failure(new ParsingFailedInformation("Exception3 thrown", parser.getParsingPosition()));
+                        return ParseResult.failure(new ParsingFailedInformation("Exception3 thrown", p.getParsingPosition()));
                     }
-                })
+                }))
                 .build();
         r.run();
         assertEquals("Welcome to the REPL for 'test'.\n" +

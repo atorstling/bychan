@@ -1,10 +1,9 @@
 package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 /**
  * Facade for a {@link org.bychan.core.basic.PrattParser} and a {@link org.bychan.core.basic.Lexer} which lexes and parses
@@ -14,6 +13,10 @@ import java.util.function.Supplier;
 public class LexParser<N> {
     @NotNull
     private final Lexer<N> lexer;
+
+    interface ParseFunction<N> {
+        ParseResult<N> parse(PrattParser<N> p);
+    }
 
     public LexParser(@NotNull final Lexer<N> lexer) {
         this.lexer = lexer;
@@ -31,47 +34,26 @@ public class LexParser<N> {
     }
 
     public ParseResult<N> tryParse(@NotNull final String text) {
-        return tryParseInternal(null, text);
+        return tryParse(text, p -> p.tryParseFully(null, 0));
     }
 
     @NotNull
     public ParseResult<N> tryParse(@NotNull N left, @NotNull final String text) {
-        return tryParseInternal(left, text);
+        return tryParse(text, p -> p.tryParseFully(left, 0));
     }
 
     @NotNull
-    private ParseResult<N> tryParseInternal(@Nullable N left, @NotNull final String text) {
+    public ParseResult<N> tryParse(@NotNull final String text, ParseFunction<N> parseFunction) {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
             LexingFailedInformation lexParsingFailedInformation = lexingResult.getFailureValue();
             return ParseResult.failure(lexParsingFailedInformation);
         }
-        return tryParse(left, lexingResult.getSuccessValue(), text);
+        final PrattParser<N> p = new PrattParser<>(lexingResult.getSuccessValue(), text);
+        return parseFunction.parse(p);
     }
 
     @NotNull
-    private ParseResult<N> tryParse(@Nullable N left, @NotNull final List<Lexeme<N>> lexemes, @NotNull final String text) {
-        PrattParser<N> parser = new PrattParser<>(lexemes, text);
-        ParseResult<N> parsed = tryParse(() -> parser.parseExpression(left, 0));
-        if (parsed.isSuccess()) {
-            if (!parser.peek().getToken().equals(EndToken.get())) {
-                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", parser.getParsingPosition()));
-            }
-            parser.swallow(EndToken.get());
-        }
-        return parsed;
-    }
-
-    @NotNull
-    private ParseResult<N> tryParse(@NotNull Supplier<N> parseFunction) {
-        try {
-            N rootNode = parseFunction.get();
-            return ParseResult.success(rootNode);
-        } catch (ParsingFailedException e) {
-            return ParseResult.failure(e.getFailureInformation());
-        }
-    }
-
     public Lexer<N> getLexer() {
         return lexer;
     }
