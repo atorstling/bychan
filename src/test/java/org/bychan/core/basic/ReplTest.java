@@ -19,11 +19,13 @@ import static org.mockito.Mockito.when;
 
 public class ReplTest {
 
+    final String prompt = "End a statement by adding an empty line. Quit by entering 'q', 'quit' or 'end' or pressing Ctrl+D.\n";
+
     @Test
     public void normalUsage() throws InterruptedException, IOException, TimeoutException, ExecutionException {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         String expected = "Welcome to the REPL for 'simpleCalc'.\n" +
-                "End with an empty line or Ctrl+D.\n" +
+                prompt +
                 // prompt for 2*3+5
                 ">" +
                 // prompt for empty line
@@ -45,7 +47,7 @@ public class ReplTest {
     public void error() throws InterruptedException, IOException, TimeoutException, ExecutionException {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         String expected = "Welcome to the REPL for 'simpleCalc'.\n" +
-                "End with an empty line or Ctrl+D.\n" +
+                prompt +
                 ">>" +
                 "Error:Lexing failed: 'No matching rule' @  position 1:5 (index 4): last lexeme was 'plus(+)', remaining text is 'jocke'\n" +
                 ">>" +
@@ -83,7 +85,7 @@ public class ReplTest {
             //expected
         }
         assertEquals("Welcome to the REPL for 'test'.\n" +
-                "End with an empty line or Ctrl+D.\n" +
+                prompt +
                 ">>", out.toString());
     }
 
@@ -112,7 +114,7 @@ public class ReplTest {
             //expected
         }
         assertEquals("Welcome to the REPL for 'test'.\n" +
-                "End with an empty line or Ctrl+D.\n" +
+                prompt +
                 ">>", out.toString());
     }
 
@@ -144,7 +146,7 @@ public class ReplTest {
                 .build();
         r.run();
         assertEquals("Welcome to the REPL for 'test'.\n" +
-                "End with an empty line or Ctrl+D.\n" +
+                prompt +
                 ">>Error:Parsing failed: 'Exception3 thrown' @  position 1:1 (index 0), current lexeme is an a(a), previous was null, and remaining are [END]\n" +
                 ">>leaving\n", out.toString());
     }
@@ -184,7 +186,7 @@ public class ReplTest {
                 .build();
         r.run();
         assertEquals("Welcome to the REPL for 'test'.\n" +
-                "End with an empty line or Ctrl+D.\n" +
+                prompt +
                 ">>Test4\n" +
                 ">>leaving\n", out.toString());
     }

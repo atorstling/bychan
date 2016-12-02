@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Repl<N> implements Runnable {
 
@@ -57,13 +58,13 @@ public class Repl<N> implements Runnable {
     private void runInternal() throws IOException {
         out.write("Welcome to the REPL for '" + languageName + "'.");
         out.newLine();
-        out.write("End with an empty line or Ctrl+D.");
+        out.write("End a statement by adding an empty line. Quit by entering 'q', 'quit' or 'end' or pressing Ctrl+D.");
         out.newLine();
         out.flush();
         String snippet;
         while (true) {
             snippet = readSnippet();
-            if (snippet.isEmpty() || snippet.matches("^(quit|end|q)$")) {
+            if (snippet == null || snippet.matches("^(quit|end|q)$")) {
                 out.write("leaving");
                 out.newLine();
                 out.flush();
@@ -115,14 +116,21 @@ public class Repl<N> implements Runnable {
         }
     }
 
-    @NotNull
+    @Nullable
     private String readSnippet() throws IOException {
         List<String> lines = new ArrayList<>();
         while (true) {
             out.write(">");
             out.flush();
             String line = in.readLine();
-            if (line == null || line.isEmpty()) {
+            if (line == null) {
+                //EOF. Return what we've got, but if we haven't got anything we return null to signal abort
+                if (lines.isEmpty()) {
+                    return null;
+                }
+                break;
+            }
+            if (line.isEmpty()) {
                 break;
             }
             lines.add(line);
