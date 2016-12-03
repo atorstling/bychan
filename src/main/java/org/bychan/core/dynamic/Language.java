@@ -38,12 +38,12 @@ public class Language<N> {
         // finder with the result.
         DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
         final Collection<DynamicToken<N>> dynamicTokens = toTokens(tokenDefinitions, delegatingFinder);
-        delegatingFinder.setDelegate(new DynamicTokenFinderImpl<>(dynamicTokens));
+        delegatingFinder.setDelegate(new TokenFinderImpl<>(dynamicTokens));
         return new Lexer<>(dynamicTokens);
     }
 
 
-    private Collection<DynamicToken<N>> toTokens(@NotNull final List<TokenDefinition<N>> leveledDefinitions, @NotNull final DynamicTokenFinder<N> tokenFinder) {
+    private Collection<DynamicToken<N>> toTokens(@NotNull final List<TokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
         return leveledDefinitions.stream().map(tokenDef -> new DynamicToken<>(tokenDef, tokenFinder)).collect(Collectors.toList());
     }
 

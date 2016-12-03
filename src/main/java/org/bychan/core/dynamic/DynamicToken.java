@@ -9,9 +9,9 @@ public class DynamicToken<N> implements Token<N> {
     @NotNull
     private final TokenDefinition<N> def;
     @NotNull
-    private final DynamicTokenFinder<N> tokenFinder;
+    private final TokenFinder<N> tokenFinder;
 
-    public DynamicToken(@NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
+    public DynamicToken(@NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.def = def;
         this.tokenFinder = tokenFinder;
     }

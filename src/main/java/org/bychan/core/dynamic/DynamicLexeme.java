@@ -11,13 +11,13 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     @NotNull
     private final TokenDefinition<N> def;
     @NotNull
-    private final DynamicTokenFinder<N> tokenFinder;
+    private final TokenFinder<N> tokenFinder;
     @Nullable
     private final DynamicLedParseAction<N> led;
     @Nullable
     private final DynamicNudParseAction<N> nud;
 
-    public DynamicLexeme(@NotNull final DynamicToken<N> token, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final DynamicTokenFinder<N> tokenFinder) {
+    public DynamicLexeme(@NotNull final DynamicToken<N> token, @NotNull final LexingMatch match, @NotNull final TokenDefinition<N> def, @NotNull final TokenFinder<N> tokenFinder) {
         this.token = token;
         this.match = match;
         this.def = def;

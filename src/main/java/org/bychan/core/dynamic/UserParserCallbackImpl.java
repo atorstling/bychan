@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     private final int leftBindingPower;
     @NotNull
-    private final DynamicTokenFinder<N> tokenFinder;
+    private final TokenFinder<N> tokenFinder;
     @Nullable
     private final N left;
     @NotNull
@@ -18,7 +18,7 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     @NotNull
     private final TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(@NotNull final TokenDefinition<N> def, @NotNull DynamicTokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
+    public UserParserCallbackImpl(@NotNull final TokenDefinition<N> def, @NotNull TokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
         this.left = left;
         this.lexeme = lexeme;
         this.leftBindingPower = def.getLeftBindingPower();
