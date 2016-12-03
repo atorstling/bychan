@@ -1,5 +1,6 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,7 +14,7 @@ public class DelegatingTokenFinder<N> implements DynamicTokenFinder<N> {
 
     @NotNull
     @Override
-    public DynamicToken<N> getToken(@NotNull TokenKey soughtKey) {
+    public Token<N> getToken(@NotNull TokenKey soughtKey) {
         assert delegate != null;
         return delegate.getToken(soughtKey);
     }

@@ -1,5 +1,7 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.basic.EndToken;
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -11,17 +13,17 @@ import java.util.stream.Collectors;
  * Created by alext on 2015-01-05.
  */
 class DynamicTokenFinderImpl<N> implements DynamicTokenFinder<N> {
-    private final Map<TokenKey, DynamicToken<N>> tokensByKey;
+    private final Map<TokenKey, Token<N>> tokensByKey;
 
     public DynamicTokenFinderImpl(Collection<DynamicToken<N>> dynamicTokens) {
         tokensByKey = dynamicTokens.stream().collect(Collectors.toMap(DynamicToken::getKey, Function.identity()));
-
+        tokensByKey.put(EndToken.get().getKey(), EndToken.get());
     }
 
     @NotNull
     @Override
-    public DynamicToken<N> getToken(@NotNull TokenKey soughtKey) {
-        DynamicToken<N> candidate = tokensByKey.get(soughtKey);
+    public Token<N> getToken(@NotNull TokenKey soughtKey) {
+        Token<N> candidate = tokensByKey.get(soughtKey);
         if (candidate == null) {
             throw new IllegalStateException("No registered token definition keyed '" + soughtKey + "' was found. Did you register your token before referring to it?");
         } else if (candidate.getKey().equals(soughtKey)) {

@@ -1,10 +1,17 @@
 package org.bychan.core.examples;
 
+import org.bychan.core.basic.EndToken;
 import org.bychan.core.basic.LexParser;
-import org.bychan.core.dynamic.Language;
-import org.bychan.core.dynamic.LanguageBuilder;
-import org.bychan.core.dynamic.TokenDefinition;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.basic.ParseResult;
+import org.bychan.core.dynamic.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -120,5 +127,96 @@ public class ReadmeExamples {
         }
     }
 
+    interface VNode {
 
+    }
+
+    class VariableList implements VNode {
+
+        private final List<Variable> variables;
+
+        public VariableList(List<Variable> variables) {
+            this.variables = variables;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            VariableList that = (VariableList) o;
+
+            return variables.equals(that.variables);
+
+        }
+
+        @Override
+        public int hashCode() {
+            return variables.hashCode();
+        }
+    }
+
+    class Variable implements VNode {
+        @NotNull
+        private final String type;
+        @NotNull
+        private final String name;
+        @NotNull
+        private final String value;
+
+        public Variable(@NotNull String type, @NotNull String name, @NotNull String value) {
+
+            this.type = type;
+            this.name = name;
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Variable variable = (Variable) o;
+
+            return type.equals(variable.type) && name.equals(variable.name) && value.equals(variable.value);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = type.hashCode();
+            result = 31 * result + (name.hashCode());
+            result = 31 * result + (value.hashCode());
+            return result;
+        }
+    }
+
+    @Test
+    public void statements() throws Exception {
+        final LanguageBuilder<VNode> b = new LanguageBuilder<>("variables");
+
+        b.newToken().named("whitespace").matchesWhitespace().discardAfterLexing();
+        final TokenDefinition<VNode> semicolon = b.newToken().named("semicolon").matchesString(";").build();
+        final TokenDefinition<VNode> decl = b
+                .newToken().matchesPattern("(int|float) (\\w+)=([0-9]+)")
+                .nud((left, parser, lexeme) -> new Variable(lexeme.group(1), lexeme.group(2), lexeme.group(3)))
+                .build();
+        b.newToken()
+                .named("lcurly")
+                .matchesString("{")
+                .nud((left, parser, lexeme) -> {
+                    final ArrayList<Variable> variables = new ArrayList<>();
+                    while (!parser.nextIs(EndToken.get().getKey())) {
+                        final Variable vNode = (Variable) parser.parseSingleToken(left, decl.getKey());
+                        variables.add(vNode);
+                        if (parser.nextIs(semicolon.getKey())) {
+                            parser.expectSingleLexeme(semicolon.getKey());
+                        }
+                    }
+                    return new VariableList(variables);
+                }).build();
+        final Language<VNode> lang = b.completeLanguage();
+        final LexParser<VNode> lp = lang.newLexParser();
+        final ParseResult<VNode> pr = lp.tryParse("{int a=4;float b=72;");
+        assertEquals(new VariableList(Arrays.asList(new Variable("int", "a","4"), new Variable("float", "b", "72"))), pr.getRootNode());
+    }
 }
