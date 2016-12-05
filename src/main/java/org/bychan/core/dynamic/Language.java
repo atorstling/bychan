@@ -18,12 +18,19 @@ import java.util.stream.Collectors;
 public class Language<N> {
     @NotNull
     private final String name;
-    @NotNull
-    private final List<TokenDefinition<N>> tokenDefinitions;
+    private final DelegatingTokenFinder<N> tokenFinder;
+    private final Collection<DynamicToken<N>> dynamicTokens;
 
     public Language(@NotNull final String name, @NotNull final List<TokenDefinition<N>> tokenDefinitions) {
         this.name = name;
-        this.tokenDefinitions = tokenDefinitions;
+        // Use a delegating finder to break the circular dependency between DynamicToken
+        // and DynamicTokenFinder. First build all tokens with an empty finder, then build the
+        // finder with the result.
+        tokenFinder = new DelegatingTokenFinder<>();
+        dynamicTokens = tokenDefinitions.stream()
+                .map(tokenDef -> new DynamicToken<N>(tokenDef, tokenFinder))
+                .collect(Collectors.toList());
+        tokenFinder.setDelegate(new TokenFinderImpl<>(dynamicTokens));
     }
 
     @NotNull
@@ -33,18 +40,7 @@ public class Language<N> {
 
     @NotNull
     Lexer<N> newLexer() {
-        // Use a delegating finder to break the circular dependency between DynamicToken
-        // and DynamicTokenFinder. First build all tokens with an empty finder, then build the
-        // finder with the result.
-        DelegatingTokenFinder<N> delegatingFinder = new DelegatingTokenFinder<>();
-        final Collection<DynamicToken<N>> dynamicTokens = toTokens(tokenDefinitions, delegatingFinder);
-        delegatingFinder.setDelegate(new TokenFinderImpl<>(dynamicTokens));
         return new Lexer<>(dynamicTokens);
-    }
-
-
-    private Collection<DynamicToken<N>> toTokens(@NotNull final List<TokenDefinition<N>> leveledDefinitions, @NotNull final TokenFinder<N> tokenFinder) {
-        return leveledDefinitions.stream().map(tokenDef -> new DynamicToken<>(tokenDef, tokenFinder)).collect(Collectors.toList());
     }
 
     @NotNull
