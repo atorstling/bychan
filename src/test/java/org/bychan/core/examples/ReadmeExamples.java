@@ -212,7 +212,7 @@ public class ReadmeExamples {
             final ArrayList<Variable> variables = new ArrayList<>();
             while (!parser.peek().getToken().equals(EndToken.get())) {
                 final Lexeme<VNode> lexeme = parser.swallow(lang.getToken(decl));
-                final Variable variable = (Variable) parser.nud(null, lexeme);
+                final Variable variable = (Variable) parser.nud(lexeme, null);
                 variables.add(variable);
                 parser.swallow(lang.getToken(semicolon));
             }

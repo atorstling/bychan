@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class PrattParser<N> implements TokenParserCallback<N> {
     @NotNull
@@ -71,7 +69,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         //         which keeps going until next 0-valued token is encountered (")" or end)
         // any digit, used in for instance "3", parses to 3.
         Lexeme<N> firstLexeme = pop();
-        final N first = nud(left, firstLexeme);
+        final N first = nud(firstLexeme, left);
         // When we have the nud parsing settled, we cannot be sure that the parsing is done. Digit parsing
         // returns almost immediately for instance. If the nud parse swallowed all the expression, only the end
         // token will remain. But since the end token has 0 binding power, we will never continue in this case.
@@ -150,7 +148,7 @@ public class PrattParser<N> implements TokenParserCallback<N> {
 
     @NotNull
     @Override
-    public N nud(@Nullable N left, @NotNull Lexeme<N> lexeme) {
+    public N nud(@NotNull Lexeme<N> lexeme, @Nullable N left) {
         NudParseAction<N> nudParseAction = lexeme.getNud();
         if (nudParseAction == null) {
             throw new ParsingFailedException(new ParsingFailedInformation("Current lexeme does not support nud parsing", getParsingPosition()));

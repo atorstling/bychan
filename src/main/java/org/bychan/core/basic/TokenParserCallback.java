@@ -28,8 +28,11 @@ public interface TokenParserCallback<N> {
     @NotNull
     Lexeme<N> peek();
 
+    /**
+     * Call nud of the given lexeme, abort with a nice exception if the lexeme doesn't support nud parsing
+     */
     @NotNull
-    N nud(@Nullable N left, @NotNull Lexeme<N> lexeme);
+    N nud(@NotNull Lexeme<N> lexeme, @Nullable N left);
 
     @NotNull
     ParsingPosition getParsingPosition();

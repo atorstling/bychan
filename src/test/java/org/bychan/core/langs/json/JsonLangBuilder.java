@@ -39,7 +39,7 @@ class JsonLangBuilder {
                 .nud((left, parser, lexeme) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
                     while (!parser.peek().isA(rcurly.getToken())) {
-                        final StringLiteralNode key = (StringLiteralNode) parser.nud(left, parser.swallow(string.getToken()));
+                        final StringLiteralNode key = (StringLiteralNode) parser.nud(parser.swallow(string.getToken()), left);
                         parser.swallow(colon.getToken());
                         JsonNode value = parser.parseExpression(left, lexeme.leftBindingPower());
                         pairs.put(key, value);
