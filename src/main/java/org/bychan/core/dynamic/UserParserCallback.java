@@ -20,9 +20,6 @@ public interface UserParserCallback<N> {
     @NotNull
     N parseExpression(@Nullable final N left, int leftBindingPower);
 
-    @NotNull
-    N parseSingleToken(N left, Token<N> token);
-
     /**
      * Calls the nud parse action. This is pure convenience
      * for led actions which resemble or partly consist of their

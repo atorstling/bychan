@@ -21,14 +21,8 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
         return parser.parseExpression(left, leftBindingPower);
     }
 
-    @NotNull
     @Override
-    public N parseSingleToken(N left, Token<N> token) {
-        return parser.nud(left, parser.swallow(token));
-    }
-
-    @Override
-    public N nud(@NotNull final N left, Lexeme<N> lexeme) {
+    public N nud(@Nullable final N left, Lexeme<N> lexeme) {
         return parser.nud(left, lexeme);
     }
 
