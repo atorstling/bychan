@@ -17,7 +17,7 @@ public interface Parser<N> {
      *             node before the sub-expression which you are trying to parse.
      */
     @NotNull
-    N parseExpression(@Nullable N left, int rightBindingPower);
+    N expression(@Nullable N left, int rightBindingPower);
 
     /**
      * Swallow a token of the specified token.

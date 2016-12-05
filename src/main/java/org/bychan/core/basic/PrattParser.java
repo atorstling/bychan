@@ -21,7 +21,7 @@ public class PrattParser<N> implements Parser<N> {
     }
 
     public N parseExpression() {
-        return parseExpression(null, 0);
+        return expression(null, 0);
     }
 
     @NotNull
@@ -39,7 +39,7 @@ public class PrattParser<N> implements Parser<N> {
     @NotNull
     public ParseResult<N> tryParse(@Nullable N left, final int rightBindingPower) {
         try {
-            N rootNode = parseExpression(left, rightBindingPower);
+            N rootNode = expression(left, rightBindingPower);
             return ParseResult.success(rootNode);
         } catch (ParsingFailedException e) {
             return ParseResult.failure(e.getFailureInformation());
@@ -60,7 +60,7 @@ public class PrattParser<N> implements Parser<N> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    public N parseExpression(@Nullable N left, final int rightBindingPower) {
+    public N expression(@Nullable N left, final int rightBindingPower) {
         // An expression always starts with a symbol which can qualify as a nud value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)

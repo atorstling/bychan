@@ -10,11 +10,11 @@ public class CalculatorTestHelper {
                 .build();
         b.powerUp();
         b.newToken().named("plus").matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.parseExpression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
                 .build();
         b.powerUp();
         b.newToken().named("multiplication").matchesString("*")
-                .led((left, parser, lexeme) -> left * parser.parseExpression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left * parser.expression(left, lexeme.leftBindingPower()))
                 .build();
         b.powerUp();
         b.newToken().named("integer").matchesPattern("[0-9]+")
