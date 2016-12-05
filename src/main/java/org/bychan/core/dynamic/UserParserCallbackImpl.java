@@ -21,11 +21,6 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
         return parser.parseExpression(left, leftBindingPower);
     }
 
-    @Override
-    public boolean peekIsA(Token<N> token) {
-        return parser.peek().isA(token);
-    }
-
     @NotNull
     @Override
     public N parseSingleToken(N left, Token<N> token) {

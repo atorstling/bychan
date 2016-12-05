@@ -20,9 +20,6 @@ public interface UserParserCallback<N> {
     @NotNull
     N parseExpression(@Nullable final N left, int leftBindingPower);
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    boolean peekIsA(Token<N> token);
-
     @NotNull
     N parseSingleToken(N left, Token<N> token);
 

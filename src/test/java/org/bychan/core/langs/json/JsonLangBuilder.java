@@ -26,9 +26,9 @@ class JsonLangBuilder {
         lb.newToken().named("lbracket").matchesString("[")
                 .nud((left, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
-                    while (!parser.peekIsA(rbracket.getToken())) {
+                    while (!parser.peek().isA(rbracket.getToken())) {
                         expressions.add(parser.parseExpression(left, lexeme.leftBindingPower()));
-                        if (!parser.peekIsA(rbracket.getToken())) {
+                        if (!parser.peek().isA(rbracket.getToken())) {
                             parser.swallow(comma.getToken());
                         }
                     }
@@ -38,12 +38,12 @@ class JsonLangBuilder {
         lb.newToken().named("lcurly").matchesString("{")
                 .nud((left, parser, lexeme) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.peekIsA(rcurly.getToken())) {
+                    while (!parser.peek().isA(rcurly.getToken())) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(left, string.getToken());
                         parser.swallow(colon.getToken());
                         JsonNode value = parser.parseExpression(left, lexeme.leftBindingPower());
                         pairs.put(key, value);
-                        if (!parser.peekIsA(rcurly.getToken())) {
+                        if (!parser.peek().isA(rcurly.getToken())) {
                             parser.swallow(comma.getToken());
                         }
                     }
