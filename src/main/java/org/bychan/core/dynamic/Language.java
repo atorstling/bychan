@@ -53,4 +53,7 @@ public class Language<N> {
         return name;
     }
 
+    public TokenFinder<N> getTokenFinder() {
+        return tokenFinder;
+    }
 }

@@ -14,7 +14,7 @@ public class LexParser<N> {
     @NotNull
     private final Lexer<N> lexer;
 
-    interface ParseFunction<N> {
+    public interface ParseFunction<N> {
         ParseResult<N> parse(PrattParser<N> p);
     }
 

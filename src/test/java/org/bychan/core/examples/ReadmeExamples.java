@@ -1,9 +1,6 @@
 package org.bychan.core.examples;
 
-import org.bychan.core.basic.EndToken;
-import org.bychan.core.basic.LexParser;
-import org.bychan.core.basic.Lexeme;
-import org.bychan.core.basic.ParseResult;
+import org.bychan.core.basic.*;
 import org.bychan.core.dynamic.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -197,26 +194,29 @@ public class ReadmeExamples {
         b.newToken().named("whitespace").matchesWhitespace().discardAfterLexing();
         final TokenDefinition<VNode> semicolon = b.newToken().named("semicolon").matchesString(";").build();
         final TokenDefinition<VNode> decl = b
-                .newToken().matchesPattern("(int|float) (\\w+)=([0-9]+)")
+                .newToken()
+                .named("vardecl")
+                .matchesPattern("(int|float) (\\w+)=([0-9]+)")
                 .nud((left, parser, lexeme) -> new Variable(lexeme.group(1), lexeme.group(2), lexeme.group(3)))
                 .build();
-        b.newToken()
-                .named("lcurly")
-                .matchesString("{")
-                .nud((left, parser, lexeme) -> {
-                    final ArrayList<Variable> variables = new ArrayList<>();
-                    while (!parser.nextIs(EndToken.get().getKey())) {
-                        final Variable vNode = (Variable) parser.parseSingleToken(left, decl.getKey());
-                        variables.add(vNode);
-                        if (parser.nextIs(semicolon.getKey())) {
-                            parser.expectSingleLexeme(semicolon.getKey());
-                        }
-                    }
-                    return new VariableList(variables);
-                }).build();
         final Language<VNode> lang = b.completeLanguage();
         final LexParser<VNode> lp = lang.newLexParser();
-        final ParseResult<VNode> pr = lp.tryParse("{int a=4;float b=72;");
-        assertEquals(new VariableList(Arrays.asList(new Variable("int", "a","4"), new Variable("float", "b", "72"))), pr.getRootNode());
+
+        final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", parser -> {
+            final ArrayList<Variable> variables = new ArrayList<>();
+            while (!parser.peek().getToken().equals(EndToken.get())) {
+                final TokenFinder<VNode> finder = lang.getTokenFinder();
+                final Token<VNode> token = finder.getToken(decl.getKey());
+                final Lexeme<VNode> lexeme = parser.swallow(token);
+                final Variable variable = (Variable) parser.nud(null, lexeme);
+                variables.add(variable);
+                final Token<VNode> semiToken = finder.getToken(semicolon.getKey());
+                if (parser.peek().getToken().equals(semiToken)) {
+                    parser.swallow(semiToken);
+                }
+            }
+            return ParseResult.success(new VariableList(variables));
+        });
+        assertEquals(new VariableList(Arrays.asList(new Variable("int", "a", "4"), new Variable("float", "b", "72"))), pr.getRootNode());
     }
 }
