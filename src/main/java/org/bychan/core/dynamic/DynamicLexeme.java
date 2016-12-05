@@ -30,7 +30,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     @Override
     public NudParseAction<N> getNud() {
         return nud == null ? null : (left, parser) -> {
-            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(parser, left, this);
+            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(parser);
             return nud.parse(left, callback, this);
         };
     }
@@ -39,7 +39,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     @Override
     public LedParseAction<N> getLed() {
         return led == null ? null : (left, parser) -> {
-            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(parser, left, this);
+            UserParserCallbackImpl<N> callback = new UserParserCallbackImpl<>(parser);
             return led.parse(left, callback, this);
         };
     }

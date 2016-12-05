@@ -7,16 +7,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 class UserParserCallbackImpl<N> implements UserParserCallback<N> {
-    @Nullable
-    private final N left;
-    @NotNull
-    private final DynamicLexeme<N> lexeme;
     @NotNull
     private final TokenParserCallback<N> parser;
 
-    public UserParserCallbackImpl(@NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
-        this.left = left;
-        this.lexeme = lexeme;
+    public UserParserCallbackImpl(@NotNull final TokenParserCallback<N> parser) {
         this.parser = parser;
     }
 
@@ -39,7 +33,7 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     }
 
     @Override
-    public N nud() {
+    public N nud(@NotNull final N left, Lexeme<N> lexeme) {
         return parser.nud(left, lexeme);
     }
 

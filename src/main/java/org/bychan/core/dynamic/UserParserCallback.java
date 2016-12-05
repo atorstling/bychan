@@ -31,7 +31,7 @@ public interface UserParserCallback<N> {
      * for led actions which resemble or partly consist of their
      * nud counterparts.
      */
-    N nud();
+    public N nud(@NotNull final N left, Lexeme<N> lexeme);
 
     <S> S abort(@NotNull final String message);
 
