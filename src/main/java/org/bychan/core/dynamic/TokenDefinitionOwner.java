@@ -7,5 +7,5 @@ import org.jetbrains.annotations.NotNull;
  */
 interface TokenDefinitionOwner<N> {
     int increaseUnnamedTokenCounter();
-    void tokenBuilt(@NotNull TokenDefinition<N> token);
+    void tokenBuilt(TokenDefinitionBuilder<N> builder, @NotNull TokenDefinition<N> token);
 }

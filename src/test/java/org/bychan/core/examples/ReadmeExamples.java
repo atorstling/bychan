@@ -53,7 +53,7 @@ public class ReadmeExamples {
                 .build();
         lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
             String next = parser.expression(left, lexeme.leftBindingPower());
-            parser.expectSingleLexeme(rparen.getKey());
+            parser.swallow(rparen.getToken());
             return next;
         }).build();
         lb.powerUp();

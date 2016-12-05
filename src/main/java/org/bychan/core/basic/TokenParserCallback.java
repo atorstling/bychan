@@ -28,4 +28,6 @@ public interface TokenParserCallback<N> {
 
     @NotNull
     Lexeme<N> next();
+
+    <S> S abort(String message);
 }

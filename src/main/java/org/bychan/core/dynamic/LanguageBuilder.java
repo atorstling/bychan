@@ -13,6 +13,8 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     @NotNull
     private final List<TokenDefinition<N>> tokens;
     @NotNull
+    private final List<TokenDefinitionBuilder<N>> builders;
+    @NotNull
     private final String name;
     /**
      * If you don't specify binding powers of your tokens,
@@ -32,12 +34,13 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     public LanguageBuilder(@NotNull final String name) {
         this.currentLeftBindingPower = 1;
         this.tokens = new ArrayList<>();
+        this.builders = new ArrayList<>();
         this.name = name;
     }
 
     @NotNull
     public Language<N> completeLanguage() {
-        return new Language<>(name, tokens);
+        return new Language<>(name, tokens, builders);
     }
 
     @NotNull
@@ -51,7 +54,8 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     }
 
     @Override
-    public void tokenBuilt(@NotNull TokenDefinition<N> token) {
+    public void tokenBuilt(TokenDefinitionBuilder<N> builder, @NotNull TokenDefinition<N> token) {
+        builders.add(builder);
         tokens.add(token);
     }
 

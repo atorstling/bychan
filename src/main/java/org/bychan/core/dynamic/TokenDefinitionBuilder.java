@@ -1,5 +1,6 @@
 package org.bychan.core.dynamic;
 
+import org.bychan.core.basic.Token;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -17,6 +18,7 @@ public class TokenDefinitionBuilder<N> {
     private int leftBindingPower = 1;
     private TokenKey tokenKey;
     private String documentation;
+    private DelegatingTokenFinder<N> tokenFinder;
 
     public TokenDefinitionBuilder(@NotNull TokenDefinitionOwner<N> tokenDefinitionOwner) {
         this.tokenDefinitionOwner = tokenDefinitionOwner;
@@ -59,7 +61,7 @@ public class TokenDefinitionBuilder<N> {
             tokenName = "token" + tokenDefinitionOwner.increaseUnnamedTokenCounter();
         }
         TokenDefinition<N> token = new TokenDefinition<>(matcher, nud, led, tokenName, documentation, keepAfterLexing, leftBindingPower);
-        tokenDefinitionOwner.tokenBuilt(token);
+        tokenDefinitionOwner.tokenBuilt(this, token);
         return token;
     }
 
@@ -117,5 +119,18 @@ public class TokenDefinitionBuilder<N> {
         return matches((input, searchStart) ->
                 strings.stream().map(StringMatcher::new).map(
                         m -> m.tryMatch(input, searchStart)).filter(Objects::nonNull).findFirst().orElse(null));
+    }
+
+
+
+    public Token<N> getToken() {
+        if (tokenFinder == null) {
+            throw new NullPointerException("tokenFinder not set");
+        }
+        return tokenFinder.getToken(getKey());
+    }
+
+    public void setTokenFinder(DelegatingTokenFinder<N> tokenFinder) {
+        this.tokenFinder = tokenFinder;
     }
 }

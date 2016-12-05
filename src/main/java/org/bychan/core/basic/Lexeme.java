@@ -49,4 +49,8 @@ public interface Lexeme<N> {
     default String group(int i) {
         return getMatch().group(i);
     }
+
+    default boolean isA(Token<N> token) {
+        return getToken().equals(token);
+    }
 }

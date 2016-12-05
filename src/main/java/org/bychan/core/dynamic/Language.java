@@ -18,7 +18,7 @@ public class Language<N> {
     private final DelegatingTokenFinder<N> tokenFinder;
     private final Collection<DynamicToken<N>> dynamicTokens;
 
-    public Language(@NotNull final String name, @NotNull final List<TokenDefinition<N>> tokenDefinitions) {
+    public Language(@NotNull final String name, @NotNull final List<TokenDefinition<N>> tokenDefinitions, @NotNull final List<TokenDefinitionBuilder<N>> tokenDefinitionBuilders) {
         this.name = name;
         // Use a delegating finder to break the circular dependency between DynamicToken
         // and DynamicTokenFinder. First build all tokens with an empty finder, then build the
@@ -28,6 +28,12 @@ public class Language<N> {
                 .map(tokenDef -> new DynamicToken<N>(tokenDef, tokenFinder))
                 .collect(Collectors.toList());
         tokenFinder.setDelegate(new TokenFinderImpl<>(dynamicTokens));
+        for (TokenDefinition<N> tokenDefinition : tokenDefinitions) {
+            tokenDefinition.setTokenFinder(tokenFinder);
+        }
+        for (TokenDefinitionBuilder<N> builder : tokenDefinitionBuilders) {
+            builder.setTokenFinder(tokenFinder);
+        }
     }
 
     @NotNull

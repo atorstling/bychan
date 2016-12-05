@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 class UserParserCallbackImpl<N> implements UserParserCallback<N> {
-    private final int leftBindingPower;
     @NotNull
     private final TokenFinder<N> tokenFinder;
     @Nullable
@@ -21,7 +20,6 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     public UserParserCallbackImpl(@NotNull final TokenDefinition<N> def, @NotNull TokenFinder<N> tokenFinder, @NotNull final TokenParserCallback<N> parser, @Nullable N left, @NotNull final DynamicLexeme<N> lexeme) {
         this.left = left;
         this.lexeme = lexeme;
-        this.leftBindingPower = def.getLeftBindingPower();
         this.tokenFinder = tokenFinder;
         this.parser = parser;
     }
@@ -33,28 +31,16 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
         return parser.parseExpression(left, leftBindingPower);
     }
 
-    @NotNull
-    @Override
-    public Lexeme<N> expectSingleLexeme(@NotNull TokenKey tokenKey) {
-        return swallow(tokenKey, parser);
-    }
-
-    @NotNull
-    private Lexeme<N> swallow(@NotNull TokenKey tokenKey, TokenParserCallback<N> parser) {
-        Token<N> token = tokenFinder.getToken(tokenKey);
-        return parser.swallow(token);
-    }
-
     @Override
     public boolean nextIs(@NotNull TokenKey tokenKey) {
-        Token<N> expectedToken = tokenFinder.getToken(tokenKey);
-        return parser.peek().getToken().equals(expectedToken);
+        return parser.peek().isA(tokenFinder.getToken(tokenKey));
     }
 
     @NotNull
     @Override
     public N parseSingleToken(N left, @NotNull TokenKey tokenKey) {
-        Lexeme<N> lexeme = swallow(tokenKey, parser);
+        Token<N> token = tokenFinder.getToken(tokenKey);
+        Lexeme<N> lexeme = parser.swallow(token);
         return parser.nud(left, lexeme);
     }
 
@@ -65,12 +51,22 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @Override
     public <S> S abort(@NotNull String message) {
-        throw ParsingFailedException.forFailedAfterLexing(message, parser);
+        return parser.abort(message);
     }
 
     @NotNull
     @Override
     public Lexeme<N> next() {
         return parser.next();
+    }
+
+    @Override
+    public Lexeme<N> peek() {
+        return parser.peek();
+    }
+
+    @Override
+    public Lexeme<N> swallow(@NotNull final Token<N> token) {
+        return parser.swallow(token);
     }
 }

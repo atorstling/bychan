@@ -134,6 +134,11 @@ public class PrattParser<N> implements TokenParserCallback<N> {
         return lexemeStack.pop();
     }
 
+    @Override
+    public <S> S abort(String message) {
+        throw ParsingFailedException.forFailedAfterLexing(message, this);
+    }
+
     @NotNull
     public Lexeme<N> swallow(@NotNull Token<N> token) {
         Lexeme<N> next = next();

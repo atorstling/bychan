@@ -31,7 +31,7 @@ public class CalculatorTest {
                 .named("lparen")
                 .nud((left, parser, lexeme) -> {
                     CalculatorNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
-                    parser.expectSingleLexeme(rparen.getKey());
+                    parser.swallow(rparen.getToken());
                     return trailingExpression;
                 }).build();
 
