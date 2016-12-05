@@ -1,7 +1,7 @@
 package org.bychan.core.dynamic;
 
 import org.bychan.core.basic.Lexeme;
-import org.bychan.core.basic.TokenParserCallback;
+import org.bychan.core.basic.Parser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,5 +23,5 @@ public interface DynamicNudParseAction<N> {
      * @return the resulting AST node.
      */
     @NotNull
-    N parse(@Nullable N left, @NotNull TokenParserCallback<N> parser, @NotNull Lexeme<N> lexeme);
+    N parse(@Nullable N left, @NotNull Parser<N> parser, @NotNull Lexeme<N> lexeme);
 }

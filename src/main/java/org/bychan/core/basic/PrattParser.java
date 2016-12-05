@@ -5,7 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PrattParser<N> implements TokenParserCallback<N> {
+public class PrattParser<N> implements Parser<N> {
     @NotNull
     private final LexemeStack<N> lexemeStack;
     @NotNull

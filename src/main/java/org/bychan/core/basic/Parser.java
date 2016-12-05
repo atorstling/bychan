@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
  * An interface to the parser, which the tokens can use to
  * continue the parsing
  */
-public interface TokenParserCallback<N> {
+public interface Parser<N> {
     /**
      * Parse the directly following tokens an an expression. Proceed while tokens
      * with higher priority than given binding power are found.

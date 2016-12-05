@@ -20,5 +20,5 @@ public interface NudParseAction<N> {
      * @return the resulting AST node.
      */
     @NotNull
-    N parse(@Nullable N left, @NotNull TokenParserCallback<N> parser);
+    N parse(@Nullable N left, @NotNull Parser<N> parser);
 }
