@@ -210,11 +210,11 @@ public class ReadmeExamples {
 
         final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", parser -> {
             final ArrayList<Variable> variables = new ArrayList<>();
-            while (!parser.peek().getToken().equals(EndToken.get())) {
-                final Lexeme<VNode> lexeme = parser.swallow(lang.getToken(decl));
+            while (!parser.peek().isA(EndToken.get())) {
+                final Lexeme<VNode> lexeme = parser.swallow(decl.getToken());
                 final Variable variable = (Variable) parser.nud(lexeme, null);
                 variables.add(variable);
-                parser.swallow(lang.getToken(semicolon));
+                parser.swallow(semicolon.getToken());
             }
             return ParseResult.success(new VariableList(variables));
         });

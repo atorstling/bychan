@@ -56,11 +56,4 @@ public class Language<N> {
         return name;
     }
 
-    public TokenFinder<N> getTokenFinder() {
-        return tokenFinder;
-    }
-
-    public Token<N> getToken(TokenDefinition<N> definition) {
-        return tokenFinder.getToken(definition.getKey());
-    }
 }
