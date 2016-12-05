@@ -1,9 +1,6 @@
 package org.bychan.core.dynamic;
 
-import org.bychan.core.basic.LexParser;
-import org.bychan.core.basic.Lexer;
-import org.bychan.core.basic.Repl;
-import org.bychan.core.basic.ReplBuilder;
+import org.bychan.core.basic.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -55,5 +52,9 @@ public class Language<N> {
 
     public TokenFinder<N> getTokenFinder() {
         return tokenFinder;
+    }
+
+    public Token<N> getToken(TokenDefinition<N> definition) {
+        return tokenFinder.getToken(definition.getKey());
     }
 }

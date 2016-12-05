@@ -151,6 +151,13 @@ public class ReadmeExamples {
         public int hashCode() {
             return variables.hashCode();
         }
+
+        @Override
+        public String toString() {
+            return "VariableList{" +
+                    "variables=" + variables +
+                    '}';
+        }
     }
 
     class Variable implements VNode {
@@ -205,15 +212,10 @@ public class ReadmeExamples {
         final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", parser -> {
             final ArrayList<Variable> variables = new ArrayList<>();
             while (!parser.peek().getToken().equals(EndToken.get())) {
-                final TokenFinder<VNode> finder = lang.getTokenFinder();
-                final Token<VNode> token = finder.getToken(decl.getKey());
-                final Lexeme<VNode> lexeme = parser.swallow(token);
+                final Lexeme<VNode> lexeme = parser.swallow(lang.getToken(decl));
                 final Variable variable = (Variable) parser.nud(null, lexeme);
                 variables.add(variable);
-                final Token<VNode> semiToken = finder.getToken(semicolon.getKey());
-                if (parser.peek().getToken().equals(semiToken)) {
-                    parser.swallow(semiToken);
-                }
+                parser.swallow(lang.getToken(semicolon));
             }
             return ParseResult.success(new VariableList(variables));
         });
