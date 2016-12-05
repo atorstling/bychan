@@ -35,12 +35,6 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public N expression(@Nullable N left) {
-        return parser.parseExpression(left, leftBindingPower);
-    }
-
-    @NotNull
-    @Override
     public Lexeme<N> expectSingleLexeme(@NotNull TokenKey tokenKey) {
         return swallow(tokenKey, parser);
     }

@@ -20,17 +20,6 @@ public interface UserParserCallback<N> {
     N expression(@Nullable final N left, int leftBindingPower);
 
     /**
-     * Parse the directly following tokens an an expression. Proceed while tokens
-     * with higher priority than the left token are found.
-     *
-     * @param left passed to the sub-expression parser as the node found directly before. If you
-     *                 have performed any custom parsing in your handler you should pass in the directly leading
-     *                 node before the sub-expression which you are trying to parse.
-     */
-    @NotNull
-    N expression(@Nullable final N left);
-
-    /**
      * Parse a single lexeme of the token identified by the given key.
      */
     @NotNull

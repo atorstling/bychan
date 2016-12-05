@@ -27,11 +27,11 @@ Sure! Let's start with a simple calculator:
                 .build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.expression(left))
+                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
                 .build();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> left * parser.expression(left))
+                .led((left, parser, lexeme) -> left * parser.expression(left, lexeme.leftBindingPower()))
                 .build();
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
@@ -58,17 +58,17 @@ and throw in some whitespace and parentheses while we're at it:
                 .matchesString(")")
                 .build();
         lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
-            String next = parser.expression(left);
+            String next = parser.expression(left, lexeme.leftBindingPower());
             parser.expectSingleLexeme(rparen.getKey());
             return next;
         }).build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left) + ")")
+                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
                 .build();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left) + ")")
+                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
                 .build();
         Language<String> language = lb.completeLanguage();
         LexParser<String> lexParser = language.newLexParser();
@@ -117,7 +117,7 @@ If you want to build an AST you can build it directly with your own classes. Sha
                 .build();
         lb.newToken().named("and")
                 .matchesString("&&")
-                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left)))
+                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left, lexeme.leftBindingPower())))
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();

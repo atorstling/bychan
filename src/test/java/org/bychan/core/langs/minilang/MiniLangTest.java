@@ -35,7 +35,7 @@ public class MiniLangTest {
                 .nud((left, parser, lexeme) -> {
                     Scope scope = (left == null) ? new RootScope() : left.getScope() == null ? new RootScope() : new NestedScope(left.getScope());
                     ScopeNode scopeNode = new ScopeNode(scope);
-                    LaiLaiNode expression = parser.expression(scopeNode);
+                    LaiLaiNode expression = parser.expression(scopeNode, lexeme.leftBindingPower());
                     scopeNode.setChild(expression);
                     parser.expectSingleLexeme(rcurly.getKey());
                     return scopeNode;
@@ -49,7 +49,7 @@ public class MiniLangTest {
                 .matchesString("(")
                 .named("lparen")
                 .nud((left, parser, lexeme) -> {
-                    LaiLaiNode trailingExpression = parser.expression(left);
+                    LaiLaiNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
                     parser.expectSingleLexeme(rparen.getKey());
                     return trailingExpression;
                 });
@@ -62,19 +62,19 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .nud((left, parser, lexeme) -> parser.expression(left))
-                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expression(left)));
+                .nud((left, parser, lexeme) -> parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expression(left, lexeme.leftBindingPower())));
 
         TokenDefinitionBuilder<LaiLaiNode> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .led((left, parser, lexeme) -> new HatNode(left, parser.expression(left)));
+                .led((left, parser, lexeme) -> new HatNode(left, parser.expression(left, lexeme.leftBindingPower())));
 
         TokenDefinitionBuilder<LaiLaiNode> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
                 .led((left, parser, lexeme) -> {
-                    LaiLaiNode right = parser.expression(left);
+                    LaiLaiNode right = parser.expression(left, lexeme.leftBindingPower());
                     return new AssignNode(left, right);
                 });
 
@@ -118,7 +118,7 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
-                .led((left, parser, lexeme) -> new StatementNode(left, parser.expression(left)));
+                .led((left, parser, lexeme) -> new StatementNode(left, parser.expression(left, lexeme.leftBindingPower())));
 
         final TokenDefinitionBuilder<LaiLaiNode> listEnd = lb.newToken()
                 .matchesString("]")
@@ -134,7 +134,7 @@ public class MiniLangTest {
                 .nud((left, parser, lexeme) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(listEnd.getKey())) {
-                        expressions.add(parser.expression(left));
+                        expressions.add(parser.expression(left, lexeme.leftBindingPower()));
                         if (!parser.nextIs(listEnd.getKey())) {
                             parser.expectSingleLexeme(comma.getKey());
                         }

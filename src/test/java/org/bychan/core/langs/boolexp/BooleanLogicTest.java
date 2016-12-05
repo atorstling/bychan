@@ -18,14 +18,14 @@ public class BooleanLogicTest {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         lb.newToken().matchesString("(").named("lparen").nud((left, parser, lexeme) -> {
-            BooleanExpressionNode trailingExpression = parser.expression(left);
+            BooleanExpressionNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
         lb.powerUp();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
-        lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left))).build();
-        lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left))).build();
+        lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left, lexeme.leftBindingPower()))).build();
+        lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left, lexeme.leftBindingPower()))).build();
         lb.newToken().matchesPattern("[a-z]+").named("variable").nud((left, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
@@ -37,14 +37,14 @@ public class BooleanLogicTest {
         LanguageBuilder<BooleanExpressionNode> lb = new LanguageBuilder<>();
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         lb.newToken().matchesString("(").named("lparen").nud((left, parser, lexeme) -> {
-            BooleanExpressionNode trailingExpression = parser.expression(left);
+            BooleanExpressionNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
             parser.expectSingleLexeme(rparen.getKey());
             return trailingExpression;
         }).build();
         lb.powerUp();
         lb.newToken().matchesPattern("\\s+").named("whitespace").discardAfterLexing().build();
-        lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left))).build();
-        lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left))).build();
+        lb.newToken().matchesString("!").named("not").nud((left, parser, lexeme) -> new NotNode(parser.expression(left, lexeme.leftBindingPower()))).build();
+        lb.newToken().matchesString("&").named("and").led((left, parser, lexeme) -> new AndNode(left, parser.expression(left, lexeme.leftBindingPower()))).build();
         lb.newToken().matchesPattern("[a-z]+").named("variable").nud((left, parser, lexeme) -> new VariableNode(lexeme.getText())).build();
         Language<BooleanExpressionNode> l = lb.completeLanguage();
         checkparanthesisPrio(l);
