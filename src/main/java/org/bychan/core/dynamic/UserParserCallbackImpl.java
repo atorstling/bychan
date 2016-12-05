@@ -1,7 +1,6 @@
 package org.bychan.core.dynamic;
 
 import org.bychan.core.basic.Lexeme;
-import org.bychan.core.basic.ParsingFailedException;
 import org.bychan.core.basic.Token;
 import org.bychan.core.basic.TokenParserCallback;
 import org.jetbrains.annotations.NotNull;
@@ -32,16 +31,14 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
     }
 
     @Override
-    public boolean nextIs(@NotNull TokenKey tokenKey) {
-        return parser.peek().isA(tokenFinder.getToken(tokenKey));
+    public boolean peekIsA(Token<N> token) {
+        return parser.peek().isA(token);
     }
 
     @NotNull
     @Override
-    public N parseSingleToken(N left, @NotNull TokenKey tokenKey) {
-        Token<N> token = tokenFinder.getToken(tokenKey);
-        Lexeme<N> lexeme = parser.swallow(token);
-        return parser.nud(left, lexeme);
+    public N parseSingleToken(N left, Token<N> token) {
+        return parser.nud(left, parser.swallow(token));
     }
 
     @Override

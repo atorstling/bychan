@@ -21,10 +21,10 @@ public interface UserParserCallback<N> {
     N parseExpression(@Nullable final N left, int leftBindingPower);
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    boolean nextIs(@NotNull TokenKey tokenKey);
+    boolean peekIsA(Token<N> token);
 
     @NotNull
-    N parseSingleToken(N left, @NotNull TokenKey tokenKey);
+    N parseSingleToken(N left, Token<N> token);
 
     /**
      * Calls the nud parse action. This is pure convenience

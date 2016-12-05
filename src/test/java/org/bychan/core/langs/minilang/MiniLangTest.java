@@ -133,9 +133,9 @@ public class MiniLangTest {
                 .named("listStart")
                 .nud((left, parser, lexeme) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
-                    while (!parser.nextIs(listEnd.getKey())) {
+                    while (!parser.peekIsA(listEnd.getToken())) {
                         expressions.add(parser.parseExpression(left, lexeme.leftBindingPower()));
-                        if (!parser.nextIs(listEnd.getKey())) {
+                        if (!parser.peekIsA(listEnd.getToken())) {
                             parser.swallow(comma.getToken());
                         }
                     }
