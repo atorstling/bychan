@@ -3,7 +3,6 @@ package org.bychan.core.examples;
 import org.bychan.core.basic.*;
 import org.bychan.core.dynamic.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -25,12 +24,12 @@ public class ReadmeExamples {
                 .build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left + parser.parseExpression(left, lexeme.leftBindingPower()))
                 .build();
         lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> left * parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left * parser.parseExpression(left, lexeme.leftBindingPower()))
                 .build();
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
@@ -52,19 +51,19 @@ public class ReadmeExamples {
                 .matchesString(")")
                 .build();
         lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
-            String next = parser.expression(left, lexeme.leftBindingPower());
+            String next = parser.parseExpression(left, lexeme.leftBindingPower());
             parser.swallow(rparen.getToken());
             return next;
         }).build();
         lb.powerUp();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
+                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.parseExpression(left, lexeme.leftBindingPower()) + ")")
                 .build();
         lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
+                .led((left, parser, lexeme) -> "(* " + left + " " + parser.parseExpression(left, lexeme.leftBindingPower()) + ")")
                 .build();
         Language<String> language = lb.completeLanguage();
         LexParser<String> lexParser = language.newLexParser();
@@ -80,7 +79,7 @@ public class ReadmeExamples {
                 .build();
         lb.newToken().named("and")
                 .matchesString("&&")
-                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left, lexeme.leftBindingPower())))
+                .led((left, parser, lexeme) -> new AndNode(left, parser.parseExpression(left, lexeme.leftBindingPower())))
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();

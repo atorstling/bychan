@@ -27,7 +27,7 @@ class UserParserCallbackImpl<N> implements UserParserCallback<N> {
 
     @NotNull
     @Override
-    public N expression(@Nullable N left, int leftBindingPower) {
+    public N parseExpression(@Nullable N left, int leftBindingPower) {
         return parser.parseExpression(left, leftBindingPower);
     }
 

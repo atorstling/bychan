@@ -16,7 +16,7 @@ public class DirectEvaluationTest {
                 .nud((left, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
                 .build();
         lb.newToken().named("addition").matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left + parser.parseExpression(left, lexeme.leftBindingPower()))
                 .build();
         Language<Integer> lang = lb.completeLanguage();
         String expr = "1+3";

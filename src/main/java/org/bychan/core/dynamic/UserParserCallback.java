@@ -18,7 +18,7 @@ public interface UserParserCallback<N> {
      *                 node before the sub-expression which you are trying to parse.
      */
     @NotNull
-    N expression(@Nullable final N left, int leftBindingPower);
+    N parseExpression(@Nullable final N left, int leftBindingPower);
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean nextIs(@NotNull TokenKey tokenKey);

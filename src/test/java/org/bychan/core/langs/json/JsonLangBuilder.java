@@ -27,7 +27,7 @@ class JsonLangBuilder {
                 .nud((left, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
                     while (!parser.nextIs(rbracket.getKey())) {
-                        expressions.add(parser.expression(left, lexeme.leftBindingPower()));
+                        expressions.add(parser.parseExpression(left, lexeme.leftBindingPower()));
                         if (!parser.nextIs(rbracket.getKey())) {
                             parser.swallow(comma.getToken());
                         }
@@ -41,7 +41,7 @@ class JsonLangBuilder {
                     while (!parser.nextIs(rcurly.getKey())) {
                         StringLiteralNode key = (StringLiteralNode) parser.parseSingleToken(left, string.getKey());
                         parser.swallow(colon.getToken());
-                        JsonNode value = parser.expression(left, lexeme.leftBindingPower());
+                        JsonNode value = parser.parseExpression(left, lexeme.leftBindingPower());
                         pairs.put(key, value);
                         if (!parser.nextIs(rcurly.getKey())) {
                             parser.swallow(comma.getToken());
