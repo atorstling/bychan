@@ -150,7 +150,7 @@ Install via maven central:
   <dependency>
     <groupId>org.bychan</groupId>
     <artifactId>bychan-core</artifactId>
-    <version>0.1.0</version>
+    <version>2.0.0</version>
   </dependency>
 </dependencies>
 ```
@@ -163,9 +163,6 @@ MIT
 
 ##Prerequisites
 Bychan has no dependencies and runs on JDK 8 and above.
-
-##Maturity
-This is the first public version of Bychan. For this release I tried to focus on parsing expressions, so functionality for statements might be a bit lacking. Please let me know if you run into limitations in this area. Documentation is also slim to none, if there is interest in this project this will definitely improve.
  
  
 
