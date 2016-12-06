@@ -24,10 +24,10 @@ public class LexParser<N> {
         final PrattParser<N> p1 = new PrattParser<>(lexingResult.getSuccessValue(), text);
         final ParseResult<N> parsed = tryParse(p1, f);
         if (parsed.isSuccess()) {
-            if (!p1.peek().isA(EndToken.get().getName())) {
+            if (!p1.peek().isA("end")) {
                 return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", p1.getParsingPosition()));
             }
-            p1.swallow(EndToken.get().getName());
+            p1.swallow("end");
         }
         return parsed;
     }

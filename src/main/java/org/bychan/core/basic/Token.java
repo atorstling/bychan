@@ -22,6 +22,10 @@ public interface Token<N> {
      */
     boolean keepAfterLexing();
 
+    /**
+     * @return  the name of the token. The name should be unique within a language and is
+     * used as key in many methods, such as {@link Parser#swallow(String)} .
+     */
     @NotNull
     default String getName() {
         final String simpleName = getClass().getSimpleName();

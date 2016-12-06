@@ -215,7 +215,7 @@ public class ReadmeExamples {
     @NotNull
     private VariableList declList(Parser<VNode> parser) {
         final ArrayList<Variable> variables = new ArrayList<>();
-        while (!parser.peek().isA(EndToken.get().getName())) {
+        while (!parser.peek().isA("end")) {
             final Lexeme<VNode> lexeme = parser.swallow("vardecl");
             final Variable variable = (Variable) parser.nud(lexeme, null);
             variables.add(variable);

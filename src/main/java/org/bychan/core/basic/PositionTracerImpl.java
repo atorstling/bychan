@@ -36,7 +36,7 @@ public class PositionTracerImpl<N> implements PositionTracer<N> {
         }
         final int currentPosition = current.getMatch().getStartPosition();
         if (currentPosition == originalInputString.length()) {
-            assert current.isA(EndToken.get().getName());
+            assert current.isA("end");
             //If we are at the END token (past the input length), use the last position.
             return originalInputString.length() -1;
         }
