@@ -35,23 +35,18 @@ public class LexParser<N> {
 
     @NotNull
     public ParseResult<N> tryParse(@NotNull final String text, ParseFunction<N> f) {
-        return tryParseCustom(text, p -> tryParse(p, f));
-    }
-
-    @NotNull
-    public ParseResult<N> tryParseCustom(@NotNull String text, TryParseFunction<N> f) {
         LexingResult<N> lexingResult = lexer.tryLex(text);
         if (lexingResult.isFailure()) {
             LexingFailedInformation lexParsingFailedInformation = lexingResult.getFailureValue();
             return ParseResult.failure(lexParsingFailedInformation);
         }
-        final PrattParser<N> p = new PrattParser<>(lexingResult.getSuccessValue(), text);
-        final ParseResult<N> parsed = f.tryParse(p);
+        final PrattParser<N> p1 = new PrattParser<>(lexingResult.getSuccessValue(), text);
+        final ParseResult<N> parsed = tryParse(p1, f);
         if (parsed.isSuccess()) {
-            if (!p.peek().isA(EndToken.get().getName())) {
-                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", p.getParsingPosition()));
+            if (!p1.peek().isA(EndToken.get().getName())) {
+                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", p1.getParsingPosition()));
             }
-            p.swallow(EndToken.get().getName());
+            p1.swallow(EndToken.get().getName());
         }
         return parsed;
     }
