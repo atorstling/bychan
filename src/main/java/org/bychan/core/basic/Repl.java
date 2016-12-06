@@ -25,11 +25,12 @@ public class Repl<N> implements Runnable {
 
     interface RunFunction<N> {
         /**
-         * A callback used to parse a snippet.
+         * Used to parse a snippet and return a N if it went well, or a string error if it went bad.
          * Parses the given snippet with the parser. You may add try..catch to swallow exceptions if you wish .
          * @param lexParser the lexParser to use to parse the ...
+         * @param parseFunction the supplied function for parsing a line in the repl
          * @param snippet ... snippet.
-         * @return A parse result.
+         * @return A run result
          */
         ReplRunResult<N> run(LexParser<N> lexParser, ParseFunction<N> parseFunction, String snippet);
     }
