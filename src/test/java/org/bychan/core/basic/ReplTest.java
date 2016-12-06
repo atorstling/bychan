@@ -135,9 +135,9 @@ public class ReplTest {
         final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0))
                 .withIn(in)
                 .withOut(out)
-                .withParsingFunction((lexParser, snippet) -> {
+                .withRunFunction((lexParser, parseFunction, snippet) -> {
                     try {
-                        final ParseResult<Integer> result = lexParser.tryParse(snippet, p -> p.expression(null, 0));
+                        final ParseResult<Integer> result = lexParser.tryParse(snippet, parseFunction);
                         if (result.isFailure()) {
                             return ReplRunResult.error(result.getErrorMessage().toString());
                         }

@@ -13,18 +13,19 @@ public class ReplBuilder<N> {
     @NotNull
     private final Language<N> language;
     @NotNull
-    private Repl.ParsingFunction<N> parsingFunction;
+    private Repl.RunFunction<N> runFunction;
     @NotNull
     private Repl.EvaluationFunction<N> evaluationFunction;
+    @NotNull
+    private ParseFunction<N> parseFunction;
     private BufferedReader in;
     private BufferedWriter out;
 
     public ReplBuilder(@NotNull final Language<N> language, ParseFunction<N> pf) {
         this.language = language;
-        withIn(System.in).withOut(System.out);
-
-        parsingFunction = (lexParser, snippet) -> {
-            final ParseResult<N> result = lexParser.tryParse(snippet, pf);
+        withIn(System.in).withOut(System.out).withParseFunction(pf);
+        runFunction = (lexParser, parseFunction, snippet) -> {
+            final ParseResult<N> result = lexParser.tryParse(snippet, parseFunction);
             if (result.isFailure()) {
                 return ReplRunResult.error(result.getErrorMessage().toString());
             } else {
@@ -32,6 +33,12 @@ public class ReplBuilder<N> {
             }
         };
         evaluationFunction = Repl::reflectionInvokeEvaluate;
+    }
+
+    @NotNull
+    private ReplBuilder<N> withParseFunction(@NotNull final ParseFunction<N> parseFunction) {
+        this.parseFunction = parseFunction;
+        return this;
     }
 
     private ReplBuilder<N> withIn(InputStream in) {
@@ -48,8 +55,8 @@ public class ReplBuilder<N> {
         return this;
     }
 
-    public ReplBuilder<N> withParsingFunction(@NotNull Repl.ParsingFunction<N> parsingFunction) {
-        this.parsingFunction = parsingFunction;
+    public ReplBuilder<N> withRunFunction(@NotNull Repl.RunFunction<N> runFunction) {
+        this.runFunction = runFunction;
         return this;
     }
 
@@ -59,7 +66,7 @@ public class ReplBuilder<N> {
     }
 
     public Repl<N> build() {
-        return new Repl<>(language, in, out, parsingFunction, evaluationFunction);
+        return new Repl<>(language, in, out, runFunction, evaluationFunction, parseFunction);
     }
 
     public ReplBuilder<N> withOut(OutputStream out) {

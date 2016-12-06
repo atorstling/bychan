@@ -21,8 +21,9 @@ public class Repl<N> implements Runnable {
     @NotNull
     private final String languageName;
     private final EvaluationFunction<N> evaluationFunction;
+    private final ParseFunction<N> parseFunction;
 
-    interface ParsingFunction<N> {
+    interface RunFunction<N> {
         /**
          * A callback used to parse a snippet.
          * Parses the given snippet with the parser. You may add try..catch to swallow exceptions if you wish .
@@ -30,7 +31,7 @@ public class Repl<N> implements Runnable {
          * @param snippet ... snippet.
          * @return A parse result.
          */
-        ReplRunResult<N> parse(LexParser<N> lexParser, String snippet);
+        ReplRunResult<N> run(LexParser<N> lexParser, ParseFunction<N> parseFunction, String snippet);
     }
 
     interface EvaluationFunction<N> {
@@ -46,14 +47,15 @@ public class Repl<N> implements Runnable {
         Object evaluate(N node);
     }
 
-    private final ParsingFunction<N> parsingFunction;
+    private final RunFunction<N> runFunction;
 
-    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, ParsingFunction<N> parsingFunction, EvaluationFunction<N> evaluationFunction) {
+    public Repl(@NotNull Language<N> language, @NotNull BufferedReader in, @NotNull BufferedWriter out, RunFunction<N> runFunction, EvaluationFunction<N> evaluationFunction, ParseFunction<N> parseFunction) {
+        this.parseFunction = parseFunction;
         languageName = language.getName();
         this.lexParser = language.newLexParser();
         this.in = in;
         this.out = out;
-        this.parsingFunction = parsingFunction;
+        this.runFunction = runFunction;
         this.evaluationFunction = evaluationFunction;
     }
 
@@ -81,7 +83,7 @@ public class Repl<N> implements Runnable {
                 out.flush();
                 break;
             }
-            ReplRunResult<N> result = parsingFunction.parse(lexParser, snippet);
+            ReplRunResult<N> result = runFunction.run(lexParser, parseFunction, snippet);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());
                 out.newLine();
