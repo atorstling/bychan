@@ -168,7 +168,7 @@ public class PrattParserTest {
             p.expression(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
-            assertEquals("Parsing failed: 'Expected token 'RightParenthesisToken', but got 'END'' @ mock position", e.getFailureInformation().toString());
+            assertEquals("Parsing failed: 'Expected token 'rightParenthesis', but got 'END'' @ mock position", e.getFailureInformation().toString());
         }
     }
 

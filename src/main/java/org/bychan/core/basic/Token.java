@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
  * A token defines how to make certain types of lexemes.
  * A pattern defines which string segments to match during lexing,
  * and a factory method makes lexemes out of the resulting matches.
- *
  */
 public interface Token<N> {
     @NotNull
@@ -25,6 +24,8 @@ public interface Token<N> {
 
     @NotNull
     default String getName() {
-        return getClass().getSimpleName();
+        final String simpleName = getClass().getSimpleName();
+        final String uncapitalized = simpleName.substring(0, 1).toLowerCase() + simpleName.substring(1);
+        return uncapitalized.replaceAll("Token", "");
     }
 }
