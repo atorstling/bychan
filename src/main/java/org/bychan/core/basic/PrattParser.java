@@ -24,28 +24,6 @@ public class PrattParser<N> implements Parser<N> {
         return expression(null, 0);
     }
 
-    @NotNull
-    public ParseResult<N> tryParseFully(@Nullable N left, final int rightBindingPower) {
-        ParseResult<N> parsed = tryParse(left, rightBindingPower);
-        if (parsed.isSuccess()) {
-            if (!peek().isA(EndToken.get().getName())) {
-                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", getParsingPosition()));
-            }
-            swallow(EndToken.get().getName());
-        }
-        return parsed;
-    }
-
-    @NotNull
-    public ParseResult<N> tryParse(@Nullable N left, final int rightBindingPower) {
-        try {
-            N rootNode = expression(left, rightBindingPower);
-            return ParseResult.success(rootNode);
-        } catch (ParsingFailedException e) {
-            return ParseResult.failure(e.getFailureInformation());
-        }
-    }
-
     /**
      * Parse upcoming tokens from the stream into an expression, and keep going
      * until token binding powers drop down to or below the supplied right binding power. If this

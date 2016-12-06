@@ -17,7 +17,6 @@ class TokenFinderImpl<N> implements TokenFinder<N> {
 
     public TokenFinderImpl(Collection<DynamicToken<N>> dynamicTokens) {
         tokensByKey = dynamicTokens.stream().collect(Collectors.toMap(DynamicToken::getName, Function.identity()));
-        tokensByKey.put(EndToken.get().getName(), EndToken.get());
     }
 
     @NotNull

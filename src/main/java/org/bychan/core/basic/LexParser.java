@@ -1,14 +1,13 @@
 package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Facade for a {@link org.bychan.core.basic.PrattParser} and a {@link org.bychan.core.basic.Lexer} which lexes and parses
  * an input text completely, making sure all input text has been properly processed before returning a result.
- *
  */
 public class LexParser<N> {
     @NotNull
@@ -34,13 +33,36 @@ public class LexParser<N> {
     }
 
     public ParseResult<N> tryParse(@NotNull final String text) {
-        return tryParse(text, p -> p.tryParseFully(null, 0));
+        return tryParse(text, p -> tryParseFully(p, null, 0));
     }
 
     @NotNull
     public ParseResult<N> tryParse(@NotNull N left, @NotNull final String text) {
-        return tryParse(text, p -> p.tryParseFully(left, 0));
+        return tryParse(text, p -> tryParseFully(p, left, 0));
     }
+
+    @NotNull
+    public ParseResult<N> tryParseFully(PrattParser<N> p, @Nullable N left, final int rightBindingPower) {
+        ParseResult<N> parsed = tryParse(p, left, rightBindingPower);
+        if (parsed.isSuccess()) {
+            if (!p.peek().isA(EndToken.get().getName())) {
+                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", p.getParsingPosition()));
+            }
+            p.swallow(EndToken.get().getName());
+        }
+        return parsed;
+    }
+
+    @NotNull
+    public ParseResult<N> tryParse(PrattParser<N> p, @Nullable N left, final int rightBindingPower) {
+        try {
+            N rootNode = p.expression(left, rightBindingPower);
+            return ParseResult.success(rootNode);
+        } catch (ParsingFailedException e) {
+            return ParseResult.failure(e.getFailureInformation());
+        }
+    }
+
 
     @NotNull
     public ParseResult<N> tryParse(@NotNull final String text, ParseFunction<N> parseFunction) {
