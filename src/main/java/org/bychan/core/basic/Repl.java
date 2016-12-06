@@ -30,7 +30,7 @@ public class Repl<N> implements Runnable {
          * @param snippet ... snippet.
          * @return A parse result.
          */
-        ParseResult<N> parse(LexParser<N> lexParser, String snippet);
+        ReplRunResult<N> parse(LexParser<N> lexParser, String snippet);
     }
 
     interface EvaluationFunction<N> {
@@ -81,7 +81,7 @@ public class Repl<N> implements Runnable {
                 out.flush();
                 break;
             }
-            ParseResult<N> result = parsingFunction.parse(lexParser, snippet);
+            ReplRunResult<N> result = parsingFunction.parse(lexParser, snippet);
             if (result.isFailure()) {
                 out.write("Error:" + result.getErrorMessage());
                 out.newLine();

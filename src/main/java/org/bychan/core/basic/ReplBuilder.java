@@ -23,7 +23,14 @@ public class ReplBuilder<N> {
     public ReplBuilder(@NotNull final Language<N> language) {
         this.language = language;
         withIn(System.in).withOut(System.out);
-        parsingFunction = LexParser::tryParse;
+        parsingFunction = (lexParser, snippet) -> {
+            final ParseResult<N> result = lexParser.tryParse(snippet);
+            if (result.isFailure()) {
+                return ReplRunResult.error(result.getErrorMessage().toString());
+            } else {
+                return ReplRunResult.success(result.getRootNode());
+            }
+        };
         evaluationFunction = Repl::reflectionInvokeEvaluate;
     }
 

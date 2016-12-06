@@ -206,10 +206,7 @@ public class ReadmeExamples {
         final Language<VNode> lang = b.completeLanguage();
         final LexParser<VNode> lp = lang.newLexParser();
 
-        final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", parser -> {
-            final VariableList list = declList(parser);
-            return ParseResult.success(list);
-        });
+        final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", this::declList);
         assertEquals(new VariableList(Arrays.asList(new Variable("int", "a", "4"), new Variable("float", "b", "72"))), pr.getRootNode());
     }
 

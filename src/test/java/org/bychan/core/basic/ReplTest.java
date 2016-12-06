@@ -135,19 +135,22 @@ public class ReplTest {
         final Repl<Integer> r = new ReplBuilder<>(l)
                 .withIn(in)
                 .withOut(out)
-                .withParsingFunction((lexParser, snippet) -> lexParser.tryParse(snippet, p -> {
+                .withParsingFunction((lexParser, snippet) -> {
                     try {
-                        final Integer node = p.parseExpression();
-                        return ParseResult.success(node);
+                        final ParseResult<Integer> result = lexParser.tryParse(snippet);
+                        if (result.isFailure()) {
+                            return ReplRunResult.error(result.getErrorMessage().toString());
+                        }
+                        return ReplRunResult.success(result.getRootNode());
                     } catch (TestException3 te3) {
-                        return ParseResult.failure(new ParsingFailedInformation("Exception3 thrown", p.getParsingPosition()));
+                        return ReplRunResult.error("Exception3 thrown");
                     }
-                }))
+                })
                 .build();
         r.run();
         assertEquals("Welcome to the REPL for 'test'.\n" +
                 prompt +
-                ">>Error:Parsing failed: 'Exception3 thrown' @  position 1:1 (index 0), current lexeme is an a(a), previous was null, and remaining are [END]\n" +
+                ">>Error:Exception3 thrown\n" +
                 ">>leaving\n", out.toString());
     }
 
@@ -179,7 +182,7 @@ public class ReplTest {
                 .withEvaluationFunction(node -> {
                     try {
                         return Repl.reflectionInvokeEvaluate(node);
-                    } catch(TestException4 te4) {
+                    } catch (TestException4 te4) {
                         return null;
                     }
                 })
