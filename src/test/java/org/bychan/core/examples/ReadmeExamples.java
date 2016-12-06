@@ -52,7 +52,7 @@ public class ReadmeExamples {
                 .build();
         lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
             String next = parser.expression(left, lexeme.leftBindingPower());
-            parser.swallow(rparen.getToken());
+            parser.swallow(rparen.getToken().getName());
             return next;
         }).build();
         lb.powerUp();
@@ -210,11 +210,11 @@ public class ReadmeExamples {
 
         final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", parser -> {
             final ArrayList<Variable> variables = new ArrayList<>();
-            while (!parser.peek().isA(EndToken.get())) {
-                final Lexeme<VNode> lexeme = parser.swallow(decl.getToken());
+            while (!parser.peek().isA(EndToken.get().getName())) {
+                final Lexeme<VNode> lexeme = parser.swallow(decl.getToken().getName());
                 final Variable variable = (Variable) parser.nud(lexeme, null);
                 variables.add(variable);
-                parser.swallow(semicolon.getToken());
+                parser.swallow(semicolon.getToken().getName());
             }
             return ParseResult.success(new VariableList(variables));
         });

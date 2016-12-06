@@ -28,10 +28,10 @@ public class PrattParser<N> implements Parser<N> {
     public ParseResult<N> tryParseFully(@Nullable N left, final int rightBindingPower) {
         ParseResult<N> parsed = tryParse(left, rightBindingPower);
         if (parsed.isSuccess()) {
-            if (!peek().isA(EndToken.get())) {
+            if (!peek().isA(EndToken.get().getName())) {
                 return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", getParsingPosition()));
             }
-            swallow(EndToken.get());
+            swallow(EndToken.get().getName());
         }
         return parsed;
     }
@@ -138,10 +138,10 @@ public class PrattParser<N> implements Parser<N> {
     }
 
     @NotNull
-    public Lexeme<N> swallow(@NotNull Token<N> token) {
+    public Lexeme<N> swallow(String tokenName) {
         Lexeme<N> next = next();
-        if (!next.isA(token)) {
-            throw new ParsingFailedException(new ParsingFailedInformation("Expected token '" + token.getName() + "', but got '" + next + "'", getParsingPosition()));
+        if (!next.getToken().getName().equals(tokenName)) {
+            throw new ParsingFailedException(new ParsingFailedInformation("Expected token '" + tokenName + "', but got '" + next + "'", getParsingPosition()));
         }
         return next;
     }

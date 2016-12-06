@@ -18,7 +18,7 @@ public class LeftParenthesisLexeme<N> implements Lexeme<N> {
     public NudParseAction<N> getNud() {
         return (left, parser) -> {
             N expression = parser.expression(left, 0);
-            parser.swallow(RightParenthesisToken.<N>get());
+            parser.swallow(RightParenthesisToken.<N>get().getName());
             return expression;
         };
     }

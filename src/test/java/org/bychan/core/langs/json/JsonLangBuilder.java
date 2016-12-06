@@ -26,28 +26,28 @@ class JsonLangBuilder {
         lb.newToken().named("lbracket").matchesString("[")
                 .nud((left, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
-                    while (!parser.peek().isA(rbracket.getToken())) {
+                    while (!parser.peek().isA(rbracket.getToken().getName())) {
                         expressions.add(parser.expression(left, lexeme.leftBindingPower()));
-                        if (!parser.peek().isA(rbracket.getToken())) {
-                            parser.swallow(comma.getToken());
+                        if (!parser.peek().isA(rbracket.getToken().getName())) {
+                            parser.swallow(comma.getToken().getName());
                         }
                     }
-                    parser.swallow(rbracket.getToken());
+                    parser.swallow(rbracket.getToken().getName());
                     return new ArrayNode(expressions);
                 }).build();
         lb.newToken().named("lcurly").matchesString("{")
                 .nud((left, parser, lexeme) -> {
                     LinkedHashMap<StringLiteralNode, JsonNode> pairs = new LinkedHashMap<>();
-                    while (!parser.peek().isA(rcurly.getToken())) {
-                        final StringLiteralNode key = (StringLiteralNode) parser.nud(parser.swallow(string.getToken()), left);
-                        parser.swallow(colon.getToken());
+                    while (!parser.peek().isA(rcurly.getToken().getName())) {
+                        final StringLiteralNode key = (StringLiteralNode) parser.nud(parser.swallow(string.getToken().getName()), left);
+                        parser.swallow(colon.getToken().getName());
                         JsonNode value = parser.expression(left, lexeme.leftBindingPower());
                         pairs.put(key, value);
-                        if (!parser.peek().isA(rcurly.getToken())) {
-                            parser.swallow(comma.getToken());
+                        if (!parser.peek().isA(rcurly.getToken().getName())) {
+                            parser.swallow(comma.getToken().getName());
                         }
                     }
-                    parser.swallow(rcurly.getToken());
+                    parser.swallow(rcurly.getToken().getName());
                     return new ObjectNode(pairs);
                 }).build();
 

@@ -23,7 +23,7 @@ public interface Parser<N> {
      * Swallow a token of the specified token.
      */
     @NotNull
-    Lexeme<N> swallow(@NotNull Token<N> token);
+    Lexeme<N> swallow(String tokenName);
 
     @NotNull
     Lexeme<N> peek();

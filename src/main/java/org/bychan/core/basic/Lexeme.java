@@ -50,7 +50,7 @@ public interface Lexeme<N> {
         return getMatch().group(i);
     }
 
-    default boolean isA(Token<N> token) {
-        return getToken().equals(token);
+    default boolean isA(String tokenName) {
+        return getToken().getName().equals(tokenName);
     }
 }
