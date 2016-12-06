@@ -35,7 +35,7 @@ public class MiniLangTest {
                 .nud((left, parser, lexeme) -> {
                     Scope scope = (left == null) ? new RootScope() : left.getScope() == null ? new RootScope() : new NestedScope(left.getScope());
                     ScopeNode scopeNode = new ScopeNode(scope);
-                    LaiLaiNode expression = parser.expression(scopeNode, lexeme.leftBindingPower());
+                    LaiLaiNode expression = parser.expr(scopeNode, lexeme.lbp());
                     scopeNode.setChild(expression);
                     parser.swallow("rcurly");
                     return scopeNode;
@@ -49,7 +49,7 @@ public class MiniLangTest {
                 .matchesString("(")
                 .named("lparen")
                 .nud((left, parser, lexeme) -> {
-                    LaiLaiNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
+                    LaiLaiNode trailingExpression = parser.expr(left, lexeme.lbp());
                     parser.swallow("rparen");
                     return trailingExpression;
                 });
@@ -62,19 +62,19 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> plus = lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .nud((left, parser, lexeme) -> parser.expression(left, lexeme.leftBindingPower()))
-                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expression(left, lexeme.leftBindingPower())));
+                .nud((left, parser, lexeme) -> parser.expr(left, lexeme.lbp()))
+                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expr(left, lexeme.lbp())));
 
         TokenDefinitionBuilder<LaiLaiNode> hat = lb.newToken()
                 .matchesString("^")
                 .named("hat")
-                .led((left, parser, lexeme) -> new HatNode(left, parser.expression(left, lexeme.leftBindingPower())));
+                .led((left, parser, lexeme) -> new HatNode(left, parser.expr(left, lexeme.lbp())));
 
         TokenDefinitionBuilder<LaiLaiNode> assign = lb.newToken()
                 .matchesString("=")
                 .named("assign")
                 .led((left, parser, lexeme) -> {
-                    LaiLaiNode right = parser.expression(left, lexeme.leftBindingPower());
+                    LaiLaiNode right = parser.expr(left, lexeme.lbp());
                     return new AssignNode(left, right);
                 });
 
@@ -83,7 +83,7 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> variableDeclaration = lb.newToken()
                 .matchesPattern("(?:float|int|bool) [a-z]+")
                 .named("variableDef").nud((left, parser, lexeme) -> {
-                    String declaration = lexeme.getText();
+                    String declaration = lexeme.text();
                     Matcher matcher = variablePattern.matcher(declaration);
                     boolean matches = matcher.matches();
                     if (!matches) {
@@ -96,29 +96,29 @@ public class MiniLangTest {
         TokenDefinitionBuilder<LaiLaiNode> variableReference = lb.newToken()
                 .matchesPattern("[a-z]+")
                 .named("variableRef").nud((left, parser, lexeme) -> {
-                    String name = lexeme.getText();
+                    String name = lexeme.text();
                     return new VariableRefNode(name);
                 });
 
         TokenDefinitionBuilder<LaiLaiNode> booleanLiteral = lb.newToken()
                 .matchesPattern("true|false")
-                .named("bool").nud((left, parser, lexeme) -> new BooleanLiteralNode(Boolean.parseBoolean(lexeme.getText())));
+                .named("bool").nud((left, parser, lexeme) -> new BooleanLiteralNode(Boolean.parseBoolean(lexeme.text())));
 
         TokenDefinitionBuilder<LaiLaiNode> integerLiteral = lb.newToken()
                 .matchesPattern("[0-9]+i")
                 .named("int").nud((left, parser, lexeme) -> {
-                    String text = lexeme.getText();
+                    String text = lexeme.text();
                     return new IntegerLiteralNode(left, Integer.parseInt(text.substring(0, text.length() - 1)));
                 });
 
         TokenDefinitionBuilder<LaiLaiNode> floatLiteral = lb.newToken()
                 .matchesPattern("[0-9]+f")
-                .named("float").nud((left, parser, lexeme) -> new FloatLiteralNode(left, Float.parseFloat(lexeme.getText())));
+                .named("float").nud((left, parser, lexeme) -> new FloatLiteralNode(left, Float.parseFloat(lexeme.text())));
 
         TokenDefinitionBuilder<LaiLaiNode> semicolon = lb.newToken()
                 .matchesString(";")
                 .named("statement")
-                .led((left, parser, lexeme) -> new StatementNode(left, parser.expression(left, lexeme.leftBindingPower())));
+                .led((left, parser, lexeme) -> new StatementNode(left, parser.expr(left, lexeme.lbp())));
 
         final TokenDefinitionBuilder<LaiLaiNode> listEnd = lb.newToken()
                 .matchesString("]")
@@ -134,7 +134,7 @@ public class MiniLangTest {
                 .nud((left, parser, lexeme) -> {
                     ArrayList<LaiLaiNode> expressions = new ArrayList<>();
                     while (!parser.peek().isA("listEnd")) {
-                        expressions.add(parser.expression(left, lexeme.leftBindingPower()));
+                        expressions.add(parser.expr(left, lexeme.lbp()));
                         if (!parser.peek().isA("listEnd")) {
                             parser.swallow("comma");
                         }
@@ -160,16 +160,16 @@ public class MiniLangTest {
         assign.leftBindingPower(fourth).build();
         plus.leftBindingPower(fifth).build();
         hat.leftBindingPower(fifth).build();
-        Language<LaiLaiNode> l = lb.completeLanguage();
+        Language<LaiLaiNode> l = lb.build();
         testOne(l);
         testTwo(l);
 
-        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{int a=1i; int b=2i; { int a=3i; a+b}}", p -> p.expression(null, 0));
+        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{int a=1i; int b=2i; { int a=3i; a+b}}", p -> p.expr(null, 0));
         assertEquals(5, r.root().evaluate(null));
     }
 
     private void testTwo(Language<LaiLaiNode> l) {
-        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}", p -> p.expression(null, 0));
+        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}", p -> p.expr(null, 0));
         LaiLaiNode root = r.root();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
         assertEquals(Arrays.asList(Boolean.TRUE, 16f), root.evaluate(null));
@@ -177,7 +177,7 @@ public class MiniLangTest {
 
     private void testOne(Language<LaiLaiNode> l) {
         String expr = "{int a=5i; a=a+4i; a}";
-        ParseResult<LaiLaiNode> result = l.newLexParser().tryParse(expr, p -> p.expression(null, 0));
+        ParseResult<LaiLaiNode> result = l.newLexParser().tryParse(expr, p -> p.expr(null, 0));
         LaiLaiNode rootNode = result.root();
         assertEquals("(s (x (x (= int(a) 5i) (= a (+ a 4i))) a))", rootNode.toString());
         assertEquals(9, rootNode.evaluate(null));

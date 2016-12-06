@@ -9,7 +9,7 @@ public class LanguageBuilderTest {
 
     @Test
     public void noNameIsAcceptable() {
-        new LanguageBuilder<>().completeLanguage();
+        new LanguageBuilder<>().build();
     }
 
     @Test
@@ -27,7 +27,7 @@ public class LanguageBuilderTest {
     public void noNameOnTokenResultsInDefault() {
         LanguageBuilder<Object> lb = new LanguageBuilder<>();
         TokenDefinition<Object> tokenDefinition = lb.newToken().matchesString("[0-9]+").build();
-        lb.completeLanguage();
+        lb.build();
         assertEquals("token1", tokenDefinition.tokenName());
     }
 }

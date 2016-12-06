@@ -35,7 +35,7 @@ public class VariableLexeme implements Lexeme<BooleanExpressionNode> {
         return null;
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         throw new UnsupportedOperationException();
     }
 

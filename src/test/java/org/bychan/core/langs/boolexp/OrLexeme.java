@@ -21,10 +21,10 @@ public class OrLexeme implements Lexeme<BooleanExpressionNode> {
     @Nullable
     @Override
     public LedParseAction<BooleanExpressionNode> getLed() {
-        return (left, parser) -> new OrNode(left, parser.expression(left, leftBindingPower()));
+        return (left, parser) -> new OrNode(left, parser.expr(left, lbp()));
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         return 20;
     }
 

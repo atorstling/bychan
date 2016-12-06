@@ -14,9 +14,9 @@ public class AssociativityTest {
     @Test
     public void right() {
         LanguageBuilder<Integer> lb = new LanguageBuilder<>("pow");
-        lb.newToken().named("number").matchesPattern("[0-9]+").nud((left, parser, lexeme) -> Integer.parseInt(lexeme.getText())).build();
-        lb.newToken().named("pow").matchesString("^").led((left, parser, lexeme) -> (int) Math.pow(left, parser.expression(left, lexeme.leftBindingPower() - 1))).build();
-        Language<Integer> l = lb.completeLanguage();
-        assertEquals((Integer) 256, l.newLexParser().tryParse("2^2^3", p -> p.expression(null, 0)).root());
+        lb.newToken().named("number").matchesPattern("[0-9]+").nud((left, parser, lexeme) -> Integer.parseInt(lexeme.text())).build();
+        lb.newToken().named("pow").matchesString("^").led((left, parser, lexeme) -> (int) Math.pow(left, parser.expr(left, lexeme.lbp() - 1))).build();
+        Language<Integer> l = lb.build();
+        assertEquals((Integer) 256, l.newLexParser().tryParse("2^2^3", p -> p.expr(null, 0)).root());
     }
 }

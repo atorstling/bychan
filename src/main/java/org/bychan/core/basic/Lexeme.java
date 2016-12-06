@@ -14,9 +14,10 @@ public interface Lexeme<N> {
     @Nullable
     LedParseAction<N> getLed();
     /**
-     * @return How strongly this lexeme, when interpreted as an infix operator (led), binds to the left argument.
+     * @return The left binding power of this lexeme.
+     * How strongly this lexeme, when interpreted as an infix operator (led), binds to the left argument.
      */
-    int leftBindingPower();
+    int lbp();
 
     /**
      * Get the token of this lexeme.
@@ -31,7 +32,7 @@ public interface Lexeme<N> {
     LexingMatch getMatch();
 
     @NotNull
-    default String getText() {
+    default String text() {
         return getMatch().getText();
     }
 

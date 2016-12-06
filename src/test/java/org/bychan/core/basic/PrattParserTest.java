@@ -30,7 +30,7 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch(text)),
                 createTestEndToken());
         PrattParser<CalculatorNode> p = createParser(lexemes);
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         assertEquals(new NumberNode(1), rootNode);
     }
 
@@ -44,8 +44,8 @@ public class PrattParserTest {
         return new PrattParser<>(lexemes, positionTracer);
     }
 
-    private EndLexeme createTestEndToken() {
-        return new EndLexeme(new LexingMatch<>(7, 8, "", EndToken.get()));
+    private <N> EndLexeme<N> createTestEndToken() {
+        return new EndLexeme<>(new LexingMatch<>(7, 8, "", EndToken.get()));
     }
 
     private LexingMatch createTestMatch(String text) {
@@ -64,7 +64,7 @@ public class PrattParserTest {
                 new SubtractionLexeme(nextMatch()),
                 new NumberLexeme(createTestMatch("2")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         assertEquals(new SubtractionNode(new NumberNode(1), new NumberNode(2)), rootNode);
     }
 
@@ -75,7 +75,7 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("2")),
                 new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         assertEquals(new NumberNode(2), rootNode);
     }
 
@@ -90,7 +90,7 @@ public class PrattParserTest {
                 new SubtractionLexeme(nextMatch()),
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         SubtractionNode left = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -107,7 +107,7 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("3")),
                 new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         NumberNode left = new NumberNode(1);
         SubtractionNode right = new SubtractionNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -122,7 +122,7 @@ public class PrattParserTest {
                 new MultiplicationLexeme(nextMatch()),
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         NumberNode left = new NumberNode(1);
         MultiplicationNode right = new MultiplicationNode(new NumberNode(2), new NumberNode(3));
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -137,7 +137,7 @@ public class PrattParserTest {
                 new SubtractionLexeme(nextMatch()),
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new SubtractionNode(left, right), rootNode);
@@ -152,7 +152,7 @@ public class PrattParserTest {
                 new MultiplicationLexeme(nextMatch()),
                 new NumberLexeme(createTestMatch("3")),
                 createTestEndToken()));
-        CalculatorNode rootNode = p.expression(null, 0);
+        CalculatorNode rootNode = p.expr(null, 0);
         MultiplicationNode left = new MultiplicationNode(new NumberNode(1), new NumberNode(2));
         NumberNode right = new NumberNode(3);
         assertEquals(new MultiplicationNode(left, right), rootNode);
@@ -165,7 +165,7 @@ public class PrattParserTest {
                 new NumberLexeme(createTestMatch("1")),
                 createTestEndToken()));
         try {
-            p.expression(null, 0);
+            p.expr(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing failed: 'Expected token 'rightParenthesis', but got 'END'' @ mock position", e.getFailureInformation().toString());
@@ -178,7 +178,7 @@ public class PrattParserTest {
                 new RightParenthesisLexeme(nextMatch()),
                 createTestEndToken()));
         try {
-            p.expression(null, 0);
+            p.expr(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing failed: 'Current lexeme does not support nud parsing' @ mock position", e.getMessage());
@@ -190,7 +190,7 @@ public class PrattParserTest {
         PrattParser<CalculatorNode> p = createParser(Collections.<Lexeme<CalculatorNode>>singletonList(
                 createTestEndToken()));
         try {
-            p.expression(null, 0);
+            p.expr(null, 0);
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Parsing failed: 'Premature end reached' @ mock position", e.getFailureInformation().toString());
@@ -209,7 +209,7 @@ public class PrattParserTest {
         Lexeme second = mock(Lexeme.class);
         when(second.toString()).thenReturn("secondToken");
         when(second.getLed()).thenReturn(null);
-        when(second.leftBindingPower()).thenReturn(1);
+        when(second.lbp()).thenReturn(1);
         when(second.getToken()).thenReturn(mock(Token.class));
         //noinspection unchecked
         LexingMatch<Object> match = mock(LexingMatch.class);
@@ -218,7 +218,7 @@ public class PrattParserTest {
 
         PrattParser<Object> p = createParser(Arrays.asList(first, second));
         try {
-            p.expression(5, 0);
+            p.expr(5, 0);
             fail("Expected exception");
         } catch(ParsingFailedException e) {
             assertEquals("Parsing failed: 'Current token does not support led parsing' @ mock position", e.getMessage());
@@ -235,9 +235,10 @@ public class PrattParserTest {
         when(match.getStartPosition()).thenReturn(1);
         when(lexeme.getMatch()).thenReturn(match);
         when(lexeme.getToken()).thenReturn(mock(Token.class));
+        //noinspection unchecked
         PrattParser<Object> p = createParser(Collections.singletonList(lexeme));
         try {
-            p.expression(null, 0);
+            p.expr(null, 0);
             fail("Expected exception");
         } catch(ParsingFailedException e) {
             assertEquals("Parsing failed: 'Current lexeme does not support nud parsing' @ mock position", e.getMessage());

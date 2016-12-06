@@ -12,7 +12,7 @@ public class ParsingFailedException extends RuntimeException {
     }
 
     public static ParsingFailedException forFailedAfterLexing(@NotNull String failureMessage, @NotNull Parser<?> parser) {
-        return new ParsingFailedException(new ParsingFailedInformation(failureMessage, parser.getParsingPosition()));
+        return new ParsingFailedException(new ParsingFailedInformation(failureMessage, parser.position()));
     }
 
     @NotNull

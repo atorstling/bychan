@@ -27,7 +27,7 @@ class JsonLangBuilder {
                 .nud((left, parser, lexeme) -> {
                     ArrayList<JsonNode> expressions = new ArrayList<>();
                     while (!parser.peek().isA("rbracket")) {
-                        expressions.add(parser.expression(left, lexeme.leftBindingPower()));
+                        expressions.add(parser.expr(left, lexeme.lbp()));
                         if (!parser.peek().isA("rbracket")) {
                             parser.swallow("comma");
                         }
@@ -41,7 +41,7 @@ class JsonLangBuilder {
                     while (!parser.peek().isA("rcurly")) {
                         final StringLiteralNode key = (StringLiteralNode) parser.nud(parser.swallow("string"), left);
                         parser.swallow("colon");
-                        JsonNode value = parser.expression(left, lexeme.leftBindingPower());
+                        JsonNode value = parser.expr(left, lexeme.lbp());
                         pairs.put(key, value);
                         if (!parser.peek().isA("rcurly")) {
                             parser.swallow("comma");
@@ -51,7 +51,7 @@ class JsonLangBuilder {
                     return new ObjectNode(pairs);
                 }).build();
 
-        return lb.completeLanguage();
+        return lb.build();
     }
 
     @NotNull
@@ -86,7 +86,7 @@ class JsonLangBuilder {
 
     @NotNull
     static TokenDefinition<JsonNode> boolLiteral(LanguageBuilder<JsonNode> lb) {
-        return lb.newToken().named("bool_literal").matchesPattern("(true)|(false)").nud((left, parser, lexeme) -> new BooleanLiteralNode(Boolean.valueOf(lexeme.getText()))).build();
+        return lb.newToken().named("bool_literal").matchesPattern("(true)|(false)").nud((left, parser, lexeme) -> new BooleanLiteralNode(Boolean.valueOf(lexeme.text()))).build();
     }
 
     @NotNull
@@ -103,7 +103,7 @@ class JsonLangBuilder {
     static TokenDefinition<JsonNode> numberLiteral(LanguageBuilder<JsonNode> lb) {
         return lb.newToken().named("number_literal")
                 .matchesPattern("-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE]([+-])?[0-9]+)?")
-                .nud((left, parser, lexeme) -> new NumberLiteralNode(lexeme.getText()))
+                .nud((left, parser, lexeme) -> new NumberLiteralNode(lexeme.text()))
                 .build();
     }
 }

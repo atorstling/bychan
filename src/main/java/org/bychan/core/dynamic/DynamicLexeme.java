@@ -39,7 +39,7 @@ public class DynamicLexeme<N> implements Lexeme<N> {
     }
 
     @Override
-    public int leftBindingPower() {
+    public int lbp() {
         return def.getLeftBindingPower();
     }
 

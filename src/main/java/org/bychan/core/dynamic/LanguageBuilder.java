@@ -39,7 +39,7 @@ public class LanguageBuilder<N> implements TokenDefinitionOwner<N> {
     }
 
     @NotNull
-    public Language<N> completeLanguage() {
+    public Language<N> build() {
         return new Language<>(name, tokens, builders);
     }
 

@@ -25,7 +25,7 @@ public class LexParser<N> {
         final ParseResult<N> parsed = tryParse(p1, f);
         if (parsed.isSuccess()) {
             if (!p1.peek().isA("end")) {
-                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", p1.getParsingPosition()));
+                return ParseResult.failure(new ParsingFailedInformation("The input stream was not completely parsed", p1.position()));
             }
             p1.swallow("end");
         }

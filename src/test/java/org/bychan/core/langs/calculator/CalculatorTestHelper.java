@@ -10,16 +10,16 @@ public class CalculatorTestHelper {
                 .build();
         b.powerUp();
         b.newToken().named("plus").matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left + parser.expr(left, lexeme.lbp()))
                 .build();
         b.powerUp();
         b.newToken().named("multiplication").matchesString("*")
-                .led((left, parser, lexeme) -> left * parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left * parser.expr(left, lexeme.lbp()))
                 .build();
         b.powerUp();
         b.newToken().named("integer").matchesPattern("[0-9]+")
-                .nud((left, parser, lexeme) -> Integer.parseInt(lexeme.getText()))
+                .nud((left, parser, lexeme) -> Integer.parseInt(lexeme.text()))
                 .build();
-        return b.completeLanguage();
+        return b.build();
     }
 }

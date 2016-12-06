@@ -31,7 +31,7 @@ public class EndLexeme<N> implements Lexeme<N> {
         return null;
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         return 0;
     }
 

@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 public class CalculatorTest {
     public static void main(String[] args) {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        l.repl(p -> p.expression(null, 0)).run();
+        l.repl(p -> p.expr(null, 0)).run();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class CalculatorTest {
                 .matchesString("(")
                 .named("lparen")
                 .nud((left, parser, lexeme) -> {
-                    CalculatorNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
+                    CalculatorNode trailingExpression = parser.expr(left, lexeme.lbp());
                     parser.swallow("rparen");
                     return trailingExpression;
                 }).build();
@@ -44,23 +44,23 @@ public class CalculatorTest {
         lb.newToken()
                 .matchesString("+")
                 .named("plus")
-                .nud((left, parser, lexeme) -> parser.expression(left, lexeme.leftBindingPower()))
-                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expression(left, lexeme.leftBindingPower())))
+                .nud((left, parser, lexeme) -> parser.expr(left, lexeme.lbp()))
+                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expr(left, lexeme.lbp())))
                 .build();
 
         lb.newToken()
                 .matchesString("-")
                 .named("minus")
-                .nud((left, parser, lexeme) -> new NegationNode(parser.expression(left, lexeme.leftBindingPower())))
-                .led((left, parser, lexeme) -> new SubtractionNode(left, parser.expression(left, lexeme.leftBindingPower()))).build();
+                .nud((left, parser, lexeme) -> new NegationNode(parser.expr(left, lexeme.lbp())))
+                .led((left, parser, lexeme) -> new SubtractionNode(left, parser.expr(left, lexeme.lbp()))).build();
 
         lb.newToken()
                 .matchesPattern("[0-9]+")
-                .named("number").nud((left, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).build();
-        Language<CalculatorNode> l = lb.completeLanguage();
-        assertEquals(3, (int) l.newLexParser().tryParse("1+2", p2 -> p2.expression(null, 0)).root().evaluate());
-        assertEquals(-1, (int) l.newLexParser().tryParse("1+-2", p1 -> p1.expression(null, 0)).root().evaluate());
-        assertEquals(3, (int) l.newLexParser().tryParse("1--2", p -> p.expression(null, 0)).root().evaluate());
+                .named("number").nud((left, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.text()))).build();
+        Language<CalculatorNode> l = lb.build();
+        assertEquals(3, (int) l.newLexParser().tryParse("1+2", p2 -> p2.expr(null, 0)).root().evaluate());
+        assertEquals(-1, (int) l.newLexParser().tryParse("1+-2", p1 -> p1.expr(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1--2", p -> p.expr(null, 0)).root().evaluate());
     }
 
     @Test
@@ -70,29 +70,29 @@ public class CalculatorTest {
         lb.newToken().named("lparen").matchesString("(").build();
         lb.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing().build();
         lb.newToken().named("plus").matchesString("+")
-                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expression(left, lexeme.leftBindingPower()))).build();
+                .led((left, parser, lexeme) -> new AdditionNode(left, parser.expr(left, lexeme.lbp()))).build();
         lb.newToken().named("minus").matchesString("-")
-                .nud((left, parser, lexeme) -> new NegationNode(parser.expression(left, lexeme.leftBindingPower())))
-                .led((left, parser, lexeme) -> new SubtractionNode(left, parser.expression(left, lexeme.leftBindingPower()))).build();
-        lb.newToken().named("number").matchesPattern("[0-9]+").nud((left, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).build();
-        Language<CalculatorNode> l = lb.completeLanguage();
+                .nud((left, parser, lexeme) -> new NegationNode(parser.expr(left, lexeme.lbp())))
+                .led((left, parser, lexeme) -> new SubtractionNode(left, parser.expr(left, lexeme.lbp()))).build();
+        lb.newToken().named("number").matchesPattern("[0-9]+").nud((left, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.text()))).build();
+        Language<CalculatorNode> l = lb.build();
 
-        assertEquals(3, (int) l.newLexParser().tryParse("1+2", p2 -> p2.expression(null, 0)).root().evaluate());
-        assertEquals(-1, (int) l.newLexParser().tryParse("1+-2", p1 -> p1.expression(null, 0)).root().evaluate());
-        assertEquals(3, (int) l.newLexParser().tryParse("1--2", p -> p.expression(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1+2", p2 -> p2.expr(null, 0)).root().evaluate());
+        assertEquals(-1, (int) l.newLexParser().tryParse("1+-2", p1 -> p1.expr(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1--2", p -> p.expr(null, 0)).root().evaluate());
     }
 
     @Test
     public void testDirectCalculation() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        assertEquals(Integer.valueOf(7), l.newLexParser().tryParse("1 + 2 * 3", p -> p.expression(null, 0)).root());
+        assertEquals(Integer.valueOf(7), l.newLexParser().tryParse("1 + 2 * 3", p -> p.expr(null, 0)).root());
     }
 
     @Test
     public void emptyInput() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         try {
-            l.newLexParser().tryParse("", p -> p.expression(null, 0)).root();
+            l.newLexParser().tryParse("", p -> p.expr(null, 0)).root();
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Premature end reached", e.getFailureInformation().toParsingFailedInformation().getFailureMessage());

@@ -20,10 +20,6 @@ public class PrattParser<N> implements Parser<N> {
         this(lexemes, new PositionTracerImpl<>(originalInputString));
     }
 
-    public N parseExpression() {
-        return expression(null, 0);
-    }
-
     /**
      * Parse upcoming tokens from the stream into an expression, and keep going
      * until token binding powers drop down to or below the supplied right binding power. If this
@@ -38,7 +34,7 @@ public class PrattParser<N> implements Parser<N> {
      * this method with the lower binding power of "+" as an argument.
      */
     @NotNull
-    public N expression(@Nullable N left, final int rightBindingPower) {
+    public N expr(@Nullable N left, final int rightBindingPower) {
         // An expression always starts with a symbol which can qualify as a nud value
         // i.e
         // "+" as in "positive", used in for instance "+3 + 5", parses to +(rest of expression)
@@ -73,7 +69,7 @@ public class PrattParser<N> implements Parser<N> {
 
     @SuppressWarnings("UnusedDeclaration")
     private N iterativeParseLoop(@NotNull N currentLeftHandSide, final int rightBindingPower) {
-        while (peek().leftBindingPower() > rightBindingPower) {
+        while (peek().lbp() > rightBindingPower) {
             Lexeme<N> next = pop();
             currentLeftHandSide = led(currentLeftHandSide, next);
         }
@@ -82,7 +78,7 @@ public class PrattParser<N> implements Parser<N> {
 
     private N recursiveParseLoop(@NotNull final N currentLeftHandSide, final int rightBindingPower) {
         Lexeme<N> peekedLexeme = peek();
-        if (peekedLexeme.leftBindingPower() > rightBindingPower) {
+        if (peekedLexeme.lbp() > rightBindingPower) {
             //Parsing happens by passing the left LHS to the operator, which will continue parsing.
             Lexeme<N> next = pop();
             N nextExpression = led(currentLeftHandSide, next);
@@ -91,16 +87,8 @@ public class PrattParser<N> implements Parser<N> {
         return currentLeftHandSide;
     }
 
-    private N led(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
-        LedParseAction<N> ledParseAction = takenLexeme.getLed();
-        if (ledParseAction == null) {
-            throw new ParsingFailedException(new ParsingFailedInformation("Current token does not support led parsing", getParsingPosition()));
-        }
-        return ledParseAction.parse(currentLeftHandSide, this);
-    }
-
     @NotNull
-    public ParsingPosition getParsingPosition() {
+    public ParsingPosition position() {
         return positionTracer.getParsingPosition(lexemeStack);
     }
 
@@ -119,9 +107,17 @@ public class PrattParser<N> implements Parser<N> {
     public Lexeme<N> swallow(String tokenName) {
         Lexeme<N> next = next();
         if (!next.getToken().getName().equals(tokenName)) {
-            throw new ParsingFailedException(new ParsingFailedInformation("Expected token '" + tokenName + "', but got '" + next + "'", getParsingPosition()));
+            throw new ParsingFailedException(new ParsingFailedInformation("Expected token '" + tokenName + "', but got '" + next + "'", position()));
         }
         return next;
+    }
+
+    private N led(@NotNull N currentLeftHandSide, @NotNull Lexeme<N> takenLexeme) {
+        LedParseAction<N> ledParseAction = takenLexeme.getLed();
+        if (ledParseAction == null) {
+            throw new ParsingFailedException(new ParsingFailedInformation("Current token does not support led parsing", position()));
+        }
+        return ledParseAction.parse(currentLeftHandSide, this);
     }
 
     @NotNull
@@ -129,7 +125,7 @@ public class PrattParser<N> implements Parser<N> {
     public N nud(@NotNull Lexeme<N> lexeme, @Nullable N left) {
         NudParseAction<N> nudParseAction = lexeme.getNud();
         if (nudParseAction == null) {
-            throw new ParsingFailedException(new ParsingFailedInformation("Current lexeme does not support nud parsing", getParsingPosition()));
+            throw new ParsingFailedException(new ParsingFailedInformation("Current lexeme does not support nud parsing", position()));
         }
         return nudParseAction.parse(left, this);
     }

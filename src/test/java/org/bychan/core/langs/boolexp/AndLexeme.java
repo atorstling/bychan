@@ -21,12 +21,12 @@ public class AndLexeme implements Lexeme<BooleanExpressionNode> {
     @Override
     public LedParseAction<BooleanExpressionNode> getLed() {
         return (left, parser) -> {
-            BooleanExpressionNode right = parser.expression(left, leftBindingPower());
+            BooleanExpressionNode right = parser.expr(left, lbp());
             return new AndNode(left, right);
         };
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         return 10;
     }
 

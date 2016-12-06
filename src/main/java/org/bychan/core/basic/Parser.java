@@ -17,7 +17,7 @@ public interface Parser<N> {
      *             node before the sub-expression which you are trying to parse.
      */
     @NotNull
-    N expression(@Nullable N left, int rightBindingPower);
+    N expr(@Nullable N left, int rightBindingPower);
 
     /**
      * Swallow a token of the specified token.
@@ -35,7 +35,7 @@ public interface Parser<N> {
     N nud(@NotNull Lexeme<N> lexeme, @Nullable N left);
 
     @NotNull
-    ParsingPosition getParsingPosition();
+    ParsingPosition position();
 
     @NotNull
     Lexeme<N> next();

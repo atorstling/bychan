@@ -62,7 +62,7 @@ public class NumberLexeme implements Lexeme<CalculatorNode> {
         return null;
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         throw new UnsupportedOperationException();
     }
 

@@ -11,6 +11,6 @@ class BooleanExpressionParser {
     @NotNull
     public BooleanExpressionNode parse(@NotNull final String input) {
         List<Lexeme<BooleanExpressionNode>> lexemes = new Lexer<>(BooleanExpressionTokens.<BooleanSymbolTable>get()).lex(input);
-        return new PrattParser<>(lexemes, input).expression(null, 0);
+        return new PrattParser<>(lexemes, input).expr(null, 0);
     }
 }

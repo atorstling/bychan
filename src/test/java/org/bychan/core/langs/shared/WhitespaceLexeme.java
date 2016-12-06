@@ -27,7 +27,7 @@ public class WhitespaceLexeme<N> implements Lexeme<N> {
     }
 
     @Override
-    public int leftBindingPower() {
+    public int lbp() {
         return 0;
     }
 

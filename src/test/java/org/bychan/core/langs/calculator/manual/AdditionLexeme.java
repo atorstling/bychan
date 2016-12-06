@@ -25,12 +25,12 @@ public class AdditionLexeme implements Lexeme<CalculatorNode> {
     @Override
     public LedParseAction<CalculatorNode> getLed() {
         return (left, parser) -> {
-            CalculatorNode right = parser.expression(left, leftBindingPower());
+            CalculatorNode right = parser.expr(left, lbp());
             return new AdditionNode(left, right);
         };
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         return 10;
     }
 

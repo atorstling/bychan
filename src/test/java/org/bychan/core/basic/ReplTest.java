@@ -59,7 +59,7 @@ public class ReplTest {
 
     private void check(@NotNull Language<Integer> l, @NotNull BufferedReader in, @NotNull String expected) throws InterruptedException, TimeoutException, ExecutionException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0)).withIn(in).withOut(out).build();
+        Repl<Integer> r = new ReplBuilder<>(l, p -> p.expr(null, 0)).withIn(in).withOut(out).build();
         r.run();
         assertEquals(expected, out.toString());
     }
@@ -73,11 +73,11 @@ public class ReplTest {
         b.newToken().named("only").matchesString("a").nud((left, parser, lexeme) -> {
             throw new TestException1();
         }).build();
-        final Language<Integer> l = b.completeLanguage();
+        final Language<Integer> l = b.build();
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0)).withIn(in).withOut(out).build();
+        final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expr(null, 0)).withIn(in).withOut(out).build();
         try {
             r.run();
             fail("expected exception");
@@ -102,11 +102,11 @@ public class ReplTest {
     public void propagateExceptionDuringEvaluate() throws Exception {
         final LanguageBuilder<Test2> b = new LanguageBuilder<>("test");
         b.newToken().named("only").matchesString("a").nud((left, parser, lexeme) -> new Test2()).build();
-        final Language<Test2> l = b.completeLanguage();
+        final Language<Test2> l = b.build();
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Test2> r = new ReplBuilder<>(l, p -> p.expression(null, 0)).withIn(in).withOut(out).build();
+        final Repl<Test2> r = new ReplBuilder<>(l, p -> p.expr(null, 0)).withIn(in).withOut(out).build();
         try {
             r.run();
             fail("expected exception");
@@ -128,11 +128,11 @@ public class ReplTest {
         b.newToken().named("an a").matchesString("a").nud((left, parser, lexeme) -> {
             throw new TestException3();
         }).build();
-        final Language<Integer> l = b.completeLanguage();
+        final Language<Integer> l = b.build();
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0))
+        final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expr(null, 0))
                 .withIn(in)
                 .withOut(out)
                 .withRunFunction((lexParser, parseFunction, snippet) -> {
@@ -172,11 +172,11 @@ public class ReplTest {
     public void canRecoverFromExceptionDuringEvaluate() throws Exception {
         final LanguageBuilder<Test4> b = new LanguageBuilder<>("test");
         b.newToken().named("an a").matchesString("a").nud((left, parser, lexeme) -> new Test4()).build();
-        final Language<Test4> l = b.completeLanguage();
+        final Language<Test4> l = b.build();
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Test4> r = new ReplBuilder<>(l, p -> p.expression(null, 0))
+        final Repl<Test4> r = new ReplBuilder<>(l, p -> p.expr(null, 0))
                 .withIn(in)
                 .withOut(out)
                 .withEvaluationFunction(node -> {

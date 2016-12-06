@@ -17,7 +17,7 @@ public class LeftParenthesisLexeme<N> implements Lexeme<N> {
     @Override
     public NudParseAction<N> getNud() {
         return (left, parser) -> {
-            N expression = parser.expression(left, 0);
+            N expression = parser.expr(left, 0);
             parser.swallow(RightParenthesisToken.<N>get().getName());
             return expression;
         };
@@ -29,7 +29,7 @@ public class LeftParenthesisLexeme<N> implements Lexeme<N> {
         return null;
     }
 
-    public int leftBindingPower() {
+    public int lbp() {
         throw new UnsupportedOperationException();
     }
 

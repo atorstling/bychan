@@ -3,7 +3,6 @@ package org.bychan.core.examples;
 import org.bychan.core.basic.*;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
-import org.bychan.core.dynamic.TokenDefinition;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -22,20 +21,20 @@ public class ReadmeExamples {
     public void simpleCalc() {
         LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
         lb.newToken().named("digit").matchesPattern("[0-9]+")
-                .nud((left, parser, lexeme) -> Long.parseLong(lexeme.getText()))
+                .nud((left, parser, lexeme) -> Long.parseLong(lexeme.text()))
                 .build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left + parser.expr(left, lexeme.lbp()))
                 .build();
         lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> left * parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left * parser.expr(left, lexeme.lbp()))
                 .build();
-        Language<Long> language = lb.completeLanguage();
+        Language<Long> language = lb.build();
         LexParser<Long> lexParser = language.newLexParser();
-        assertEquals((Long) 7l, lexParser.tryParse("1+2*3", p -> p.expression(null, 0)).root());
+        assertEquals((Long) 7L, lexParser.tryParse("1+2*3", p -> p.expr(null, 0)).root());
     }
 
     @Test
@@ -46,30 +45,30 @@ public class ReadmeExamples {
                 .discardAfterLexing()
                 .build();
         lb.newToken().named("digit").matchesPattern("[0-9]+")
-                .nud((left, parser, lexeme) -> lexeme.getText())
+                .nud((left, parser, lexeme) -> lexeme.text())
                 .build();
-        TokenDefinition<String> rparen = lb.newToken()
+        lb.newToken()
                 .named("rparen")
                 .matchesString(")")
                 .build();
         lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
-            String next = parser.expression(left, lexeme.leftBindingPower());
+            String next = parser.expr(left, lexeme.lbp());
             parser.swallow("rparen");
             return next;
         }).build();
         lb.powerUp();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
+                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expr(left, lexeme.lbp()) + ")")
                 .build();
         lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
+                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expr(left, lexeme.lbp()) + ")")
                 .build();
-        Language<String> language = lb.completeLanguage();
+        Language<String> language = lb.build();
         LexParser<String> lexParser = language.newLexParser();
-        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.tryParse("( 1 + 2 ) * 3 + 5", p -> p.expression(null, 0)).root());
+        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.tryParse("( 1 + 2 ) * 3 + 5", p -> p.expr(null, 0)).root());
     }
 
     @Test
@@ -77,19 +76,19 @@ public class ReadmeExamples {
         LanguageBuilder<BoolNode> lb = new LanguageBuilder<>("boolLogic");
         lb.newToken().named("literal")
                 .matchesPattern("true|false")
-                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.getText())))
+                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.text())))
                 .build();
         lb.newToken().named("and")
                 .matchesString("&&")
-                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left, lexeme.leftBindingPower())))
+                .led((left, parser, lexeme) -> new AndNode(left, parser.expr(left, lexeme.lbp())))
                 .build();
-        Language<BoolNode> l = lb.completeLanguage();
+        Language<BoolNode> l = lb.build();
         LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.tryParse("false&&false&&false", p -> p.expression(null, 0)).root();
+        BoolNode one = lexParser.tryParse("false&&false&&false", p -> p.expr(null, 0)).root();
         assertFalse(one.evaluate());
-        BoolNode two = lexParser.tryParse("true&&false&&true", p -> p.expression(null, 0)).root();
+        BoolNode two = lexParser.tryParse("true&&false&&true", p -> p.expr(null, 0)).root();
         assertFalse(two.evaluate());
-        BoolNode three = lexParser.tryParse("true&&true&&true", p -> p.expression(null, 0)).root();
+        BoolNode three = lexParser.tryParse("true&&true&&true", p -> p.expr(null, 0)).root();
         assertTrue(three.evaluate());
     }
 
@@ -205,7 +204,7 @@ public class ReadmeExamples {
                 .matchesPattern("(int|float) (\\w+)=([0-9]+)")
                 .nud((left, parser, lexeme) -> new Variable(lexeme.group(1), lexeme.group(2), lexeme.group(3)))
                 .build();
-        final Language<VNode> lang = b.completeLanguage();
+        final Language<VNode> lang = b.build();
         final LexParser<VNode> lp = lang.newLexParser();
 
         final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", this::declList);
