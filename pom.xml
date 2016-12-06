@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.bychan</groupId>
     <artifactId>bychan-core</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -49,7 +49,7 @@
         <connection>scm:git:git@github.com:atorstling/bychan.git</connection>
         <developerConnection>scm:git:git@github.com:atorstling/bychan.git
         </developerConnection>
-        <tag>bychan-core-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
