@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import static org.junit.Assert.*;
 
@@ -196,11 +197,9 @@ public class ReadmeExamples {
     @Test
     public void statements() throws Exception {
         final LanguageBuilder<VNode> b = new LanguageBuilder<>("variables");
-
         b.newToken().named("whitespace").matchesWhitespace().discardAfterLexing();
-        final TokenDefinition<VNode> semicolon = b.newToken().named("semicolon").matchesString(";").build();
-        final TokenDefinition<VNode> decl = b
-                .newToken()
+        b.newToken().named("semicolon").matchesString(";").build();
+        b.newToken()
                 .named("vardecl")
                 .matchesPattern("(int|float) (\\w+)=([0-9]+)")
                 .nud((left, parser, lexeme) -> new Variable(lexeme.group(1), lexeme.group(2), lexeme.group(3)))
@@ -209,15 +208,21 @@ public class ReadmeExamples {
         final LexParser<VNode> lp = lang.newLexParser();
 
         final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", parser -> {
-            final ArrayList<Variable> variables = new ArrayList<>();
-            while (!parser.peek().isA(EndToken.get().getName())) {
-                final Lexeme<VNode> lexeme = parser.swallow(decl.getToken().getName());
-                final Variable variable = (Variable) parser.nud(lexeme, null);
-                variables.add(variable);
-                parser.swallow(semicolon.getToken().getName());
-            }
-            return ParseResult.success(new VariableList(variables));
+            final VariableList list = declList(parser);
+            return ParseResult.success(list);
         });
         assertEquals(new VariableList(Arrays.asList(new Variable("int", "a", "4"), new Variable("float", "b", "72"))), pr.getRootNode());
+    }
+
+    @NotNull
+    private VariableList declList(Parser<VNode> parser) {
+        final ArrayList<Variable> variables = new ArrayList<>();
+        while (!parser.peek().isA(EndToken.get().getName())) {
+            final Lexeme<VNode> lexeme = parser.swallow("vardecl");
+            final Variable variable = (Variable) parser.nud(lexeme, null);
+            variables.add(variable);
+            parser.swallow("semicolon");
+        }
+        return new VariableList(variables);
     }
 }
