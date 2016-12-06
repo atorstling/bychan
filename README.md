@@ -40,7 +40,11 @@ Sure! Let's start with a simple calculator:
         assertEquals((Long) 7L, lexParser.tryParse("1+2*3", p -> p.expr(null, 0)).root());
     }
 ```
-This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense. Instead we keep a sort of running total as we parse. When we are finished we get a result directly! Worth noting in this example is that the left binding power (lbp) of the tokens is set automatically in increasing order unless otherwise specified. So "mult" has the highest lbp and "digit" the lowest.
+This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense. 
+Instead we keep a sort of running total as we parse. When we are finished we get a result directly! 
+Worth noting in this example is that the left binding power (lbp) of the tokens is set by calling `powerUp()`. 
+So "mult" has higher lbp than "plus" and "digit". The order of tokens is preserved, so that the first token
+which matches the input will be selected when lexing.
 
 You can choose any AST node type. Lets try to write a parser which converts to RPN,
 and throw in some whitespace and parentheses while we're at it:
