@@ -19,7 +19,7 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         lb.newToken().matchesString("(").named("lparen").nud((left, parser, lexeme) -> {
             BooleanExpressionNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
-            parser.swallow(rparen.getToken().getName());
+            parser.swallow("rparen");
             return trailingExpression;
         }).build();
         lb.powerUp();
@@ -38,7 +38,7 @@ public class BooleanLogicTest {
         final TokenDefinition<BooleanExpressionNode> rparen = lb.newToken().matchesString(")").named("rparen").build();
         lb.newToken().matchesString("(").named("lparen").nud((left, parser, lexeme) -> {
             BooleanExpressionNode trailingExpression = parser.expression(left, lexeme.leftBindingPower());
-            parser.swallow(rparen.getToken().getName());
+            parser.swallow("rparen");
             return trailingExpression;
         }).build();
         lb.powerUp();
