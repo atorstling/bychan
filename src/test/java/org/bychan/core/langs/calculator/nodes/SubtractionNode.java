@@ -30,7 +30,7 @@ public class SubtractionNode implements CalculatorNode {
         return result;
     }
 
-    public int evaluate() {
+    public Integer evaluate() {
         return left.evaluate() - right.evaluate();
     }
 

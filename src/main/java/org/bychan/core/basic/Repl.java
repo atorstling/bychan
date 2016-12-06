@@ -1,13 +1,12 @@
 package org.bychan.core.basic;
 
 import org.bychan.core.dynamic.Language;
-import org.bychan.core.utils.ExceptionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class Repl<N> implements Runnable {
     interface EvaluationFunction<N> {
         /**
          * A callback used to evaluate a node.
-         * To your help you may use {@link #reflectionInvokeEvaluate(Object)} which
+         * To your help you may use {@link #invokeEvaluate(Object)} which
          * can call "evaluate" on the node. You may surround the call with try..catch or modify the call as you
          * wish
          * @param node the node
@@ -105,29 +104,11 @@ public class Repl<N> implements Runnable {
     }
 
     @Nullable
-    public static <N> Object reflectionInvokeEvaluate(N node) {
-        Method evaluateMethod = getEvaluateMethod(node);
-        if (evaluateMethod == null) {
-            return null;
+    public static <N> Object invokeEvaluate(N node) {
+        if (node instanceof Evaluatable) {
+            return ((Evaluatable) node).evaluate();
         }
-        try {
-            return evaluateMethod.invoke(node);
-        } catch (IllegalAccessException e) {
-            // Could not access function, treat as if it doesn't exist
-            return null;
-        } catch (InvocationTargetException e) {
-            ExceptionUtils.sneakyThrow(e.getCause());
-            throw new IllegalStateException("Failed to throw InvocationTargetException", e);
-        }
-    }
-
-    @Nullable
-    private static <N> Method getEvaluateMethod(@NotNull final N node) {
-        try {
-            return node.getClass().getMethod("evaluate");
-        } catch (NoSuchMethodException e) {
-            return null;
-        }
+        return null;
     }
 
     @Nullable

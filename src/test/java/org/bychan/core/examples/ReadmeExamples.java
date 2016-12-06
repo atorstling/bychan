@@ -1,7 +1,9 @@
 package org.bychan.core.examples;
 
 import org.bychan.core.basic.*;
-import org.bychan.core.dynamic.*;
+import org.bychan.core.dynamic.Language;
+import org.bychan.core.dynamic.LanguageBuilder;
+import org.bychan.core.dynamic.TokenDefinition;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
@@ -91,8 +93,8 @@ public class ReadmeExamples {
         assertTrue(three.evaluate());
     }
 
-    interface BoolNode {
-        boolean evaluate();
+    interface BoolNode extends Evaluatable<Boolean> {
+        Boolean evaluate();
     }
 
     class LiteralNode implements BoolNode {
@@ -103,7 +105,7 @@ public class ReadmeExamples {
         }
 
         @Override
-        public boolean evaluate() {
+        public Boolean evaluate() {
             return value;
         }
     }
@@ -118,7 +120,7 @@ public class ReadmeExamples {
         }
 
         @Override
-        public boolean evaluate() {
+        public Boolean evaluate() {
             return left.evaluate() && right.evaluate();
         }
     }

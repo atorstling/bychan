@@ -92,8 +92,8 @@ public class ReplTest {
     static class TestException2 extends RuntimeException {
     }
 
-    static class Test2 {
-        public void evaluate() {
+    static class Test2 implements Evaluatable {
+        public Object evaluate() {
             throw new TestException2();
         }
     }
@@ -157,8 +157,8 @@ public class ReplTest {
     static class TestException4 extends RuntimeException {
     }
 
-    static class Test4 {
-        public void evaluate() {
+    static class Test4 implements Evaluatable {
+        public Object evaluate() {
             throw new TestException4();
         }
 
@@ -181,7 +181,7 @@ public class ReplTest {
                 .withOut(out)
                 .withEvaluationFunction(node -> {
                     try {
-                        return Repl.reflectionInvokeEvaluate(node);
+                        return Repl.invokeEvaluate(node);
                     } catch (TestException4 te4) {
                         return null;
                     }

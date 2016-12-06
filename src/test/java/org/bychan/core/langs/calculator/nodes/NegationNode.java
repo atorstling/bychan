@@ -8,7 +8,7 @@ public class NegationNode implements CalculatorNode {
     }
 
     @Override
-    public int evaluate() {
+    public Integer evaluate() {
         return -1 * child.evaluate();
     }
 }

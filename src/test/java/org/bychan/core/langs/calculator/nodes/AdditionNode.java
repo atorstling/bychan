@@ -9,7 +9,7 @@ public class AdditionNode implements CalculatorNode {
         this.right = right;
     }
 
-    public int evaluate() {
+    public Integer evaluate() {
         return left.evaluate() + right.evaluate();
     }
 }

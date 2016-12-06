@@ -1,5 +1,7 @@
 package org.bychan.core.langs.calculator.nodes;
 
-public interface CalculatorNode {
-    int evaluate();
+import org.bychan.core.basic.Evaluatable;
+
+public interface CalculatorNode extends Evaluatable<Integer> {
+    Integer evaluate();
 }

@@ -22,7 +22,7 @@ public class NumberNode implements CalculatorNode {
         return value;
     }
 
-    public int evaluate() {
+    public Integer evaluate() {
         return value;
     }
 

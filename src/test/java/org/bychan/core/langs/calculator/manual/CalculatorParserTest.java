@@ -20,19 +20,19 @@ public class CalculatorParserTest {
         NumberNode secondRight = new NumberNode(3);
         SubtractionNode secondleft = new SubtractionNode(new NumberNode(1), new NumberNode(2));
         assertEquals(new SubtractionNode(new MultiplicationNode(secondleft, secondRight), topRight), rootNode);
-        assertEquals(rootNode.evaluate(), -7);
+        assertEquals((int) rootNode.evaluate(), -7);
     }
 
     @Test
     public void test2() {
         CalculatorNode rootNode = new CalculatorParser().parse("1-2*3");
-        assertEquals(rootNode.evaluate(), -5);
+        assertEquals((int) rootNode.evaluate(), -5);
     }
 
     @Test
     public void test3() {
         CalculatorNode rootNode = new CalculatorParser().parse("99+1");
-        assertEquals(rootNode.evaluate(), 100);
+        assertEquals((int) rootNode.evaluate(), 100);
     }
 
     public static void main(String[] args) throws IOException {

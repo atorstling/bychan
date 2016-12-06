@@ -58,9 +58,9 @@ public class CalculatorTest {
                 .matchesPattern("[0-9]+")
                 .named("number").nud((left, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).build();
         Language<CalculatorNode> l = lb.completeLanguage();
-        assertEquals(3, l.newLexParser().tryParse("1+2", p2 -> p2.expression(null, 0)).root().evaluate());
-        assertEquals(-1, l.newLexParser().tryParse("1+-2", p1 -> p1.expression(null, 0)).root().evaluate());
-        assertEquals(3, l.newLexParser().tryParse("1--2", p -> p.expression(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1+2", p2 -> p2.expression(null, 0)).root().evaluate());
+        assertEquals(-1, (int) l.newLexParser().tryParse("1+-2", p1 -> p1.expression(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1--2", p -> p.expression(null, 0)).root().evaluate());
     }
 
     @Test
@@ -77,9 +77,9 @@ public class CalculatorTest {
         lb.newToken().named("number").matchesPattern("[0-9]+").nud((left, parser, lexeme) -> new NumberNode(Integer.parseInt(lexeme.getText()))).build();
         Language<CalculatorNode> l = lb.completeLanguage();
 
-        assertEquals(3, l.newLexParser().tryParse("1+2", p2 -> p2.expression(null, 0)).root().evaluate());
-        assertEquals(-1, l.newLexParser().tryParse("1+-2", p1 -> p1.expression(null, 0)).root().evaluate());
-        assertEquals(3, l.newLexParser().tryParse("1--2", p -> p.expression(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1+2", p2 -> p2.expression(null, 0)).root().evaluate());
+        assertEquals(-1, (int) l.newLexParser().tryParse("1+-2", p1 -> p1.expression(null, 0)).root().evaluate());
+        assertEquals(3, (int) l.newLexParser().tryParse("1--2", p -> p.expression(null, 0)).root().evaluate());
     }
 
     @Test

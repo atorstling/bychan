@@ -32,7 +32,7 @@ public class ReplBuilder<N> {
                 return ReplRunResult.success(result.root());
             }
         };
-        evaluationFunction = Repl::reflectionInvokeEvaluate;
+        evaluationFunction = Repl::invokeEvaluate;
     }
 
     @NotNull
