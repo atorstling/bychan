@@ -22,7 +22,8 @@ Sure! Let's start with a simple calculator:
     @Test
     public void simpleCalc() {
         LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
-        lb.newToken().named("digit").matchesPattern("[0-9]+")
+        lb.newToken().named("digit")
+                .matchesPattern("[0-9]+")
                 .nud((left, parser, lexeme) -> Long.parseLong(lexeme.text()))
                 .build();
         lb.newToken().named("plus")
