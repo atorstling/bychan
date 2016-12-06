@@ -23,19 +23,20 @@ Sure! Let's start with a simple calculator:
     public void simpleCalc() {
         LanguageBuilder<Long> lb = new LanguageBuilder<>("simpleCalc");
         lb.newToken().named("digit").matchesPattern("[0-9]+")
-                .nud((left, parser, lexeme) -> Long.parseLong(lexeme.getText()))
+                .nud((left, parser, lexeme) -> Long.parseLong(lexeme.text()))
                 .build();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> left + parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left + parser.expr(left, lexeme.lbp()))
                 .build();
+        lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> left * parser.expression(left, lexeme.leftBindingPower()))
+                .led((left, parser, lexeme) -> left * parser.expr(left, lexeme.lbp()))
                 .build();
-        Language<Long> language = lb.completeLanguage();
+        Language<Long> language = lb.build();
         LexParser<Long> lexParser = language.newLexParser();
-        assertEquals((Long) 7l, lexParser.parse("1+2*3"));
+        assertEquals((Long) 7L, lexParser.tryParse("1+2*3", p -> p.expr(null, 0)).root());
     }
 ```
 This language uses `Long`s as AST nodes, so we don't even get an AST in the classical sense. Instead we keep a sort of running total as we parse. When we are finished we get a result directly! Worth noting in this example is that the left binding power (lbp) of the tokens is set automatically in increasing order unless otherwise specified. So "mult" has the highest lbp and "digit" the lowest.
@@ -51,52 +52,75 @@ and throw in some whitespace and parentheses while we're at it:
                 .discardAfterLexing()
                 .build();
         lb.newToken().named("digit").matchesPattern("[0-9]+")
-                .nud((left, parser, lexeme) -> lexeme.getText())
+                .nud((left, parser, lexeme) -> lexeme.text())
                 .build();
-        TokenDefinition<String> rparen = lb.newToken()
+        lb.newToken()
                 .named("rparen")
                 .matchesString(")")
                 .build();
         lb.newToken().named("lparen").matchesString("(").nud((left, parser, lexeme) -> {
-            String next = parser.expression(left, lexeme.leftBindingPower());
-            parser.swallow(rparen.getToken());
+            String next = parser.expr(left, lexeme.lbp());
+            parser.swallow("rparen");
             return next;
         }).build();
+        lb.powerUp();
         lb.newToken().named("plus")
                 .matchesString("+")
-                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
+                .led((left, parser, lexeme) -> "(+ " + left + " " + parser.expr(left, lexeme.lbp()) + ")")
                 .build();
+        lb.powerUp();
         lb.newToken().named("mult")
                 .matchesString("*")
-                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expression(left, lexeme.leftBindingPower()) + ")")
+                .led((left, parser, lexeme) -> "(* " + left + " " + parser.expr(left, lexeme.lbp()) + ")")
                 .build();
-        Language<String> language = lb.completeLanguage();
+        Language<String> language = lb.build();
         LexParser<String> lexParser = language.newLexParser();
-        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.parse("( 1 + 2 ) * 3 + 5"));
+        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.tryParse("( 1 + 2 ) * 3 + 5", p -> p.expr(null, 0)).root());
     }
 ```
 If you want to build an AST you can build it directly with your own classes. Shall we try with some simple boolean logic?
 ```Java
-    interface BoolNode {
-        boolean evaluate();
+    @Test
+    public void boolLogic() {
+        LanguageBuilder<BoolNode> lb = new LanguageBuilder<>("boolLogic");
+        lb.newToken().named("literal")
+                .matchesPattern("true|false")
+                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.text())))
+                .build();
+        lb.newToken().named("and")
+                .matchesString("&&")
+                .led((left, parser, lexeme) -> new AndNode(left, parser.expr(left, lexeme.lbp())))
+                .build();
+        Language<BoolNode> l = lb.build();
+        LexParser<BoolNode> lexParser = l.newLexParser();
+        BoolNode one = lexParser.tryParse("false&&false&&false", p -> p.expr(null, 0)).root();
+        assertFalse(one.evaluate());
+        BoolNode two = lexParser.tryParse("true&&false&&true", p -> p.expr(null, 0)).root();
+        assertFalse(two.evaluate());
+        BoolNode three = lexParser.tryParse("true&&true&&true", p -> p.expr(null, 0)).root();
+        assertTrue(three.evaluate());
+    }
+
+    interface BoolNode extends Evaluatable<Boolean> {
+        Boolean evaluate();
     }
 
     class LiteralNode implements BoolNode {
-        boolean value;
+        final boolean value;
 
         public LiteralNode(boolean value) {
             this.value = value;
         }
 
         @Override
-        public boolean evaluate() {
+        public Boolean evaluate() {
             return value;
         }
     }
 
     class AndNode implements BoolNode {
-        BoolNode left;
-        BoolNode right;
+        final BoolNode left;
+        final BoolNode right;
 
         public AndNode(BoolNode left, BoolNode right) {
             this.left = left;
@@ -104,29 +128,9 @@ If you want to build an AST you can build it directly with your own classes. Sha
         }
 
         @Override
-        public boolean evaluate() {
+        public Boolean evaluate() {
             return left.evaluate() && right.evaluate();
         }
-    }
-    @Test
-    public void boolLogic() {
-        LanguageBuilder<BoolNode> lb = new LanguageBuilder<>("boolLogic");
-        lb.newToken().named("literal")
-                .matchesPattern("true|false")
-                .nud((left, parser, lexeme) -> new LiteralNode(Boolean.parseBoolean(lexeme.getText())))
-                .build();
-        lb.newToken().named("and")
-                .matchesString("&&")
-                .led((left, parser, lexeme) -> new AndNode(left, parser.expression(left, lexeme.leftBindingPower())))
-                .build();
-        Language<BoolNode> l = lb.completeLanguage();
-        LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.parse("false&&false&&false");
-        assertFalse(one.evaluate());
-        BoolNode two = lexParser.parse("true&&false&&true");
-        assertFalse(two.evaluate());
-        BoolNode three = lexParser.parse("true&&true&&true");
-        assertTrue(three.evaluate());
     }
 ```
 If you have a language you can also get a REPL by calling `language.repl().run()`. A session looks something like this:
