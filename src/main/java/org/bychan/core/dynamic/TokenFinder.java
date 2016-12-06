@@ -5,5 +5,5 @@ import org.jetbrains.annotations.NotNull;
 
 public interface TokenFinder<N> {
     @NotNull
-    Token<N> getToken(@NotNull final TokenKey soughtKey);
+    Token<N> getToken(@NotNull final String name);
 }

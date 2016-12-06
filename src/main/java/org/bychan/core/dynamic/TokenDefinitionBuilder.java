@@ -16,7 +16,6 @@ public class TokenDefinitionBuilder<N> {
     private boolean keepAfterLexing;
     private String tokenName;
     private int leftBindingPower = 1;
-    private TokenKey tokenKey;
     private String documentation;
     private DelegatingTokenFinder<N> tokenFinder;
 
@@ -80,7 +79,6 @@ public class TokenDefinitionBuilder<N> {
     @NotNull
     public TokenDefinitionBuilder<N> named(@NotNull final String name) {
         this.tokenName = name;
-        tokenKey = TokenKey.byName(tokenName);
         return this;
     }
 
@@ -93,14 +91,6 @@ public class TokenDefinitionBuilder<N> {
     public TokenDefinitionBuilder<N> leftBindingPower(int leftBindingPower) {
         this.leftBindingPower = leftBindingPower;
         return this;
-    }
-
-    @NotNull
-    public TokenKey getKey() {
-        if (tokenKey == null) {
-            throw new IllegalStateException("You must set a name first");
-        }
-        return tokenKey;
     }
 
     @NotNull
@@ -127,10 +117,14 @@ public class TokenDefinitionBuilder<N> {
         if (tokenFinder == null) {
             throw new NullPointerException("tokenFinder not set");
         }
-        return tokenFinder.getToken(getKey());
+        return tokenFinder.getToken(tokenName);
     }
 
     public void setTokenFinder(DelegatingTokenFinder<N> tokenFinder) {
         this.tokenFinder = tokenFinder;
+    }
+
+    public String getTokenName() {
+        return tokenName;
     }
 }

@@ -1,6 +1,5 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.dynamic.TokenKey;
 import org.bychan.core.dynamic.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,10 +26,5 @@ public interface Token<N> {
     @NotNull
     default String getName() {
         return getClass().getSimpleName();
-    }
-
-    @NotNull
-    default TokenKey getKey() {
-        return TokenKey.byName(getName());
     }
 }

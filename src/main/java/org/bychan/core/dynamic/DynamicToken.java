@@ -48,8 +48,4 @@ public class DynamicToken<N> implements Token<N> {
         return def;
     }
 
-    @NotNull
-    public TokenKey getKey() {
-        return def.getKey();
-    }
 }

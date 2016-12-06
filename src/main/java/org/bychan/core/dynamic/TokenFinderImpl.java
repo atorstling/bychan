@@ -13,23 +13,23 @@ import java.util.stream.Collectors;
  * Created by alext on 2015-01-05.
  */
 class TokenFinderImpl<N> implements TokenFinder<N> {
-    private final Map<TokenKey, Token<N>> tokensByKey;
+    private final Map<String, Token<N>> tokensByKey;
 
     public TokenFinderImpl(Collection<DynamicToken<N>> dynamicTokens) {
-        tokensByKey = dynamicTokens.stream().collect(Collectors.toMap(DynamicToken::getKey, Function.identity()));
-        tokensByKey.put(EndToken.get().getKey(), EndToken.get());
+        tokensByKey = dynamicTokens.stream().collect(Collectors.toMap(DynamicToken::getName, Function.identity()));
+        tokensByKey.put(EndToken.get().getName(), EndToken.get());
     }
 
     @NotNull
     @Override
-    public Token<N> getToken(@NotNull TokenKey soughtKey) {
-        Token<N> candidate = tokensByKey.get(soughtKey);
+    public Token<N> getToken(@NotNull String name) {
+        Token<N> candidate = tokensByKey.get(name);
         if (candidate == null) {
-            throw new IllegalStateException("No registered token definition keyed '" + soughtKey + "' was found. Did you register your token before referring to it?");
-        } else if (candidate.getKey().equals(soughtKey)) {
+            throw new IllegalStateException("No registered token definition named '" + name + "' was found. Did you register your token before referring to it?");
+        } else if (candidate.getName().equals(name)) {
             return candidate;
         } else {
-            throw new IllegalStateException("Found a candidate token definition with the same key ('" + soughtKey + "'), but it had a different specification. Do you have multiple copies of this token definition?");
+            throw new IllegalStateException("Found a candidate token definition with the same key ('" + name + "'), but it had a different specification. Do you have multiple copies of this token definition?");
         }
     }
 }

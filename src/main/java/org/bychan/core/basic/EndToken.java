@@ -1,6 +1,5 @@
 package org.bychan.core.basic;
 
-import org.bychan.core.dynamic.TokenKey;
 import org.bychan.core.dynamic.TokenMatcher;
 import org.jetbrains.annotations.NotNull;
 

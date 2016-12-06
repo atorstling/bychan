@@ -21,7 +21,6 @@ public class TokenDefinition<N> {
     private final String documentation;
     private final boolean keepAfterLexing;
     private final int leftBindingPower;
-    private final TokenKey tokenKey;
     private TokenFinder<N> tokenFinder;
 
     public TokenDefinition(@NotNull final TokenMatcher matcher, @Nullable final DynamicNudParseAction<N> nud, @Nullable final DynamicLedParseAction<N> led, @NotNull final String tokenName, @Nullable final String documentation, boolean keepAfterLexing, int leftBindingPower) {
@@ -32,7 +31,6 @@ public class TokenDefinition<N> {
         this.documentation = documentation;
         this.keepAfterLexing = keepAfterLexing;
         this.leftBindingPower = leftBindingPower;
-        this.tokenKey = TokenKey.byName(tokenName());
     }
 
     @NotNull
@@ -68,10 +66,6 @@ public class TokenDefinition<N> {
         return leftBindingPower;
     }
 
-    public TokenKey getKey() {
-        return tokenKey;
-    }
-
     @Nullable
     public String getDocumentation() {
         return documentation;
@@ -85,6 +79,6 @@ public class TokenDefinition<N> {
         if (tokenFinder == null) {
             throw new NullPointerException("tokenFinder not set");
         }
-        return tokenFinder.getToken(getKey());
+        return tokenFinder.getToken(tokenName());
     }
 }

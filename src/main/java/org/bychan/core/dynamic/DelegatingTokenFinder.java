@@ -14,9 +14,9 @@ public class DelegatingTokenFinder<N> implements TokenFinder<N> {
 
     @NotNull
     @Override
-    public Token<N> getToken(@NotNull TokenKey soughtKey) {
+    public Token<N> getToken(@NotNull String name) {
         assert delegate != null;
-        return delegate.getToken(soughtKey);
+        return delegate.getToken(name);
     }
 
     public void setDelegate(@SuppressWarnings("NullableProblems") @NotNull final TokenFinder<N> delegate) {
