@@ -137,11 +137,11 @@ public class ReplTest {
                 .withOut(out)
                 .withParsingFunction((lexParser, snippet) -> {
                     try {
-                        final ParseResult<Integer> result = lexParser.tryParse(snippet);
+                        final ParseResult<Integer> result = lexParser.tryParse(snippet, p -> p.expression(null, 0));
                         if (result.isFailure()) {
                             return ReplRunResult.error(result.getErrorMessage().toString());
                         }
-                        return ReplRunResult.success(result.getRootNode());
+                        return ReplRunResult.success(result.root());
                     } catch (TestException3 te3) {
                         return ReplRunResult.error("Exception3 thrown");
                     }

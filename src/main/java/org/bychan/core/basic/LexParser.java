@@ -11,26 +11,12 @@ public class LexParser<N> {
     @NotNull
     private final Lexer<N> lexer;
 
-    public interface TryParseFunction<N> {
-        ParseResult<N> tryParse(PrattParser<N> p);
-    }
-
     public interface ParseFunction<N> {
         N parse(PrattParser<N> p);
     }
 
     public LexParser(@NotNull final Lexer<N> lexer) {
         this.lexer = lexer;
-    }
-
-
-    public ParseResult<N> tryParse(@NotNull final String text) {
-        return tryParse(text, p -> p.expression(null, 0));
-    }
-
-    @NotNull
-    public ParseResult<N> tryParse(@Nullable N left, @NotNull final String text) {
-        return tryParse(text, p -> p.expression(left, 0));
     }
 
     @NotNull

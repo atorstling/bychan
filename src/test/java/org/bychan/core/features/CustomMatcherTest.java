@@ -43,6 +43,6 @@ public class CustomMatcherTest {
                 .nud((left, parser, lexeme) -> lexeme.getLexerValue()).build();
         Language<Object> l = lb.completeLanguage();
         GregorianCalendar g = new GregorianCalendar(1970, 0, 1, 11, 14, 10);
-        Assert.assertEquals(g.getTime(), l.newLexParser().tryParse("11:14:10").getRootNode());
+        Assert.assertEquals(g.getTime(), l.newLexParser().tryParse("11:14:10", p -> p.expression(null, 0)).root());
     }
 }

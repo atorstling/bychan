@@ -39,7 +39,7 @@ public class JsonPerfTest {
         assertNotNull(is);
         Language<JsonNode> l = new JsonLangBuilder().build();
         String original = streamToString(is);
-        JsonNode parsed = l.newLexParser().tryParse(original).getRootNode();
+        JsonNode parsed = l.newLexParser().tryParse(original, p -> p.expression(null, 0)).root();
         String prettyPrinted = parsed.prettyPrint(0);
         assertTrue(prettyPrinted.contains("V{>ꤩ혙넪㭪"));
         String pattern = "[ \\t\\n\\r]";

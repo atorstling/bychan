@@ -24,11 +24,11 @@ public class ReplBuilder<N> {
         this.language = language;
         withIn(System.in).withOut(System.out);
         parsingFunction = (lexParser, snippet) -> {
-            final ParseResult<N> result = lexParser.tryParse(snippet);
+            final ParseResult<N> result = lexParser.tryParse(snippet, p -> p.expression(null, 0));
             if (result.isFailure()) {
                 return ReplRunResult.error(result.getErrorMessage().toString());
             } else {
-                return ReplRunResult.success(result.getRootNode());
+                return ReplRunResult.success(result.root());
             }
         };
         evaluationFunction = Repl::reflectionInvokeEvaluate;

@@ -33,7 +33,7 @@ public class ReadmeExamples {
                 .build();
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
-        assertEquals((Long) 7l, lexParser.tryParse("1+2*3").getRootNode());
+        assertEquals((Long) 7l, lexParser.tryParse("1+2*3", p -> p.expression(null, 0)).root());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class ReadmeExamples {
                 .build();
         Language<String> language = lb.completeLanguage();
         LexParser<String> lexParser = language.newLexParser();
-        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.tryParse("( 1 + 2 ) * 3 + 5").getRootNode());
+        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.tryParse("( 1 + 2 ) * 3 + 5", p -> p.expression(null, 0)).root());
     }
 
     @Test
@@ -83,11 +83,11 @@ public class ReadmeExamples {
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.tryParse("false&&false&&false").getRootNode();
+        BoolNode one = lexParser.tryParse("false&&false&&false", p -> p.expression(null, 0)).root();
         assertFalse(one.evaluate());
-        BoolNode two = lexParser.tryParse("true&&false&&true").getRootNode();
+        BoolNode two = lexParser.tryParse("true&&false&&true", p -> p.expression(null, 0)).root();
         assertFalse(two.evaluate());
-        BoolNode three = lexParser.tryParse("true&&true&&true").getRootNode();
+        BoolNode three = lexParser.tryParse("true&&true&&true", p -> p.expression(null, 0)).root();
         assertTrue(three.evaluate());
     }
 
@@ -207,7 +207,7 @@ public class ReadmeExamples {
         final LexParser<VNode> lp = lang.newLexParser();
 
         final ParseResult<VNode> pr = lp.tryParse("int a=4;float b=72;", this::declList);
-        assertEquals(new VariableList(Arrays.asList(new Variable("int", "a", "4"), new Variable("float", "b", "72"))), pr.getRootNode());
+        assertEquals(new VariableList(Arrays.asList(new Variable("int", "a", "4"), new Variable("float", "b", "72"))), pr.root());
     }
 
     @NotNull

@@ -32,7 +32,7 @@ public class ParseResult<N> {
     }
 
     @NotNull
-    public N getRootNode() {
+    public N root() {
         checkSuccess();
         assert rootNode != null;
         return rootNode;

@@ -164,21 +164,21 @@ public class MiniLangTest {
         testOne(l);
         testTwo(l);
 
-        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{int a=1i; int b=2i; { int a=3i; a+b}}");
-        assertEquals(5, r.getRootNode().evaluate(null));
+        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{int a=1i; int b=2i; { int a=3i; a+b}}", p -> p.expression(null, 0));
+        assertEquals(5, r.root().evaluate(null));
     }
 
     private void testTwo(Language<LaiLaiNode> l) {
-        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}");
-        LaiLaiNode root = r.getRootNode();
+        ParseResult<LaiLaiNode> r = l.newLexParser().tryParse("{bool b=true;bool c=false;float d=2f;float e=4f;bool f=b^c;float g=d^e;[f,g]}", p -> p.expression(null, 0));
+        LaiLaiNode root = r.root();
         assertEquals("(s (x (x (x (x (x (x (= bool(b) true) (= bool(c) false)) (= float(d) 2.0f)) (= float(e) 4.0f)) (= bool(f) (^ b c))) (= float(g) (^ d e))) (l f g )))", root.toString());
         assertEquals(Arrays.asList(Boolean.TRUE, 16f), root.evaluate(null));
     }
 
     private void testOne(Language<LaiLaiNode> l) {
         String expr = "{int a=5i; a=a+4i; a}";
-        ParseResult<LaiLaiNode> result = l.newLexParser().tryParse(expr);
-        LaiLaiNode rootNode = result.getRootNode();
+        ParseResult<LaiLaiNode> result = l.newLexParser().tryParse(expr, p -> p.expression(null, 0));
+        LaiLaiNode rootNode = result.root();
         assertEquals("(s (x (x (= int(a) 5i) (= a (+ a 4i))) a))", rootNode.toString());
         assertEquals(9, rootNode.evaluate(null));
     }
