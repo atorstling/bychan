@@ -1,7 +1,6 @@
 package org.bychan.core.basic;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Facade for a {@link org.bychan.core.basic.PrattParser} and a {@link org.bychan.core.basic.Lexer} which lexes and parses
@@ -10,10 +9,6 @@ import org.jetbrains.annotations.Nullable;
 public class LexParser<N> {
     @NotNull
     private final Lexer<N> lexer;
-
-    public interface ParseFunction<N> {
-        N parse(PrattParser<N> p);
-    }
 
     public LexParser(@NotNull final Lexer<N> lexer) {
         this.lexer = lexer;

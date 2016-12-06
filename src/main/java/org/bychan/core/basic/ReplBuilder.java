@@ -19,12 +19,12 @@ public class ReplBuilder<N> {
     private BufferedReader in;
     private BufferedWriter out;
 
-
-    public ReplBuilder(@NotNull final Language<N> language) {
+    public ReplBuilder(@NotNull final Language<N> language, ParseFunction<N> pf) {
         this.language = language;
         withIn(System.in).withOut(System.out);
+
         parsingFunction = (lexParser, snippet) -> {
-            final ParseResult<N> result = lexParser.tryParse(snippet, p -> p.expression(null, 0));
+            final ParseResult<N> result = lexParser.tryParse(snippet, pf);
             if (result.isFailure()) {
                 return ReplRunResult.error(result.getErrorMessage().toString());
             } else {

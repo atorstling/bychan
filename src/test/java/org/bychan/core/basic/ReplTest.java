@@ -59,7 +59,7 @@ public class ReplTest {
 
     private void check(@NotNull Language<Integer> l, @NotNull BufferedReader in, @NotNull String expected) throws InterruptedException, TimeoutException, ExecutionException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Repl<Integer> r = new ReplBuilder<>(l).withIn(in).withOut(out).build();
+        Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0)).withIn(in).withOut(out).build();
         r.run();
         assertEquals(expected, out.toString());
     }
@@ -77,7 +77,7 @@ public class ReplTest {
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Integer> r = new ReplBuilder<>(l).withIn(in).withOut(out).build();
+        final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0)).withIn(in).withOut(out).build();
         try {
             r.run();
             fail("expected exception");
@@ -106,7 +106,7 @@ public class ReplTest {
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Test2> r = new ReplBuilder<>(l).withIn(in).withOut(out).build();
+        final Repl<Test2> r = new ReplBuilder<>(l, p -> p.expression(null, 0)).withIn(in).withOut(out).build();
         try {
             r.run();
             fail("expected exception");
@@ -132,7 +132,7 @@ public class ReplTest {
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Integer> r = new ReplBuilder<>(l)
+        final Repl<Integer> r = new ReplBuilder<>(l, p -> p.expression(null, 0))
                 .withIn(in)
                 .withOut(out)
                 .withParsingFunction((lexParser, snippet) -> {
@@ -176,7 +176,7 @@ public class ReplTest {
         final BufferedReader in = mock(BufferedReader.class);
         when(in.readLine()).thenReturn("a").thenReturn("").thenReturn("quit").thenReturn("");
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        final Repl<Test4> r = new ReplBuilder<>(l)
+        final Repl<Test4> r = new ReplBuilder<>(l, p -> p.expression(null, 0))
                 .withIn(in)
                 .withOut(out)
                 .withEvaluationFunction(node -> {

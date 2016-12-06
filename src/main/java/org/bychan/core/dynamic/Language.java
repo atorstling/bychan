@@ -47,8 +47,8 @@ public class Language<N> {
     }
 
     @NotNull
-    public Repl repl() {
-        return new ReplBuilder<>(this).build();
+    public Repl repl(ParseFunction<N> parseFunction) {
+        return new ReplBuilder<>(this, parseFunction).build();
     }
 
     @NotNull

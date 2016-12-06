@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 public class CalculatorTest {
     public static void main(String[] args) {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
-        l.repl().run();
+        l.repl(p -> p.expression(null, 0)).run();
     }
 
     @Test
