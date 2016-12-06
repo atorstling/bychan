@@ -27,7 +27,7 @@ public class LexParser<N> {
     }
 
     @NotNull
-    public PrattParser<N> getParser(@NotNull String text) {
+    private PrattParser<N> getParser(@NotNull String text) {
         List<Lexeme<N>> lexemes = lexer.lex(text);
         return new PrattParser<>(lexemes, text);
     }
@@ -42,7 +42,7 @@ public class LexParser<N> {
     }
 
     @NotNull
-    public ParseResult<N> tryParseFully(PrattParser<N> p, @Nullable N left, final int rightBindingPower) {
+    private ParseResult<N> tryParseFully(PrattParser<N> p, @Nullable N left, final int rightBindingPower) {
         ParseResult<N> parsed = tryParse(p, left, rightBindingPower);
         if (parsed.isSuccess()) {
             if (!p.peek().isA(EndToken.get().getName())) {
@@ -54,7 +54,7 @@ public class LexParser<N> {
     }
 
     @NotNull
-    public ParseResult<N> tryParse(PrattParser<N> p, @Nullable N left, final int rightBindingPower) {
+    private ParseResult<N> tryParse(PrattParser<N> p, @Nullable N left, final int rightBindingPower) {
         try {
             N rootNode = p.expression(left, rightBindingPower);
             return ParseResult.success(rootNode);
@@ -75,8 +75,4 @@ public class LexParser<N> {
         return parseFunction.parse(p);
     }
 
-    @NotNull
-    public Lexer<N> getLexer() {
-        return lexer;
-    }
 }
