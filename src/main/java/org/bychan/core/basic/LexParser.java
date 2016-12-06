@@ -22,16 +22,6 @@ public class LexParser<N> {
     }
 
 
-    public N parse(@NotNull final String text) {
-        return getParser(text).parseExpression();
-    }
-
-    @NotNull
-    private PrattParser<N> getParser(@NotNull String text) {
-        List<Lexeme<N>> lexemes = lexer.lex(text);
-        return new PrattParser<>(lexemes, text);
-    }
-
     public ParseResult<N> tryParse(@NotNull final String text) {
         return tryParse(text, p -> tryParseFully(p, null, 0));
     }

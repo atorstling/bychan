@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 import static org.junit.Assert.*;
 
@@ -34,7 +33,7 @@ public class ReadmeExamples {
                 .build();
         Language<Long> language = lb.completeLanguage();
         LexParser<Long> lexParser = language.newLexParser();
-        assertEquals((Long) 7l, lexParser.parse("1+2*3"));
+        assertEquals((Long) 7l, lexParser.tryParse("1+2*3").getRootNode());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class ReadmeExamples {
                 .build();
         Language<String> language = lb.completeLanguage();
         LexParser<String> lexParser = language.newLexParser();
-        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.parse("( 1 + 2 ) * 3 + 5"));
+        assertEquals("(+ (* (+ 1 2) 3) 5)", lexParser.tryParse("( 1 + 2 ) * 3 + 5").getRootNode());
     }
 
     @Test
@@ -84,11 +83,11 @@ public class ReadmeExamples {
                 .build();
         Language<BoolNode> l = lb.completeLanguage();
         LexParser<BoolNode> lexParser = l.newLexParser();
-        BoolNode one = lexParser.parse("false&&false&&false");
+        BoolNode one = lexParser.tryParse("false&&false&&false").getRootNode();
         assertFalse(one.evaluate());
-        BoolNode two = lexParser.parse("true&&false&&true");
+        BoolNode two = lexParser.tryParse("true&&false&&true").getRootNode();
         assertFalse(two.evaluate());
-        BoolNode three = lexParser.parse("true&&true&&true");
+        BoolNode three = lexParser.tryParse("true&&true&&true").getRootNode();
         assertTrue(three.evaluate());
     }
 

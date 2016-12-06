@@ -92,7 +92,7 @@ public class CalculatorTest {
     public void emptyInput() {
         Language<Integer> l = CalculatorTestHelper.getSimpleCalculatorLanguage();
         try {
-            l.newLexParser().parse("");
+            l.newLexParser().tryParse("").getRootNode();
             fail("expected exception");
         } catch (ParsingFailedException e) {
             assertEquals("Premature end reached", e.getFailureInformation().toParsingFailedInformation().getFailureMessage());
