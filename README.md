@@ -1,8 +1,10 @@
-#Bychan [![Build Status](https://travis-ci.org/atorstling/bychan.svg?branch=master)](https://travis-ci.org/atorstling/bychan)
+[![Build Status](https://travis-ci.org/atorstling/bychan.svg?branch=master)](https://travis-ci.org/atorstling/bychan)
+
+# Bychan 
 
 A Pratt (TDOP) Expression Parser Library for Java
 
-##Introduction
+## Introduction
 
 Bychan is a library for TDOP parsing. TDOP is essentially recursive descent with a clever way
 of incorporating shunting-yard for the handling of expressions. It is a surprisingly powerful technique
@@ -16,7 +18,7 @@ What it does do is to help you with the boring bits: lexing, error handling and 
 
 You could call it a middle ground between using a parser generator and writing a parser by hand.
 
-##Show me the Code
+## Show me the Code
 Sure! Let's start with a simple calculator:
 ```Java
     @Test
@@ -148,11 +150,11 @@ Error:Lexing failed: 'No matching rule' @  position 1:1 (index 0), remaining tex
 >quit
 leaving
 ```
-##More Examples
+## More Examples
 Above given examples are available [in the repo](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/examples/ReadmeExamples.java) along with more advanced examples such as an (not extensively tested) [JSON parser](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/json/JsonLangBuilder.java)
  and a [minimal computer language](https://github.com/atorstling/bychan/blob/master/src/test/java/org/bychan/core/langs/minilang/MiniLangTest.java).
 
-##Installing
+## Installing
 Install via maven central:
 ```xml
 <dependencies>
@@ -164,13 +166,13 @@ Install via maven central:
 </dependencies>
 ```
 
-##Feedback
+## Feedback
 Please give feedback if you are using Bychan. Create issues, send mail or whatever you prefer. I'd be glad to hear from you with or without any contributions.
 
-##License
+## License
 MIT
 
-##Prerequisites
+## Prerequisites
 Bychan has no dependencies and runs on JDK 8 and above.
  
  
