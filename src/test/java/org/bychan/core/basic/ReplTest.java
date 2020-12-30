@@ -61,7 +61,11 @@ public class ReplTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         Repl<Integer> r = new ReplBuilder<>(l, p -> p.expr(null, 0)).withIn(in).withOut(out).build();
         r.run();
-        assertEquals(expected, out.toString());
+        assertEquals(replaceNewlines(expected), out.toString());
+    }
+
+    private String replaceNewlines(String s) {
+        return s.replace("\n", System.lineSeparator());
     }
 
     static class TestException1 extends RuntimeException {
@@ -84,9 +88,9 @@ public class ReplTest {
         } catch (TestException1 te) {
             //expected
         }
-        assertEquals("Welcome to the REPL for 'test'.\n" +
+        assertEquals(replaceNewlines("Welcome to the REPL for 'test'.\n" +
                 prompt +
-                ">>", out.toString());
+                ">>"), out.toString());
     }
 
     static class TestException2 extends RuntimeException {
@@ -113,9 +117,9 @@ public class ReplTest {
         } catch (TestException2 te2) {
             //expected
         }
-        assertEquals("Welcome to the REPL for 'test'.\n" +
+        assertEquals(replaceNewlines("Welcome to the REPL for 'test'.\n" +
                 prompt +
-                ">>", out.toString());
+                ">>"), out.toString());
     }
 
 
@@ -148,10 +152,10 @@ public class ReplTest {
                 })
                 .build();
         r.run();
-        assertEquals("Welcome to the REPL for 'test'.\n" +
+        assertEquals(replaceNewlines("Welcome to the REPL for 'test'.\n" +
                 prompt +
                 ">>Error:Exception3 thrown\n" +
-                ">>leaving\n", out.toString());
+                ">>leaving\n"), out.toString());
     }
 
     static class TestException4 extends RuntimeException {
@@ -188,10 +192,10 @@ public class ReplTest {
                 })
                 .build();
         r.run();
-        assertEquals("Welcome to the REPL for 'test'.\n" +
+        assertEquals(replaceNewlines("Welcome to the REPL for 'test'.\n" +
                 prompt +
                 ">>Test4\n" +
-                ">>leaving\n", out.toString());
+                ">>leaving\n"), out.toString());
     }
 
 }

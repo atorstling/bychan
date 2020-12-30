@@ -130,6 +130,6 @@ public class Repl<N> implements Runnable {
             }
             lines.add(line);
         }
-        return String.join("\n", lines);
+        return String.join(System.lineSeparator(), lines);
     }
 }
